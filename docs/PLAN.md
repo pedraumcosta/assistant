@@ -4,7 +4,7 @@
 |---|---|
 | Status | Draft for discussion with Pedro. Nothing below is executed until the decisions in §2 are settled. |
 | Date | 2026-10-03 |
-| Brief | `init-prompt.md` (root) |
+| Brief | `docs/init-prompt.md` |
 | Source-of-truth order | `docs/PLAN.md` → `docs/ROADMAP.md` → `docs/JOURNAL.md`. If they disagree, the earlier one wins and the later one is corrected. |
 | Time budget | One working day |
 
@@ -34,7 +34,7 @@ Each has a recommendation. Work on the phases in §6 starts once these are answe
 | D4 | Prototype language | Python, standard library plus the model SDK | Fastest for one day. Pedro's most recent authored code is Go with no external dependencies; Go is the alternative if he prefers it. |
 | D5 | Model access and spend ceiling for the prototype and eval runs | Claude API, with a hard budget cap set by Pedro before any eval run | The eval runs each task several times across several arms. No key or budget has been confirmed (ASSIST-006). |
 | D6 | GitHub repo owner, name and access model | Needs Pedro's call; see ASSIST-001 | "Others read, only Pedro writes" is not available on a private repo owned by a personal account, as far as I know. It needs an organisation-owned repo or a workaround. |
-| D7 | Git author identity | Needs Pedro's call | Global git config says `pcosta@gmail.com`; this session's account is `pcosta@clone.me` (ASSIST-002). |
+| D7 | Git author identity | **Decided 2026-10-03:** `pcosta@gmail.com` | Pedro's existing git config; closes ASSIST-002. |
 | D8 | Proposal and presentation format | `docs/PROPOSAL.md` for the written case, plus one HTML page for the system design view and slides | Follows Pedro's rule "Markdown for models, HTML for humans". PowerPoint is the alternative if the CXOs expect a file. |
 | D9 | May the documents cite material from `Practices/Churn/nubank_pwr_staff/`? | Reuse the ideas, cite the primary sources behind them, do not cite that folder | It is interview preparation for another company (ASSIST-007). |
 | D10 | Commit trailers | Keep the `Co-Authored-By: Claude` trailer on every commit | It makes the "how Claude Code was used" summary verifiable from `git log`. |
@@ -126,7 +126,7 @@ Timeboxes are targets for a one-day budget, not measurements.
 
 | # | Step | Output | Exit check | Commit | Timebox |
 |---|---|---|---|---|---|
-| P0 | Repo setup: `git init`, `.gitignore`, private GitHub repo, access model per D6 | Repo with `init-prompt.md` and `docs/PLAN.md` | Repo is private; access matches D6 | `chore: initialise repo and plan` | 15 min |
+| P0 | Repo setup: `git init`, `.gitignore`, private GitHub repo, access model per D6 | Repo with `docs/init-prompt.md` and `docs/PLAN.md` | Repo is private; access matches D6 | `chore: initialise repo and plan` | 15 min |
 | P1 | Roadmap and journal | `ROADMAP.md`, `JOURNAL.md` with ADR-001 (the wedge, D1) | Every step below appears in the roadmap with an exit check | `docs: roadmap, journal, ADR-001` | 20 min |
 | P2 | Evidence base | `EVIDENCE.md`, `LANDSCAPE.md` | Every figure we intend to use is tagged [L] or [P], or is dropped | `docs: evidence ledger and landscape` | 45 min |
 | P3 | Problem and product | `PROPOSAL.md` §1–2: problem, value proposition, differentiation, exclusions, adopt / supplement / replace | Includes the case against entering; exclusions list is explicit | `docs: problem and product definition` | 45 min |
@@ -209,7 +209,7 @@ IDE plugin, any UI beyond the CLI, cloud or background agents, multi-agent orche
 | ID | Issue | Status |
 |---|---|---|
 | ASSIST-001 | "Others read, only Pedro writes" is not available on a personal private repo as far as I know; to be confirmed against GitHub's documentation at setup | Open, blocks P0 |
-| ASSIST-002 | Git identity mismatch: `pcosta@gmail.com` (git config) vs `pcosta@clone.me` (session account) | Open, blocks P0 |
+| ASSIST-002 | Git identity mismatch: `pcosta@gmail.com` (git config) vs `pcosta@clone.me` (session account) | Closed: commits use `pcosta@gmail.com` |
 | ASSIST-003 | Parts of the Practices notes are Dropbox online-only and read as 0 bytes, including `Mngmnt/Strategy/`, `Mngmnt/Product Mngmnt/` and eight `Coding/` shelves | Open, not blocking |
 | ASSIST-004 | Many research figures are tagged [S] and need primary-source verification before CXO use | Open, handled in P2 |
 | ASSIST-005 | Article retrieval incomplete: the SFT / distillation article could not be fetched at all; "Building Claude from Scratch", "Senior Staff Engineer with sub-agent teams" and "Building Claude Code with Harness Engineering" were cut off part-way. All digests came through a summarising fetch, so no article figure is usable without checking the original | Open, not blocking |
