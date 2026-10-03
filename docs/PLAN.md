@@ -22,22 +22,61 @@ The plan keeps "do not build" alive as a real outcome. The prototype exists to t
 
 This position is a hypothesis for discussion, not a settled decision. See decision D1.
 
+### 1.1 Narrowing the position after the harness paper (open, D1)
+
+Pedro asked for the paper "Harness Engineering: Anatomy, Architecture, and Evolution of Coding Agents — A Source-Code Study of Eleven Systems" (Barbaste, Darrigol, Vu, Wiltberger; arXiv 2609.00006v1) to be weighed before D1 closes. Read from the arXiv full text on 2026-10-03, selected sections only: the landscape, the OpenHands sections, platform economics, the meta-harness, the 18 recommendations, and the conclusion.
+
+**What it confirms**
+- The inner loop is a commodity. Recommendation 1: "Start with a linear while loop". The paper says loop sophistication "does not predict benchmark performance" and ships a 90-line minimum viable harness.
+- No production harness uses an agent framework or embeddings over code. Recommendations 8, 15 and 16 say not to build either.
+- Stay single-agent until parallel exploration is shown to win (Recommendation 12).
+
+**What it changes**
+- The outer layer is being commoditised as well. Databricks open-sourced Omnigent in June 2026, described as "a bet that the harness has become a commodity component and that the durable value sits one layer up". It wraps vendor harnesses behind one API and adds a cross-harness policy plane with per-user budgets, a uniform sandbox with a secretless credential proxy, and shareable sessions with review comments. OpenHands hosts Claude Code, Codex and Gemini CLI as interchangeable backends.
+- So policy, sandboxing and budgets are not a wedge. They are free, open source and backed by a large vendor (ASSIST-010).
+
+**What is still open in the sections read**
+- "Safety" in these systems means action safety: is this command dangerous. None of the sections describes outcome evidence: is this change correct, in scope, and safe to merge. Where review exists it is another model's opinion (OpenHands runs "an LLM judge over the transcript"; Omnigent's example mandates cross-vendor review in a prompt).
+- The paper's own future work lists "Unified evaluation frameworks that assess safety, user experience, cost efficiency, and extensibility alongside correctness, addressing the gap between benchmark performance and production readiness".
+
+**Proposed narrowing**
+
+| Option | What we build | Assessment |
+|---|---|---|
+| A. Outer harness (the §1 wording) | Policy, sandbox, gate and evidence around any agent | Weakened. Most of it now exists as open source. |
+| B. Evidence layer | A change contract, deterministic verification, an evidence bundle and risk routing, delivered as a plug-in to existing harnesses through hooks, MCP, SKILL.md and CI | Recommended. It is the part nobody in the paper builds, and it rides the standards instead of competing with the platforms. |
+| C. Per-repo agent evaluation | Run the customer's own tasks across harnesses and models; report pass^k, cost per accepted change and false-green rate | Recommended as the way in. It is the same engine as B, sold first as a measurement. |
+
+Under B and C we build neither a harness nor a meta-harness. The prototype's own loop (D3) becomes the agent under test, not the product.
+
+**Weaknesses to settle before closing D1**
+- Nothing stops Omnigent, OpenHands or a review-bot vendor from adding the same checks. With no inherited moat (D2), the defensible assets would be neutrality (a vendor grading its own agent is not credible) and each customer's accumulated contracts and eval history.
+- The paper was read in part. A full read is needed before the proposal quotes it.
+
+**What we take from the paper into the prototype**
+- An append-only event log as the system of record; the evidence bundle is a projection of it.
+- Safety rules as data, with a floor that no mode can switch off (Recommendation 11).
+- Checks combined worst-case-wins, failing closed.
+- Repository content marked as untrusted before it enters context.
+- No parallel delegation. The one second agent is a cross-vendor adversarial reviewer, which is where OpenAI fits (D5).
+- Stretch: expose the gate through a hook or MCP so the same check runs against a vendor harness, not only our own loop.
+
 ## 2. Decisions needed from Pedro
 
-Each has a recommendation. Work on the phases in §6 starts once these are answered.
+Decisions are recorded here as they are made. D1 and D6 are still open; the roadmap is drafted once D1 closes.
 
 | ID | Decision | Recommendation | Why |
 |---|---|---|---|
-| D1 | Which wedge do we defend? (a) verification and evidence layer, (b) sovereign / air-gapped assistant, (c) brownfield modernisation for one vertical, (d) cross-vendor cost control plane | (a), with cost per accepted change as its headline metric, which absorbs most of (d) | (a) has the best-triangulated evidence and fits a one-day prototype. (b) has the weakest evidence and IBM shipped a self-hosted option on 2026-10-01. (c) needs a vertical we have not been given. The weakness of (a): it is the most contested gap, since every major vendor ships a review bot. Our answer has to be "gate before the PR and remove a human step", not "one more reviewer". |
-| D2 | What does "our AI company" already own? (own models, a customer vertical, a distribution channel) | Assume nothing: no proprietary model, no captive vertical | The brief does not say. If the company does own a model or a regulated customer base, wedge (b) or (c) gets stronger and D1 should be revisited. |
-| D3 | Prototype inner loop: write a minimal loop ourselves, or wrap an existing agent SDK or hosted agent service | Write a minimal single loop behind a provider interface | It demonstrates every design topic the brief lists (context, tools, permissions) in code a CXO's engineer can read, and it makes the strategic point: the inner loop is small, so it is not the product. The product code is the policy, gate and evidence layers around it. |
-| D4 | Prototype language | Python, standard library plus the model SDK | Fastest for one day. Pedro's most recent authored code is Go with no external dependencies; Go is the alternative if he prefers it. |
-| D5 | Model access and spend ceiling for the prototype and eval runs | Claude API, with a hard budget cap set by Pedro before any eval run | The eval runs each task several times across several arms. No key or budget has been confirmed (ASSIST-006). |
-| D6 | GitHub repo owner, name and access model | Needs Pedro's call; see ASSIST-001 | "Others read, only Pedro writes" is not available on a private repo owned by a personal account, as far as I know. It needs an organisation-owned repo or a workaround. |
+| D1 | Which wedge do we defend? | **Under discussion.** Pedro accepts the thesis in principle (2026-10-03). §1.1 narrows it after the harness paper; D1 closes when that narrowing is agreed. | See §1.1. |
+| D2 | What does the company already own? | **Decided 2026-10-03:** nothing. No proprietary model, no harness, no captive vertical, no special moat. | The strategy must stand without an inherited advantage. |
+| D3 | Prototype inner loop | **Decided 2026-10-03:** write a minimal single loop ourselves, behind a provider interface. | It shows every design topic in readable code and makes the point that the loop is small, so it is not the product. Rejected alternative: wrapping an agent SDK or hosted agent service. |
+| D4 | Prototype language | **Decided 2026-10-03:** Python. | Fastest for one day. |
+| D5 | Model access and spend ceiling | **Decided 2026-10-03:** Anthropic first, hard cap of 50 USD across all runs. OpenAI may be used to cross-check results or as the adversarial reviewer. | No API key is set in the environment yet (ASSIST-006). |
+| D6 | GitHub repo owner, name and access model | **Open.** Recommended: a private repo in an organisation, readers given the Read role, branch protection on `main`. Pedro is an admin of `tech-apereal`, which is on the Team plan; whether that organisation is the right home is his call. | GitHub offers private repos on every plan. The limit is on personal accounts: "Collaborators can't have read-only access to repositories owned by a personal account" (GitHub Docs). Organisation repos have a Read role that cannot push. |
 | D7 | Git author identity | **Decided 2026-10-03:** `pcosta@gmail.com` | Pedro's existing git config; closes ASSIST-002. |
-| D8 | Proposal and presentation format | `docs/PROPOSAL.md` for the written case, plus one HTML page for the system design view and slides | Follows Pedro's rule "Markdown for models, HTML for humans". PowerPoint is the alternative if the CXOs expect a file. |
-| D9 | May the documents cite material from `Practices/Churn/nubank_pwr_staff/`? | Reuse the ideas, cite the primary sources behind them, do not cite that folder | It is interview preparation for another company (ASSIST-007). |
-| D10 | Commit trailers | Keep the `Co-Authored-By: Claude` trailer on every commit | It makes the "how Claude Code was used" summary verifiable from `git log`. |
+| D8 | Proposal and presentation format | **Decided 2026-10-03:** Markdown first. When the content is close to final, a Claude Code artifact, then a Slidev presentation. | "Markdown for models, HTML for humans." |
+| D9 | Use of material from outside this repo | **Decided 2026-10-03:** the repo is self-contained. Nothing is cited from Pedro's private folders; any material we rely on is copied into `docs/research/` with its original source. | Readers of the repo cannot open Pedro's Dropbox. Closes ASSIST-007. |
+| D10 | Commit trailers | **Decided 2026-10-03:** keep the `Co-Authored-By: Claude` trailer; the git log is the record of how Claude Code was used. | Makes the build log verifiable. |
 
 ## 3. What the research says
 
@@ -101,7 +140,7 @@ Pedro's notes have no market sizing, competitor pricing, unit economics, latency
 | `docs/research/LANDSCAPE.md` | Competitor table and feature taxonomy | 1, 2 |
 | `docs/PROPOSAL.md` | The written case: problem, product, design summary, CFO message | 1, 2, 3, 4 |
 | `docs/DESIGN.md` | System design: every design topic in the brief, plus risks, assumptions, redlines | 3 |
-| `docs/design.html` | System design view and slides for the CXO session | 3 |
+| Claude Code artifact, then Slidev deck | System design view and slides for the CXO session, built from the Markdown once it is close to final (D8) | 3 |
 | `prototype/` | The working prototype and its eval set | 3 |
 | `docs/RESULTS.md` | What the prototype measured, with the raw run data alongside | 3 |
 | `docs/BUILD_LOG.md` | How Claude Code was used to produce the repo | Output item 5 |
@@ -133,7 +172,7 @@ Timeboxes are targets for a one-day budget, not measurements.
 | P4 | System design | `DESIGN.md`: all topics in §8, risks, assumptions, redlines, what to prototype first | Each design topic has a position, a rejected alternative, and a way to measure it | `docs: system design` | 60 min |
 | P5 | Prototype | `prototype/`, built in the slices of §7.2 | Each slice runs end to end on the fixture repo | One `feat:` commit per slice | 150 min |
 | P6 | Measure | `RESULTS.md`, `prototype/runs/` | Results table generated from run files, with limitations stated | `test: eval runs and results` | 45 min |
-| P7 | Proposal, design view, CFO message | `PROPOSAL.md` complete, `design.html` | Recommendation is consistent with `RESULTS.md`, including if the hypotheses failed | `docs: proposal, design view, executive message` | 60 min |
+| P7 | Proposal, design view, CFO message (people and weeks, assumptions stated) | `PROPOSAL.md` complete, artifact, Slidev deck | Recommendation is consistent with `RESULTS.md`, including if the hypotheses failed | `docs: proposal, design view, executive message` | 60 min |
 | P8 | Build log and final review | `BUILD_LOG.md`; consistency pass across all documents | No number without an evidence row; no open ASSIST issue unaccounted for | `docs: build log and final review` | 30 min |
 
 P3 and P4 are deliberately lean on the first pass. They are revised in P7 once the prototype has produced results.
@@ -200,7 +239,7 @@ IDE plugin, any UI beyond the CLI, cloud or background agents, multi-agent orche
 | The wedge is the most contested gap in the market | The proposal must show how ASSIST differs from a review bot. If it cannot, the answer is Wait. |
 | The prototype result is weak or negative | That is a valid outcome. `RESULTS.md` reports it and the recommendation changes. |
 | Small, self-authored task set | Stated as a limitation everywhere results appear. |
-| One day is not enough for all nine phases | Stretch slice dropped first, then `design.html` reduced to a single diagram. The evidence ledger and the results are not cut. |
+| One day is not enough for all nine phases | Stretch slice dropped first, then the artifact and deck reduced to a single diagram. The evidence ledger and the results are not cut. |
 | Research figures that fail re-verification | Dropped, not softened. |
 | Eval spend overruns | Hard cap from D5, enforced in the eval runner. |
 
@@ -208,19 +247,21 @@ IDE plugin, any UI beyond the CLI, cloud or background agents, multi-agent orche
 
 | ID | Issue | Status |
 |---|---|---|
-| ASSIST-001 | "Others read, only Pedro writes" is not available on a personal private repo as far as I know; to be confirmed against GitHub's documentation at setup | Open, blocks P0 |
+| ASSIST-001 | "Others read, only Pedro writes" is not available on a personal private repo as far as I know; to be confirmed against GitHub's documentation at setup | Confirmed against GitHub Docs. Resolved by using an organisation repo; owner pending (D6) |
 | ASSIST-002 | Git identity mismatch: `pcosta@gmail.com` (git config) vs `pcosta@clone.me` (session account) | Closed: commits use `pcosta@gmail.com` |
 | ASSIST-003 | Parts of the Practices notes are Dropbox online-only and read as 0 bytes, including `Mngmnt/Strategy/`, `Mngmnt/Product Mngmnt/` and eight `Coding/` shelves | Open, not blocking |
 | ASSIST-004 | Many research figures are tagged [S] and need primary-source verification before CXO use | Open, handled in P2 |
 | ASSIST-005 | Article retrieval incomplete: the SFT / distillation article could not be fetched at all; "Building Claude from Scratch", "Senior Staff Engineer with sub-agent teams" and "Building Claude Code with Harness Engineering" were cut off part-way. All digests came through a summarising fetch, so no article figure is usable without checking the original | Open, not blocking |
-| ASSIST-006 | No model API key or spend ceiling confirmed for the prototype | Open, blocks P6 |
-| ASSIST-007 | Some of the richest source material is interview preparation for another company | Open, see D9 |
+| ASSIST-006 | No model API key or spend ceiling confirmed for the prototype | Open: cap set at 50 USD (D5); API key still to be provided, via a git-ignored `.env` |
+| ASSIST-007 | Some of the richest source material is interview preparation for another company | Closed by D9 |
 | ASSIST-008 | The last link in the brief was two URLs joined together; treated as two articles | Closed |
-| ASSIST-009 | No cost inputs (team size, loaded cost, budget envelope) for the CFO message; without them the ask is stated in people and weeks, not money | Open, needed by P7 |
+| ASSIST-009 | No cost inputs (team size, loaded cost, budget envelope) for the CFO message; without them the ask is stated in people and weeks, not money | Closed: no inputs exist. The CFO message states the ask in people and weeks, with every figure labelled as an assumption and listed in an assumptions table |
+| ASSIST-010 | Omnigent (Databricks, open source, June 2026) already provides cross-harness policy, sandboxing, budgets and shared sessions, per the harness paper. The original "outer harness" framing overlaps with it | Open, drives §1.1 and D1 |
 
 ## 11. Done so far
 
 - Read the brief and the Practices root index.
 - Six research passes run in parallel and all reported. Their findings exist only in this session so far; P2 writes them into `docs/research/`.
 - Confirmed `gh` is authenticated as `pedraumcosta` with `repo` scope.
-- No repository created, nothing committed, nothing published.
+- Local git repository initialised with the brief and this plan. No GitHub remote yet (D6); nothing published.
+- Harness paper (arXiv 2609.00006v1) read in part; findings in §1.1.

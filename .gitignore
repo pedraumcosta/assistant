@@ -4,3 +4,7 @@
 __pycache__/
 *.pyc
 .venv/
+
+# Pedro's private scratch pad and IDE files: never commit
+docs/scratchpad.md
+.idea/
