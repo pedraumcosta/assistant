@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| Status | Reviewed by Pedro on 2026-10-05, with five decisions recorded in §9. Nothing here is built. |
+| Status | Reviewed by Pedro on 2026-10-05, with five decisions recorded in §9 and three on the prototype (`PLAN.md` §2.1, T20 to T22). Nothing here is built. |
 | Reads with | `docs/PROPOSAL.md` (what and why), `docs/PLAN.md` §2.1 (decisions), §7 (prototype) and §8 (positions) |
 | Evidence | Figures cite `docs/research/EVIDENCE.md` as (E-nn). Design rules without a citation are our own judgment. |
 | Scope | Two designs: the product (§1 to §6) and the one-day prototype that tests it (§7). The mandatory items from the brief are in §8. |
@@ -247,7 +247,7 @@ One day, 50 USD. It tests conventional code only.
 
 ### 7.1 Parts
 
-- **Agent under test.** The 90-line published scaffold (E-59), with adapters for the model providers and an event log. Departures from the listing are recorded in the journal.
+- **Agent under test.** The 90-line published scaffold (E-59), on Claude Sonnet 5.5, with an adapter for the model provider and an event log. The listing is kept as published in `docs/research/harness-scaffold-listing.md`; departures from it are recorded in the journal (ADR-021).
 - **Fixture repository.** A small Python package with a test suite, written for the purpose.
 - **Tasks.** A small set of ordinary changes, plus trap tasks that invite a specific failure: touching a file outside scope, weakening a test, a destructive command, an instruction planted in a repository file, editing the contract.
 - **Hidden acceptance checks** for every task: the ground truth. Neither the agent nor the gate sees them.
@@ -262,7 +262,7 @@ One day, 50 USD. It tests conventional code only.
 | Prompt discipline | The scaffold, told to verify before claiming completion |
 | Gated | The scaffold, with the contract and the verdict of §4.1, and a bounded number of repair attempts |
 
-Every arm runs in an isolated copy of the fixture, because the scaffold has no sandbox.
+The scaffold has no sandbox, so in every arm its tools run in a Docker container that holds only that run's copy of the fixture, with no network and no API key. The verdict and the ground-truth checks run in containers of their own, because they execute code the agent wrote. This confinement is the prototype's safety measure, applied to all arms alike. It is not part of the product, and it is not what the gated arm tests.
 
 ### 7.3 Verdict sources compared with ground truth
 
@@ -282,7 +282,7 @@ Every arm runs in an isolated copy of the fixture, because the scaffold has no s
 
 ### 7.5 What it reports
 
-Unsafe actions per arm; pass rate on one attempt and on every attempt; false-pass and false-fail rates per verdict source; cost per production-qualified change; time and cost added by the gate; planted flaws rejected out of planted flaws tried. Every result table is generated from run files.
+Unsafe actions attempted per arm, and of the changes that contain one, how many each verdict source accepted; pass rate on one attempt and on every attempt; false-pass and false-fail rates per verdict source; cost per production-qualified change; time and cost added by the gate; planted flaws rejected out of planted flaws tried. Every result table is generated from run files.
 
 ## 8. Risks, assumptions, redlines
 
@@ -336,4 +336,4 @@ Decided by Pedro on 2026-10-05 (`PLAN.md` §2.1, T15 to T19).
 | Hooks inside the assistant | Offered, for human intervention and early feedback; the pipeline's verdict is the one that counts (§3) |
 | Diagrams | Mermaid for now |
 
-**The prototype stays very simple.** It builds none of the following: the first process (contracts are written by hand), the protected branch (the contract and hidden checks sit in a directory outside the agent's working copy), hooks, or the evaluation path unless time allows.
+**The prototype stays very simple.** It builds none of the following: the first process (contracts are written by hand), the protected branch (the contract and hidden checks sit in a directory that is never mounted into the agent's container), hooks, or the evaluation path unless time allows.

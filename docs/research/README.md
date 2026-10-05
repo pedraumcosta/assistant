@@ -10,6 +10,7 @@ Everything we read or looked up for the ASSIST exercise, recorded so the repo st
 | `market-landscape.md` | Competitor table, feature taxonomy, where incumbents are strong, candidate gaps, recent market events | Record as received; many [S] figures |
 | `limitations-evidence.md` | Independent evidence on productivity, quality, security, cost and technical limits, including the case against entering | Record as received; mixed [P] and [S] |
 | `harness-paper.md` | arXiv 2609.00006v1, the Wavestone AI Lab source-code study of eleven coding harnesses | Read end to end from the full text |
+| `harness-scaffold-listing.md` | Listing 3 of the harness paper, the 82-line scaffold used as the agent under test, transcribed from the PDF, with what we observed reading it | Transcribed from the arXiv PDF by the main session; checked to parse as Python |
 | `harness-paper-implications-2026-10-02.md` | Pedro's own analysis of what the harness paper implies, checked claim by claim against the paper and set against our later research | Checked by the main session against the HTML text and the PDF |
 | `paper-verification-economics.md` | arXiv 2609.04681, a synthesis proposing Production-Qualified Change, the Verification Tax and an SDLC control plane. Prior art for our framing | Read end to end by the main session |
 | `paper-governed-ai-engineering.md` | arXiv 2606.22484, a governance framework with three human-oversight tiers for agent-written code in regulated domains | Read end to end from the full text |

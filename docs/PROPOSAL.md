@@ -229,7 +229,7 @@ If the first three do not improve for a design partner, the product has made del
 
 | Stage | What it is | Continue only if |
 |---|---|---|
-| 1. Prototype | One day. The same tasks run with and without the evidence layer, and each verdict compared with hidden acceptance checks | The layer's false-pass rate is lower than both the agent's own claim and a separate evaluator's; every planted flaw is rejected; no unsafe action runs under the layer |
+| 1. Prototype | One day. The same tasks run with and without the evidence layer, and each verdict compared with hidden acceptance checks | The layer's false-pass rate is lower than both the agent's own claim and a separate evaluator's; every planted flaw is rejected; the layer accepts no change that contains an unsafe action |
 | 2. Measurement pilot | One or two design partners, on their own repository and tasks. A report on the rate and cost of production-qualified changes | At least one partner says the report changed a decision they were about to make |
 | 3. Build | The gate, as a product | Stage 2 cleared |
 

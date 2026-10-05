@@ -11,7 +11,8 @@
 - The plan exists and ten working decisions are recorded in it (`PLAN.md` §2).
 - Research is done and recorded in `docs/research/`: the first pass, the full re-reads, and three sets of Pedro's own material checked against their sources (his Notion notes, his web research notes, and his analysis of the harness paper), with four papers read in full along the way.
 - The thesis is decided (§2 below): the evidence layer, pursued as a three-stage probe that ends in Build or Wait.
-- The first two sections of the proposal and the system design are written and reviewed. Nothing is built.
+- The first two sections of the proposal and the system design are written and reviewed.
+- The prototype (plan phase P5) is scoped slice by slice in §3.4, with three decisions taken on it (T20 to T22). Nothing is built. Pedro gave the word to start on 2026-10-05.
 
 ## 2. The thesis
 
@@ -59,7 +60,8 @@ Status values: Done, In review, Not started, Blocked.
 | Thesis discussion: posture, thesis, buyer, differentiation, exclusions, kill criteria and prototype scope decided | `PLAN.md` §2.1, `JOURNAL.md` ADR-014 to ADR-016 | The commit after `5b7fef5` | 2026-10-05 |
 | Evidence verification: ledger rows E-01 to E-29 re-checked against raw sources | `docs/research/EVIDENCE.md` | The commit after `1e3d2c5` | 2026-10-05 |
 | Problem and product: proposal sections 1 and 2, reviewed by Pedro and reframed as evidence-driven development | `docs/PROPOSAL.md` | `fa96c11`, `cc90fad` | 2026-10-05 |
-| System design, reviewed by Pedro with five decisions (T15 to T19) | `docs/DESIGN.md` | The commit after `cc90fad` | 2026-10-05 |
+| System design, reviewed by Pedro with five decisions (T15 to T19) | `docs/DESIGN.md` | `0c10417` | 2026-10-05 |
+| Preparation for the prototype: keys confirmed, scaffold listing recorded, three decisions (T20 to T22), slices scoped | `docs/research/harness-scaffold-listing.md`, `PLAN.md` §2.1 and §7, `JOURNAL.md` ADR-021, §3.4 below | Not yet committed | 2026-10-05 |
 
 ### 3.2 In review
 
@@ -72,12 +74,78 @@ These are the remaining phases from `PLAN.md` §6. With the thesis decided, they
 
 | Phase | Output | Exit check (from the plan) | Depends on |
 |---|---|---|---|
-| Prototype | `prototype/` | Each slice runs end to end on the fixture repo | Nothing; can start on Pedro's word |
+| Prototype (P5) | `prototype/`, in the slices of §3.4 | Each slice runs end to end on the fixture repo | Started 2026-10-05 |
 | Bonus: evaluation path for an LLM application | One small task verified by an evaluation, end to end | Three-way result reported; hidden cases never shown to the agent; any model scorer's agreement with labels stated | Prototype; time remaining |
 | Measurement | `docs/RESULTS.md`, `prototype/runs/` | Results table generated from run files, limitations stated, spend within the 50 USD cap | Prototype |
 | Next enhancements: counterexample search; decision-model judge and recalibration test | A search for hidden behavioural differences that produces executable failing tests; a fourth verdict source in the evaluation; and a measurement of how far the prototype's own outcomes improve a classifier's calibration | Reported on false-pass rate, variance, cost and latency beside the other verdict sources; limits stated | First prototype measured; a TypeSafe API key or a local open build |
 | Proposal, design view, CFO message | `PROPOSAL.md` complete; Claude Code artifact; Slidev deck | Recommendation is consistent with the results, including if the hypotheses fail | Measurement; the CFO assumptions (T8) |
 | Build log and final review | `docs/BUILD_LOG.md` | No number without an evidence row; no ASSIST issue unaccounted for | All of the above |
+
+### 3.4 Phase P5, the prototype: scope of each slice
+
+The order is `DESIGN.md` §7.4. One `feat:` commit per slice, after its exit check passes and Pedro confirms. The counts below are choices, not measurements.
+
+**What is ready**
+
+| Item | State |
+|---|---|
+| API keys | Both confirmed on 2026-10-05 by listing models, which spends nothing. `claude-sonnet-5-5` and the GPT-5.4 models are available to them |
+| The scaffold | Listing 3 recorded as published and checked to parse (`docs/research/harness-scaffold-listing.md`). Eight departures are needed around it (ADR-021) |
+| Python | 3.12.9 with `pytest`, `anthropic`, `openai`, `PyYAML` and `python-dotenv` installed |
+| Docker | Running (Rancher Desktop, server 29.5.3), started by Pedro on 2026-10-05 |
+| Model prices | Not yet recorded. Needed as evidence rows before slice 2 (ASSIST-018) |
+
+**Layout**
+
+| Path | Holds | Who can see it |
+|---|---|---|
+| `prototype/fixture/` | A small Python package using only the standard library, with its test suite. The base commit of every task | Agent, gate, ground truth |
+| `prototype/tasks/` | One task description per task, as given to the agent | Agent |
+| `prototype/protected/` | Per task: the contract and the gate's hidden checks. Stands in for the protected branch | Gate only |
+| `prototype/groundtruth/` | Per task: the acceptance checks that decide whether a change was in fact good | Neither agent nor gate |
+| `prototype/planted/`, `prototype/known_good/` | Hand-made changes, as patches | Fed to the gate |
+| `prototype/scaffold/` | The listing, unedited; the adapter; the tool entry point that runs in the container | — |
+| `prototype/gate/` | The verdict runner and its checks | — |
+| `prototype/runner/` | Arms, containers, event log, spend ledger, unsafe-action rules, results table | — |
+| `prototype/runs/` | One directory per run: events, diff, evidence, verdicts, outcome record | Committed in P6 |
+
+**Slices**
+
+| # | Slice | What is built | Exit check | Spend |
+|---|---|---|---|---|
+| 1 | Measurement skeleton | The fixture; the tasks and their ground-truth checks, written before any gate code; the three containers (agent tools, verdict, ground truth); the runner; the event log; the spend ledger with the 50 USD cap; the unsafe-action rules; the results table generated from run files; a fake agent that replays scripted changes | The fake agent's good, bad and crashing changes go through all three arms and produce a results table. A crashed check reads as `error`, never as a pass. The agent's container cannot read `protected/` or `groundtruth/`, cannot reach the network, and holds no API key, each shown by a test. A run that would pass the cap is refused before the call | None |
+| 2 | Loop | The listing with its adapter for Anthropic; tools executed in the container; cost from token counts and recorded prices; limits read as "limit reached" | One ordinary task runs in the bare arm to the end, with every turn in the event log and its cost in the ledger. That cost sets the number of tasks and repeats for slice 5, and Pedro confirms the number | The first paid call |
+| 3 | Gate | The contract format; the verdict of `DESIGN.md` §4.1 in its order; bounded repair attempts in the gated arm, returning only the visible reason; the outcome record as JSON and Markdown | The same task runs in the gated arm. Re-running the verdict on the same commits and contract gives the same record. A check made to crash gives `error` | Small |
+| 4 | Planted flaws and known-good changes | One planted flaw for each way of being wrong the design names, and the known-good changes | Every planted flaw is rejected, each for the reason it was planted. The false-fail count on known-good changes is reported. If a flaw is accepted, that is a result to report, not a check to tune until it passes | None |
+| 5 | The three arms | All tasks, each repeated, in the three arms | All runs complete or stop at the cap, and every one leaves a record | Most of the budget |
+| 6 | Evaluator comparison | An evaluator on a GPT-5.4 model, given the task, the contract's criteria and the change, on a sample of runs | Its verdict sits beside the gate's and the agent's claim for every sampled run | The remainder |
+| 7 | Bonus | One evaluation-path task (`DESIGN.md` §4.2) | As in §3.3 | Only if budget and time remain |
+
+**Size of the task set** (confirmed by Pedro on 2026-10-05; cut at slice 2 if the first paid task shows it does not fit the cap)
+
+| Set | Number | Notes |
+|---|---|---|
+| Ordinary tasks | 6 | Each has behaviour its visible tests do not describe, so that a change can pass them and be wrong |
+| Trap tasks | 5 | One for each failure the design names: a file outside scope, a weakened test, a destructive command, an instruction planted in a repository file, the contract |
+| Repeats per task and arm | 3 | The smallest number that lets "passes every time" differ from "passes once" |
+| Planted flaws | 9 | Out of scope; test weakened; test deleted; test reporter patched (E-75); contract altered; behaviour quietly dropped; new tests that pass on the original code (E-76); a dependency that does not exist; a secret |
+| Known-good changes | 5 | One per ordinary task where possible |
+
+**Rules for the build**
+
+- **Ground truth comes first and stays apart.** The ground-truth checks are written before the gate and are richer than the gate's own. If they were the same checks, the gate's false-pass rate would be zero by construction.
+- **Nothing is tuned after the runs start.** Tasks, ground truth, planted flaws and the unsafe-action rules are fixed at slice 4. A change after that is recorded in the journal with its reason.
+- **Counts beside rates.** With a task set this small some rates will rest on a handful of changes, and a rate may have nothing under it at all (for example, no bad change that the agent claimed was done). Every rate is reported with its counts.
+- **The gated arm tells the agent only what a pipeline would:** the visible checks and the first reason for a failure. Never the hidden checks or the ground truth.
+- **The cap is enforced before a call is made,** from a ledger on disk that survives a restart.
+
+**What could stop the phase**
+
+| Risk | Response |
+|---|---|
+| Sonnet 5.5 gets every task right in every arm, so there is no gap to measure | Planted flaws and known-good changes still give the gate's two error rates. The comparison with the agent's claim is then reported as not measurable on this task set, which weakens the first kill criterion; Pedro decides whether to add harder tasks or report as is |
+| The first paid task shows the proposed set does not fit the cap | Cut repeats last. Cut ordinary tasks first, then the bonus |
+| Containers add more time than the timebox allows | The start-up delay is measured in slice 1, before any paid run |
 
 ## 4. Working rules in force
 
@@ -111,3 +179,6 @@ This is the only copy of the register (decided 2026-10-05). `PLAN.md` §10 point
 | ASSIST-014 | Bloomberg, Forbes, OpenAI's site, EUR-Lex and SEC full-text search block automated download. Items resting on them use an equivalent primary source, an archive capture, or are marked secondary | Open, not blocking |
 | ASSIST-015 | The decision-model enhancement needs a TypeSafe API key or a local open build; neither is in place | Open, not blocking the first prototype |
 | ASSIST-016 | The label "evidence-driven development" has not been searched in trademark registers; the registers could not be queried automatically | Open; needs a manual search before any public use |
+| ASSIST-017 | The Docker daemon is not running on this machine (Rancher Desktop is installed). Every prototype run needs it (T21) | Closed 2026-10-05: started by Pedro |
+| ASSIST-018 | The prices of the models used are not in `EVIDENCE.md`. The prototype computes cost from token counts and published prices, and no price may be assumed | Open; blocks the first paid call, not slice 1 |
+| ASSIST-019 | `PLAN.md` §8 predates `DESIGN.md` §6 and still differs from it on some rows (model routing by task, context management, orchestration, the redline candidates). Only the tool-execution row was brought into line, because T20 decided it | Open, not blocking; Pedro to say whether §8 is rewritten or replaced by a pointer to the design |

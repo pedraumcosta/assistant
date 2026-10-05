@@ -55,6 +55,7 @@ Two kinds of entry:
 - Pedro proposed reframing the product for its market: not a plug-in for an assistant but a tool for how a mature software team runs delivery, under a banner with a future (eval-driven development, spec-driven development, or a factory). After discussion he adopted "evidence-driven development" (ADR-019). A check of existing uses of that label was started.
 - System design drafted (`docs/DESIGN.md`) at Pedro's request, following PLAN §7 and §8 and his own design method and checklists. A sub-agent read the notes he pointed to and returned their ideas as plain statements; the design restates them in its own words and cites no private material. His unpublished measurements were left out.
 - Pedro reviewed the system design and decided its five open points (ADR-020), asking that the prototype be kept very simple.
+- Preparation for the prototype (plan phase P5). Both API keys confirmed by listing models, which spends nothing. The scaffold's listing was not in the repository: it was taken from the arXiv PDF and recorded (`docs/research/harness-scaffold-listing.md`). Pedro decided three points (ADR-021). Plan §7.2 revised to the build order of the design; each slice scoped with an exit check in `ROADMAP.md` §3.4. No code written.
 
 **Deviations and corrections**
 - **First-pass reading was truncated without warning.** The summarising fetch cut three long articles part-way and reported one as near-complete. Found when Pedro challenged the coverage. Fix: download the full text, check it reaches the final section, read end to end.
@@ -79,6 +80,10 @@ Two kinds of entry:
 - **One committed file broke the new citation rule.** The digest of Pedro's notes named his private files and carried untraced figures. It was replaced with a list of his principles.
 - **Nine early ledger rows were not exact.** They had been gathered through a summarising fetch. Corrections that changed meaning: a security quotation applied to two models, not to all newer models; a billing change was an announcement with an exception for annual subscribers; an incident date was not in its source; one repository reported as archived is read-only. The plan carried three of these and was corrected.
 - **One figure in Pedro's notes is arithmetically wrong and was not used:** a 90% single-attempt success rate gives about 43% over eight attempts, not 57%.
+- **A kill criterion could not have been met as worded.** "No unsafe action runs in the gated arm" assumed a policy on tool calls, which the thesis decisions exclude and the design does not have. The gate runs after the agent stops. Found while scoping the prototype; reworded by Pedro's decision (ADR-021).
+- **The plan and the design disagreed on the prototype's build order.** The plan still listed a policy slice and started with the loop; the design starts with a measurement skeleton and a fake agent. The plan was brought into line.
+- **The scaffold does not run as published.** Read closely, it lacks tool parameter schemas, and its turn and cost limits surface as a `RuntimeError`, not as a stop. Recorded with the listing; neither is fixed in the listing itself.
+- **Pedro's copy of the harness paper was not on the machine** (a cloud placeholder of zero bytes). The public arXiv copy was used.
 - **A push failed** for lack of git credentials and was retried through the GitHub CLI's login (ASSIST-011).
 
 ---
@@ -322,7 +327,7 @@ Two kinds of entry:
 2. a measurement pilot with one or two design partners, on their own repository and tasks;
 3. a build of the gate, only if the pilot clears thresholds set in advance.
 
-**Kill criteria.** After the prototype, continue only if the gate's false-pass rate is lower than both comparators, every planted flaw is rejected, and no unsafe action runs in the gated arm. After the pilot, continue only if at least one design partner says the report changed a decision they were about to make. Otherwise the recommendation is Wait, with a review date.
+**Kill criteria.** After the prototype, continue only if the gate's false-pass rate is lower than both comparators, every planted flaw is rejected, and no unsafe action runs in the gated arm. *(The last condition was reworded on 2026-10-05; see ADR-021.)* After the pilot, continue only if at least one design partner says the report changed a decision they were about to make. Otherwise the recommendation is Wait, with a review date.
 
 **Rationale.**
 - The idea, the metrics and the risk tiering are published; a funded competitor owns the adjacent ground; a check's value moves with each model release; we have no model, customers or vertical. That rules out a straight Build.
@@ -485,3 +490,32 @@ Each line is the decision, then why.
 **The prototype is kept very simple.** It builds none of the first process, the protected branch or the hooks, and the evaluation path only as a bonus. A directory outside the agent's working copy stands in for the protected branch. *Why:* one day, and one question to answer.
 
 **Diagrams** stay in Mermaid for now.
+
+### ADR-021 — Prototype: what "unsafe" means, how the agent is confined, which models, and the departures from the listing
+
+| | |
+|---|---|
+| Status | Decided 2026-10-05 |
+| Plan reference | `PLAN.md` §2.1, T20 to T22; §7.1 and §7.2 |
+
+**The kill criterion on safety is reworded: the gate accepts no change that contains an unsafe action.** Unsafe actions attempted are counted per arm from the event log, as a measurement, by rules written before any run. *Why:* the gate runs after the author stops and cannot prevent an action. As first worded ("no unsafe action runs in the gated arm") the criterion needed a policy on tool calls, which is excluded (ADR-016) and is the ground of an existing open-source layer (ASSIST-010). *Rejected:* a thin policy in the gated arm, which would make that arm test two things at once; a fourth arm with gate and policy, which costs runs under the cap. *What this gives up:* the prototype says nothing about preventing harm while an agent works. That stays the job of the team's environment.
+
+**Every run is confined in a Docker container.** Only that run's copy of the fixture is mounted; there is no network; no API key is in its environment. The verdict and the ground-truth checks run in containers of their own, because they execute code the agent wrote. *Why:* the listing runs shell commands on the host with no restriction, and the trap tasks invite destructive commands and planted instructions. A separate copy of the repository confines neither. *Rejected:* macOS `sandbox-exec`, confirmed to work on this machine but less portable; the isolated copy alone. *Cost accepted:* set-up time, and a start-up delay on each command. The Docker daemon was not running when this was decided (ASSIST-017).
+
+**Models.** The agent under test is Claude Sonnet 5.5 (`claude-sonnet-5-5`). The evaluator comparator is an OpenAI GPT-5.4 model, on a sample of runs, the exact model fixed when that slice is built. *Why:* Sonnet is what a team would run an agent on day to day. *Rejected:* Opus 5.5, which may leave no gap to measure on small tasks and allows fewest repeats; Haiku 4.5, where a poor result could reflect the minimal tool interface and not the gate.
+
+**Departures from the listing.** The listing is kept unedited in `prototype/` and in `docs/research/harness-scaffold-listing.md`. Everything below is added around it and applies to all three arms alike.
+
+| Departure | Why it is needed |
+|---|---|
+| A provider adapter that implements the listing's `Model` protocol, translates its message format, and supplies a parameter schema for each tool | As published, the tool schemas carry a name only, and neither provider accepts the listing's message format directly |
+| The adapter reports cost from the provider's token counts and its published prices, recorded as evidence rows before the first paid run | The loop's cost cap reads a `cost` field the adapter must fill; no price is assumed |
+| The four tool functions run inside the run's container, unedited; the loop stays on the host and holds the API key | The listing has no sandbox; the model call needs the network and the tools must not have it |
+| Context discovery runs inside the container | As published it reads `AGENTS.md` from every parent directory of the host |
+| The runner treats `RuntimeError: coroutine raised StopIteration` as "limit reached" | The listing's limits raise `StopIteration` inside a coroutine, which Python converts; confirmed on Python 3.12.9 |
+| `max_turns` and `max_cost` are set per run from the contract's budget | Parameters of the listing, not changes to it |
+| Every model response and tool result is written to the event log | The listing keeps no record |
+| The task text in every arm asks for a last line stating whether the work is done; a run that returns without one counts as a claim of done | The listing has no notion of done, and the agent's own claim is a verdict source we compare |
+
+**Beyond this exercise.** The product ships no loop and no container; it attaches to the team's pipeline, where the runner's isolation is the team's.
+

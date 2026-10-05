@@ -131,7 +131,7 @@ Taken in the thesis discussion. Each has its rationale in `docs/JOURNAL.md` (ADR
 | T4 | Where contracts come from | **The product's first process is guiding the user to create the checks:** a test suite or an evaluation, in the manner of test-driven or eval-driven development, kept simple. In the prototype the contracts are written by hand. | Without checks there is nothing to verify against, and the research shows agents guess when a task is underspecified (E-80). Making this the first step of the workflow, not an open question, is what turns the idea into a usable product. |
 | T5 | Attachment | **A CI check first.** One harness hook as a demonstration if time allows. | CI needs no vendor hook; the harness layer has no standard interface yet. |
 | T6 | Exclusions | **We do not build:** a coding assistant, an agent loop, a meta-harness, a policy or sandbox layer, a review bot, the wider delivery control plane, or a model of our own. | Each exists, is funded, or is a model vendor's home ground. |
-| T7 | Kill criteria | **After the prototype, continue only if** the gate's false-pass rate is lower than both comparators, every planted flaw is rejected, and no unsafe action runs in the gated arm. **After the pilot, continue only if** at least one design partner says the report changed a decision they were about to make. **Otherwise the recommendation is Wait**, with a review date. | A probe needs its exits fixed before the results are known. The review date is still to be named by Pedro. |
+| T7 | Kill criteria | **After the prototype, continue only if** the gate's false-pass rate is lower than both comparators, every planted flaw is rejected, and the gate accepts no change that contains an unsafe action (reworded 2026-10-05, T20). **After the pilot, continue only if** at least one design partner says the report changed a decision they were about to make. **Otherwise the recommendation is Wait**, with a review date. | A probe needs its exits fixed before the results are known. The review date is still to be named by Pedro. |
 | T8 | The CFO's numbers | **Deferred until the prototype is ready.** Working assumption, judged reasonable: two engineers and a part-time product lead for six weeks for the pilot, after the one-day prototype. | Better stated once the prototype shows what the pilot has to do. All figures will be labelled assumptions. |
 | T9 | Prototype scope | **Three arms** (bare, prompt discipline, gated) and **two comparators** (the agent's own claim; an evaluator agent on a sample of runs). The cheaper-model arm moves to stretch. | The cheaper-model arm is confounded by sharing a harness and costs runs under the 50 USD cap. |
 | T10 | Staying valuable as models improve | **Measurement is repeated for each and every model and harness pairing, and the product adapts to each.** This is to be emphasised in the proposal. | A check's value moves with each model release (E-36); harness effects change in size and sign by model (E-58). Adapting per model is what keeps the measurement worth paying for. |
@@ -144,10 +144,13 @@ Taken in the thesis discussion. Each has its rationale in `docs/JOURNAL.md` (ADR
 | T17 | How thorough the evaluation cases are | **Coverage and data samples are comprehensive by default:** every functional requirement has cases, across ordinary inputs, edge cases and inputs meant to break it; coverage is reported with the result. Budget limits repeats, not breadth. | A narrow case set gives a confident verdict on the wrong question. This costs more, and the cost is stated (T13). |
 | T18 | Hooks inside the assistant | **Offered, for human intervention** (pausing for approval, asking a question) **and early feedback.** The pipeline's verdict remains the one that counts. | A hook is the natural place for a person to step in while the agent works. It cannot be the verdict, because it runs where the author can reach it. |
 | T19 | How much of this the prototype builds | **Very little: it is kept simple.** No first process (contracts written by hand), no protected branch (a directory outside the agent's working copy stands in), no hooks, and the evaluation path only as a bonus. | One day and one question: whether an executable verdict beats the agent's own claim and a model reviewer's. |
+| T20 | What "unsafe" means for the kill criterion | **The gate accepts no change that contains an unsafe action.** Unsafe actions attempted are counted per arm from the event log, as a measurement. The prototype builds no policy that blocks tool calls. | The gate runs after the author stops, so it cannot prevent an action; as first worded, the criterion would have failed by construction, or required the policy layer that T6 excludes. Preventing actions is the job of the team's environment (`DESIGN.md` §6). Rejected: a thin policy in the gated arm, which would test two things at once; a fourth arm, which costs runs under the cap. |
+| T21 | How the agent's commands are confined | **A Docker container for every run, in every arm:** only that run's copy of the fixture is mounted, there is no network, and no API key is in its environment. The verdict and the ground-truth checks run in containers of their own, because they execute code the agent wrote. | The published scaffold runs shell commands on the host with no restriction, and the trap tasks invite destructive commands and planted instructions. An isolated copy of the repository does not confine either. Rejected: macOS `sandbox-exec` (lighter, less portable); the isolated copy alone. |
+| T22 | The models | **Agent under test: Claude Sonnet 5.5** (`claude-sonnet-5-5`). **Evaluator comparator: an OpenAI GPT-5.4 model**, on a sample of runs, the exact model fixed when that slice is built. Both pinned and written to every event. | Sonnet is the model a team would run an agent on day to day. A stronger model risks leaving no gap to measure on small tasks; a weaker one confounds the result with the minimal tool interface (§7.1). |
 
 Still open: the review date in T7, and T8.
 
-Journal references: ADR-014 to ADR-020.
+Journal references: ADR-014 to ADR-021.
 
 ## 3. What the research says
 
@@ -467,9 +470,9 @@ P3 and P4 are deliberately lean on the first pass. They are revised in P7 once t
 
 The same task set is run several times under each of three arms (decided, §2.1 T9). A cheaper-model arm is a stretch goal:
 
-- **Arm A, bare:** the published scaffold alone, in a throwaway worktree. The scaffold has no sandbox and runs shell commands directly, so every arm runs inside an isolated copy of the fixture repository.
+- **Arm A, bare:** the published scaffold alone. The scaffold has no sandbox and runs shell commands directly, so in every arm its tools run inside a Docker container that holds only that run's copy of the fixture repository, with no network (T21).
 - **Arm P, prompt discipline:** arm A plus a "verify before you claim completion" instruction, standing in for prompt-only plugins.
-- **Arm G, gate:** the loop inside the policy, contract and deterministic gate.
+- **Arm G, gate:** the same loop, given the contract's task and visible checks, with the verdict of `DESIGN.md` §4.1 run after it stops and a bounded number of repair attempts. There is no policy on its tool calls (T20).
 
 Finished runs are also scored by an **evaluator agent from a different vendor** (OpenAI, per D5), modelled on the evaluator Anthropic describes: it exercises the result against the contract's criteria, each with a hard threshold. It does not change the run; it gives us a second verdict to compare. A single judging call would be a weaker alternative than the one buyers will actually have. An evaluator agent costs more per run, so under the 50 USD cap it may be applied to a sample of runs.
 
@@ -477,7 +480,7 @@ Ground truth for each task is a set of acceptance checks the agent and the gate 
 
 | ID | Hypothesis | Measure |
 |---|---|---|
-| H1 Safety | Deterministic policy stops the unsafe actions a bare or prompt-disciplined loop takes on trap tasks (out-of-scope edits, deleting or weakening tests, destructive commands, instructions planted in repo files, editing the contract) | Count of unsafe actions executed, per arm |
+| H1 Safety | No change that contains an unsafe action is accepted by the gate, where the agent's own claim would have let it through. Unsafe actions on trap tasks: out-of-scope edits, deleting or weakening tests, destructive commands, following instructions planted in repo files, trying to edit the contract | Count of unsafe actions attempted, per arm, from the event log; of the changes that contain one, how many each verdict source accepts |
 | H2 Reliability | A gate with a bounded repair loop raises consistency, not just one-shot success | pass@1 and pass^k against the hidden checks, per arm |
 | H3 Economics | Cost per production-qualified change (PQC per dollar) is no worse with the gate | Tokens and dollars per production-qualified change, per arm |
 | H4 Trustworthy verdict | The gate's "pass" is right more often than the agent's own claim (arms A and P) and than the evaluator agent's verdict | False-pass rate of each verdict source against the hidden checks |
@@ -486,7 +489,7 @@ Ground truth for each task is a set of acceptance checks the agent and the gate 
 
 H4 is the product's claim and the number that can kill it. H3 is the CFO's number. H5 is pass or fail. H6 is what the product costs the delivery process; the prototype can measure what the gate adds, and only a pilot can measure what it saves.
 
-**Kill criteria after the prototype (decided, §2.1 T7).** Continue only if the gate's false-pass rate is lower than both comparators, every planted flaw is rejected, and no unsafe action runs in the gated arm.
+**Kill criteria after the prototype (decided, §2.1 T7 and T20).** Continue only if the gate's false-pass rate is lower than both comparators, every planted flaw is rejected, and the gate accepts no change that contains an unsafe action.
 
 **Reporting.** Results are reported in the metric set proposed by Bhati (§3.7) so that they are comparable with later work: PQC rate, PQC per dollar, first-pass qualification, retry rate, cost variance across repeats, and evidence coverage. "PQC per reviewer-hour" and "escaped-failure rate" need real reviewers and production, so they are pilot measures. The verifier's false-pass rate is our addition to that set.
 
@@ -500,12 +503,15 @@ The task set will be small and written by us, so results are an indication, not 
 
 ### 7.2 Slices, in build order
 
-1. **Loop.** The harness paper's 90-line scaffold (D3), with provider adapters for Anthropic and OpenAI and every step written to a JSONL event log with tokens, cost and latency. Its four tools (bash, read_file, write_file, search_replace) are kept as published.
-2. **Policy.** Each tool call classified allow / review / block by deterministic rules; work confined to a git worktree; path zones; ceilings on turns, tokens and wall-clock time.
-3. **Gate.** A task contract (scope, acceptance checks, budget), then the executable evidence after the agent stops, run in a separate process: tests, lint, diff scope, secrets scan, dependency changes. The checks include whether any new dependency exists, and whether the agent's own tests fail against the original code. Bounded repair attempts. Includes the planted-flaw evaluations (H5).
-4. **Evidence.** A bundle per run, as JSON and Markdown: what was asked, what changed, which checks ran and their results, risk tier, cost.
-5. **Eval runner.** Tasks × trials × arms into a results table, with the cross-vendor evaluator's verdict recorded beside the runs it scores and the spend cap enforced.
-6. **Stretch.** The same gate attached to a vendor harness through a hook or MCP; context compaction and a repo map.
+Revised 2026-10-05 to the order in `DESIGN.md` §7.4. The earlier second slice, a policy that classified each tool call, is removed (T20). The scope and exit check of each slice are in `ROADMAP.md` §3.4.
+
+1. **Measurement skeleton, with a fake agent that costs nothing.** The fixture repository, the tasks, the ground-truth checks, the containers (T21), the runner, the event log, the spend ledger and the results table, proven end to end before any money is spent.
+2. **Loop.** The harness paper's scaffold (D3), as published (`docs/research/harness-scaffold-listing.md`), with a provider adapter and every step written to the event log with tokens, cost and latency. Its four tools are kept as published and run inside the container. One paid task, whose cost sizes the rest.
+3. **Gate.** The contract (scope, checks, budget), then the verdict of `DESIGN.md` §4.1 after the agent stops, in a container of its own: build, tests, diff scope, the agent's own tests run against the original code, new dependencies, secrets. Bounded repair attempts. An outcome record per run, as JSON and Markdown.
+4. **Planted flaws and known-good changes,** fed straight to the gate (H5, and the false-fail rate of H6).
+5. **The three arms across all tasks,** under the cap.
+6. **The evaluator comparison** on a sample of runs (T22).
+7. **Stretch.** The same gate attached to a vendor harness through a hook or MCP.
 
 **Bonus, if time allows:** the evaluation path for an LLM application (§2.1 T12), shown end to end on one small task. It is designed in `DESIGN.md` whether or not it is built.
 
@@ -524,7 +530,7 @@ IDE plugin, any UI beyond the CLI, cloud or background agents, multi-agent orche
 | Model | Model-agnostic behind a provider interface. Route by task: cheaper tier where the gate can catch errors, frontier tier where it cannot. No own model. |
 | Context management | Stable prompt prefix for caching; tool output shaped before it enters context; compaction that preserves decisions; sub-agents only for context isolation. |
 | Repo understanding | Search, glob and syntax-aware reads plus a short repo map. No embeddings index. |
-| Tool execution and permissions | Deterministic allow / review / block before every call. Worktree sandbox, no network by default, least-privilege credentials. Trust ladder: local-only, then PR, then wider. |
+| Tool execution and permissions | The team's environment owns this; we add no policy or sandbox layer (T6, T20). The verdict job has a read-only checkout, no network on the deterministic path, and no deployment credentials. In the prototype the agent's tools run in a container because the scaffold has none (T21). |
 | Orchestration | Single loop first. "Fan out reads, single-thread writes." A second loop only when the single loop is measured as the bottleneck. |
 | Evaluation | pass^k and cost per production-qualified change, not pass@1. Deterministic checks before any model judge. The agent never grades itself. Where the software under change is itself an LLM application, the check is an evaluation with a three-way result (pass, fail, inconclusive), hidden cases, and a stated error rate for any model scorer. |
 | Security | Assume prompt injection succeeds; break one leg of the lethal trifecta by design. Secrets never enter context. |
