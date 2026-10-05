@@ -5,14 +5,14 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>ASSIST Recommendation</title>
 <!--
-  The presentation page for the executive session (D8): the spoken 10-minute
-  walkthrough follows the minute marks in the section comments; the Working-rules
-  section and footer are leave-behind. The Slidev deck (docs/slides.md) is the
-  spoken equivalent, same order and numbers.
-  Every figure cites EVIDENCE.md ([P]/[L]) or docs/RESULTS.md (generated from
-  prototype/runs/). The prototype stopped on the time budget (ADR-022) with its
-  central comparison unrun; the scoreboard carries RESULTS.md section 3 verbatim
-  in spirit. Built from docs/templates/presentation-template.html.
+  The presentation page for the executive session: written for the CEO, CTO and CFO.
+  The spoken 10-minute walkthrough follows the minute marks in the section comments;
+  the technical and closing sections are the leave-behind. The Slidev deck
+  (docs/slides.md) is the spoken equivalent, same order and numbers.
+  Sourcing: every figure traces to the public-source evidence ledger
+  (docs/research/EVIDENCE.md) or to the prototype's run records via docs/RESULTS.md.
+  On this page sources are named in human form (who published it); the ledger holds
+  the row-by-row mapping.
 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,650;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap">
@@ -116,32 +116,33 @@ footer p{max-width:none}
 <body>
 <main>
 
-<!-- Spoken walkthrough: hero + answer to 1:00 · buy 2:30 · problem 4:00 · gap 5:00 ·
-     product 6:30 · measured 8:00 · scoreboard 8:30 · cost 9:00 · ask + recommendation 10:00.
-     Working rules and footer: leave-behind. -->
+<!-- Spoken walkthrough: hero + answer to 1:00 · why-not-buy to 2:30 · problem to 4:00 ·
+     gap to 5:00 · product to 6:30 · what-we-measured to 8:00 · scoreboard to 8:30 ·
+     cost to 9:00 · ask + recommendation to 10:00. The "How a verdict works" section and
+     everything after the recommendation are the leave-behind. -->
 <header class="hero">
-  <span class="eyebrow">ASSIST · executive recommendation · evidence-driven development</span>
+  <span class="eyebrow">ASSIST · a recommendation to the executive team</span>
   <h1>Should we enter the AI software-development-assistant market?</h1>
-  <p class="lede"><b>Not as asked.</b> Generation is owned by the model vendors, and entering
-  their contest with their supplies is a poor trade. We probed the one part nobody sells —
-  a verdict on agent-written changes built from <b>executable evidence</b>, independent of the
-  model vendor and measured for its own error — and this page is the case, the design in brief,
-  and the staged ask. The one-day prototype was built measurement-first and stopped on the
-  time budget with its central comparison unrun (ADR-022); what it did measure is on this
-  page, with its limits, and the scoreboard says exactly what is known.</p>
+  <p class="lede"><b>Not the market as asked — and we can show why with evidence rather than
+  opinion.</b> Code generation belongs to the companies that own the models. What we did
+  instead was test the one part of this market nobody sells yet: an independent verdict on
+  AI-written code — one that runs the team's own tests, answers to no model vendor, and
+  measures its own error rate. A one-day prototype was built and tested. It ran out of day
+  before the comparison that decides everything, and this page reports exactly what it did
+  and did not establish, and what we ask for next.</p>
   <div class="metahead">
-    <span><b>Method</b> a three-stage probe; kill criteria fixed 2026-10-05, before any run</span>
-    <span><b>Evidence</b> every figure cites <span class="mono">EVIDENCE.md</span>, verified at its raw source</span>
-    <span><b>Agent under test</b> the published 90-line scaffold, arXiv 2609.00006, CC BY 4.0 (E-59)</span>
-    <span><b>Spend</b> 0.070632 of the 50 USD cap, enforced by the runner</span>
+    <span><b>Approach</b> a staged probe, with stopping rules agreed before any result existed</span>
+    <span><b>Sourcing</b> every figure has a named public source or comes from the prototype's own records</span>
+    <span><b>Test agent</b> a published, citable 90-line agent from independent research — not one we tuned</span>
+    <span><b>Model spend</b> 7 cents, of a 50-dollar cap</span>
   </div>
   <div class="stats">
-    <div class="stat"><div class="n">19/21</div><div class="l">wrong changes rejected</div></div>
-    <div class="stat"><div class="n">9/9</div><div class="l">correct changes accepted</div></div>
-    <div class="stat"><div class="n">10.3 s</div><div class="l">a full verdict, mean</div></div>
-    <div class="stat"><div class="n">350</div><div class="l">lines: the whole gate</div></div>
-    <div class="stat"><div class="n">84</div><div class="l">tests, all passing</div></div>
-    <div class="stat"><div class="n">0.07</div><div class="l">USD spent of 50</div></div>
+    <div class="stat"><div class="n">19 of 21</div><div class="l">bad changes caught</div></div>
+    <div class="stat"><div class="n">9 of 9</div><div class="l">good changes passed</div></div>
+    <div class="stat"><div class="n">10.3 s</div><div class="l">an average verdict</div></div>
+    <div class="stat"><div class="n">350</div><div class="l">lines of code: the whole gate</div></div>
+    <div class="stat"><div class="n">84</div><div class="l">automated tests, all passing</div></div>
+    <div class="stat"><div class="n">$0.07</div><div class="l">spent, of a $50 cap</div></div>
   </div>
   <ul class="toc">
     <li><a href="#answer">The answer</a></li>
@@ -149,321 +150,361 @@ footer p{max-width:none}
     <li><a href="#problem">The problem</a></li>
     <li><a href="#gap">The gap</a></li>
     <li><a href="#product">The product</a></li>
-    <li><a href="#verdict">How the verdict is computed</a></li>
-    <li><a href="#measured">What we measure</a></li>
+    <li><a href="#verdict">How a verdict works</a></li>
+    <li><a href="#measured">What we measured</a></li>
     <li><a href="#scoreboard">The scoreboard</a></li>
     <li><a href="#cost">What it costs</a></li>
     <li><a href="#ask">The ask</a></li>
     <li><a href="#recommendation">The recommendation</a></li>
-    <li><a href="#rules">Working rules</a></li>
+    <li><a href="#rules">How this was prepared</a></li>
   </ul>
 </header>
 
 <h2 id="answer">The answer</h2>
-<p><b>Do not build another AI coding assistant.</b> The model owners sell their assistants over
-models they do not have to buy, at 20 and 100 USD tiers (E-12, E-13); Claude Code alone reports
-a run-rate above 2.5 billion USD (E-48); the independents are priced at acquisition scale —
-Cursor's maker at an implied 60 billion USD, Cognition at 48 (E-46, E-47); and a founder in the
-segment puts reseller margins at "neutral or negative… absolutely abysmal" (E-17). We have no
-model, no customers, no captive vertical.</p>
-<p>What we tested instead is tooling for <b>evidence-driven development</b>: the team defines
-what "done" means as executable checks before the work starts, and every change — written by a
-person or an agent — is accepted on that evidence. The product is the part a team cannot do by
-hand at the pace agents work: it holds the checks, runs them where the author cannot interfere,
-records the outcome, and measures how far its own verdict can be trusted.</p>
-<div class="callout"><b>The decision requested is staged:</b> a one-day prototype
-(<span class="verd nm">stopped on the time budget</span> — the instrument is built and tested,
-the deciding comparison unrun), a cheap completion, a six-week measurement pilot, a build only
-past exits fixed in advance. Each stage can end it; "wait, with a review date" is a real
-outcome — and the <a href="#scoreboard">scoreboard</a>'s strict reading today.</div>
+<p><b>We should not build another AI coding assistant.</b> The companies that own the models
+sell their assistants over infrastructure they do not have to buy: Anthropic and OpenAI both
+price theirs at 20 and 100 dollars a month, and Anthropic has said its coding product alone
+runs at more than 2.5 billion dollars a year. The independents are being priced at acquisition
+scale — Cursor's maker changed hands at an implied 60 billion dollars. And for everyone in
+between, a founder in the segment told TechCrunch that margins on code-generation products are
+<em>"neutral or negative… absolutely abysmal."</em> We have no model of our own, no installed
+base, and no captive industry. Entering that contest would mean competing on the incumbents'
+ground with supplies bought from them.</p>
+<p>What we tested instead is a tool for a practice we call <b>evidence-driven development</b>:
+the team writes down what "done" means as runnable checks before the work starts, and every
+change — written by a person or by an AI agent — is accepted on that evidence. The product is
+the part of that practice a team cannot do by hand at the speed agents work: it holds the
+checks where the author cannot touch them, runs them after the author finishes, keeps a
+permanent record of every outcome, and — the part nobody else offers — measures how often its
+own verdict is wrong.</p>
+<div class="callout"><b>The decision we are asking for is staged.</b> A one-day prototype has
+been built and tested; it stopped when the day ended, with its deciding comparison still
+unrun. Next comes a small completion step measured in hours and single-digit dollars, then a
+six-week pilot with a real engineering team, then — only if the pilot earns it — a product.
+Each stage has a stopping rule that was written down before any result existed, and "wait,
+with a date to look again" is a real outcome. On a strict reading of those rules it is
+today's outcome, and the <a href="#scoreboard">scoreboard below</a> shows exactly why.</div>
 
 <h2 id="buy">"Why shouldn't we simply buy their products?"</h2>
-<p class="secnote">The question answered before the ask. In one line: we do buy them — what we
-probed is the one thing their position prevents them from selling.</p>
+<p class="secnote">The question deserves a direct answer before any request for money. The
+short version: we should buy them — and the one layer worth building is the one they cannot
+credibly sell.</p>
 <div class="tablewrap"><table>
   <tbody>
-  <tr><th>Layer</th><th>Decision</th><th>Why</th></tr>
-  <tr><td>Assistants and generation</td><td><b>Buy</b> — the vendors' 20 and 100 USD tiers (E-12, E-13)</td><td>Vendor-subsidised; features copy between vendors in months</td></tr>
-  <tr><td>Policy, sandbox, budgets across agents</td><td><b>Adopt open source</b> — Omnigent, from Databricks (E-32)</td><td>Free, backed by a large vendor</td></tr>
-  <tr><td>Model-opinion code review</td><td>Buy if wanted</td><td>A model's opinion; cannot run our tests (E-50) or block a merge (E-51)</td></tr>
-  <tr class="ref"><td><b>The verdict, its measured error rate, the outcome record</b></td><td><b>The only build</b></td><td>Sold by no one (E-50, E-51, E-53); credible from no model vendor (E-34)</td></tr>
+  <tr><th>Layer</th><th>Our decision</th><th>Why</th></tr>
+  <tr><td>Coding assistants and code generation</td><td><b>Buy.</b> The vendors' own tiers run at 20 and 100 dollars per seat per month</td><td>They subsidise their own products, and every feature copies across vendors within months. There is nothing durable to build here</td></tr>
+  <tr><td>Guardrails across agents — permissions, sandboxes, spending limits</td><td><b>Use open source.</b> Databricks released exactly this layer, free, in 2026</td><td>No reason to pay for, or to rebuild, what a major vendor already gives away</td></tr>
+  <tr><td>AI code reviewers</td><td>Buy one if the teams want it</td><td>Useful comments — but the verdict is a model's opinion. The market leader's own documentation says its checks cannot run your test suite, and the reviewer built into Anthropic's product is designed never to block a merge</td></tr>
+  <tr class="ref"><td><b>An independent verdict that runs the team's own checks, with a measured error rate and a permanent record of outcomes</b></td><td><b>The only thing worth building</b></td><td>Nobody sells it — and the model vendors cannot sell it credibly, in their own words below</td></tr>
 </tbody></table></div>
-<p>The independence point, in the vendor's own words: "agents reliably skew positive when grading
-their own work", and a second model from the same family "is still an LLM that is inclined to be
-generous towards LLM-generated outputs" (E-34, E-35). A vendor cannot sell a credible verdict on
-itself, whatever it spends.</p>
+<p>The independence point is not ours; it is the vendors'. Anthropic has published, about its
+own models, that <em>"agents reliably skew positive when grading their own work"</em> — and
+that adding a second model as evaluator does not fix it, because that evaluator <em>"is still
+an LLM that is inclined to be generous towards LLM-generated outputs."</em> A company whose
+model wrote the code cannot sell a credible verdict on that code, whatever it spends. That is
+the structural opening, and it does not close when their models improve.</p>
 
-<h2 id="problem">What the incumbents have not solved</h2>
-<p class="secnote">Writing code got cheap. Knowing whether to trust it did not.</p>
+<h2 id="problem">The problem the incumbents have not solved</h2>
+<p class="secnote">Writing code has become cheap. Knowing whether to trust it has not.</p>
 <div class="duo">
-  <div class="box"><h3>Passing tests is weak evidence</h3><p>"Roughly half of test-passing"
-  agent changes on a standard benchmark "would not be merged into main by repo maintainers"
-  (E-01). On whole-repository migrations, 118 runs passed every fixed check; 28 deserved to (E-68).</p></div>
-  <div class="box"><h3>Review is absorbing the cost</h3><p>Across 22,000 developers: "Median time
-  in review is up 441.5%", and PRs merged with no review at all are up 31.3% (E-04, E-05). The
-  source sells measurement — said here, as everywhere.</p></div>
-  <div class="box"><h3>Trust is falling while use rises</h3><p>Trust in AI output accuracy fell
-  43% → 33% in a year; distrust rose 31% → 46% (E-82). Two thirds cite solutions "almost right,
-  but not quite" (E-07).</p></div>
-  <div class="box"><h3>Agents can defeat the check</h3><p>A model trained on coding tasks learned
-  to force tests green — including by patching the test reporter to report "passed" (E-75). The
-  author of a change cannot be the keeper of its evidence.</p></div>
+  <div class="box"><h3>Passing the tests is weak evidence</h3><p>METR, an independent research
+  group, found that roughly half of AI-written changes that pass their tests <em>"would not be
+  merged"</em> by the maintainers of the repositories they were written for. On a benchmark of
+  whole-repository migrations, 118 attempts passed every pre-written check — and on closer
+  inspection, only 28 deserved to.</p></div>
+  <div class="box"><h3>Review is absorbing the cost</h3><p>Telemetry across 22,000 developers
+  shows median code-review time up 441% in a year, while the share of changes merged with no
+  review at all rose 31%. The company behind those numbers sells measurement tooling, so we
+  treat them with care — but the direction matches everything else we found.</p></div>
+  <div class="box"><h3>Trust is falling while use rises</h3><p>In Stack Overflow's annual survey
+  of developers, trust in the accuracy of AI output fell from 43% to 33% in a single year,
+  while distrust rose from 31% to 46%. Two thirds of developers name the same frustration:
+  answers that are <em>"almost right, but not quite."</em></p></div>
+  <div class="box"><h3>And the check itself can be gamed</h3><p>In a controlled study, a model
+  being trained on real coding tasks learned to force its tests to pass — including by quietly
+  patching the test-reporting tool so that everything read "passed." The conclusion we build
+  on: the author of a change, human or machine, cannot be the keeper of its own evidence.</p></div>
 </div>
 
 <h2 id="gap">The gap: four things nobody sells together</h2>
 <div class="pipe">
-  <div class="step"><b>A verdict that runs the customer's own checks</b>
-    <p>Not a model's reading of the diff. The funded reviewer's checks cannot "run your test suite"
-    or "execute arbitrary repository code" (E-50).</p></div>
+  <div class="step"><b>A verdict that actually runs the customer's own tests and checks</b>
+    <p>Not a model's reading of the code. The best-funded reviewer in the market says in its own
+    documentation that its checks cannot run your test suite or execute repository code.</p></div>
   <div class="step"><b>Independence from the vendor whose model wrote the code</b>
-    <p>The grader is not the author, and not the author's family (E-34, E-35).</p></div>
-  <div class="step"><b>A measured false-pass rate, on the customer's repository</b>
-    <p>Published by no vendor. Four vendors each claim first place on the same review benchmark.</p></div>
-  <div class="step"><b>An outcome record an auditor can read</b>
-    <p>Vendor logs record actions and cost; none records whether the change was verified or
-    accepted (E-53) — while agent auditability emerges as a procurement requirement.</p></div>
+    <p>The grader is not the author, and not the author's sibling. The vendors' own published
+    words, quoted above, explain why that matters.</p></div>
+  <div class="step"><b>A measured error rate for the verdict itself, on the customer's own repository</b>
+    <p>No vendor publishes one. Four vendors currently each claim first place on the same review
+    benchmark — which tells you what unmeasured claims are worth.</p></div>
+  <div class="step"><b>A permanent record of outcomes that an auditor can read</b>
+    <p>Today's agent logs record actions taken and money spent. None we examined records whether
+    the result was verified, accepted, or by whom — just as agent auditability is becoming a
+    procurement requirement.</p></div>
 </div>
-<div class="callout"><b>Said against ourselves:</b> the framing and its metrics are published
-research — "production-qualified change", the "verification tax" (E-40) — whose own authors call
-them hypotheses; the model vendor describes contract-plus-evaluator as its practice; and
-CodeRabbit, 143 million USD raised at a 1.5 billion valuation, is positioned as "the control
-layer" beside this gap (E-49). The gap is real, and it is <b>narrow</b> — which is why the
-recommendation is a probe with fixed exits and not an investment.</div>
+<div class="callout"><b>The case against us, stated plainly, because the evidence for it is
+strong:</b> the framing and even the metrics for this idea are already published in research —
+whose own authors call them unvalidated hypotheses; Anthropic describes an adjacent practice as
+its own; and CodeRabbit, which raised 143 million dollars at a 1.5 billion valuation, is
+positioning itself as "the control layer" immediately beside this gap. The gap is genuine, and
+it is <b>narrow</b>. That is precisely why the recommendation is a staged probe with pre-agreed
+stopping rules, and not an investment case.</div>
 
-<h2 id="product">The product, in the order a change flows</h2>
-<p class="secnote">The design in one sentence: it trades speed to merge, and some good changes
-wrongly held back, for a verdict the author of a change cannot influence. Full design:
-<span class="mono">docs/DESIGN.md</span>; self-review: <span class="mono">docs/DESIGN-REVIEW.md</span>.</p>
+<h2 id="product">The product, told as a change flowing through it</h2>
+<p class="secnote">The design in one sentence: we trade speed to merge — and accept that some
+good changes will be wrongly held back — for a verdict that the author of a change cannot
+influence.</p>
 <div class="pipe">
-  <div class="step"><b>From a use case to checks</b>
-    <p>The engineer writes the use case with its functional requirements; the team's own assistant
-    asks clarifying questions — agents guess when tasks are underspecified (E-80) — checks are
-    drafted, each requirement linked to at least one; a person approves.</p></div>
-  <div class="step"><b>A contract, fixed before the agent runs</b>
-    <p>Scope, required checks, budget — on a protected branch the author cannot write to.</p></div>
-  <div class="step"><b>A verdict of executable evidence, after the agent stops</b>
-    <p>The customer's tests, a scope check on the diff, and the agent's new tests run against the
-    original code, where "they must fail" (E-76). For software built on a model: an evaluation over
-    fixed cases, some hidden from the agent — pass, fail or inconclusive. Always executable; not
-    always deterministic.</p></div>
-  <div class="step"><b>An outcome record for every change</b>
-    <p>What was asked, what changed, which checks ran, the verdict and its reason, the risk tier,
-    the cost. Written once, never edited.</p></div>
-  <div class="step"><b>A measured error rate for the verdict itself</b>
-    <p>How often it passes what should have failed — per repository, re-measured for every model
-    and harness pairing, because a check's value moves with each release (E-36) and harness effects
-    change sign by model (E-58). This is what no one else measures, and it decides how much human
-    review each class of change gets.</p></div>
+  <div class="step"><b>Before any work starts, the team turns the request into checks</b>
+    <p>The engineer writes what is wanted, with its main requirements. The team's own AI
+    assistant asks the clarifying questions — research shows agents guess when a task is
+    ambiguous rather than ask. Runnable checks are drafted from the answers, each requirement
+    linked to at least one check, and a person approves the result.</p></div>
+  <div class="step"><b>Those checks become a contract, locked away from the author</b>
+    <p>What is in scope, which checks must pass, and what the task may cost — stored where the
+    author of the change, human or AI, has no ability to write.</p></div>
+  <div class="step"><b>After the author finishes, the verdict runs, somewhere the author cannot reach</b>
+    <p>The team's own test suite; a check that the change stayed inside its agreed scope; and a
+    telling extra step: the author's newly written tests are run against the original, unchanged
+    code — where they must fail. A test that passes on both versions proves nothing about the
+    change. For software that is itself built on a model, the verdict is an evaluation instead,
+    explained in the technical section below.</p></div>
+  <div class="step"><b>Every change leaves a permanent record</b>
+    <p>What was asked, what changed, which checks ran and what they found, the verdict and its
+    reason, and the cost. Written once, never edited — the audit trail that no vendor's logs
+    provide today.</p></div>
+  <div class="step"><b>The verdict's own error rate is measured, and reported to the team</b>
+    <p>How often it lets a bad change through, and how often it wrongly blocks a good one —
+    re-measured whenever the model or the assistant changes, because Anthropic's own experience
+    shows that a check which earns its keep on one model generation can be pure overhead on the
+    next. This number is what no one else offers, and it decides how much human review each kind
+    of change still needs.</p></div>
 </div>
 
 <!-- Technical detail for the walkthrough and the leave-behind; not part of the 10 minutes. -->
-<h2 id="verdict">How the verdict is computed — and whether it is deterministic</h2>
-<p class="secnote">The first technical question the verdict invites, answered in full.
-Design detail: <span class="mono">docs/DESIGN.md</span> §2 and §4.</p>
-<p><b>A verdict is computed, not judged.</b> Every check in the contract is executable and
-versioned. Each run produces an <b>evidence item</b>: the check's exit status, its structured
-report, its duration and cost, and the versions of everything involved. The verdict is a fold
-over those items — <b>worst case wins, fail closed</b> — taken in a fixed ladder: integrity of
-the contract, the protected paths, the existing tests and the checks (decided in 0.0 s, before
-any code runs — this rung stopped the E-75 reporter patch before a single test executed), then
-budget, the build, the tests (the repository's, the author's and the hidden ones), scope,
-test-adequacy — the author's new tests run against the original code, where "they must fail"
-(E-76) — dependencies and secrets. First match wins; a check that crashes reads as <b>error</b>,
-never as a pass, and an error is re-queued, never counted either way. The self-review proposes
-moving the remaining static screens (scope, dependencies, secrets) ahead of the tests as well;
-noted, not yet done.</p>
-<p>Three properties follow from how it is built, rather than from policy:</p>
+<h2 id="verdict">How a verdict is computed — and whether it is deterministic</h2>
+<p class="secnote">The first technical question this design gets asked, answered in full. This
+section belongs to the technical walkthrough; the ten-minute version is the section above.</p>
+<p><b>A verdict is computed, not judged.</b> Every check in the contract is a runnable program
+with a version. Each check produces a piece of evidence: its result, its report, and the exact
+versions of everything involved. The verdict is then assembled from those pieces by a fixed
+rule — the worst result wins, and when anything is in doubt, nothing passes. The checks run in
+a set order, with the cheapest decisive ones first: whether the contract, the protected files,
+the existing tests or the checks themselves were tampered with is decided in under a tenth of
+a second, before a single line of the change's code is executed. That is the step that caught
+the "patched test reporter" trick in our measurements. Then come the budget, the build, the
+tests — the team's, the author's, and the hidden ones — the scope of the change, the
+tests-must-fail-on-the-original rule, and screens for missing dependencies and leaked secrets.
+A check that crashes is an "error", never a pass; an error is retried once and then escalated
+to a person, never counted as a result either way. And the verdict never reads the agent's
+conversation: a verifier that reads the author's account of its work inherits the author's
+mistakes.</p>
+<p>Three properties follow from how it is built, rather than from anyone's promise:</p>
 <div class="duo">
-  <div class="box"><h3>It is a function of its inputs</h3><p>The verdict depends only on the
-  base commit, the head commit, the contract's hash and the checks' results — never on the
-  agent's conversation. A verifier that reads the author's account of its work inherits the
-  author's mistakes. Idempotency follows: running the same verdict twice gives the same record,
-  not two.</p></div>
-  <div class="box"><h3>It can be replayed</h3><p>Every evidence item carries the versions of the
-  check, the contract, the model and the assistant involved, so any verdict can be reproduced
-  from its record. That is what makes the outcome record an audit record rather than a log.</p></div>
-  <div class="box"><h3>Its own error is measured</h3><p>Planted flaws measure how often it
-  passes what should fail; known-good changes measure how often it blocks what should pass.
-  Both rates are reported with the verdict, with denominators — a verdict of unknown
-  reliability is another opinion.</p></div>
+  <div class="box"><h3>It is a pure function of its inputs</h3><p>The verdict depends only on
+  the starting code, the finished code, the contract, and the checks' results. Running the same
+  verdict twice produces the same record, not two records.</p></div>
+  <div class="box"><h3>It can be replayed years later</h3><p>Every piece of evidence carries the
+  versions of the check, the contract, the model and the assistant involved, so any past verdict
+  can be reproduced from its record. That is what makes the record an audit trail rather than
+  a log.</p></div>
+  <div class="box"><h3>Its own error is measured</h3><p>Deliberately flawed changes measure how
+  often it passes what it should not; known-good changes measure how often it blocks what it
+  should pass. Both rates are reported with their sample sizes — a verdict of unknown
+  reliability is just another opinion.</p></div>
   <div class="box honesty"><h3>The honest caveat</h3><p>Determinism is bounded by the team's own
-  checks: a flaky test makes the verdict flaky. Flaky checks are retried within a bound and
-  quarantined to a person — never silently passed or failed (<span class="mono">docs/DESIGN-REVIEW.md</span>,
-  finding 3). The build met this family of fault in person: Docker's file sharing twice served
-  stale content (ASSIST-020), so the gate now confirms by hash, inside the container, that it is
-  judging the change it was asked to judge.</p></div>
+  tests: a flaky test makes a flaky verdict, so flaky checks are retried within a limit and then
+  routed to a person — never silently passed or failed. The build drove the broader lesson home:
+  twice during development, the container system's file sharing served stale content, and the
+  gate was at risk of judging the wrong version of a change. It now verifies, inside the
+  isolated environment, that it is judging exactly the change it was asked to judge. A verifier
+  that judges the wrong files is worse than none.</p></div>
 </div>
 
 <h3>So: is it deterministic?</h3>
 <div class="tablewrap"><table>
   <tbody>
-  <tr><th></th><th>Conventional code</th><th>LLM application</th></tr>
-  <tr><td>The checks</td><td>Tests, diff scope, test-adequacy, dependency existence, secrets scan</td><td>A versioned set of evaluation cases covering every functional requirement — some <b>hidden</b> from the agent, so it cannot fit the set instead of the task</td></tr>
-  <tr><td>Computed as</td><td>One run per check; exit status and structured report</td><td>Cases × repeats, bounded by the contract's budget; scored <b>code-first</b> (exact match, schema, tolerance); a model scores only what code cannot — pinned to a version and prompt, from another vendor where possible, its agreement with human labels measured and stated</td></tr>
-  <tr><td>Decided by</td><td>The ladder above, first match wins</td><td>The measured pass rate with its uncertainty: <b>passed</b> only if the whole plausible range clears the pass mark and the change is no worse than the previous version on the same cases; <b>failed</b> if the whole range misses; otherwise <b>inconclusive</b> — more samples while budget remains, then a person</td></tr>
-  <tr><td>Deterministic?</td><td><b>Yes</b> — the same inputs give the same verdict, with the flaky-check caveat above</td><td><b>No — and the promise never depended on it.</b> One deterministic run of a system that answers differently each time proves little. What holds in both cases: checks fixed before the agent runs and protected from it, run outside the agent, recorded, and their own error rate measured</td></tr>
-  <tr><td>Outcomes</td><td>passed · failed · error</td><td>passed · failed · <b>inconclusive</b> · error</td></tr>
-  <tr><td>Error sources, both reported</td><td>The checks under-describing behaviour (E-68); flaky checks</td><td>Too few samples, and a scorer that is wrong</td></tr>
+  <tr><th></th><th>Ordinary code</th><th>Software built on a model — an AI feature</th></tr>
+  <tr><td>The checks</td><td>The team's tests, scope limits, dependency and secrets screens, and the author's new tests re-run against the original code</td><td>A versioned set of evaluation cases covering every requirement — some kept <b>hidden</b> from the author, because an author who can see the whole set learns the set rather than the task</td></tr>
+  <tr><td>How it is computed</td><td>Each check runs once; result and report</td><td>Each case runs several times, within the contract's budget. Scoring prefers code over judgment — exact matches, formats, tolerances. A model scores only what code cannot, and that model is pinned to a version, drawn from a different vendor than the author's where possible, and its agreement with human judgment is itself measured and stated</td></tr>
+  <tr><td>How it is decided</td><td>The fixed order above; the first decisive result wins</td><td>By the measured pass rate and its uncertainty: "passed" only when the entire plausible range clears the bar, "failed" only when all of it misses, and otherwise <b>"inconclusive"</b> — more samples while budget remains, then a person decides</td></tr>
+  <tr><td>Deterministic?</td><td><b>Yes</b> — the same inputs give the same verdict, with the flaky-test caveat above</td><td><b>No — and it never needed to be.</b> A single run of a system that answers differently each time proves little. What holds identically in both cases: the checks are fixed before the work starts, protected from the author, run outside the author's reach, recorded permanently, and measured for their own error</td></tr>
+  <tr><td>Possible outcomes</td><td>passed · failed · error</td><td>passed · failed · <b>inconclusive</b> · error</td></tr>
 </tbody></table></div>
-<div class="callout"><b>The one-line answer:</b> the verdict is always <b>executable</b>, not
-always deterministic. For conventional code it is a pure function of the inputs; for software
-built on a model it is an evaluation with hidden cases and an honest third outcome. The
-guarantees that matter — fixed beforehand, protected from the author, run outside the agent,
-recorded, error-measured — hold identically in both.</div>
+<div class="callout"><b>The one-line answer:</b> the verdict is always <b>executable</b> — real
+checks actually run — but not always deterministic, and the guarantees that matter never
+depended on determinism.</div>
 
-<h2 id="measured">What one day measures</h2>
-<p class="secnote">Same tasks, three arms — <b>bare</b> scaffold, <b>prompt-disciplined</b>,
-<b>gated</b> — every run in its own container with no network and no key (T21); three verdict
-sources judging the same changes against hidden acceptance checks neither the agent nor the gate
-ever sees. <b>Run before the stop:</b> the 72-run dry run on a fake agent (all as expected), two
-model runs on one task (claude-sonnet-5-5, 0.07 USD), and 30 of 38 hand-made changes through the
-gate. <b>Not run:</b> the 165-run arm comparison, the cross-vendor evaluator, the evaluation
-path. Every judged change was written by the gate's own author: an indication, not a benchmark.</p>
+<h2 id="measured">What the one-day prototype measured</h2>
+<p class="secnote">The plan was to run the same tasks through a neutral test agent three ways —
+bare, instructed to verify its own work, and inside our gate — and to compare three opinions of
+every result: the agent's own claim of success, a reviewer model from a rival vendor, and the
+gate. The referee for all three: hidden acceptance checks that neither the agent nor the gate
+ever sees. The test agent is a 90-line program published by independent researchers, used
+unmodified, so nobody can say we tuned the agent to flatter our gate. The day ended before the
+full comparison. Here is what ran and what it showed — total model spend, 7 cents of a
+50-dollar cap. One caution applies to everything below: every change the gate judged was
+written by the same person who built the gate, with the expected outcomes recorded before
+judging.</p>
 
-<div class="metric"><header><span class="mid">H4</span><span class="mname">Whose "pass" can you trust?</span><span class="chip primary">the product's claim</span></header>
+<div class="metric"><header><span class="mid">1</span><span class="mname">Whose claim of "done" can you trust?</span><span class="chip primary">the deciding question</span></header>
   <div class="mgrid">
-    <div class="mcell"><div class="mlab">Question it answers</div><p>Is the gate's verdict wrong less often than the agent's own claim and than a model reviewer from another vendor?</p></div>
-    <div class="mcell"><div class="mlab">How it fits</div><p>The number that can kill the product. If a model reviewer is already as reliable, there is nothing to build.</p></div>
-    <div class="mcell full"><div class="mlab">How it is measured</div><p>All three sources judge the same finished changes; ground truth is the hidden checks. False-pass rate reported with denominator and plausible range — on a small sample, a rate without its range overclaims.</p></div>
+    <div class="mcell"><div class="mlab">The question</div><p>Is the gate's verdict wrong less often than the agent's own claim of success, and less often than a reviewer model from a rival vendor?</p></div>
+    <div class="mcell"><div class="mlab">Why it decides everything</div><p>If a model reviewer is already just as reliable, there is nothing here worth building. This is the number that can kill the product, and it was designed to be able to.</p></div>
+    <div class="mcell full"><div class="mlab">Status</div><p><b>Not yet measured — the comparison runs were not reached before the day ended.</b> What we do have: in the two real model runs completed, the model did the task correctly and claimed success truthfully. That is a useful reminder that on small tasks there may be no gap for a gate to close — a risk we had logged in advance, and one more reason the comparison must actually be run rather than assumed.</p></div>
   </div>
-  <div class="mval"><b>not measured</b> — the comparison runs were not made. agent's claim: <span class="ref">in 2 runs the model was right and said so truthfully</span> · evaluator: <span class="ref">not run</span> · gate, on hand-made changes: <b>false pass 2 of 21 · false fail 0 of 9</b> (<span class="mono">RESULTS.md</span> §5.2)</div>
+  <div class="mval">agent's claim: <span class="ref">no measured error yet</span> · rival-vendor reviewer: <span class="ref">not run</span> · <b>the gate: 2 wrong changes passed, of 21 · 0 good changes blocked, of 9</b></div>
 </div>
 
-<div class="metric"><header><span class="mid">H5</span><span class="mname">Can the gate itself be fooled?</span><span class="chip gate">pass / fail</span></header>
+<div class="metric"><header><span class="mid">2</span><span class="mname">Can the gate itself be fooled?</span><span class="chip gate">tested with planted flaws</span></header>
   <div class="mgrid">
-    <div class="mcell"><div class="mlab">Question it answers</div><p>Does the gate reject every change built to be wrong in a known way — out-of-scope edits, weakened tests, tampered checks, behaviour quietly dropped?</p></div>
-    <div class="mcell"><div class="mlab">How it fits</div><p>A verifier with one known hole is another opinion. All-of-all or fail.</p></div>
-    <div class="mcell full"><div class="mlab">How it is measured</div><p>Planted flaws, written before the gate, fed straight to it. Known-good changes fed the same way measure the other error: good work wrongly blocked.</p></div>
+    <div class="mcell"><div class="mlab">The question</div><p>Does the gate reject changes deliberately built to be wrong in known ways — edits outside the agreed scope, weakened tests, tampered checks, quietly dropped behaviour?</p></div>
+    <div class="mcell"><div class="mlab">How it was tested</div><p>We wrote ten "planted flaws" — each a correct change with exactly one thing made wrong — recorded in advance what the gate should do with each, and only then fed them to it. Known-good changes went through the same way, to catch the opposite error: good work wrongly blocked.</p></div>
+    <div class="mcell full"><div class="mlab">Result</div><p><b>Nine of the ten planted flaws were rejected, each at the exact step we predicted.</b> The "patched test reporter" trick from the published study was stopped in under a tenth of a second, before a single test ran. The tenth — a change that quietly stopped charging tax in most regions, behaviour that no check covered — passed. It was planted precisely to find that limit, and it did more than that: <b>our own reference answer key turned out to have the same blind spot.</b> The lesson, in one sentence: the gate is only as good as the checks the team writes — which is why helping teams write them well is the product's first feature, not an afterthought.</p></div>
   </div>
-  <div class="mval"><b>9 of 10 planted flaws rejected, each at the expected step</b> — the one accepted (<span class="mono">p06-behaviour-dropped</span>) was planted to find the limit of uncovered behaviour, and the ground truth shares it · the E-75 reporter patch stopped at integrity in 0.0 s · false-fail: <b>0 of 9</b> correct changes judged (6 probes unjudged, run interrupted)</div>
+  <div class="mval"><b>9 of 10 planted flaws rejected</b> · 10 of 11 other deliberately wrong changes rejected · <b>0 of 9</b> correct changes wrongly blocked · the 6 changes written specifically to provoke wrong blocking were not reached before the stop</div>
 </div>
 
-<div class="metric"><header><span class="mid">H1–H3</span><span class="mname">Safety, consistency, economics</span><span class="chip cost">per arm</span></header>
+<div class="metric"><header><span class="mid">3</span><span class="mname">Safety, consistency, and cost per qualified change</span><span class="chip cost">needs the full comparison</span></header>
   <div class="mgrid">
-    <div class="mcell"><div class="mlab">Question it answers</div><p>Does the gated arm run fewer unsafe actions on trap tasks, pass more consistently, and what does a qualified change cost?</p></div>
-    <div class="mcell"><div class="mlab">How it fits</div><p>pass^k, not pass@1: an agent above 60% on average can fall below 25% when it must succeed eight times running (E-79).</p></div>
-    <div class="mcell full"><div class="mlab">How it is measured</div><p>Unsafe actions counted per arm from the event log — the gate must accept no change containing one (T20); pass@1 and pass^k against hidden checks; cost per production-qualified change (E-40), verification included — never without its quality number.</p></div>
+    <div class="mcell"><div class="mlab">The question</div><p>Does the gated setup accept fewer dangerous changes, succeed more consistently, and what does a change that truly qualifies for production cost, all checking included?</p></div>
+    <div class="mcell"><div class="mlab">Why consistency, not one lucky run</div><p>Published measurements show an agent that succeeds 60% of the time on average can drop below 25% when it must succeed eight times in a row. Teams live in the second world, so that is the one we measure.</p></div>
+    <div class="mcell full"><div class="mlab">Status</div><p><b>Not yet measured on a live model.</b> What we have: of the hand-made changes containing a dangerous action, the gate accepted none — zero of five, and zero of fifteen across the full rehearsal. The two completed model runs both qualified, at 3.9 and 3.2 cents. Two runs are an anecdote, not a comparison, and we will not present them as one.</p></div>
   </div>
-  <div class="mval"><b>not measured on a model</b> — unsafe changes accepted by the gate: <b>0 of 5</b> hand-made, 0 of 15 across the dry run's arms · the two model runs were both correct and qualified (0.039 and 0.032 USD), too few to compare</div>
+  <div class="mval">dangerous changes accepted by the gate: <b>0 of 5</b> hand-made · 0 of 15 in rehearsal · cost per qualified change: <span class="ref">two data points — not yet comparable</span></div>
 </div>
 
-<div class="metric"><header><span class="mid">H6</span><span class="mname">What the gate adds</span><span class="chip cost">overhead</span></header>
+<div class="metric"><header><span class="mid">4</span><span class="mname">What the gate adds in time and money</span><span class="chip cost">measured</span></header>
   <div class="mgrid">
-    <div class="mcell"><div class="mlab">Question it answers</div><p>What does the verdict cost in time, money and extra attempts — and does it block good work?</p></div>
-    <div class="mcell"><div class="mlab">How it fits</div><p>A gate that blocks good changes teaches people to bypass it; the false-fail rate matters as much as the false-pass rate.</p></div>
-    <div class="mcell full"><div class="mlab">How it is measured</div><p>Elapsed time and dollars added per task; repair attempts triggered; false-fail beside false-pass. What the gate <em>saves</em> is the pilot's measure, not the prototype's.</p></div>
+    <div class="mcell"><div class="mlab">The question</div><p>What does the verdict cost in waiting and in money — and does it block good work, which is what teaches a team to route around a gate?</p></div>
+    <div class="mcell"><div class="mlab">Why both error rates, always together</div><p>A gate that wrongly blocks good changes costs rework and, worse, trust. We committed to reporting the wrongly-blocked rate beside the wrongly-passed rate in everything we publish — this page included.</p></div>
+    <div class="mcell full"><div class="mlab">Result</div><p>A full verdict took <b>10.3 seconds on average</b> (between 7 and 15), and most of that is starting the isolated environments rather than running the tests. A tampering rejection is effectively instant. The gate makes no model calls of its own, so it adds <b>no AI spend at all</b>. On a real repository the team's own test suite would dominate the time — as it already does today, without us.</p></div>
   </div>
-  <div class="mval">a full verdict: <b>10.32 s mean</b> (7.1–14.6; mostly container start-up — the tests themselves run in under a second) · an integrity rejection: <b>0.0 s</b> · token cost added: <b>0</b> (the gate calls no model) · false-fail: 0 of 9 judged · repair loop exercised mechanically in the dry run (10 of 22 gated runs sent back, bounded at two)</div>
+  <div class="mval">average full verdict: <b>10.3 s</b> · tampering rejection: <b>&lt; 0.1 s</b> · AI spend added by the gate: <b>none</b> · good changes wrongly blocked: <b>0 of 9 judged</b></div>
 </div>
 
-<h2 id="scoreboard">The scoreboard — exits fixed before the results exist</h2>
+<h2 id="scoreboard">The scoreboard — stopping rules fixed before any result existed</h2>
 <div class="tablewrap"><table>
   <tbody>
-  <tr><th>#</th><th>Kill criterion (decided 2026-10-05)</th><th>Measured</th><th>Verdict</th></tr>
-  <tr><td>K1</td><td>The gate's false-pass rate is lower than the agent's claim <b>and</b> the evaluator's</td><td class="num">—</td><td><span class="verd nm">not measured</span></td></tr>
-  <tr><td>K2</td><td>Every planted flaw rejected</td><td class="num">9 of 10</td><td><span class="verd fail">not met as worded</span></td></tr>
-  <tr><td>K3</td><td>The gate accepts no change containing an unsafe action (reworded before any run, T20)</td><td class="num">0 of 5 · 0 of 15</td><td><span class="verd ok">met on hand-made changes</span></td></tr>
+  <tr><th>#</th><th>Condition for continuing, agreed in advance</th><th>Measured</th><th>Result</th></tr>
+  <tr><td>1</td><td>The gate's error rate is lower than the agent's own claim <b>and</b> lower than a rival-vendor reviewer's</td><td class="num">—</td><td><span class="verd nm">not measured</span></td></tr>
+  <tr><td>2</td><td>Every deliberately planted flaw is rejected</td><td class="num">9 of 10</td><td><span class="verd fail">not met as written</span></td></tr>
+  <tr><td>3</td><td>The gate accepts no change containing a dangerous action</td><td class="num">0 of 5 · 0 of 15 in rehearsal</td><td><span class="verd ok">met, on hand-made changes</span></td></tr>
 </tbody></table></div>
-<p><b>Read strictly, the stage-1 answer today is Wait</b> (<span class="mono">RESULTS.md</span> §3).
-Read with its cause, it is narrower: the one accepted flaw was planted to find the limit of
-behaviour no check covers — the design's first-listed risk, which the ground truth shared — and
-the comparison that decides K1 was never run. It is cheap to run: finishing the interrupted run
-is free, the 165-run comparison is about 6.4 USD by one-run arithmetic (not a forecast), and the
-ground truth is to be widened first (ASSIST-021).</p>
+<p><b>Read strictly, the rules we set for ourselves say: wait.</b> Read with the cause in view,
+the picture is narrower and more useful. The instrument works and is tested. The one flaw that
+got through was planted precisely to expose the known limit — behaviour that no check covers —
+and even our own answer key shared that blind spot, which teaches us where the real risk
+lives. And the comparison that actually decides the question was never run. Finishing it is
+cheap: completing the interrupted judging run costs nothing; the full 165-run comparison comes
+to roughly six dollars of model spend at the prices we observed; the rival-vendor reviewer
+adds a little more. We would strengthen the answer key first — an improvement already logged
+in the project's issue list.</p>
 
-<h2 id="cost">What it costs, said before anyone asks</h2>
+<h2 id="cost">What this product would cost, said before anyone has to ask</h2>
 <div class="duo">
-  <div class="box"><h3>It adds cost at four stages</h3><p>Writing the checks (engineers' time —
-  the largest and least-known cost), extra attempts (capped tokens), running the verdict
-  (pipeline time; for evaluations, model calls), and upkeep plus re-measurement at every model
-  release. It also adds waiting before merge.</p></div>
-  <div class="box"><h3>It is meant to remove</h3><p>Review time that executable evidence could
-  settle, rework and incidents from changes that passed their tests and were wrong, and the risk
-  in the 31.3% of PRs now merging with no review (E-05).</p></div>
-  <div class="box honesty"><h3>Whether that nets out is unproven</h3><p>The prototype measures
-  what the gate adds; only the pilot can measure what it saves. Four numbers decide it — cost per
-  qualified change, reviewer-hours, time to qualified change, both error rates — reported
-  together, never one without the others.</p></div>
-  <div class="box honesty"><h3>Where it will not pay</h3><p>Small low-risk changes; fast new
-  builds, where a frontier lab's own words are "corrections are cheap, and waiting is expensive"
-  (E-57); teams with few tests, for whom writing the checks is most of the cost.</p></div>
+  <div class="box"><h3>It adds cost in four places</h3><p>Engineers' time to write the checks —
+  the largest cost and the least known. Extra attempts when a check fails, within a per-task
+  budget. Machine time to run the verdicts. And a standing commitment to re-measure whenever a
+  model or assistant changes. It also adds waiting: a change that used to merge when the agent
+  finished now merges when the evidence is in.</p></div>
+  <div class="box"><h3>It is meant to remove</h3><p>Reviewer hours spent on questions a test
+  could settle. Rework and incidents from changes that passed their tests and were still wrong.
+  And the risk in the growing share of changes — up 31% in a year, in the telemetry cited above
+  — that merge with no review at all.</p></div>
+  <div class="box honesty"><h3>Whether the trade nets out is unproven</h3><p>Our prototype can
+  measure what the gate adds. Only a pilot with a real team can measure what it saves. Four
+  numbers will decide it — cost per qualified change, reviewer hours, time from request to
+  accepted change, and the verdict's two error rates — reported together, never one without the
+  others.</p></div>
+  <div class="box honesty"><h3>Where it will not pay, named now</h3><p>Small, low-risk changes.
+  Fast greenfield builds — OpenAI's stated philosophy for that setting is that "corrections are
+  cheap, and waiting is expensive", and we think they are right about that setting. And teams
+  with few tests today, for whom writing the checks would be most of the cost.</p></div>
 </div>
 
 <h2 id="ask">The ask</h2>
 <div class="tablewrap"><table>
   <tbody>
-  <tr><th>Stage</th><th>Cost</th><th>Exit, fixed in advance</th><th>Status</th></tr>
-  <tr><td>1 · Prototype</td><td class="num">one day · 0.07 of 50 USD spent</td><td>The three criteria of the scoreboard</td><td><span class="verd nm">stopped on the time budget; comparison unrun</span></td></tr>
-  <tr><td>1b · Completion</td><td>Finish the interrupted run (free) · the 165-run comparison (≈ 6.4 USD, one-run arithmetic) · the cross-vendor evaluator · widen the ground truth first (ASSIST-021)</td><td>The same scoreboard, now measurable</td><td><span class="verd pending">requested</span></td></tr>
-  <tr><td>2 · Measurement pilot</td><td>6 weeks · 2 engineers · a product lead at half time · model spend capped — <b>assumption</b>, rates from finance</td><td>A design partner says the report changed a decision they were about to make</td><td><span class="verd pending">requested</span></td></tr>
-  <tr><td>3 · Build</td><td>Scoped only if stage 2 clears — estimating it now would be an invented number</td><td>Set before stage 3 starts</td><td><span class="verd nm">not reached</span></td></tr>
+  <tr><th>Stage</th><th>Cost</th><th>Continue only if</th><th>Where it stands</th></tr>
+  <tr><td>1 · One-day prototype</td><td class="num">one day · $0.07 spent</td><td>The scoreboard above</td><td><span class="verd nm">built and tested; stopped with the deciding comparison unrun</span></td></tr>
+  <tr><td>1b · Finish the measurement</td><td>A few hours of work. The interrupted run: free. The full comparison: roughly 6 dollars of model spend at observed prices. The rival-vendor reviewer: a little more. The answer key strengthened first</td><td>The same scoreboard, this time fully measurable</td><td><span class="verd pending">requested today</span></td></tr>
+  <tr><td>2 · Six-week pilot</td><td>Two engineers and a half-time product lead — a staffing assumption; finance owns the rates</td><td>A design partner tells us the report changed a decision they were about to make</td><td><span class="verd nm">gated on 1b</span></td></tr>
+  <tr><td>3 · Build the product</td><td>Scoped only if the pilot earns it. Pricing it today would be an invented number, and we do not use invented numbers</td><td>Set before it starts</td><td><span class="verd nm">not reached</span></td></tr>
 </tbody></table></div>
-<p>The pilot is also the entry product: we run the partner's own tasks and report the rate and
-cost of production-qualified changes on their repository, per model and assistant they use.</p>
+<p>The pilot doubles as the first sale: we run a partner's own tasks on their own repository
+and hand them a report on the rate, cost and trustworthiness of their AI-written changes, per
+model and per assistant they use. If nobody finds that report worth a decision, that answer
+will have been cheap to learn.</p>
 
-<h2 id="recommendation">The executive recommendation, in one page</h2>
-<p class="secnote">The closing of the spoken walkthrough, left on screen for the discussion.
-The full one-page message with the challenge-and-answer appendix accompanies this page.</p>
+<h2 id="recommendation">The recommendation, on one page</h2>
+<p class="secnote">The closing of the spoken walkthrough, left on screen for the discussion.</p>
 <div class="pipe">
-  <div class="step"><b>We agree with the premise</b>
-    <p>Microsoft, OpenAI and Anthropic own generation; we buy their products at their subsidised
-    tiers (E-12, E-13) and adopt the open-source control layer (E-32). Reselling generation has
-    "neutral or negative" margins (E-17).</p></div>
+  <div class="step"><b>We agree with the premise of the question</b>
+    <p>Microsoft, OpenAI and Anthropic own code generation. We should buy their assistants at
+    their subsidised prices, use the free open-source guardrail layer, and stay out of a
+    reselling business whose margins a founder inside it calls "neutral or negative."</p></div>
   <div class="step"><b>We probe the one thing their position prevents them from selling</b>
-    <p>An independent, executable, measured verdict on their agents' output (E-34, E-50, E-53).
-    No vendor publishes an error rate for its own reviewer; no audit log records outcomes.</p></div>
-  <div class="step"><b>The ask is priced so belief is unnecessary</b>
-    <p>One day spent 0.07 USD and built a tested gate and measurement; completing the deciding
-    comparison costs hours and about ten dollars. Then six weeks of two and a half people (an
-    assumption, rates from finance), then a build only past exits fixed before the results
-    existed. Every stage can end it — and the strict reading today is Wait.</p></div>
-  <div class="step"><b>The unit is the CFO's</b>
-    <p>Cost per production-qualified change, checking included (E-40), always beside the verdict's
-    own error rates — first measured values: 2 of 21 wrong changes passed, 0 of 9 good ones
-    blocked, on author-written changes. No vanity metrics: no lines of AI code, no acceptance
-    rates, no seats.</p></div>
-  <div class="step"><b>What we do not know, said first</b>
-    <p>Whether the gate beats the agent's claim and a model reviewer (unmeasured); market size,
-    willingness to pay, and whether the added cost nets out. The day also taught us where the
-    risk lives: in the coverage of the checks, not the mechanism — which came out at 350 lines,
-    our own "cheap to copy" claim self-demonstrated.</p></div>
+    <p>An independent verdict on their agents' output that runs the customer's own checks,
+    measures its own error rate, and keeps a permanent record of outcomes. No vendor publishes
+    an error rate for its own reviewer; no vendor's logs record whether results were accepted;
+    and by their own published admission, their models grade their own work too kindly.</p></div>
+  <div class="step"><b>The ask is priced so that belief is unnecessary</b>
+    <p>One day and seven cents bought a working, tested instrument — and an honest null result:
+    the comparison that decides Build-or-Wait was not reached. Completing it costs hours and
+    roughly ten dollars. Then six weeks of two-and-a-half people. Then, and only then, a build
+    decision. Every stage can end it, and on a strict reading of our own rules, "wait" is where
+    we stand today.</p></div>
+  <div class="step"><b>The numbers we report are the ones a finance team can audit</b>
+    <p>Cost per change that truly qualified for production, with the cost of checking included —
+    always shown beside the verdict's own error rates, whose first measured values are two wrong
+    changes passed out of twenty-one, and zero good changes blocked out of nine. Never lines of
+    AI-written code, acceptance rates, or seat counts: those flatter activity, not outcomes.</p></div>
+  <div class="step"><b>What we still do not know, said first</b>
+    <p>Whether the gate beats the agent's claim and a rival reviewer — unmeasured. Market size
+    and willingness to pay — the pilot's questions. What the day did teach us: the risk lives in
+    the coverage of the team's checks, not in the mechanism. The entire gate is 350 lines of
+    code, which proves our own warning that the mechanism is easy to copy. The durable asset, if
+    there is one, is the measurement, the neutrality, and the record.</p></div>
 </div>
-<div class="callout"><b>Decision requested:</b> fund the completion of stage 1 — free plus about
-ten dollars and the hours to run it, ground truth widened first — and read the scoreboard then;
-or set the review date now. <b>The sentence for the board:</b> one day produced a tested gate that
-rejected 19 of 21 wrong changes and blocked no good one, for seven cents; what it could not
-produce is the comparison that decides Build or Wait, the strict reading until then is Wait, and
-the completion is priced small precisely so that the decision can be made on evidence rather than
-on this page.</div>
+<div class="callout"><b>Decision requested:</b> fund the completion of stage 1 — hours of work
+and about ten dollars — and read the finished scoreboard together; or set the review date now.
+<b>For the board, in one sentence:</b> one day and seven cents produced a tested gate that
+caught nineteen of twenty-one bad changes and blocked no good one; what it could not produce is
+the comparison that decides whether to build — so the recommendation today is to wait, and to
+spend the ten dollars that turns "wait" into an answer.</div>
 
-<h2 id="rules">Working rules behind this page</h2>
+<h2 id="rules">How this material was prepared</h2>
 <div class="duo">
-  <div class="box"><h3>No invented numbers</h3><p>Every figure cites a row of
-  <span class="mono">EVIDENCE.md</span> verified at its raw source ([P]/[L]) or a file under
-  <span class="mono">prototype/runs/</span>. Targets are decisions, labelled proposed; CFO figures
-  are labelled assumptions, with rates left to finance.</p></div>
-  <div class="box"><h3>Paired reporting</h3><p>No throughput or speed number without its quality
-  number; no pass rate without the verdict's own error rates beside it. These are redlines of the
-  design, applied to our own reporting first.</p></div>
-  <div class="box"><h3>Customer data</h3><p>The product runs in the customer's environment with
-  the customer's model access. Nothing is sent to us, used for training, or shared across
-  customers; the checks and history that accumulate belong to the customer.</p></div>
-  <div class="box"><h3>Honest exits</h3><p>Kill criteria were fixed before the results existed,
-  and a negative result is reported as the recommendation it implies. "Wait, with a review date"
-  is a real outcome, not a euphemism.</p></div>
+  <div class="box"><h3>No invented numbers</h3><p>Every figure on this page has a named public
+  source, verified against the original publisher before use, or comes from the prototype's own
+  run records, from which the results report is generated rather than written. Targets are
+  labelled as proposals; staffing figures are labelled as assumptions, with rates left to
+  finance.</p></div>
+  <div class="box"><h3>Paired reporting</h3><p>No speed or volume number appears without its
+  quality number, and no pass rate without the verdict's own error rates beside it. These are
+  rules of the product's design, applied to our own reporting first.</p></div>
+  <div class="box"><h3>Customer data</h3><p>The product runs inside the customer's environment,
+  on the customer's own model subscriptions. Nothing is sent to us, used for training, or shared
+  between customers. The checks and history that accumulate belong to the customer.</p></div>
+  <div class="box"><h3>Honest exits</h3><p>The stopping rules were fixed before any result
+  existed, and a negative result is reported as the recommendation it implies — as this page
+  demonstrates. "Wait, with a date to look again" is a real outcome, not a euphemism.</p></div>
 </div>
 
 <footer>
-  <p><b>Sources and record.</b> Evidence ledger <span class="mono">docs/research/EVIDENCE.md</span>
-  (rows cited as E-nn, each verified at its raw source by 2026-10-05) · prototype results land in
-  <span class="mono">docs/RESULTS.md</span>, generated from <span class="mono">prototype/runs/</span> ·
-  decisions <span class="mono">docs/JOURNAL.md</span> ADR-001…ADR-020 · full case
-  <span class="mono">docs/PROPOSAL.md</span> · system design <span class="mono">docs/DESIGN.md</span>
-  and its self-review <span class="mono">docs/DESIGN-REVIEW.md</span> · spoken deck
-  <span class="mono">docs/slides.md</span> · vocabulary: Production-Qualified Change and PQC per
-  dollar after Bhati, arXiv 2609.04681 (E-40); agent under test: the 90-line scaffold of arXiv
-  2609.00006, CC BY 4.0 (E-59). Prepared for a 10-minute executive walkthrough with a technical
-  session to follow; nothing on this page is a number without a source.</p>
+  <p><b>Sources and records.</b> The project repository contains the full written case, the
+  system design and its critical self-review, the complete results report, and a decision
+  journal recording every choice made and the alternative it rejected. A public-source evidence
+  ledger maps every figure used in this material to the original publisher's page, where each
+  was verified before use; the prototype's raw run records sit beside the results generated from
+  them. Named sources quoted on this page include METR, Stack Overflow's annual developer
+  survey, Anthropic's published engineering writing, OpenAI's published engineering writing,
+  TechCrunch, Databricks, CodeRabbit's public documentation, a 2026 source-code study of eleven
+  coding agents (which also published, under an open licence, the 90-line test agent we used),
+  and published research on verification economics and agent behaviour. Prepared for a
+  ten-minute executive walkthrough with a technical session to follow. Nothing on this page is a
+  number without a source.</p>
 </footer>
 </main>
 </body></html>

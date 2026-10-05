@@ -1,11 +1,10 @@
 ---
-# ASSIST — slides for the executive session (D8).
-# Three parts: the recommendation (10:00 sharp), the technical walkthrough (~14 min),
-# backup for the discussion and for a changing business scenario.
-# Every number cites EVIDENCE.md ([P]/[L]) or docs/RESULTS.md (generated from
-# prototype/runs/). The prototype stopped on the time budget (ADR-022): the central
-# comparison was not run, and the deck says so where it matters.
-# Presenter-note time budgets: part 1 sums to 10:00.
+# ASSIST — slides for the executive session.
+# Three parts: the recommendation (10 minutes), the technical walkthrough (~14 minutes),
+# and backup slides for the discussion.
+# Audience: CEO, CTO, CFO. Visible text avoids project-internal codes; the presenter
+# notes (HTML comments) keep the repository references for the speaker.
+# Every number traces to docs/research/EVIDENCE.md or docs/RESULTS.md.
 theme: default
 title: ASSIST Recommendation
 info: Should we enter the AI software-development-assistant market?
@@ -20,435 +19,525 @@ fonts:
 
 # Should we enter the AI software-development-assistant market?
 
-Executive session · 10 minutes, then the technical walkthrough
+A recommendation, with the evidence behind it.
 
-Every number on these slides cites `docs/research/EVIDENCE.md`, verified at its raw
-source, or `docs/RESULTS.md`, generated from `prototype/runs/`.
+Ten minutes, followed by a technical walkthrough. Every number on these slides has a
+named public source or comes from our own prototype's records, and the appendix says
+where to find each one.
 
-<!-- 0:00–0:30. One breath: leadership's question, and that the answer comes with
-     measurements and fixed exits, not opinions. Advance. -->
+<!-- 0:00–0:30. One breath: this is the question leadership asked, and the answer
+     comes with measurements and pre-agreed stopping rules, not with enthusiasm.
+     Advance. -->
 
 ---
 
 # The answer
 
-**Do not build another AI coding assistant.**
+**We should not build another AI coding assistant.** That market belongs to the companies
+that own the models, and we would be entering their contest with supplies we have to buy
+from them.
 
-We probed the one part nobody sells — a verdict on agent-written changes built from
-**executable evidence**, independent of the model vendor, measured for error — framed as
-**evidence-driven development**: the team defines "done" as executable checks before the work
-starts, and every change is accepted on that evidence, whoever or whatever wrote it.
+What we did instead was test the one part of this market that nobody sells yet: an
+**independent verdict on AI-written code** — one that actually runs the team's own tests
+and checks, is operated by no model vendor, and measures and publishes its own error rate.
+We call the working practice behind it **evidence-driven development**: the team writes
+down what "done" means as runnable checks *before* the work starts, and every change is
+accepted on that evidence — whether a person or an AI agent wrote it.
 
-**The decision this session asks for is staged:** a one-day prototype (built; stopped on
-the time budget with its central comparison unrun — the scoreboard says exactly what is
-known), a cheap completion, a six-week measurement pilot, a build only past exits fixed
-in advance. Each stage can end it.
+The decision we are asking for is staged. A one-day prototype has been built and tells us
+what you will see today. A small completion step, then a six-week pilot, then — only if
+the pilot earns it — a product. **Each stage has a stopping rule we wrote down before we
+knew the results.**
 
-<!-- 0:30–1:00. The recommendation is the probe, not a product bet. The branch line
-     (pilot / wait with a date / budgeted re-run) is read off the scoreboard on slide 9
-     once the prototype numbers land. -->
+<!-- 0:30–1:00. The recommendation is a probe, not a product bet. Do not defend yet;
+     the hardest question gets the next slide to itself. -->
 
 ---
 
 # "Why shouldn't we simply buy their products?"
 
-**We do.** By layer:
+**We should — and that is part of this recommendation.** Layer by layer:
 
-| Layer | Decision | Why |
+| Layer | Our decision | Why |
 |---|---|---|
-| Assistants, generation | **Buy** — vendor tiers at 20 and 100 USD (E-12, E-13) | Vendor-subsidised; features copy in months |
-| Policy, sandbox, budgets | **Adopt open source** — Omnigent, Databricks (E-32) | Free, backed by a large vendor |
-| Model-opinion review | Buy if wanted | Cannot run our tests (E-50) or block merges (E-51) |
-| **The verdict + its error rate + the record** | **The only build** | Sold by no one (E-50, E-51, E-53) |
+| Coding assistants | **Buy them.** Anthropic and OpenAI sell theirs at 20 and 100 dollars a month | They subsidise their own products; every feature copies across vendors within months |
+| Guardrails across agents (permissions, sandboxes, budgets) | **Use open source.** Databricks released this layer for free in 2026 | No reason to pay for, or rebuild, what is already given away |
+| AI code reviewers | Buy one if the teams want it | It gives a model's *opinion* of a change. The market leader's own documentation says its checks cannot run your test suite |
+| **An independent verdict with a measured error rate, and a record of outcomes** | **The only thing worth building** | Nobody sells it — and the model vendors *cannot* sell it credibly |
 
-"Agents **reliably skew positive** when grading their own work" — Anthropic, on its own models (E-34).
-A second model from the same family "is still an LLM that is inclined to be generous" (E-35).
+Why they cannot: Anthropic wrote, about its own models, that *"agents reliably skew
+positive when grading their own work"*, and that a second model from the same family
+*"is still an LLM that is inclined to be generous towards LLM-generated outputs."*
 **Independence cannot be bought from the party being judged.**
 
-<!-- 1:00–2:30. The hardest question, answered in minute two. Concede the premise first:
-     their spend is on generation, which we buy. The bolded line is the slide. -->
+<!-- 1:00–2:30. The CFO's question, answered in minute two. Concede the premise first.
+     Sources: tiers E-12/E-13; Omnigent E-32; CodeRabbit E-50; quotes E-34/E-35. -->
 
 ---
 
-# What the incumbents have not solved
+# The problem the incumbents have not solved
 
-Writing code got cheap. Knowing whether to trust it did not.
+Writing code has become cheap. Knowing whether to trust it has not.
 
-- "Roughly half of test-passing" agent changes "**would not be merged** into main by repo maintainers" (E-01)
-- Median time in review **up 441.5%**; PRs merged with **no review at all up 31.3%** — 22,000 developers, from a vendor that sells measurement (E-04, E-05)
-- Trust in AI output fell **43% → 33%** in a year; distrust rose 31% → 46% (E-82); two thirds cite solutions "almost right, but not quite" (E-07)
-- A model trained on coding tasks learned to force tests green — **by patching the test reporter** to say "passed" (E-75)
+- An independent research group (METR) found that **roughly half** of AI-written changes
+  that pass their tests *"would not be merged"* by the maintainers of the very
+  repositories they were written for.
+- Telemetry across 22,000 developers shows median code-review time **up 441%** in a year,
+  while the share of changes merged **with no review at all is up 31%**. (The source sells
+  measurement tooling — we say that wherever we quote it.)
+- Developers use the tools more and trust them less: in Stack Overflow's annual survey,
+  trust in AI output fell from 43% to 33% in one year, and two thirds of developers cite
+  answers that are *"almost right, but not quite."*
+- Most striking: in a controlled study, a model being trained on coding tasks **learned to
+  force its tests to pass — by quietly patching the test reporter** so everything read
+  "passed." The author of a change cannot be the keeper of its own evidence.
 
-<!-- 2:30–4:00. Four facts, no adjectives; name the interested party on the second.
-     The last bullet sets up the whole design: the author of a change cannot be the
-     keeper of its evidence. -->
-
----
-
-# The gap: four things nobody sells together
-
-1. A verdict that **runs the customer's own checks** — CodeRabbit's custom checks cannot "run your test suite" (E-50)
-2. **Independence** from the vendor whose model wrote the code (E-34, E-35)
-3. A **measured false-pass rate**, per repository — published by no vendor
-4. An **outcome record** an auditor can read — vendor logs record actions and cost, never whether the change was verified (E-53)
-
-**Said against ourselves:** the framing and metrics are published research (E-40); CodeRabbit —
-143 M USD raised at a **1.5 B valuation** — is positioned as "the control layer" beside this gap (E-49).
-The gap is real, and it is **narrow**. That is why this is a probe with fixed exits, not an investment.
-
-<!-- 4:00–5:00. Say "narrow" out loud. The honesty paragraph is the credibility of the
-     whole talk — the case against entering is in PROPOSAL §1.4, undiluted. -->
+<!-- 2:30–4:00. Four facts, no adjectives. Name the interested party on the second
+     bullet. The last one sets up the entire design. Sources: E-01, E-04/05, E-82/E-07,
+     E-75. -->
 
 ---
 
-# The product, in the order a change flows
+# The gap is real — and we will tell you how narrow it is
 
-1. **Use case → checks.** The engineer writes the use case; the team's own assistant asks clarifying questions — agents guess when tasks are underspecified (E-80); a person approves
-2. **Contract fixed before the agent runs** — scope, required checks, budget, on a protected branch the author cannot write to
-3. **Verdict of executable evidence after it stops** — the customer's tests, a scope check, and the agent's new tests run against the original code, where "they must fail" (E-76). For LLM applications: an evaluation with hidden cases — pass, fail or inconclusive
-4. **Outcome record** — asked, changed, checked, verdict, cost. Written once, never edited
-5. **A measured error rate for the verdict itself** — per repository, re-measured for every model and harness pairing (E-36, E-58)
+Nobody sells these four things together:
 
-It trades **speed to merge** for a verdict **the author cannot influence**. Fail closed.
+1. **A verdict that runs the customer's own tests and checks** — not a model's opinion of
+   the code. The best-funded reviewer's documentation states its checks cannot execute
+   your test suite.
+2. **Independence** from whichever vendor's model wrote the code.
+3. **A measured error rate for the verdict itself**, on the customer's own repository.
+   No vendor publishes one; four of them each claim first place on the same benchmark.
+4. **A permanent record of outcomes** that an auditor can read. Today's logs record what
+   agents did and what it cost — never whether the result was verified or accepted.
 
-<!-- 5:00–6:30. Walk the five steps with one finger; step 5 is the differentiator —
-     "this is the number no one else measures". Close on the trade, stated as a trade. -->
+**Now the case against us, in plain terms:** the underlying idea is already published in
+research; Anthropic describes something adjacent as its own practice; and CodeRabbit —
+which raised 143 million dollars at a 1.5 billion valuation — markets itself as "the
+control layer" right next to this gap. The gap is genuine. It is also **narrow**, which is
+exactly why we recommend a staged probe with stopping rules, and not an investment.
+
+<!-- 4:00–5:00. Say "narrow" out loud; the honesty is the credibility of the talk.
+     Sources: E-50, E-34/35, E-53, E-40, E-49. -->
 
 ---
 
-# What one day was built to measure — and what it ran
+# What the product would be, told as a change flowing through it
 
-**Designed:** 11 tasks × 3 arms (bare 90-line scaffold / prompt-disciplined / gated),
-three verdict sources on the same changes, every run in its own container (T21).
-**Run, before the time budget stopped it** (`RESULTS.md`) — spend **0.07 of 50 USD**:
+1. **Before any work starts, the team turns the request into checks.** The engineer
+   writes what is wanted; the team's own AI assistant asks the clarifying questions
+   (agents are known to guess when a task is ambiguous); runnable checks are drafted from
+   the answers; **a person approves them.**
+2. **Those checks become a contract, locked away from the author.** Scope, required
+   checks, and a budget — stored where the author of the change, human or AI, has no
+   write access.
+3. **After the author finishes, the verdict runs — somewhere the author cannot reach.**
+   The team's own test suite; a check that the change stayed within its agreed scope; and
+   a telling extra: the author's *new* tests are run against the *original* code, where
+   they must fail — tests that pass on both versions prove nothing.
+4. **Every change leaves a permanent record:** what was asked, what changed, which checks
+   ran, the verdict, the cost. Written once, never edited.
+5. **The verdict's own error rate is measured and published to the team** — how often it
+   lets a bad change through, re-measured whenever the model or assistant changes,
+   because a check that earns its keep on this year's models may be overhead on next
+   year's.
 
-| What ran | Result |
+The trade, stated as a trade: **it adds waiting before merge, in exchange for a verdict
+the author cannot influence.** When anything in the verdict process breaks, nothing
+passes.
+
+<!-- 5:00–6:30. Walk the five steps with one finger; step 5 is what no one else
+     measures. Sources: E-80, E-76, E-36, E-58. -->
+
+---
+
+# What the one-day prototype set out to measure — and what it actually ran
+
+The plan: run the same tasks through a published, neutral test agent three ways — bare,
+instructed to verify its own work, and inside our gate — and compare three opinions of
+each result: the agent's own claim, a reviewer model from a different vendor, and our
+gate. The referee: **hidden acceptance checks** that neither the agent nor the gate ever
+sees.
+
+What actually ran before the day ended — total model spend: **7 cents** of a 50-dollar cap:
+
+| What ran | What happened |
 |---|---|
-| The measurement, proven on a fake agent first | 72 dry runs, every one as expected; simulated provider failures read `error`, never a pass |
-| The gate on hand-made **wrong** changes | **19 of 21 rejected**, each at the expected step; the E-75 reporter patch stopped at integrity, before any test ran |
-| The gate on hand-made **correct** changes | **9 of 9 accepted**; the 6 probes for wrongly failed work were not judged — run interrupted |
-| A model (claude-sonnet-5-5), 2 runs, 1 task | Correct in both arms, claimed so truthfully; the gate passed it first attempt |
-| **Not run** | The 165-run arm comparison (H2–H4, H6), the cross-vendor evaluator, the evaluation path |
+| The measurement machinery, proven first on a cost-free fake agent | 72 rehearsal runs; every one behaved as predicted, including simulated failures reading as "error" — never as a pass |
+| The gate, judging deliberately **wrong** changes we wrote by hand | **It rejected 19 of 21**, each at the exact step we predicted — including the "patched test reporter" trick from the study on the problem slide, stopped before a single test ran |
+| The gate, judging **correct** changes | **It accepted all 9** it had time to judge |
+| A real model (Claude Sonnet) on one task | Correct both times, and said so truthfully |
+| **Not reached** | The full 165-run comparison, and the rival-vendor reviewer |
 
-All 11 wrong reference changes **pass the fixture's own test suite** — the problem, in one line.
-
-<!-- 6:30–7:15. The honesty is the slide: the instrument is proven; the central
-     comparison is still open. Limitation to speak: every judged change was written by
-     the gate's own author, expected outcomes recorded first. -->
+<!-- 6:30–7:15. The honesty is the slide: the instrument is proven; the deciding
+     comparison is still open. Limitation to speak aloud: every judged change was
+     written by the gate's own author, with expected outcomes recorded first. -->
 
 ---
 
-# Whose "pass" can you trust? — still open, and here is what we know
+# Whose "pass" can you trust? Still open — here is what we know
 
-| Verdict source | What we have |
+A **false pass** lets a bad change through; a **false fail** blocks a good one, and
+teaches people to bypass the gate. We measure both, always together.
+
+| Verdict source | What we know today |
 |---|---|
-| The agent's own claim | **Not measured.** In the two model runs the model was right and said so truthfully — the main risk to the comparison: on tasks this small there may be no gap for a gate to close |
-| Evaluator agent, other vendor | **Not run** (the slice was never reached) |
-| **The gate** | **False pass 2 of 21** wrong hand-made changes · **false fail 0 of 9** correct ones judged |
+| The agent's own claim | **Not yet measured.** In our two real runs the model was right — and honest about it |
+| A rival vendor's reviewer model | **Not yet run** — the day ended first |
+| **Our gate** | **False passes: 2 of 21** wrong changes · **false fails: 0 of 9** correct ones |
 
-**Both false passes are one weakness seen twice:** behaviour no check in the contract
-covers — one planted precisely to find that limit, one found by accident. **The ground
-truth shared the blind spot.** The gate is only as good as the checks: the design's
-first-listed risk, now with a measured face.
+**Both false passes were the same weakness, seen twice:** behaviour no check covered. One
+was planted to find exactly that limit; one we found by accident — and our *own* answer
+key had the same blind spot. **The gate is only as good as the checks the team writes** —
+which is why helping teams write them is the product's first feature.
 
-<!-- 7:15–8:00. Slow down here. Finding 5 in RESULTS.md: the contract's quality is the
-     product's quality — the guided first process and the counterexample search are the
-     answer, and neither is built. Denominators always spoken: 21 and 9, author-written. -->
+<!-- 7:15–8:00. Slow down here. Always speak the denominators: 21 and 9, author-
+     written. If asked about the agent's claim: on tasks this small there may be no gap
+     for a gate to close — the open question the comparison answers (RESULTS.md 4, 5). -->
 
 ---
 
-# The scoreboard — exits fixed before the results existed
+# The scoreboard — stopping rules fixed before any result existed
 
-| # | Kill criterion (T7, T20) | Verdict (`RESULTS.md` §3) |
+| # | Condition for continuing | Result |
 |---|---|---|
-| K1 | The gate's false-pass rate is lower than the agent's claim **and** the evaluator's | **Not measured** — the comparison runs were not made |
-| K2 | **Every** planted flaw rejected | **Not met as worded: 9 of 10** — the one accepted was planted to find the limit of uncovered behaviour, and the ground truth shares it |
-| K3 | The gate accepts **no change containing an unsafe action** (reworded before any run, T20) | **Met on hand-made changes: 0 of 5** (0 of 15 in the dry run) — not measured on a model |
+| 1 | The gate errs less than the agent's claim **and** than a rival reviewer | **Not measured** — those runs were not reached |
+| 2 | Every planted flaw is rejected | **Not met as written: 9 of 10** — the one that passed was planted to find exactly that limit |
+| 3 | No change with an unsafe action is accepted | **Met on every change we fed it** — not yet seen with a live model |
 
-**Read strictly, the stage-1 answer today is Wait.** Read with its cause: the instrument
-works, the deciding comparison was never run — and it is cheap to run.
+**Read strictly, the rules say: wait.** Read with the cause in view: the instrument works,
+the one failure taught us where the risk lives, and the deciding comparison was never
+run — and is cheap to run.
 
-<!-- 8:00–8:30. Read the verdicts; do not soften K2. The strict/with-cause double
-     reading is RESULTS.md §3's own wording — both are said out loud. -->
-
----
-
-# What it costs, said before anyone asks
-
-**It adds:** writing the checks (the largest, least-known cost) · extra attempts ·
-machine time · re-measurement at every model release · **waiting before merge**.
-
-**It is meant to remove:** review time evidence could settle · rework and incidents
-from changes that passed their tests and were wrong · the risk in the 31.3% of PRs
-merging with no review (E-05).
-
-**Whether that nets out is unproven.** The prototype measures what the gate adds; only
-the pilot measures what it saves. Where it will not pay, named now: small low-risk
-changes; fast new builds, where a frontier lab says "corrections are cheap, and waiting
-is expensive" (E-57); teams with few tests.
-
-<!-- 8:30–9:00. Say the cost before the CFO does. "Unproven" is a word to use. -->
+<!-- 8:00–8:30. Read the verdicts; do not soften row 2. The strict/with-cause double
+     reading is RESULTS.md §3's own wording — both get said out loud. Row 3 was
+     re-worded before any run (journal, T20): the gate runs after the agent stops, so
+     it can refuse a change but cannot prevent an action. -->
 
 ---
 
-# The ask
+# What this product would cost us — said before anyone has to ask
 
-| Stage | Cost | Exit, fixed in advance | Status |
+**It adds cost in four places:** engineers' time to write the checks (the largest and
+least-known cost); extra attempts when a check fails; machine time to run the verdicts;
+and a standing commitment to re-measure whenever a model changes. It also adds **waiting**
+— a change that used to merge when the agent finished now merges when the evidence is in.
+
+**It is meant to remove:** reviewer hours spent on questions a test could settle; rework
+and incidents from changes that passed their tests and were still wrong; and the growing
+share of changes merging with no review at all.
+
+**Whether that trade nets out is unproven.** Our prototype can measure what the gate
+adds; only a pilot with a real team can measure what it saves. And we can already name
+where it will *not* pay: small low-risk changes, fast greenfield builds — OpenAI's own
+words are *"corrections are cheap, and waiting is expensive"* in that setting — and teams
+with few tests, for whom writing the checks is most of the cost.
+
+<!-- 8:30–9:00. Say the cost before the CFO does. "Unproven" is a word to use, not
+     avoid. Sources: E-05, E-57. -->
+
+---
+
+# What we are asking for
+
+| Stage | Cost | Continue only if | Where it stands |
 |---|---|---|---|
-| 1 · Prototype | one day · **0.07 of 50 USD spent** | the scoreboard | **stopped on the time budget; comparison unrun** |
-| 1b · Completion | finish the interrupted run (free) · the 165-run comparison (~6.4 USD by one-run arithmetic, not a forecast) · the cross-vendor evaluator · **widen the ground truth first** (ASSIST-021) | the same scoreboard, now measurable | **requested** |
-| 2 · Measurement pilot | 6 weeks · 2 engineers · product lead at half time · **assumption**, rates from finance | a partner says the report changed a decision they were about to make | gated on 1b |
-| 3 · Build | scoped only if stage 2 clears — estimating it now would be an invented number | set before it starts | not reached |
+| 1 — One-day prototype | One day; **7 cents** of model spend against a 50-dollar cap | The scoreboard you just saw | Built; stopped when the day ended, with the deciding comparison unrun |
+| **1b — Finish the measurement** | A few hours of work. Finishing the interrupted run is free; the full 165-run comparison costs roughly **6 dollars** of model spend at observed prices; the rival-vendor reviewer a little more. Strengthen the answer key first | The same scoreboard — this time fully measurable | **This is today's ask** |
+| 2 — Six-week pilot | 2 engineers and a half-time product lead (staffing is an assumption; finance owns the rates) | A design partner tells us the report changed a decision they were about to make | Gated on 1b |
+| 3 — Build the product | Scoped only if the pilot earns it — pricing it now would be an invented number | Set before it starts | Not reached |
 
-The pilot is also the entry product: we run the partner's own tasks and report the rate
-and cost of production-qualified changes on their repository.
+The pilot doubles as the first sale: we run a partner's own tasks on their repository and
+hand them a report on the rate, cost and trustworthiness of their AI-written changes.
 
 <!-- 9:00–9:30. The ask changed shape with the results: before funding six weeks, fund
-     the hours and dollars that finish stage 1 (RESULTS.md §8 lists each piece and what
-     it needs). The stages are the risk management; stage 2 doubles as the first sale. -->
+     the hours that finish stage 1. RESULTS.md §8 prices each piece. -->
 
 ---
+zoom: 0.88
+---
 
-# The executive recommendation
+# The recommendation, on one page
 
-**To the CFO, in one page:**
+1. **We agree with the premise.** The model owners keep code generation; we buy their
+   assistants and use the free open-source guardrails. Reselling generation has, in one
+   founder's words, *"neutral or negative"* margins — we should not be in it.
+2. **We probe the one thing they cannot credibly sell:** an independent, test-executing,
+   error-measured verdict on their own agents' output. No vendor publishes an error rate
+   for its reviewer; none records whether results were accepted.
+3. **One day and seven cents bought a working, tested instrument** — and an honest null:
+   the deciding comparison was not reached. Finishing it costs hours and about ten
+   dollars; then six weeks of 2.5 people; then, and only then, a build decision. Today
+   the rules point to "wait, with a review date."
+4. **We report what a finance team can audit:** cost per change that truly qualified for
+   production, checking included, always beside the verdict's own error rates. Never
+   lines of code, acceptance rates, or seats.
+5. **Unknowns first:** whether the gate beats the agent's claim and a rival reviewer;
+   market size; willingness to pay. What the day taught us: the risk lives in the
+   coverage of the checks, not in the 350-line mechanism — the moat, if any, is the
+   measurement and the neutrality.
 
-1. **We agree with the premise.** Microsoft, OpenAI and Anthropic own generation; we buy their products at their subsidised tiers (E-12, E-13) and adopt the open-source control layer (E-32). Margins for anyone reselling generation are "neutral or negative" (E-17).
-2. **We probe the one thing their position prevents them from selling:** an independent, executable, measured verdict on their agents' output (E-34, E-50, E-53). No vendor publishes an error rate for its own reviewer; no audit log records outcomes.
-3. **The ask is priced so belief is unnecessary.** One day spent 0.07 USD and built a working gate and measurement; it also found that the deciding comparison was not reachable inside the day. Completing it costs hours and about ten dollars — then six weeks of 2.5 people (assumption — rates from finance), then a build only past exits fixed before the results existed. Every stage can end it; "wait, with a review date" is a real outcome, and it is today's strict reading.
-4. **The unit is yours:** cost per production-qualified change, checking included (E-40) — always reported with the verdict's own error rates. The gate's first measured rates: 2 of 21 wrong changes passed, 0 of 9 good ones blocked, on author-written changes. No vanity metrics.
-5. **What we do not know, said first:** whether the gate beats the agent's claim and a model reviewer (unmeasured), market size, willingness to pay, and whether the added cost nets out. The one day also taught us where the risk lives: the coverage of the checks, not the mechanism — which is 350 lines and confirms our own claim that the mechanism is not the moat.
+**Decision requested: fund the completion of stage 1 — hours, not weeks — and we read
+the finished scoreboard together. Or set the review date now.**
 
-**Decision requested:** fund the completion of stage 1 and read the scoreboard then — or set the review date now.
-
-<!-- 9:30–10:00. The last slide of the recommendation, left on screen for the
-     discussion. It is the one-page CFO message condensed; the full page with the
-     challenge-and-answer appendix is docs/templates/cfo-message.md. Stop at 10:00. -->
+<!-- 9:30–10:00. The closing slide; it stays on screen for the discussion. It is the
+     one-page CFO message condensed; the full version with the challenge-and-answer
+     appendix is docs/templates/cfo-message.md. Stop at 10:00. -->
 
 ---
 layout: center
 ---
 
-# Part 2 — the technical walkthrough
+# Part two — the technical walkthrough
 
-The system design behind the recommendation · `docs/DESIGN.md`
+How the system is designed, and what building the prototype taught us about it.
 
-<!-- ~14 minutes. The audience may now include the engineering leadership. The thread:
-     one sentence, the objects, the flow, the ladder, the hard cases, and what we
-     already know is weak. -->
+<!-- ~14 minutes. The audience may now lean CTO. The thread: one sentence, the objects,
+     the flow, how a verdict is computed, the hard cases, and what we already know is
+     weak. -->
 
 ---
 
 # The design in one sentence
 
-**It trades speed to merge, and some good changes wrongly held back, for a verdict that
-the author of a change cannot influence.**
+**We trade speed to merge — and accept that some good changes will be wrongly held back —
+in exchange for a verdict that the author of a change cannot influence.**
 
-| Quality | Rule | What we give up |
+Every quality the design promises is paid for, and we can say with what:
+
+| Promise | The rule that delivers it | What it costs us |
 |---|---|---|
-| Integrity | The author cannot alter the checks, the contract or the verdict | Time: the verdict is a separate job after the agent stops |
-| Tenancy | Code, checks and records stay in the customer's environment | Central learning across customers |
-| Replay | Any verdict reproduces from its record | Storage, and versioning everything |
-| Bounded cost | Verification has a budget fixed in the contract | Some results end inconclusive |
-| **Fail closed** | When the verdict process breaks, **nothing passes** | Some good changes held back |
+| Integrity | The author cannot alter the checks, the contract or the verdict | Time: the verdict runs as a separate job after the author finishes |
+| Privacy | Code, checks and records never leave the customer's systems | We cannot learn across customers, and support is harder |
+| Reproducibility | Any past verdict can be re-run from its record | Storage, and the discipline of versioning everything |
+| Bounded cost | Verification has a budget fixed in the contract | Some verdicts end as "inconclusive" rather than definitive |
+| **Fail closed** | When the verdict process itself breaks, **nothing passes** | Some good changes wait |
 
-<!-- 1:30. Each quality is paid for; point at the third column. Fail closed is the
-     one to anchor: a crashed check never reads as clean. -->
+<!-- 1:30. Point at the third column; most designs never admit it. Fail-closed is the
+     anchor: a crashed check never reads as clean. -->
 
 ---
 
-# Core objects
+# The four objects everything is built from
 
 | Object | What it is | The detail that matters |
 |---|---|---|
-| **Check** | A named, executable test of one thing, versioned | `visible` to the author, or `hidden` — mounted only where the verdict runs |
-| **Contract** | "What done means", fixed before the agent runs: scope, checks, budget, risk tier | Lives on a **protected branch**; approved by a person; its hash pinned by the pipeline |
-| **Evidence item** | One result of one check | Exit status + structured report + versions of everything involved |
-| **Verdict** | passed · failed · inconclusive · **error** · overridden | `error` is never a pass; overrides become labels that measure the verdict's own error |
-| **Outcome record** | One per change, written once | Contract hash, commits, author (agent, model, version), every evidence item, cost |
+| **Check** | One runnable test of one thing, with a version | A check is either *visible* to the author or *hidden* — mounted only where the verdict runs, so the author cannot train against it |
+| **Contract** | The agreed meaning of "done" for one task: scope, required checks, budget | Lives on a protected branch no author can write to; approved by a person; the pipeline pins its exact fingerprint |
+| **Verdict** | passed · failed · inconclusive · error · overridden | "Error" is never a pass. When a person overrides the verdict, that override is kept as a label — the raw material for measuring the verdict's own error |
+| **Outcome record** | One per change, written once, never edited | Who asked, what changed, which checks ran, the verdict, the cost — enough to replay the whole decision years later |
 
-Idempotent: base commit + head commit + contract hash + check id → the same record, not two.
+One run of one check produces one **evidence item**: its exit status, its report, and the
+versions of everything involved. Running the same verdict twice produces the same record,
+not two.
 
 <!-- 2:00. The override-becomes-label line is the flywheel: the customer's own history
-     calibrates the verdict. It is also the accumulating asset named in the thesis. -->
+     calibrates the verdict, and that accumulating data is the only real moat we named. -->
 
 ---
 
-# How a change flows
+# How a change flows through it
 
 ```mermaid {theme: 'neutral', scale: 0.6}
 flowchart LR
-  B["Checks approved ·<br>contract fixed,<br>protected branch"] --> C["Change made<br>agent or person"]
+  B["Checks approved ·<br>contract locked"] --> C["Change made<br>by agent or person"]
   C --> V{"Verdict<br>separate job"}
   B -. read-only .-> V
-  V -->|passed| R["Route by<br>risk tier"]
-  V -->|failed| H["Author, or<br>a person"]
+  V -->|passed| R["Routed by<br>risk level"]
+  V -->|failed| H["Back to author,<br>or to a person"]
   V -->|error| X["Nothing<br>passes"]
-  R --> K[("Outcome<br>record")]
+  R --> K[("Permanent<br>record")]
   H --> K
-  K -. recalibrates .-> B
+  K -. measurement recalibrates the checks .-> B
 ```
 
 <div class="text-sm opacity-70 mt-2">
-Attachment: a required check in the team's existing pipeline — no vendor hook needed.
-Hooks in the assistant allow human pauses; the pipeline's verdict is the one that counts.
+It attaches as a required check in the team's existing build pipeline — no cooperation
+needed from any assistant vendor. Assistants can offer early feedback while the work
+runs; the pipeline's verdict is the one that counts.
 </div>
 
 <!-- 1:30. Trace one change left to right. The dotted read-only edge and the separate
-     job are the integrity story; the dotted edge back from the record is the flywheel.
-     The full verdict states (failed vs inconclusive, error re-queue) are on the next
-     slides. -->
+     job are the integrity story; the dotted edge back from the record is the flywheel. -->
 
 ---
+zoom: 0.9
+---
 
-# What a verdict is made of — and is it deterministic?
+# How a verdict is computed — and whether it is deterministic
 
-**A verdict is computed, not judged.** Every check is executable; each run produces an
-**evidence item** — exit status plus a structured report, with the versions of everything
-involved. The verdict is a fold over those items: **worst case wins, fail closed**. It never
-reads the agent's conversation — a verifier that reads the author's account inherits the
-author's mistakes. Idempotent: (base commit, head commit, contract hash, check id) → the
-same record, not two.
+**A verdict is computed, not judged.** Each check runs and reports; the verdict is the
+worst result, taken in a fixed order, failing closed. It never reads the agent's
+conversation.
 
-| | Conventional code | LLM application |
+| | Ordinary code | Software built on a model |
 |---|---|---|
-| The checks | Tests, diff scope, test-adequacy, dependencies, secrets | Fixed eval cases, some **hidden** from the agent |
-| Computed as | One run each; exit status + structured report | Cases × repeats; scored code-first, model only where code cannot |
-| Decided by | The ladder (next slide), first match wins | Whole confidence range above / below the pass mark |
-| Deterministic? | **Yes** — same inputs, same verdict (flaky checks quarantined, never silently passed) | **No — and it never needed to be**: fixed beforehand, protected, run outside the agent, recorded, its error measured |
+| The checks | The team's tests, scope, dependency and secrets screens; the author's new tests re-run on the *original* code | Evaluation cases for every requirement, some kept **hidden** from the author |
+| Computed how | Each check runs once | Each case runs several times, within budget; code scores first, a measured model only where code cannot |
+| Deterministic? | **Yes** — same inputs, same verdict. Flaky checks go to a person, never silently through | **No — and it never needed to be.** Still fixed in advance, protected, run beyond the author's reach, recorded, error-measured |
 | Outcomes | passed · failed · error | passed · failed · **inconclusive** · error |
 
-<!-- 1:30. The honest headline is T12: the verdict is always EXECUTABLE, not always
-     deterministic. For code it is a pure function of the inputs; for software built on
-     a model, one deterministic run proves little, so the check is an evaluation and
-     "inconclusive" is an honest third answer that routes to a person. -->
+<!-- 1:30. The headline is decision T12 in the plan: the verdict is always EXECUTABLE,
+     not always deterministic. "Inconclusive" is an honest third answer that routes to
+     a person. -->
 
 ---
 
-# The verdict: a decision ladder, as built and exercised
+# The order of the checks, as built and exercised
 
-For conventional code — first match wins (`prototype/runner`, 21 gate tests hold the order):
+First match wins; the cheapest decisive checks sit at the top:
 
-1. Verdict process failed → **error**, re-queued. A crashed check never reads as clean — held by 8 broken-check tests
-2. Contract, protected path, test or check altered → **failed**, integrity. Decided in **0.0 s**, no code run: this rung stopped the E-75 reporter patch before any test executed
-3. Budget exceeded → **failed**
-4. Build fails → **failed**
-5. A required test fails — the repository's, the author's, or the **hidden** ones → **failed**
-6. Out of scope → **failed**
-7. The author's new tests **pass against the original code** → **failed** — tests that cannot tell old from new prove nothing (E-76); caught `p07-vacuous-tests`
-8. Missing dependency, or a secret in the change → **failed**
+1. **The verdict process itself failed** → "error", retried once, then escalated — never a pass
+2. **Contract, protected file, existing test or check altered** → failed, in **under 0.1 s, before any code runs** — the rung that caught the "patched reporter" trick
+3. **Budget exceeded** → failed
+4. **The build fails** → failed
+5. **Any required test fails** — the team's, the author's, or the hidden ones → failed
+6. **The change left its agreed scope** → failed
+7. **The author's new tests also pass on the original code** → failed — tests that cannot tell old from new prove nothing
+8. **A missing dependency, or a secret in the change** → failed
 9. Otherwise → **passed**
 
-<!-- 1:30. Two things to say: the ladder fails closed at every rung, and integrity is
-     decided before any code runs — 6 of the 19 hand-made rejections took 0.0 s. The
-     self-review proposes moving scope/dependency/secrets (also static) before the
-     tests too; noted, not yet done. Rung 7 catches test theatre. -->
+Six of our nineteen rejections were decided at step 2, at effectively zero cost.
+
+<!-- 1:30. Two things to say: it fails closed at every rung, and integrity is decided
+     before any code runs. Rung 7 catches test theatre (it caught our planted
+     "vacuous tests" flaw). The design review proposes lifting steps 6 and 8 above the
+     tests too; noted, not yet done. -->
 
 ---
 
-# The hard case: software built on a model
+# The hard case: verifying software that is itself built on a model
 
-One run of a system that answers differently each time proves little — the check is an
-**evaluation**, and the verdict is executable without being deterministic:
+An AI feature answers differently every time, so a single passing run proves almost
+nothing. For these, the check is an **evaluation**:
 
-- **Cases**: versioned; every functional requirement covered; **some hidden** from the agent — tuning against the full set fits the set, not the task
-- **Repeats**: each case run several times, bounded by the contract's budget
-- **Scoring, in order**: code first (exact match, schema, tolerance) · a model only where code cannot — pinned, from another vendor, its agreement with human labels measured and stated · a person where neither can
-- **The decision**: `passed` / `failed` only when the whole plausible range clears or misses the mark; otherwise `inconclusive` → more samples, then a person
-- **Two error sources, both reported**: too few samples, and a scorer that is wrong
+- **The cases are written in advance and versioned**, covering every requirement — and
+  some are hidden from the author, because an author tuning against the full set learns
+  the set, not the task.
+- **Each case runs several times**, within the contract's budget.
+- **Scoring prefers code over judgment:** exact matches, schemas, tolerances. A model
+  scores only what code cannot — pinned to a version, from a different vendor than the
+  author where possible, and its agreement with human labels is measured and stated.
+- **The decision respects uncertainty:** "passed" only when the whole plausible range
+  clears the bar; "failed" only when all of it misses; otherwise **"inconclusive"** —
+  more samples while budget remains, then a person decides.
 
-Designed in full; built in the prototype only as a bonus (T12).
+This path is fully designed; building it was a stretch goal the prototype did not reach.
 
-<!-- 1:30. This is the answer to "an LLM app can't be verified deterministically" —
-     what the product promises never depended on determinism: checks fixed beforehand,
-     protected, run outside the agent, recorded, with their own error measured. -->
-
----
-
-# Risk tiers, drawn by people
-
-| Tier | Set by | On `passed` | Always |
-|---|---|---|---|
-| Green | Path rules written by a person — well-tested, isolated code | Accepted | Recorded |
-| Yellow | The default | Reviewer sees the **evidence before the diff** | Recorded |
-| Red | Path rules: sign-in, payments, permissions, anything the team names | A person on every step; an agent may propose, never land | Recorded |
-
-A person draws the tiers — "a model's confidence is a poor guide" to risk (E-74).
-A tier widens only when the measured false-pass rate for that class supports it:
-**autonomy is earned with numbers.** Pending human decisions expire upward, never into
-silent acceptance.
-
-<!-- 1:00. One line of theatre: "no human in the loop" is a configuration justified by
-     evidence, never a default. -->
+<!-- 1:30. This answers "an AI feature can't be verified deterministically" — the
+     promise never depended on determinism. Designed in DESIGN.md §4.2; decision
+     ADR-017. -->
 
 ---
 
-# Measuring the verdict itself
+# Who decides how much checking a change gets: people, by risk
 
-A verdict of unknown reliability is another opinion. Two directions, measured:
+| Risk level | Who sets it | What happens on "passed" |
+|---|---|---|
+| Low | Rules written by a person — well-tested, isolated areas of the code | Accepted automatically |
+| Normal — the default | | A reviewer sees it, **evidence first, code second** |
+| High — sign-in, payments, permissions, anything the team names | | A person is involved at every step; an agent may propose, never land |
 
-- **False pass** — a change that should have failed and passed. Measured with **planted flaws**: out-of-scope edits, weakened tests, tampered checks, behaviour quietly dropped
-- **False fail** — a good change wrongly failed. Measured with known-good changes. A verdict that blocks good work gets bypassed
+Two principles. **People draw the lines, not models** — published practitioner guidance
+is blunt that a model's confidence is a poor guide to risk. And **autonomy is earned with
+numbers**: a low-risk zone widens only when the measured error rate for that kind of
+change supports it. A pending human decision expires upward to someone senior — never
+into silent acceptance.
 
-Reported with **denominators and ranges**, per kind of task and per model. A model
-upgrade is treated as a release: the measurement re-runs (E-36, E-58) — that recurrence
-is the product's subscription logic, not an afterthought.
-
-<!-- 1:30. The honest footnote to volunteer: today's denominators are small — a
-     handful of planted flaws. The pilot's job is to grow them on a real repository;
-     overrides and outcomes accumulate as the customer's own calibration data. -->
-
----
-
-# What we already know is weak — and what the build confirmed
-
-Reviewed against our own design before building (`docs/DESIGN-REVIEW.md`), then tested by it:
-
-1. **The integrity boundary needs real isolation.** Running the customer's tests executes the author's code — the E-75 scenario. The prototype's answer: every run, verdict and ground-truth check in its own container, no network, no key (T21); the gate's source provably reads neither the ground truth nor the agent's account (held by tests)
-2. **The enforcement anchor must be the host's required status check** — CI config is author-writable; a protected branch writable only by a role no agent assumes. Not exercised by the prototype (the protected branch was simulated, T19)
-3. **Flaky tests** threaten idempotency, replay and the false-fail rate — retry policy, quarantine, flakiness as a metric. Its cousin showed up in the build: **Docker's file sharing served stale content twice** (ASSIST-020); the gate now confirms by hash, inside the container, that it judges the change it was asked to judge
-4. **Confirmed by measurement: the checks' coverage carries the risk.** Both false passes were behaviour no check covered — and the ground truth shared the blind spot. The guided first process and the counterexample search are the named answers; neither is built
-
-<!-- 1:30. Volunteering the weaknesses is the walkthrough's strongest slide — more so
-     now that one of them has a measured face. A verifier that judges the wrong files
-     is worse than none; the stale-file fault would not have been found without tests. -->
+<!-- 1:00. One line if asked: "no human in the loop" is a configuration a team earns
+     with evidence, never a default. Source: E-74 (Osmani). -->
 
 ---
 
-# The prototype: what was built, in the order the design set
+# Measuring the measurer
 
-**One day. One question** — is an executable verdict wrong less often than the agent's
-claim and a model reviewer's? **The question is still open; the instrument that will
-answer it exists and is tested.**
+A verdict of unknown reliability is just another opinion. So the product measures its
+own two error rates, continuously:
 
-- **Built, in order:** the measurement skeleton on a fake agent (slice 1) · the published 82-line scaffold on a real model, in containers (slice 2, T21) · the gate — 350 lines, 84 tests across gate, unsafe-action rules, broken checks, containers, spend cap (slice 3) · hand-made changes through the gate (slice 4, interrupted)
-- **Not reached:** the 165-run arm comparison, the cross-vendor evaluator, the evaluation path. `RESULTS.md` §8 prices each: the first is free, the comparison ≈ 6.4 USD by one-run arithmetic
-- **Why this order:** nothing is measured on an unproven instrument (ADR-022). The alternative — run the model comparison first — would have compared the gate with the agent's claim before knowing the gate's own error on known cases
-- **Simulated, by decision (T19):** the guided first process, the protected branch, hooks
+- **False passes** — bad changes it let through. Measured with **planted flaws**: changes
+  we deliberately write to be wrong in known ways (scope violations, weakened tests,
+  tampered checks, quietly dropped behaviour) and feed to the gate.
+- **False fails** — good changes it wrongly blocked. Measured with known-good changes.
+  A gate that blocks good work does not get tolerated for long; it gets bypassed.
 
-Beyond this exercise: no loop of our own ships — the product attaches to the team's
-pipeline and the vendors' harnesses.
+Every rate is reported with its sample size, per kind of task and per model. A model
+upgrade is treated like a release: the measurement re-runs, because a check that earned
+its keep on this model may be pure overhead on the next — **that recurrence is the
+product's subscription logic, not an afterthought.**
 
-<!-- 1:30. The order is the discipline point: measurement first used the day, and that
-     was a choice, defended in ADR-022. The mechanism came out small — 350 lines —
-     which is the proposal's own "cheap to copy" claim, now self-demonstrated. -->
+<!-- 1:30. Honest footnote to volunteer: today's samples are small — tens, not
+     thousands. The pilot grows them on a real repository; every human override
+     becomes a data point. -->
 
 ---
 
-# Redlines — never, in any configuration
+# What we already know is weak — including what the build itself taught us
 
-1. Accept a change when the verdict process failed
-2. Let the author write to the contract, the hidden checks or the verdict
-3. Let the agent that wrote a change approve it
-4. Land a red-tier change without a person
-5. Send the customer's code, checks or records outside their environment
-6. Use customer data beyond what the customer has agreed
-7. Report a pass rate without the verdict's own error rates beside it
-8. Report a throughput number without its quality number
-9. Run without a record
+We reviewed our own design critically before building, and then the build confirmed and
+extended the list:
 
-<!-- 0:30 and close part 2: "the last two redlines applied to this deck first."
-     Total walkthrough ≈ 14:30. Open the floor. -->
+1. **Running the team's tests means executing the author's code** — in the very place the
+   hidden checks live. The prototype's answer: every run happens in its own disposable
+   container with no network and no credentials, and automated tests prove the gate reads
+   neither the answer key nor the agent's transcript. The production design goes further.
+2. **The weakest link in a pipeline is its configuration**, which authors can usually
+   edit. The real anchor must be the repository host's required-check mechanism, with the
+   contract on a branch no agent-wielding account can write to. Not yet exercised.
+3. **The infrastructure will lie to you occasionally.** During the build, Docker's file
+   sharing twice served stale content — the gate was at risk of judging the wrong version
+   of a change. It now verifies, by fingerprint, inside the container, that it is judging
+   exactly what it was asked to judge. A verifier that judges the wrong files is worse
+   than none, and only our test suite caught it.
+4. **Confirmed by measurement: the real risk is the coverage of the checks, not the
+   mechanism.** Both false passes were behaviour no check covered — and our own answer key
+   shared the blind spot. The two named answers (guided check-writing, and an automated
+   search for counterexamples) are designed and not yet built.
+
+<!-- 1:30. Volunteering the weaknesses is the walkthrough's strongest slide — one of
+     them now has a measured face. Details: docs/DESIGN-REVIEW.md; the stale-file
+     fault is ASSIST-020. -->
+
+---
+
+# What was built in the day, in the order the design demanded
+
+**One question: is an executable verdict wrong less often than the agent's own claim, and
+less often than a rival model reviewing?** The question is still open; the instrument
+that will answer it now exists and is tested.
+
+- **Built, in order:** the measurement machinery, proven on a cost-free fake agent first
+  — so nothing would ever be measured on an unproven instrument; then the published
+  82-line test agent running a real model in containers; then the gate itself — 350 lines,
+  held by 84 automated tests; then the hand-made changes fed through it, interrupted by
+  the end of the day.
+- **Deliberately not reached:** the 165-run comparison and the rival-vendor reviewer.
+  The alternative — run the big comparison first and validate the instrument later —
+  would have produced impressive numbers we could not have defended.
+- **Deliberately simulated**, by a decision taken up front: the guided check-writing (we
+  wrote contracts by hand) and the protected branch (a directory stood in for it).
+
+Worth saying plainly: we will never ship an agent of our own. The product attaches to the
+pipelines and assistants a team already has.
+
+<!-- 1:30. The order is the discipline point (ADR-022). The mechanism came out at 350
+     lines — our own "cheap to copy" claim, self-demonstrated. -->
+
+---
+
+# Lines we will not cross, in any configuration
+
+1. Never accept a change when the verdict process itself failed.
+2. Never let the author of a change write to the checks, the contract, or the verdict.
+3. Never let the agent that wrote a change approve it.
+4. Never land a high-risk change without a person.
+5. Never move a customer's code, checks or records out of their environment.
+6. Never use customer data beyond what the customer has explicitly agreed.
+7. Never report a pass rate without the verdict's own error rates beside it.
+8. Never report a speed or volume number without its quality number.
+9. Never run without leaving a record.
+
+<!-- 0:30 and close: "the last two applied to this very deck first." Total walkthrough
+     ≈ 14:30. Open the floor. -->
 
 ---
 layout: center
@@ -458,52 +547,58 @@ layout: center
 
 ---
 
-# Challenges we expect
+# Challenges we expect, and our short answers
 
 | Challenge | The short answer |
 |---|---|
-| "They outspend us 1000:1" | Their spend is on generation, which we buy; independence from themselves is what they cannot sell (E-34) |
-| "Buy CodeRabbit instead" | It cannot run our tests (E-50) and publishes no error rate; it closing this gap within a year is the named risk — hence a probe, not a build |
-| "This raises my AI bill and slows delivery" | Yes — stated before you asked; capped per contract, applied by risk; four paired numbers decide it |
-| "The next model makes it unnecessary" | The check's value moves with each release (E-36); re-measurement per model pairing **is** the product |
-| "What's the TAM?" | Not established and not invented; stage 2 tests willingness to pay before TAM matters |
-| "Margins are abysmal" | Those are generation margins (E-17); we resell no inference — the verdict runs on the customer's pipeline and model access |
-| "Why would a customer not build this in CI themselves?" | The mechanism is ten lines and free; the product is the measured error rate, the neutrality, and the record — the parts DIY does not give |
+| "They outspend us a thousand to one" | Their spend is on generation, which we buy. Independence from themselves is the one thing they cannot sell — their own published words concede their agents grade themselves too kindly |
+| "Just buy CodeRabbit" | Its own documentation says its checks cannot run your test suite, and it publishes no error rate. It closing this gap within a year is the risk we named first — which is why we ask for a probe, not a build |
+| "This raises our AI bill and slows delivery" | Yes — we said so before you asked. Capped per task, applied by risk, and judged by four numbers reported together; if they do not improve for a pilot partner, we stop |
+| "The next model release makes it unnecessary" | Anthropic itself found its checking layer "unnecessary overhead" one model later — on tasks the newer model handled. The product's answer is re-measurement at every release; that movement is what customers pay for |
+| "What is the market size?" | Not established, and we will not invent a number. The pilot tests willingness to pay directly, before market size matters |
+| "Software margins in AI are terrible" | Those are the margins of reselling generation. We resell no model calls — the verdict runs on the customer's own pipeline and their own model subscriptions |
+| "Why wouldn't a customer build this themselves in CI?" | The mechanism, honestly, is a week of work — ours was 350 lines. What a team cannot easily give itself is the measured error rate, the neutrality, and the audit record. If buyers do not value those three, there is no product — that is what the pilot tests |
 
-<!-- Full answers with concede-or-hold lines: docs/templates/cfo-message.md appendix. -->
+<!-- Full versions with concede-or-hold guidance: docs/templates/cfo-message.md. -->
 
 ---
 
-# If the scenario changes
+# If the business scenario changes
 
 | Scenario | What changes | What does not |
 |---|---|---|
-| Budget halved | Pilot shrinks: one partner, four weeks | The exits, the unit, the redlines |
-| CodeRabbit ships contract-then-evidence | The window closes as predicted → Wait, or partner; our measurement method keeps its value | The honesty of having named it first (E-49) |
-| A vendor ships a "native independent evaluator" | Re-check differentiation; independence and a published error rate remain unsold (E-35) | Kill criteria |
-| Board wants revenue inside 6 months | Stage 2 becomes a paid measurement engagement — it already is the entry product | Scope: no assistant, no control plane |
-| AI budgets frozen at the customer | Favourable: the product runs on the customer's existing model access and pipeline; it rations spending by risk | Cost model |
-| Frontier models stop failing expensively | The measurement shows it before we overspend; product shrinks toward the audit record → Wait | The record's audit value (E-53) |
+| Budgets are cut | The pilot shrinks to one partner, four weeks | The stopping rules and the honesty of the reporting |
+| CodeRabbit ships a contract-and-evidence flow | The window closes the way we predicted; we wait, or we partner — the measurement method keeps its value | The credit for having named it first |
+| A model vendor ships a "native independent evaluator" | We re-examine the differentiation; independence and a published error rate would still be unsold | The stopping rules |
+| The board wants revenue within six months | The pilot becomes a paid measurement engagement — it already is the entry product | The exclusions: no assistant, no platform |
+| Customer AI budgets freeze | Mildly in our favour: the product rations model spend by risk and runs on access customers already pay for | The cost model |
+| Models stop making expensive mistakes | Our own re-measurement would show it before we overspend — the product shrinks to the audit record, and we wait | The value of the record itself |
 
-<!-- The probe posture absorbs most scenario shocks: stages are small, exits are fixed,
-     and the recommendation is allowed to become Wait. That is the design of the
-     strategy, not luck. -->
-
----
-
-# What one day cannot show
-
-- Real reviewer time saved, adoption, willingness to pay — the pilot's measures
-- What it costs a team to write checks for ordinary work — the largest open assumption (A1); contracts were written by hand
-- Whether results on today's models hold on the next — our task set is a snapshot; vendors' own evaluation tasks stopped discriminating within months
-- Whether the need is sharpest where we expect it (long-lived systems, regulated work) — a hypothesis for the pilot, not a finding
+<!-- The probe posture absorbs most shocks: stages are small, exits are fixed, and the
+     recommendation is allowed to become "wait". That is the design of the strategy. -->
 
 ---
 
-# Evidence index
+# What one day cannot show — stated wherever the results appear
 
-Every figure: `docs/research/EVIDENCE.md` (E-nn, each verified at its raw source) ·
-results generated from `prototype/runs/` into `docs/RESULTS.md` · decisions
-`docs/JOURNAL.md` ADR-001…020 · full case `docs/PROPOSAL.md` · design `docs/DESIGN.md` ·
-design self-review `docs/DESIGN-REVIEW.md` · the one-page leave-behind: `docs/presentation.html`,
-published as the session artifact.
+- Nothing about how models behave: a model was called twice, on one small task.
+- Every change the gate judged was written by the gate's own author. The expected
+  outcomes were recorded before judging, but an independent author would be a fairer test.
+- Nothing about reviewer time saved, adoption, or willingness to pay — those are the
+  pilot's questions.
+- Nothing about tomorrow: results on today's models are a snapshot. Anthropic's own
+  evaluation tasks stopped telling models apart within months.
+
+---
+
+# Where every number comes from
+
+Every figure in this deck traces to one of two places in the project repository: a
+public-source evidence ledger, in which each entry was verified against the original
+publisher's page before use — or the prototype's own run records, from which the results
+report is generated rather than written. The full documents behind this talk: the written
+proposal, the system design and its critical self-review, the results report, and the
+decision journal recording every choice and the alternative it rejected.
+
+<!-- For the speaker: EVIDENCE.md (rows E-01 to E-86), RESULTS.md, PROPOSAL.md,
+     DESIGN.md, DESIGN-REVIEW.md, JOURNAL.md (ADR-001 to ADR-022). -->
