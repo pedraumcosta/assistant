@@ -24,6 +24,12 @@ The spoken presentation fits **10 minutes**. Both presentation forms enforce it 
 - `slides-template.md` has 11 content slides whose presenter-note time budgets sum to 10:00; backup slides (challenges, limitations, evidence index) are for the discussion afterwards.
 - Rehearse once against a clock before the session. If over, cut detail from the problem and product sections first — never from the scoreboard, the cost honesty, or the ask.
 
+**Filled instances.** The presentation forms are instantiated at `docs/presentation.html`
+(the page, D8 artifact when published) and `docs/slides.md` (the spoken deck, with the
+technical walkthrough and discussion backup as parts 2 and 3). Both are complete except
+the run-derived slots, marked pending; they fill from `RESULTS.md` when the prototype
+lands, and the scoreboard verdicts then select the recommendation branch.
+
 ## Placeholder conventions
 
 - `{{runs:<metric>}}` — a number that must come from a file under `prototype/runs/`.
