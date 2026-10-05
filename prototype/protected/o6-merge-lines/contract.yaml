@@ -1,0 +1,23 @@
+# Contract for o6-merge-lines. Fixed before the agent runs.
+# This directory stands in for the protected branch: it is never mounted
+# into the agent's container.
+id: o6-merge-lines
+version: 1
+task: tasks/o6-merge-lines/task.md
+scope:
+  allow:
+    - invoicing/pricing.py
+    - tests/**
+# Paths the author may add to but whose existing content it may not change.
+# Existing tests: no test may be removed or have its body changed.
+protected:
+  - tests/**
+  - checks/**
+  - conftest.py
+  - pytest.ini
+budget:
+  max_turns: 30
+  max_cost_usd: 1.00
+  repair_attempts: 2
+risk_tier: green
+approved_by: null   # a person, set when the contract is reviewed

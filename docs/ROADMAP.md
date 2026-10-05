@@ -12,7 +12,8 @@
 - Research is done and recorded in `docs/research/`: the first pass, the full re-reads, and three sets of Pedro's own material checked against their sources (his Notion notes, his web research notes, and his analysis of the harness paper), with four papers read in full along the way.
 - The thesis is decided (§2 below): the evidence layer, pursued as a three-stage probe that ends in Build or Wait.
 - The first two sections of the proposal and the system design are written and reviewed.
-- The prototype (plan phase P5) is scoped slice by slice in §3.4, with three decisions taken on it (T20 to T22). Nothing is built. Pedro gave the word to start on 2026-10-05.
+- The prototype (plan phase P5) is scoped slice by slice in §3.4, with three decisions taken on it (T20 to T22). Pedro gave the word to start on 2026-10-05.
+- Slice 1 of 7 is built and its exit check passes: the measurement works end to end with a fake agent. No model has been called; nothing has been spent. The gate is not built.
 
 ## 2. The thesis
 
@@ -61,11 +62,13 @@ Status values: Done, In review, Not started, Blocked.
 | Evidence verification: ledger rows E-01 to E-29 re-checked against raw sources | `docs/research/EVIDENCE.md` | The commit after `1e3d2c5` | 2026-10-05 |
 | Problem and product: proposal sections 1 and 2, reviewed by Pedro and reframed as evidence-driven development | `docs/PROPOSAL.md` | `fa96c11`, `cc90fad` | 2026-10-05 |
 | System design, reviewed by Pedro with five decisions (T15 to T19) | `docs/DESIGN.md` | `0c10417` | 2026-10-05 |
-| Preparation for the prototype: keys confirmed, scaffold listing recorded, three decisions (T20 to T22), slices scoped | `docs/research/harness-scaffold-listing.md`, `PLAN.md` §2.1 and §7, `JOURNAL.md` ADR-021, §3.4 below | Not yet committed | 2026-10-05 |
+| Preparation for the prototype: keys confirmed, scaffold listing recorded, three decisions (T20 to T22), slices scoped | `docs/research/harness-scaffold-listing.md`, `PLAN.md` §2.1 and §7, `JOURNAL.md` ADR-021, §3.4 below | `be0139e` | 2026-10-05 |
 
 ### 3.2 In review
 
-Nothing is in review.
+| Step | Output | Exit check | Waiting on |
+|---|---|---|---|
+| Prototype slice 1: measurement skeleton with a fake agent | `prototype/` (fixture, 11 tasks, contracts, ground truth, reference changes, runner, tests) | Passed: 72 dry runs with no unexpected outcome (`prototype/runs/dryrun-fake/RESULTS.md`); 59 tests of the measurement pass | Pedro's review, the contracts' approval, and his word to commit |
 
 
 ### 3.3 Not started
@@ -103,7 +106,8 @@ The order is `DESIGN.md` §7.4. One `feat:` commit per slice, after its exit che
 | `prototype/tasks/` | One task description per task, as given to the agent | Agent |
 | `prototype/protected/` | Per task: the contract and the gate's hidden checks. Stands in for the protected branch | Gate only |
 | `prototype/groundtruth/` | Per task: the acceptance checks that decide whether a change was in fact good | Neither agent nor gate |
-| `prototype/planted/`, `prototype/known_good/` | Hand-made changes, as patches | Fed to the gate |
+| `prototype/changes/` | Hand-made changes per task: a correct one, and a wrong or unsafe one. Replayed by the fake agent; the correct ones are the known-good changes of slice 4 | Fed to the fake agent and the gate |
+| `prototype/planted/` | The planted flaws (slice 4) | Fed to the gate |
 | `prototype/scaffold/` | The listing, unedited; the adapter; the tool entry point that runs in the container | — |
 | `prototype/gate/` | The verdict runner and its checks | — |
 | `prototype/runner/` | Arms, containers, event log, spend ledger, unsafe-action rules, results table | — |
@@ -130,6 +134,15 @@ The order is `DESIGN.md` §7.4. One `feat:` commit per slice, after its exit che
 | Repeats per task and arm | 3 | The smallest number that lets "passes every time" differ from "passes once" |
 | Planted flaws | 9 | Out of scope; test weakened; test deleted; test reporter patched (E-75); contract altered; behaviour quietly dropped; new tests that pass on the original code (E-76); a dependency that does not exist; a secret |
 | Known-good changes | 5 | One per ordinary task where possible |
+
+**Slice 1 as built** (2026-10-05)
+
+- **The fake agent drives the real loop.** It speaks the listing's model interface, so the dry run goes through the unedited listing, its four tools inside the container, and everything after them. Most of slice 2's plumbing therefore exists; what remains for slice 2 is the provider adapter and the recorded prices.
+- **Only the gated arm is told the contract's scope.** The bare and prompt arms get the task as an engineer would write it. The scope and the other limits are in the contract, and without the product there is no contract to show. The gated arm so differs from the others in two ways, what the agent is told and what happens after it stops, and that pair is the product.
+- **"Qualified" has three parts:** the hidden acceptance checks pass; the repository's original tests pass from an untouched copy; the change contains no unsafe action.
+- **Existing tests may be added to, not altered.** A test file counts as weakened when anything it contained is removed or changed. Adding tests to it is ordinary work.
+- **Dry-run timing:** the mean seconds per run is in the dry run's table. It was taken with four runs in parallel and a fake agent, so it shows what the containers and checks add, not what a model adds.
+- **Not yet decided by a person:** the eleven contracts carry `approved_by: null`.
 
 **Rules for the build**
 
@@ -180,5 +193,6 @@ This is the only copy of the register (decided 2026-10-05). `PLAN.md` §10 point
 | ASSIST-015 | The decision-model enhancement needs a TypeSafe API key or a local open build; neither is in place | Open, not blocking the first prototype |
 | ASSIST-016 | The label "evidence-driven development" has not been searched in trademark registers; the registers could not be queried automatically | Open; needs a manual search before any public use |
 | ASSIST-017 | The Docker daemon is not running on this machine (Rancher Desktop is installed). Every prototype run needs it (T21) | Closed 2026-10-05: started by Pedro |
+| ASSIST-020 | Files written in a container can reach the host a moment late through Docker's file sharing on this machine. One check report was read as missing. Reports now have a unique name and are waited for briefly | Closed 2026-10-05 for check reports. Open as a watch item for the agent's working copy: not seen in 144 dry runs |
 | ASSIST-018 | The prices of the models used are not in `EVIDENCE.md`. The prototype computes cost from token counts and published prices, and no price may be assumed | Open; blocks the first paid call, not slice 1 |
 | ASSIST-019 | `PLAN.md` §8 predates `DESIGN.md` §6 and still differs from it on some rows (model routing by task, context management, orchestration, the redline candidates). Only the tool-execution row was brought into line, because T20 decided it | Open, not blocking; Pedro to say whether §8 is rewritten or replaced by a pointer to the design |

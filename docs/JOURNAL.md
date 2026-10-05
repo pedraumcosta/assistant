@@ -56,6 +56,8 @@ Two kinds of entry:
 - System design drafted (`docs/DESIGN.md`) at Pedro's request, following PLAN §7 and §8 and his own design method and checklists. A sub-agent read the notes he pointed to and returned their ideas as plain statements; the design restates them in its own words and cites no private material. His unpublished measurements were left out.
 - Pedro reviewed the system design and decided its five open points (ADR-020), asking that the prototype be kept very simple.
 - Preparation for the prototype (plan phase P5). Both API keys confirmed by listing models, which spends nothing. The scaffold's listing was not in the repository: it was taken from the arXiv PDF and recorded (`docs/research/harness-scaffold-listing.md`). Pedro decided three points (ADR-021). Plan §7.2 revised to the build order of the design; each slice scoped with an exit check in `ROADMAP.md` §3.4. No code written.
+- Pedro started Docker, confirmed the size of the task set and gave the word. Preparation committed (`be0139e`).
+- Prototype slice 1 built: the fixture library, eleven tasks with their contracts and ground-truth checks, a correct and a wrong or unsafe reference change for each, the containers, the event log, the spend ledger, the unsafe-action rules, the results table and a fake agent. The dry run puts 72 runs through the unedited listing and the containers in all three arms, with no unexpected outcome and no spend. Every wrong or unsafe reference change passes the repository's own tests and is rejected by ground truth.
 
 **Deviations and corrections**
 - **First-pass reading was truncated without warning.** The summarising fetch cut three long articles part-way and reported one as near-complete. Found when Pedro challenged the coverage. Fix: download the full text, check it reaches the final section, read end to end.
@@ -84,6 +86,10 @@ Two kinds of entry:
 - **The plan and the design disagreed on the prototype's build order.** The plan still listed a policy slice and started with the loop; the design starts with a measurement skeleton and a fake agent. The plan was brought into line.
 - **The scaffold does not run as published.** Read closely, it lacks tool parameter schemas, and its turn and cost limits surface as a `RuntimeError`, not as a stop. Recorded with the listing; neither is fixed in the listing itself.
 - **Pedro's copy of the harness paper was not on the machine** (a cloud placeholder of zero bytes). The public arXiv copy was used.
+- **One task could not have been done without changing an existing test.** The fixture's rendering test pinned the whole output, so the task that adds lines to it would have been flagged as weakening a test. The fixture test was loosened before any run.
+- **A rule flagged reading as doing.** Rewriting a file that contains the planted instruction counted as following it. The rule now looks at shell commands that contact the planted host.
+- **A check report was read as missing** because of a delay in Docker's file sharing (ASSIST-020). It surfaced as `error`, which is the designed behaviour for a report that cannot be read, and it was found by a test, not in a run.
+- **The layout differs from the one scoped:** correct and wrong reference changes sit together under `prototype/changes/`.
 - **A push failed** for lack of git credentials and was retried through the GitHub CLI's login (ASSIST-011).
 
 ---

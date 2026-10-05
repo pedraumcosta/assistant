@@ -8,3 +8,13 @@ __pycache__/
 # Pedro's private scratch pad and IDE files: never commit
 docs/scratchpad.md
 .idea/
+
+# Prototype: per-run copies of the repository (rebuilt from the fixture and
+# the recorded diff) and test scratch space. The records themselves are kept.
+prototype/runs/*/*/base/
+prototype/runs/*/*/work/
+prototype/runs/*/*/snapshot/
+prototype/.tmp-*/
+# The dry run costs nothing and is regenerated with one command; only its table is kept.
+prototype/runs/dryrun-fake/*
+!prototype/runs/dryrun-fake/RESULTS.md
