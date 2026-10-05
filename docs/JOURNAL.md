@@ -46,6 +46,7 @@ Two kinds of entry:
 - Pedro supplied his own analysis of the harness paper, dated 2026-10-02. Checked claim by claim against the paper's HTML text and PDF. He approved four actions: record it, base the agent under test on the paper's published scaffold, add Omnigent-as-channel and outcome-fed recalibration as inputs, and check two unverified items in the PDF. Both items were confirmed.
 - Plan §1 rewritten to state the current position and how it moved. All of the day's research rounds committed together at Pedro's confirmation.
 - Pedro raised decision models (TypeSafe's Jev) as a possible new element and supplied his addendum of 2026-10-02. Two sub-agents checked it at primary sources. Finding: useful for cost at harness call sites we do not build; a component, never the verdict, in the evidence layer; the valuable link is recalibrating a cheap classifier from the labels our layer produces. Records added; plan §3.10 written; roadmap inputs updated. Pedro decided to treat it as the next enhancement after the first prototype (ADR-012).
+- Pedro raised a second thesis from his own list of candidates: a brownfield / enterprise-legacy specialisation. Its section in his notes and Osmani's article were read by the main session; the two papers behind it were read in full and the legacy-modernisation market researched by sub-agents. Evaluation recorded; plan §3.11 written; roadmap question T11 added (ADR-013).
 
 **Deviations and corrections**
 - **First-pass reading was truncated without warning.** The summarising fetch cut three long articles part-way and reported one as near-complete. Found when Pedro challenged the coverage. Fix: download the full text, check it reaches the final section, read end to end.
@@ -64,6 +65,8 @@ Two kinds of entry:
 - **One quotation in Pedro's paper analysis is not in the paper** (that Omnigent "does not evaluate output correctness"). The paper is silent on the point.
 - **Decision D3 was refined, not reversed.** We still run our own minimal loop, but take it from the paper's published listing.
 - **The decision-model addendum needed ten corrections**, among them the context limit (about 32,000 usable tokens, not 64,000), the mechanism (unpublished, not as described), and two integration claims that had changed state. Its central caution, that such judges fail where LLM judges fail, was confirmed with a figure, for text rubrics only.
+- **Evaluating the second thesis exposed a weakness in the first.** We had worded the verdict as deterministic and drawn from the customer's own checks. On a migration benchmark such checks alone accepted 118 runs of which 28 deserved it. A wider verdict is proposed and not yet agreed.
+- **Pedro's notes described the VB6 study as equivalence-tested.** It was assessed by hand by the system's maintainer; there was no test suite.
 - **A push failed** for lack of git credentials and was retried through the GitHub CLI's login (ASSIST-011).
 
 ---
@@ -74,7 +77,7 @@ Two kinds of entry:
 
 | | |
 |---|---|
-| Status | **Direction agreed 2026-10-05. Details open** (`ROADMAP.md` §2, questions T1 to T10). Not final. |
+| Status | **Direction agreed 2026-10-05. Details open** (`ROADMAP.md` §2, questions T1 to T11). Not final. |
 | Plan reference | D1, `PLAN.md` §1 and §1.1 |
 
 **Decision.** We do not propose building a coding assistant, an agent harness, or a meta-harness. The candidate is an evidence layer (change contract, deterministic verification after the agent stops, evidence bundle, risk routing) delivered as a plug-in to existing harnesses and entered through per-repo agent evaluation. "Wait, with a review date" stays a possible conclusion.
@@ -262,3 +265,32 @@ Two kinds of entry:
 - Building the product around decision-model economics: the argument was made for a governance layer this project dropped, and the call sites where it saves most sit inside the harness, which we do not build.
 
 **Beyond this exercise.** The evidence is three weeks old and contains no code judgments. Whether a decision model's errors on code changes overlap with a model reviewer's is something our own data would have to show.
+
+### ADR-013 — Second thesis evaluated: brownfield / enterprise-legacy specialisation
+
+| | |
+|---|---|
+| Status | Evaluated 2026-10-05. Recommendation recorded; decision pending the thesis discussion. |
+| Plan reference | `PLAN.md` §3.11; `docs/research/second-thesis-brownfield.md` |
+
+**What was evaluated.** A product specialised for agent work in old codebases, built on four practices from Osmani's article: zoning by blast radius, a durable comprehension memo, characterization tests first, and the harness as institutional memory.
+
+**Recommendation.** Do not pursue it as a separate product. Carry it into the first thesis (ADR-001) in two ways: as the candidate first market, and as the reason to widen the verdict from fixed checks to fixed checks plus a completeness audit plus a counterexample search.
+
+**Rationale.**
+- The premise holds: agents are weakest in legacy code (E-67, E-70, E-71).
+- The four practices are process, reproducible as a prompt or a skill file, and each already exists as a product or feature (`docs/research/brownfield-market.md`).
+- The evidence does not test the practices; it points to model capability and to verification.
+- In every verified success the decisive input was the customer's own oracle, which a tool cannot supply.
+- The large migrations are sold by hyperscalers and model vendors, largely free or bundled; with no model, customers or vertical (ADR-002), every foothold means choosing a vertical and starting with services.
+- The setting fits the first thesis closely: it identifies the buyer, its best-known practitioner states our contract and risk-tier ideas in his own words (E-73, E-74), and migration supplies an oracle that eases the question of where contracts come from.
+
+**What it changes in ADR-001, if agreed.**
+- The candidate buyer becomes teams working in legacy systems.
+- The verdict is no longer described as deterministic checks alone. On a migration benchmark those accepted 118 runs of which 28 deserved it (E-68). The proposed verdict has three parts, and the counterexample search is done by a model whose result depends on which models search (E-69). What it produces is still an executable failing test.
+
+**Alternatives considered.**
+- Brownfield as the main thesis, replacing the first: rejected in the recommendation for the reasons above.
+- Ignoring brownfield: rejected; it is the best answer found to who the buyer is.
+
+**Open.** Whether to accept the wider verdict (ROADMAP T11) and brownfield as the first market (T1).

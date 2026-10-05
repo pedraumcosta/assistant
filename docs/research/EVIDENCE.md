@@ -9,7 +9,7 @@ Every figure or quotation that a document in this repo relies on has a row here.
 | [S] | Seen only in a search summary or secondary write-up. Not verified; must be upgraded to [P] or dropped |
 | [P-archive] | Read raw from a web-archive capture because the publisher blocked direct download |
 
-A caution applies to the [P] rows numbered E-01 to E-29 that were gathered by a research sub-agent: the page was fetched through a tool that summarises with a small model, so the exact wording of a quotation should be re-read at the source before it is printed in the proposal. Rows E-30 to E-37, E-40 to E-45 and E-59 to E-61 were read directly from the source text by the main session and do not carry that caution; E-38 and E-39 were checked against the downloaded text. Rows E-17, E-46 to E-58 and E-62 to E-66 were confirmed by sub-agents in the raw downloaded page.
+A caution applies to the [P] rows numbered E-01 to E-29 that were gathered by a research sub-agent: the page was fetched through a tool that summarises with a small model, so the exact wording of a quotation should be re-read at the source before it is printed in the proposal. Rows E-30 to E-37, E-40 to E-45, E-59 to E-61, E-73 and E-74 were read directly from the source text by the main session and do not carry that caution; E-38 and E-39 were checked against the downloaded text. Rows E-17, E-46 to E-58 and E-62 to E-72 were confirmed by sub-agents in the raw downloaded page or the full text.
 
 "Interest" records whether the source sells a product that benefits from the finding.
 
@@ -143,6 +143,19 @@ The product is three weeks old. None of these rows concerns judgments about code
 | E-64 | "Use a Jev-first cascade to lower cost, and expect little gain in accuracy" | as E-63, Appendix P | [P] | Academic | as E-63 |
 | E-65 | Post-hoc calibration: calibration error "0.117" raw, "0.008" with isotonic regression; "a few hundred labeled examples is enough to get most of the benefit". One constructed sentiment dataset | AnthusAI/Jev-Calibration repository | [P] | Independent project | see `check-decision-model-risks.md` item R2 |
 | E-66 | "Jev matched the oracle on all 500 repeated decisions." Five frozen agent runs, one reviewer's labels; "not a general ranking of judge accuracy" | LangChain blog | [P] | Vendor of evaluation tooling | see `check-decision-model-product.md` item 4 |
+
+## Brownfield work and the limits of fixed checks
+
+| ID | Claim, as published | Source and date | Tag | Interest | URL |
+|---|---|---|---|---|---|
+| E-67 | "only 28 of 520 runs ( 5.4% ) pass all three stages, 13 of the 20 tasks receive no accepted solution" | Hong et al., SWE Refactor Bench, arXiv 2608.23564, August 2026 | [P] | Academic | https://arxiv.org/abs/2608.23564 |
+| E-68 | Of runs passing every fixed behavioural check: 30 had not migrated ("Stage II gives all 30 full marks; only Stage I stops them"); of the 88 that had, "only 28 survived all six verifiers; the other 60 ( 68.2% ) had a counterexample found against them within the hour" | as E-67 | [P] | Academic | as E-67 |
+| E-69 | The completeness audit is a model judge: "Judge and human agree 89.7% of the time ( 140/156, κ=0.795 )". The counterexample search depends on the panel: "retire the two strongest and the remaining four would accept 46 submissions instead of 28" | as E-67 | [P] | Academic | as E-67 |
+| E-70 | "a 35–40% productivity gain on simple, greenfield tasks, its impact on complex, legacy brownfield code is often 10% or less" | DORA, ROI of AI-assisted Software Development, v.2026.1, citing Stanford research | [P] | Vendor-run (Google) | https://services.google.com/fh/files/misc/dora-roi-of-ai-assisted-software-development-2026.pdf |
+| E-71 | Legacy-Bench: pass rates "from 16.9% to 42.5% across the 12 model-agent combinations"; "In 97% of failures, the agent believes it has solved the task" | Factory, 2026-04-01 | [P] | Vendor (sells a coding agent) | see `brownfield-market.md` Part 2 |
+| E-72 | VB6 to C# case study: "the agent scored 70% equivalence across the 331 instructions evaluated", assessed by hand by the system's maintainer; one system, twelve features | Alves, Politowski and Montandon, arXiv 2608.28972, August 2026 | [P] | Academic | https://arxiv.org/abs/2608.28972 |
+| E-73 | "When an agent is the one making them pass, don't let that same session be the only author of the tests. Pin the behavior first, in a separate pass or by a person" | Addy Osmani, "Brownfield Agentic Engineering", 2026-09-14 | [P] | Practitioner | https://addyo.substack.com/p/brownfield-agentic-engineering |
+| E-74 | "Autonomy should follow blast radius, observability, and recoverability. A model's confidence is a poor guide." | as E-73 | [P] | Practitioner | as E-73 |
 
 ## Not usable as evidence
 

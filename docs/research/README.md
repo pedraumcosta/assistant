@@ -22,6 +22,10 @@ Everything we read or looked up for the ASSIST exercise, recorded so the repo st
 | `check-procurement-claims.md` | Check of the enterprise procurement checklist against vendors' official documentation | Quotations confirmed in raw pages |
 | `review-verification-segment.md` | Funding, scale and actual behaviour of AI code review and verification products; what vendor audit logs record; the products closest to our idea | Figures confirmed in raw pages; the assessment of how occupied the space is belongs to the researcher |
 | `paper-harness-ablation.md` | arXiv 2609.20804, an ablation study of planning, tools and context management across four models | Read end to end from the full text |
+| `second-thesis-brownfield.md` | Evaluation of a second thesis, a brownfield / enterprise-legacy specialisation: its evidence read in full, the market, and what it changes in the first thesis | Overview of the four records below; the assessment and recommendation are ours |
+| `paper-swe-refactor-bench.md` | arXiv 2608.23564: whole-repository migrations judged in three stages; the best measurement we have of a behaviour-only check passing bad changes | Read end to end from the full text |
+| `paper-legacy-modernization-case-study.md` | arXiv 2608.28972: a VB6 to C# migration of twelve features, assessed by hand | Read end to end; one system, internally inconsistent on some figures |
+| `brownfield-market.md` | Who sells AI for legacy modernisation, the demand evidence, Osmani's case studies checked at source, and products close to the four practices | Figures confirmed in raw pages; the closing assessment is the researcher's |
 | `decision-models-2026-10-02.md` | Pedro's addendum on the Jev decision model: what it is, what held, and where it fits an assistant and our evidence layer | Overview of the two check files below; the product is three weeks old and independent evidence is thin |
 | `check-decision-model-product.md` | Claim-by-claim check of what Jev is, its limits, deployment and the measurements cited for it | Figures confirmed in raw pages |
 | `check-decision-model-risks.md` | Check of the risk and crowdedness claims, including a full read of arXiv 2609.29769 on shared errors between decision models and LLM judges | Figures confirmed in raw pages; negative findings are weak |
@@ -43,6 +47,7 @@ Everything we read or looked up for the ASSIST exercise, recorded so the repo st
 | `articles/claude-code-spec-driven-development-hour-three.md` | Claude Code: Spec-Driven Development — Why Your AI Coding Sessions Fall Apart at Hour Three | Rick Hightower | Full text, end to end |
 | `articles/cca-f-part-4-long-running-agent-harness.md` | Foundations of CCA-F Exam Part 4: Engineering the Long-Running Agent Harness | Rick Hightower | Full text, end to end |
 | `articles/real-time-visualization-of-agentic-interactions.md` | Real-Time Visualization of Agentic Interactions | Daniel Warfield | Full text, end to end |
+| `articles/osmani-brownfield-agentic-engineering.md` | Brownfield Agentic Engineering | Addy Osmani | Full text, by the main session |
 
 The article records are digests written for this exercise, not copies of the articles.
 
@@ -84,6 +89,8 @@ Token, tool-call and duration figures are as reported by the Claude Code harness
 | 2026-10-05 | Review and verification segment | Raw-page research | 219,065 | 68 | 615 s |
 | 2026-10-05 | Check: Jev decision model, product claims | Raw-page verification | 148,790 | 34 | 395 s |
 | 2026-10-05 | Check: decision-model risks and crowdedness | Raw-page verification | 201,366 | 59 | 502 s |
+| 2026-10-05 | SWE Refactor Bench and VB6 case-study papers | Full text | 141,226 | 18 | 311 s |
+| 2026-10-05 | Legacy modernisation and brownfield market | Raw-page research | 155,264 | 56 | 570 s |
 
 Anthropic's harness design post and the verification-economics paper were read by the main session itself, so they have no row above.
 

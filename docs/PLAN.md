@@ -27,6 +27,8 @@ It is entered through measurement: run the customer's own tasks and report the r
 
 **Who it is for.** Teams where a wrong change is expensive: existing systems and regulated work. It is not for high-throughput new builds, where a frontier lab argues that "corrections are cheap, and waiting is expensive".
 
+**A second thesis was evaluated and not adopted as a product:** a brownfield / enterprise-legacy specialisation (§3.11). It is carried instead as the candidate first market for the evidence layer, and it showed that fixed checks alone pass bad changes where tests under-describe behaviour. Widening the verdict accordingly is proposed for the thesis discussion.
+
 **Where the case stands.** The idea is not new. The framing and metrics are published, the model vendor describes a contract plus a separate evaluator, and a competitor valued at 1.5 billion USD is positioning as "the control layer" for agent-written changes. What remains open is the narrow list above. The case for **Wait, with a review date** is stronger than when this plan was first written, and it remains a real outcome.
 
 **What the prototype is for.** To show whether a deterministic verdict is right more often than the agent's own claim and than a model reviewer's verdict, by a margin worth paying for (§7). If it is not, the recommendation is Wait.
@@ -42,6 +44,7 @@ In Pedro's own terms (from his working notes): "Reliability, not capability, is 
 | 2026-10-05 | A verifier with a measured false-pass rate; the mechanism itself is cheap to copy | Full re-read of the articles (§3.4) |
 | 2026-10-05 | A deterministic, vendor-independent, measured verdict; the contract-plus-evaluator idea and the metrics are published | Anthropic's harness design post and two papers (§3.6, §3.7) |
 | 2026-10-05 | The same, for teams where a wrong change is expensive; a funded competitor owns the adjacent ground | Market check of the review and verification segment (§3.8) |
+| 2026-10-05 | Proposed, not yet agreed: brownfield as the first market, and a verdict widened from fixed checks to fixed checks plus a completeness audit plus a counterexample search | Evaluation of a second thesis, brownfield specialisation (§3.11) |
 
 This position is a working hypothesis. Decision D1 records the agreed direction; the details are open questions T1 to T10 in `ROADMAP.md` §2.
 
@@ -316,6 +319,34 @@ Pedro asked whether a new kind of model, sold as Jev by TypeSafe AI, could be us
 
 It needs a TypeSafe API key or a local open build. The first prototype keeps the door open by recording, for every run, the inputs a judge would need and the deterministic outcome.
 
+### 3.11 A second thesis evaluated: brownfield specialisation (2026-10-05)
+
+Pedro's list of thesis candidates names a second one: a brownfield / enterprise-legacy assistant built on Osmani's practices (zoning by blast radius, a durable comprehension memo, characterization tests first, the harness as institutional memory). It was evaluated from its primary sources and the market. Full evaluation: `docs/research/second-thesis-brownfield.md`.
+
+**The premise holds.** Agents are weakest in legacy code: "only 28 of 520 runs ( 5.4% ) pass all three stages" on whole-repository migrations (EVIDENCE E-67); gains "on complex, legacy brownfield code" are "often 10% or less" (E-70).
+
+**As a separate product it is weaker than the first thesis.**
+
+- Its four practices are process, reproducible as a prompt or a skill file, and each already exists as a product or feature.
+- The evidence does not test them. Where it points anywhere, it points to model capability and to verification.
+- In every verified success the decisive input was the customer's own oracle: an existing test suite, the running system, or replayed production traffic.
+- Large migrations are sold by AWS, Microsoft, Google, IBM and Anthropic, largely free or bundled.
+- With no model, customers or vertical (D2), every foothold found means choosing a vertical and starting with services-heavy work.
+
+**As the first market for the evidence layer it is the best fit found.** It answers who the buyer is: teams where constraints live outside the code, tests under-describe behaviour, and a wrong change is expensive. Osmani's practices restate the evidence layer in brownfield terms: "Pin the behavior first, in a separate pass or by a person" (E-73); "Autonomy should follow blast radius, observability, and recoverability. A model's confidence is a poor guide" (E-74). Migration also has an oracle that ordinary change lacks, the old system, which eases the question of where contracts come from.
+
+**It exposes a weakness in how §1 words the verdict.** On the migration benchmark, 118 runs passed every fixed behavioural check and 28 deserved to. Thirty had not migrated at all, and 60 of the remaining 88 were broken by a counterexample within the hour (E-68). Fixed checks alone are not enough where the customer's checks under-describe behaviour, which is the brownfield condition.
+
+**Proposed refinement, for the thesis discussion.** The verdict has three parts, with the false-pass rate measured across all of them:
+
+1. fixed checks from the customer;
+2. a completeness audit: did the change actually happen;
+3. a counterexample search: new tests written to find hidden differences.
+
+The search is done by a model, and its result depends on which models search (E-69). What it produces is an executable failing test, so the evidence stays executable.
+
+**Recommendation.** Do not pursue brownfield as a second product. Carry it into the first thesis as the candidate first market and as the reason to widen the verdict. No decision has been taken (ROADMAP T1, T11; JOURNAL ADR-013).
+
 ## 4. Deliverables
 
 | File | Purpose | Brief topic |
@@ -469,3 +500,4 @@ The issue register lives in `docs/ROADMAP.md` §5. It is the only copy.
 - Pedro's web research notes checked in raw source pages; ablation paper read in full; review and verification segment researched; findings in §3.8.
 - Pedro's own analysis of the harness paper checked against the paper; findings in §3.9; decision D3 refined.
 - Pedro's addendum on decision models checked at primary sources; findings in §3.10.
+- Second thesis (brownfield specialisation) evaluated from its primary sources and the market; findings in §3.11.
