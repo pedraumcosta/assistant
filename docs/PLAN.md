@@ -67,11 +67,11 @@ Under B and C we build neither a harness nor a meta-harness. The prototype's own
 
 ## 2. Decisions needed from Pedro
 
-Decisions are recorded here as they are made. All ten are now decided.
+Decisions are recorded here as they are made. Nine are decided; D1 has an agreed direction with details still open.
 
 | ID | Decision | Recommendation | Why |
 |---|---|---|---|
-| D1 | Which wedge do we defend? | **Decided 2026-10-05:** option B of §1.1, the evidence layer delivered as a plug-in to existing harnesses, entered through option C, per-repo agent evaluation. | Pedro agreed the paper analysis and the narrowing. Still subject to the full re-read of the linked articles (ASSIST-005). |
+| D1 | Which wedge do we defend? | **Direction agreed 2026-10-05, details open:** option B of §1.1, the evidence layer delivered as a plug-in to existing harnesses, entered through option C, per-repo agent evaluation. | Pedro agreed the paper analysis and the narrowing, and on the same day said the thesis details are not yet chosen. The open questions are listed in `ROADMAP.md` §2. |
 | D2 | What does the company already own? | **Decided 2026-10-03:** nothing. No proprietary model, no harness, no captive vertical, no special moat. | The strategy must stand without an inherited advantage. |
 | D3 | Prototype inner loop | **Decided 2026-10-03:** write a minimal single loop ourselves, behind a provider interface. | It shows every design topic in readable code and makes the point that the loop is small, so it is not the product. Rejected alternative: wrapping an agent SDK or hosted agent service. |
 | D4 | Prototype language | **Decided 2026-10-03:** Python. | Fastest for one day. |
