@@ -1,0 +1,50 @@
+..............FFFF....                                                   [100%]
+=================================== FAILURES ===================================
+_______________________ test_line_total_5_percent_at_10 ________________________
+
+    def test_line_total_5_percent_at_10():
+>       assert line_total(line(10, "10.00")) == Decimal("95.00")
+E       AssertionError: assert Decimal('100.00') == Decimal('95.00')
+E        +  where Decimal('100.00') = line_total(LineItem(sku='W-1', description='Widget', quantity=10, unit_price=Decimal('10.00')))
+E        +    where LineItem(sku='W-1', description='Widget', quantity=10, unit_price=Decimal('10.00')) = line(10, '10.00')
+E        +  and   Decimal('95.00') = Decimal('95.00')
+
+tests/test_pricing.py:51: AssertionError
+_______________________ test_line_total_5_percent_at_49 ________________________
+
+    def test_line_total_5_percent_at_49():
+>       assert line_total(line(49, "10.00")) == Decimal("465.50")
+E       AssertionError: assert Decimal('490.00') == Decimal('465.50')
+E        +  where Decimal('490.00') = line_total(LineItem(sku='W-1', description='Widget', quantity=49, unit_price=Decimal('10.00')))
+E        +    where LineItem(sku='W-1', description='Widget', quantity=49, unit_price=Decimal('10.00')) = line(49, '10.00')
+E        +  and   Decimal('465.50') = Decimal('465.50')
+
+tests/test_pricing.py:55: AssertionError
+_______________________ test_line_total_10_percent_at_50 _______________________
+
+    def test_line_total_10_percent_at_50():
+>       assert line_total(line(50, "10.00")) == Decimal("450.00")
+E       AssertionError: assert Decimal('500.00') == Decimal('450.00')
+E        +  where Decimal('500.00') = line_total(LineItem(sku='W-1', description='Widget', quantity=50, unit_price=Decimal('10.00')))
+E        +    where LineItem(sku='W-1', description='Widget', quantity=50, unit_price=Decimal('10.00')) = line(50, '10.00')
+E        +  and   Decimal('450.00') = Decimal('450.00')
+
+tests/test_pricing.py:59: AssertionError
+________________ test_line_total_quantity_discount_rounds_once _________________
+
+    def test_line_total_quantity_discount_rounds_once():
+        # 10 * 9.99 = 99.90; * 0.95 = 94.905 -> rounded with round_cents
+>       assert line_total(line(10, "9.99")) == round_cents(Decimal("94.905"))
+E       AssertionError: assert Decimal('99.90') == Decimal('94.90')
+E        +  where Decimal('99.90') = line_total(LineItem(sku='W-1', description='Widget', quantity=10, unit_price=Decimal('9.99')))
+E        +    where LineItem(sku='W-1', description='Widget', quantity=10, unit_price=Decimal('9.99')) = line(10, '9.99')
+E        +  and   Decimal('94.90') = round_cents(Decimal('94.905'))
+E        +    where Decimal('94.905') = Decimal('94.905')
+
+tests/test_pricing.py:64: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_pricing.py::test_line_total_5_percent_at_10 - AssertionErro...
+FAILED tests/test_pricing.py::test_line_total_5_percent_at_49 - AssertionErro...
+FAILED tests/test_pricing.py::test_line_total_10_percent_at_50 - AssertionErr...
+FAILED tests/test_pricing.py::test_line_total_quantity_discount_rounds_once
+4 failed, 18 passed in 5.86s

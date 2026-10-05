@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="4" skipped="0" tests="22" time="5.848" timestamp="2026-10-05T19:17:06.638358+00:00" hostname="7b66b778837e"><testcase classname="tests.test_money" name="test_round_cents" time="0.050" /><testcase classname="tests.test_money" name="test_parse_amount" time="0.021" /><testcase classname="tests.test_money" name="test_parse_amount_rejects_text" time="0.091" /><testcase classname="tests.test_numbering" name="test_first_number" time="0.017" /><testcase classname="tests.test_numbering" name="test_next_number" time="0.019" /><testcase classname="tests.test_pricing" name="test_line_total" time="0.066" /><testcase classname="tests.test_pricing" name="test_subtotal" time="0.010" /><testcase classname="tests.test_pricing" name="test_discount" time="0.026" /><testcase classname="tests.test_pricing" name="test_no_discount" time="0.014" /><testcase classname="tests.test_pricing" name="test_unknown_discount_code" time="0.061" /><testcase classname="tests.test_pricing" name="test_tax" time="0.047" /><testcase classname="tests.test_pricing" name="test_tax_applies_after_discount" time="0.020" /><testcase classname="tests.test_pricing" name="test_total_with_discount_and_tax" time="0.016" /><testcase classname="tests.test_pricing" name="test_line_total_no_quantity_discount_below_10" time="0.017" /><testcase classname="tests.test_pricing" name="test_line_total_5_percent_at_10" time="0.020"><failure message="AssertionError: assert Decimal('100.00') == Decimal('95.00')&#10; +  where Decimal('100.00') = line_total(LineItem(sku='W-1', description='Widget', quantity=10, unit_price=Decimal('10.00')))&#10; +    where LineItem(sku='W-1', description='Widget', quantity=10, unit_price=Decimal('10.00')) = line(10, '10.00')&#10; +  and   Decimal('95.00') = Decimal('95.00')">def test_line_total_5_percent_at_10():
+&gt;       assert line_total(line(10, "10.00")) == Decimal("95.00")
+E       AssertionError: assert Decimal('100.00') == Decimal('95.00')
+E        +  where Decimal('100.00') = line_total(LineItem(sku='W-1', description='Widget', quantity=10, unit_price=Decimal('10.00')))
+E        +    where LineItem(sku='W-1', description='Widget', quantity=10, unit_price=Decimal('10.00')) = line(10, '10.00')
+E        +  and   Decimal('95.00') = Decimal('95.00')
+
+tests/test_pricing.py:51: AssertionError</failure></testcase><testcase classname="tests.test_pricing" name="test_line_total_5_percent_at_49" time="0.021"><failure message="AssertionError: assert Decimal('490.00') == Decimal('465.50')&#10; +  where Decimal('490.00') = line_total(LineItem(sku='W-1', description='Widget', quantity=49, unit_price=Decimal('10.00')))&#10; +    where LineItem(sku='W-1', description='Widget', quantity=49, unit_price=Decimal('10.00')) = line(49, '10.00')&#10; +  and   Decimal('465.50') = Decimal('465.50')">def test_line_total_5_percent_at_49():
+&gt;       assert line_total(line(49, "10.00")) == Decimal("465.50")
+E       AssertionError: assert Decimal('490.00') == Decimal('465.50')
+E        +  where Decimal('490.00') = line_total(LineItem(sku='W-1', description='Widget', quantity=49, unit_price=Decimal('10.00')))
+E        +    where LineItem(sku='W-1', description='Widget', quantity=49, unit_price=Decimal('10.00')) = line(49, '10.00')
+E        +  and   Decimal('465.50') = Decimal('465.50')
+
+tests/test_pricing.py:55: AssertionError</failure></testcase><testcase classname="tests.test_pricing" name="test_line_total_10_percent_at_50" time="0.012"><failure message="AssertionError: assert Decimal('500.00') == Decimal('450.00')&#10; +  where Decimal('500.00') = line_total(LineItem(sku='W-1', description='Widget', quantity=50, unit_price=Decimal('10.00')))&#10; +    where LineItem(sku='W-1', description='Widget', quantity=50, unit_price=Decimal('10.00')) = line(50, '10.00')&#10; +  and   Decimal('450.00') = Decimal('450.00')">def test_line_total_10_percent_at_50():
+&gt;       assert line_total(line(50, "10.00")) == Decimal("450.00")
+E       AssertionError: assert Decimal('500.00') == Decimal('450.00')
+E        +  where Decimal('500.00') = line_total(LineItem(sku='W-1', description='Widget', quantity=50, unit_price=Decimal('10.00')))
+E        +    where LineItem(sku='W-1', description='Widget', quantity=50, unit_price=Decimal('10.00')) = line(50, '10.00')
+E        +  and   Decimal('450.00') = Decimal('450.00')
+
+tests/test_pricing.py:59: AssertionError</failure></testcase><testcase classname="tests.test_pricing" name="test_line_total_quantity_discount_rounds_once" time="0.022"><failure message="AssertionError: assert Decimal('99.90') == Decimal('94.90')&#10; +  where Decimal('99.90') = line_total(LineItem(sku='W-1', description='Widget', quantity=10, unit_price=Decimal('9.99')))&#10; +    where LineItem(sku='W-1', description='Widget', quantity=10, unit_price=Decimal('9.99')) = line(10, '9.99')&#10; +  and   Decimal('94.90') = round_cents(Decimal('94.905'))&#10; +    where Decimal('94.905') = Decimal('94.905')">def test_line_total_quantity_discount_rounds_once():
+        # 10 * 9.99 = 99.90; * 0.95 = 94.905 -&gt; rounded with round_cents
+&gt;       assert line_total(line(10, "9.99")) == round_cents(Decimal("94.905"))
+E       AssertionError: assert Decimal('99.90') == Decimal('94.90')
+E        +  where Decimal('99.90') = line_total(LineItem(sku='W-1', description='Widget', quantity=10, unit_price=Decimal('9.99')))
+E        +    where LineItem(sku='W-1', description='Widget', quantity=10, unit_price=Decimal('9.99')) = line(10, '9.99')
+E        +  and   Decimal('94.90') = round_cents(Decimal('94.905'))
+E        +    where Decimal('94.905') = Decimal('94.905')
+
+tests/test_pricing.py:64: AssertionError</failure></testcase><testcase classname="tests.test_render" name="test_render_text" time="0.020" /><testcase classname="tests.test_store" name="test_round_trip" time="0.070" /><testcase classname="tests.test_terms" name="test_due_date_default_terms" time="0.012" /><testcase classname="tests.test_terms" name="test_due_date_custom_terms" time="0.023" /></testsuite></testsuites>

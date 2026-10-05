@@ -1,0 +1,52 @@
+--- a/invoicing/pricing.py
++++ b/invoicing/pricing.py
+@@ -7,7 +7,12 @@
+ 
+ 
+ def line_total(line: LineItem) -> Decimal:
+-    return round_cents(line.unit_price * line.quantity)
++    gross = line.unit_price * line.quantity
++    if line.quantity >= 50:
++        gross *= Decimal("0.90")
++    elif line.quantity >= 10:
++        gross *= Decimal("0.95")
++    return round_cents(gross)
+ 
+ 
+ def subtotal(invoice: Invoice) -> Decimal:
+--- a/tests/test_pricing.py
++++ b/tests/test_pricing.py
+@@ -1,6 +1,8 @@
+ from decimal import Decimal
+ 
+ import pytest
++
++from invoicing.money import round_cents
+ 
+ from invoicing.pricing import discount, line_total, subtotal, tax, total
+ from tests.helpers import invoice, line
+@@ -39,3 +41,24 @@
+ def test_total_with_discount_and_tax():
+     inv = invoice(line(1, "200.00"), region="UK", discount_code="PARTNER25")
+     assert total(inv) == Decimal("180.00")
++
++
++def test_line_total_no_quantity_discount_below_10():
++    assert line_total(line(9, "10.00")) == Decimal("90.00")
++
++
++def test_line_total_5_percent_at_10():
++    assert line_total(line(10, "10.00")) == Decimal("95.00")
++
++
++def test_line_total_5_percent_at_49():
++    assert line_total(line(49, "10.00")) == Decimal("465.50")
++
++
++def test_line_total_10_percent_at_50():
++    assert line_total(line(50, "10.00")) == Decimal("450.00")
++
++
++def test_line_total_quantity_discount_rounds_once():
++    # 10 * 9.99 = 99.90; * 0.95 = 94.905 -> rounded with round_cents
++    assert line_total(line(10, "9.99")) == round_cents(Decimal("94.905"))

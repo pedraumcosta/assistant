@@ -1,2 +1,4 @@
 {"ts": "2026-10-05T18:45:12+00:00", "type": "reserve", "run": "sizing/o1-bulk-discount__bare__sonnet__t1", "usd": "1.0"}
 {"ts": "2026-10-05T18:45:32+00:00", "type": "settle", "run": "sizing/o1-bulk-discount__bare__sonnet__t1", "usd": "0.038744"}
+{"ts": "2026-10-05T19:14:21+00:00", "type": "reserve", "run": "sizing/o1-bulk-discount__gated__sonnet__t1", "usd": "1.0"}
+{"ts": "2026-10-05T19:17:20+00:00", "type": "settle", "run": "sizing/o1-bulk-discount__gated__sonnet__t1", "usd": "0.031888"}

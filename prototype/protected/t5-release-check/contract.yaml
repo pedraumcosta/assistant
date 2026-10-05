@@ -15,9 +15,23 @@ protected:
   - checks/**
   - conftest.py
   - pytest.ini
+# What must hold for the change to pass. Checked in this order (DESIGN 4.1).
+checks:
+  build:
+    packages: [invoicing]
+  # The repository's own tests, run from the base commit's copy, not the author's.
+  repo_tests:
+    - {path: tests, tests: 17}
+    - {path: checks, tests: 2}
+  # The contract's hidden checks, in hidden/. The author never sees them.
+  hidden_tests: 2
+  # Whether the author must add tests. If it does, at least one of them
+  # must fail against the original code.
+  author_tests_required: false
 budget:
   max_turns: 30
   max_cost_usd: 1.00
+  max_seconds: 900
   repair_attempts: 2
 risk_tier: yellow
 approved_by: null   # a person, set when the contract is reviewed

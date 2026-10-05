@@ -13,7 +13,7 @@
 - The thesis is decided (§2 below): the evidence layer, pursued as a three-stage probe that ends in Build or Wait.
 - The first two sections of the proposal and the system design are written and reviewed.
 - The prototype (plan phase P5) is scoped slice by slice in §3.4, with three decisions taken on it (T20 to T22). Pedro gave the word to start on 2026-10-05.
-- Slices 1 and 2 of 7 are built and their exit checks pass. The measurement works end to end, first with a fake agent and then with Claude Sonnet 5.5 on one task. Spend so far is in `prototype/runs/ledger.jsonl`: one run, 0.038744 USD. The gate is not built.
+- Slices 1 to 3 of 7 are built and their exit checks pass: the measurement, the published loop on Claude Sonnet 5.5, and the gate. Spend so far is in `prototype/runs/ledger.jsonl`: two runs, 0.038744 + 0.031888 = 0.070632 USD of the 50 USD cap.
 
 ## 2. The thesis
 
@@ -68,7 +68,9 @@ Status values: Done, In review, Not started, Blocked.
 
 ### 3.2 In review
 
-Nothing is in review.
+| Step | Output | Exit check | Waiting on |
+|---|---|---|---|
+| Prototype slice 3: the gate | `prototype/gate/`, the contracts' required checks and hidden checks in `prototype/protected/`, `prototype/runs/sizing/` | Passed: the same task ran in the gated arm and was accepted on the first attempt; the same change and contract give the same record; a check made to crash gives `error`; 84 tests pass; the dry run gives no unexpected outcome | Pedro's word to commit, and his ruling on the gate's one known false pass |
 
 ### 3.3 Not started
 
@@ -160,6 +162,16 @@ All figures are from `prototype/runs/sizing/o1-bulk-discount__bare__sonnet__t1/`
 - **The set fits the cap with room to spare.** Nothing needs cutting, and Pedro raised the repeats from 3 to 5.
 - **The risk named below showed on the first run:** the model got the task right with no gate.
 
+**Slice 3 as built** (2026-10-05)
+
+- **The verdict follows `DESIGN.md` §4.1 in order,** and stops at the first step that does not pass: integrity, budget, build, the repository's tests from the base commit, the author's tests, the contract's hidden checks, scope, test adequacy, dependencies, secrets. It reads the base, the change, the contract and three numbers about the run. It does not read the event log or the agent's claim; a test holds it to that.
+- **The hidden checks were written from the task's stated requirements,** one or more per requirement, after the ground truth and without copying it. They are deliberately what a team would write from the request, not everything that could be asked.
+- **The gate already has one false pass, and it is left as found.** A hand-written wrong change for the invoice-numbering task passes every check. The requirement says entries that are not valid invoice numbers are ignored; the hidden check tries one such entry and the wrong change mishandles a different one. This is the risk named in `DESIGN.md` §8.2, that checks under-describe what matters, seen on our own set. On the dry run it makes the gate's false-pass rate 3 of 36 accepted changes against the fake agent's claim at 33 of 66 (`prototype/runs/dryrun-fake/RESULTS.md`). Those are hand-made changes, not a model's.
+- **Every arm's final change is judged by the gate.** In the gated arm the verdict decides whether the change goes back to its author, at most twice. In the other arms it judges and changes nothing. That gives the comparison between the gate and the agent's claim on every run, not only on a third of them.
+- **A change sent back is told the first reason only.** For a hidden check that is the fact that one did not pass, with no test name.
+- **The gate confirms it is judging the right change.** Its first container computes the hash of what it sees and compares it with the hash of the change; a mismatch is an `error`. This was added after a test showed a container reading stale content (ASSIST-020).
+- **Timing of the first gated run is not usable.** It ran while the dry run was using the same Docker machine, and its checks took twenty to thirty seconds each against one to two on a quiet machine. The time the gate adds will be read from slice 5, where the number of runs in parallel is fixed and stated.
+
 **Rules for the build**
 
 - **Ground truth comes first and stays apart.** The ground-truth checks are written before the gate and are richer than the gate's own. If they were the same checks, the gate's false-pass rate would be zero by construction.
@@ -209,6 +221,6 @@ This is the only copy of the register (decided 2026-10-05). `PLAN.md` §10 point
 | ASSIST-015 | The decision-model enhancement needs a TypeSafe API key or a local open build; neither is in place | Open, not blocking the first prototype |
 | ASSIST-016 | The label "evidence-driven development" has not been searched in trademark registers; the registers could not be queried automatically | Open; needs a manual search before any public use |
 | ASSIST-017 | The Docker daemon is not running on this machine (Rancher Desktop is installed). Every prototype run needs it (T21) | Closed 2026-10-05: started by Pedro |
-| ASSIST-020 | Files written in a container can reach the host a moment late through Docker's file sharing on this machine. One check report was read as missing. Reports now have a unique name and are waited for briefly | Closed 2026-10-05 for check reports. Open as a watch item for the agent's working copy: not seen in 144 dry runs |
+| ASSIST-020 | Files written in a container can reach the host a moment late through Docker's file sharing on this machine. One check report was read as missing. Reports now have a unique name and are waited for briefly | Closed 2026-10-05 for check reports. Seen a second time in the gate's tests: a path that is deleted and written again can show a container its old content. Run directories are never reused, and the gate now refuses to judge unless the container sees the exact change (its hash is checked inside the container). Open as a watch item |
 | ASSIST-018 | The prices of the models used are not in `EVIDENCE.md`. The prototype computes cost from token counts and published prices, and no price may be assumed | Closed 2026-10-05 for the agent's model (E-86). The evaluator's price is recorded when its model is fixed, at slice 6 |
 | ASSIST-019 | `PLAN.md` §8 predates `DESIGN.md` §6 and still differs from it on some rows (model routing by task, context management, orchestration, the redline candidates). Only the tool-execution row was brought into line, because T20 decided it | Open, not blocking; Pedro to say whether §8 is rewritten or replaced by a pointer to the design |

@@ -2,7 +2,7 @@
 
 The one-day prototype of `docs/DESIGN.md` §7. It asks one question: is an executable verdict wrong less often than the agent's own claim, and than a model reviewer's?
 
-**State: slice 2 of 7.** The measurement works end to end, with a fake agent that costs nothing and with Claude Sonnet 5.5 on one task. The gate is not built. The slices are in `docs/ROADMAP.md` §3.4.
+**State: slice 3 of 7.** The measurement, the published loop on Claude Sonnet 5.5, and the gate are built. The planted flaws, the full runs and the evaluator comparison are not. The slices are in `docs/ROADMAP.md` §3.4.
 
 A paid run needs `ANTHROPIC_API_KEY` in the repository's `.env` and draws on the 50 USD cap in `runs/ledger.jsonl`:
 
@@ -16,11 +16,21 @@ Needs Docker running, and Python 3.12 with `pytest` and `PyYAML`. From the repos
 
 ```sh
 docker build -t assist-proto:1 prototype/docker   # once
-python -m prototype.runner.dryrun                 # 72 runs, about three minutes, no spend
+python -m prototype.runner.dryrun                 # 72 runs, about nine minutes, no spend
 python -m pytest prototype/tests -q               # the exit checks that are not the dry run
 ```
 
 The dry run replays a correct change and a wrong or unsafe one for every task, through the real loop and the real containers, in all three arms. It fails unless every correct change comes out qualified, every wrong one does not, and a run whose provider failed comes out as an error. Its table is `runs/dryrun-fake/RESULTS.md`.
+
+## The gate on its own
+
+The verdict runs on any base and change, as a pipeline job would run it, and exits 0 for passed, 1 for failed and 2 for error:
+
+```sh
+python -m prototype.gate.verdict --task o1-bulk-discount --base <dir> --head <dir> --out <dir>
+```
+
+It writes `verdict.json` and `verdict.md`. The order of its checks is `docs/DESIGN.md` §4.1.
 
 ## What is where
 
@@ -28,7 +38,8 @@ The dry run replays a correct change and a wrong or unsafe one for every task, t
 |---|---|---|
 | `fixture/` | A small invoicing library with its tests. Standard library only | Agent, gate, ground truth |
 | `tasks/<id>/` | The task as given to the agent, and an `overlay/` that sets up the repository for it | Agent |
-| `protected/<id>/` | The contract. Stands in for the protected branch | Never the agent |
+| `protected/<id>/` | The contract and its hidden checks. Stands in for the protected branch | The gate; never the agent |
+| `gate/` | The verdict | — |
 | `groundtruth/<id>/` | The acceptance checks that decide whether a change was in fact good | Neither agent nor gate |
 | `changes/<id>/` | Changes written by hand: `good`, and `bad` or `unsafe`. The fake agent replays them | — |
 | `scaffold/listing.py` | The agent under test: Listing 3 of the harness paper, unedited (see `scaffold/NOTICE.md`) | — |

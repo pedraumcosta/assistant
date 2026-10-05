@@ -25,21 +25,26 @@ def _read_junit(path: Path) -> dict | None:
         return None
     counts = {"total": 0, "failed": 0, "errors": 0, "skipped": 0}
     first = None
+    cases = {}      # test id -> passed | failed | errors | skipped
     for case in root.iter("testcase"):
         counts["total"] += 1
+        ident = f"{case.get('classname', '')}::{case.get('name', '')}".strip(":")
+        cases[ident] = "passed"
         for kind, key in (("failure", "failed"), ("error", "errors"), ("skipped", "skipped")):
             if case.find(kind) is not None:
                 counts[key] += 1
+                cases[ident] = key
                 if first is None and kind != "skipped":
                     first = f"{case.get('classname', '')}::{case.get('name', '')}".strip(":")
     counts["passed"] = counts["total"] - counts["failed"] - counts["errors"] - counts["skipped"]
     counts["first_failure"] = first
+    counts["cases"] = cases
     return counts
 
 
 def pytest_check(name: str, mounts: list[tuple[Path, str, str]], target: str, out_dir: Path,
                  expected_tests: int | None, env: dict[str, str] | None = None,
-                 timeout: int = 180) -> dict:
+                 timeout: int = 180, min_tests: int = 1, extra_args: tuple[str, ...] = ()) -> dict:
     """Run pytest on `target` in a fresh container and return an evidence item."""
     out_dir = Path(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -47,18 +52,21 @@ def pytest_check(name: str, mounts: list[tuple[Path, str, str]], target: str, ou
     # the host never has a stale view of a file it deleted a moment ago.
     junit = out_dir / f"junit-{uuid.uuid4().hex}.xml"
     result = sandbox.run_once([*mounts, (out_dir, "/out", "rw")],
-                              [*PYTEST, f"--junitxml=/out/{junit.name}", target],
+                              [*PYTEST, *extra_args, f"--junitxml=/out/{junit.name}", target],
                               workdir="/checks", env=env, timeout=timeout)
     (out_dir / "stdout.txt").write_text(result.stdout[-20000:])
     (out_dir / "stderr.txt").write_text(result.stderr[-20000:])
     tests = _read_junit(junit)
+    cases = None
     for _ in range(10):     # the mount can show the file a moment after the container wrote it
         if tests is not None or result.timed_out:
             break
         time.sleep(0.3)
         tests = _read_junit(junit)
+    if tests is not None:
+        cases = tests.pop("cases")
     item = {"check": name, "exit_code": result.code, "duration_s": result.duration_s,
-            "expected_tests": expected_tests, "tests": tests}
+            "expected_tests": expected_tests, "tests": tests, "cases": cases}
 
     def end(status: str, reason: str) -> dict:
         return {**item, "status": status, "reason": reason}
@@ -70,8 +78,8 @@ def pytest_check(name: str, mounts: list[tuple[Path, str, str]], target: str, ou
     if result.code == 0:
         if tests["failed"] or tests["errors"] or tests["skipped"]:
             return end("error", "exit code 0 but the report shows tests that did not pass")
-        if tests["total"] == 0:
-            return end("error", "exit code 0 but no test ran")
+        if tests["total"] < min_tests:
+            return end("error", f"exit code 0 but only {tests['total']} tests ran, at least {min_tests} expected")
         if expected_tests is not None and tests["total"] != expected_tests:
             return end("error", f"{tests['total']} tests ran, {expected_tests} expected")
         return end("passed", f"{tests['passed']} of {tests['total']} tests passed")

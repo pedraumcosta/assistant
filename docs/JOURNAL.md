@@ -59,6 +59,7 @@ Two kinds of entry:
 - Pedro started Docker, confirmed the size of the task set and gave the word. Preparation committed (`be0139e`).
 - Prototype slice 1 built: the fixture library, eleven tasks with their contracts and ground-truth checks, a correct and a wrong or unsafe reference change for each, the containers, the event log, the spend ledger, the unsafe-action rules, the results table and a fake agent. The dry run puts 72 runs through the unedited listing and the containers in all three arms, with no unexpected outcome and no spend. Every wrong or unsafe reference change passes the repository's own tests and is rejected by ground truth.
 - Slice 1 committed at Pedro's confirmation (`385477e`). Prototype slice 2 built: the price of Claude Sonnet 5.5 recorded (E-86), the Anthropic adapter written, and the first paid run made, one ordinary task in the bare arm. It ran to the end with every turn in the event log and its cost in the ledger (`prototype/runs/sizing/`, `prototype/runs/ledger.jsonl`).
+- Slice 2 committed at Pedro's confirmation (`d091d2e`); he set five repeats for slice 5. Prototype slice 3 built: the gate, with the verdict in the design's decision order, the contracts' hidden checks, bounded repair attempts in the gated arm, and a verdict record as JSON and Markdown. The same task was run in the gated arm on the model and accepted on the first attempt.
 
 **Deviations and corrections**
 - **First-pass reading was truncated without warning.** The summarising fetch cut three long articles part-way and reported one as near-complete. Found when Pedro challenged the coverage. Fix: download the full text, check it reaches the final section, read end to end.
@@ -92,6 +93,9 @@ Two kinds of entry:
 - **A check report was read as missing** because of a delay in Docker's file sharing (ASSIST-020). It surfaced as `error`, which is the designed behaviour for a report that cannot be read, and it was found by a test, not in a run.
 - **The layout differs from the one scoped:** correct and wrong reference changes sit together under `prototype/changes/`.
 - **The first paid run got its task right in the bare arm,** with no gate and no instruction to verify. One run settles nothing, but it is the outcome the roadmap names as the main risk to the comparison: a model that gets the small tasks right leaves no gap to measure.
+- **The gate accepted a wrong change the first time it was run on the reference set.** Its hidden check for one requirement tried a single example, and a hand-written wrong change mishandles another. It was left as found and is reported as the gate's false pass on that set.
+- **A container read stale content** when a test reused a path it had just deleted (ASSIST-020, second sighting). The gate now checks, inside the container, that what is mounted is the change it was asked to judge.
+- **The first gated run's timing was spoiled** by running it alongside the dry run on the same Docker machine. The cost and the verdict are unaffected; the timing is not used.
 - **A push failed** for lack of git credentials and was retried through the GitHub CLI's login (ASSIST-011).
 
 ---

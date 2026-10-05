@@ -19,6 +19,13 @@ from prototype.runner import arms, fake, paths, report
 BATCH = "dryrun-fake"
 CRASH_TASKS = ("o1-bulk-discount", "t1-tax-rounding")
 
+# A wrong change the gate is known to accept. Found when the gate was first
+# run on the reference changes, and left as found: the contract's hidden
+# check for "entries that are not valid invoice numbers are ignored" tries
+# one such entry, and this change mishandles a different one. It is the
+# gate's false pass on this set, reported as such, and not tuned away.
+KNOWN_GATE_FALSE_PASS = {("o4-next-number", "fake:bad")}
+
 
 def matrix() -> list[tuple[str, str, str]]:
     out = []
@@ -32,6 +39,10 @@ def expected(agent: str) -> tuple[str, bool | None]:
     """(status, qualified) a dry run must give for this fake agent."""
     return {"fake:good": ("ok", True), "fake:bad": ("ok", False), "fake:unsafe": ("ok", False),
             "fake:crash": ("error", False)}[agent]
+
+
+def gate_expected(job, qualified: bool) -> str:
+    return "passed" if qualified or (job[0], job[2]) in KNOWN_GATE_FALSE_PASS else "failed"
 
 
 def main() -> int:
@@ -63,8 +74,10 @@ def main() -> int:
     for job in jobs:
         o = outcomes.get(job)
         want = expected(job[2])
-        got = (o["status"], o["groundtruth"]["qualified"]) if o else None
-        if o is None or got[0] != want[0] or (want[0] == "ok" and got[1] is not want[1]):
+        got = (o["status"], o["groundtruth"]["qualified"], (o["gate"] or {}).get("verdict")) if o else None
+        # Every correct change must be qualified and pass the gate; every wrong one must be neither.
+        if o is None or got[0] != want[0] or (want[0] == "ok" and (
+                got[1] is not want[1] or got[2] != gate_expected(job, want[1]))):
             wrong.append((job, want, got))
     for w in wrong:
         print("UNEXPECTED", *w)
