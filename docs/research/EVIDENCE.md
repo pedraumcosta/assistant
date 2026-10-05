@@ -171,6 +171,7 @@ The product is three weeks old. None of these rows concerns judgments about code
 | E-81 | Of 2.23 million generated package references, "440,445 (19.7%) were determined to be hallucinations"; "43% of hallucinated packages were repeated in all 10 queries" | Package-hallucination study; see `check-agent-limits-claims.md` item L6 | [P] | Academic | see record |
 | E-82 | Trust in AI accuracy: 43% (2024) to 33% (2025); distrust 31% to 46% | Stack Overflow Developer Survey 2024 and 2025 | [P] | Independent of AI vendors | https://survey.stackoverflow.co/2025/ai |
 | E-83 | Attributed to Ryan Lopopolo of OpenAI: "I am bearish on any harness that doesn't come from the lab whose model you are using. You're fighting against post-training." Quoted on a third-party show; the original was not found | "ai that works", episode notes of 2026-05-05 | [P] for the notes; original unverified | Third party quoting a vendor | https://github.com/ai-that-works/ai-that-works/tree/main/2026-05-05-openai-tells-you-not-to-build-your-own-harness |
+| E-85 | Heading "AI, the great amplifier"; "AI adoption does continue to have a negative relationship with software delivery stability" | Google's announcement of the 2025 DORA report, 2025-09-23 | [P] | Vendor-run (Google) | https://cloud.google.com/blog/products/ai-machine-learning/announcing-the-2025-dora-report |
 
 ## Not usable as evidence
 

@@ -18,6 +18,7 @@
 **Decided on 2026-10-05.** The decisions and their justifications are in `PLAN.md` §2.1; the rationale is in `JOURNAL.md` ADR-014 to ADR-016. In brief:
 
 - **Posture:** a small, dated probe in three stages (prototype, measurement pilot, build), each able to end it.
+- **Frame:** tooling for evidence-driven development. A tool for the team's delivery process, not a plug-in for an assistant; one standard of evidence for every change, whoever or whatever wrote it.
 - **Thesis:** the evidence layer. The brownfield specialisation was evaluated and is not pursued; brownfield is not claimed as a first market.
 - **Buyer:** engineering leaders, as sponsors, in organisations that build software.
 - **Product:** a first process that guides the user to create the checks; a protected contract; a verdict of executable evidence; an outcome record; a measured false-pass rate, repeated and adapted for each model and harness pairing.
@@ -109,3 +110,4 @@ This is the only copy of the register (decided 2026-10-05). `PLAN.md` §10 point
 | ASSIST-013 | Unread leads: Anthropic's earlier long-running harness post, and the primary studies cited second-hand by the verification-economics paper. The two arXiv papers first listed here were read on 2026-10-05 | Open; Pedro to decide whether they are read |
 | ASSIST-014 | Bloomberg, Forbes, OpenAI's site, EUR-Lex and SEC full-text search block automated download. Items resting on them use an equivalent primary source, an archive capture, or are marked secondary | Open, not blocking |
 | ASSIST-015 | The decision-model enhancement needs a TypeSafe API key or a local open build; neither is in place | Open, not blocking the first prototype |
+| ASSIST-016 | The label "evidence-driven development" has not been searched in trademark registers; the registers could not be queried automatically | Open; needs a manual search before any public use |

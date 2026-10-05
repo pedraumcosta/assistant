@@ -52,6 +52,7 @@ Two kinds of entry:
 - Evidence ledger rows E-01 to E-29 re-checked against raw sources by a sub-agent: 20 exact, 6 with wording that differed, 2 with a figure that differed, 1 not found publicly. Ledger corrected; three unverified rows confirmed at primary sources. Proposal sections 1 and 2 drafted.
 - Pedro reviewed the proposal draft, judged it sound, and questioned one point: whether the verdict is always deterministic, given that software built on an LLM has to be checked by an evaluation. The item was reworded and the scope decided (ADR-017).
 - Pedro asked for the costs and the effect on the delivery process to be elaborated: more tests and checks add latency, time and cost. A section was added to the proposal and a sixth hypothesis to the prototype (ADR-018).
+- Pedro proposed reframing the product for its market: not a plug-in for an assistant but a tool for how a mature software team runs delivery, under a banner with a future (eval-driven development, spec-driven development, or a factory). After discussion he adopted "evidence-driven development" (ADR-019). A check of existing uses of that label was started.
 
 **Deviations and corrections**
 - **First-pass reading was truncated without warning.** The summarising fetch cut three long articles part-way and reported one as near-complete. Found when Pedro challenged the coverage. Fix: download the full text, check it reaches the final section, read end to end.
@@ -425,3 +426,38 @@ Each line is the decision, then why.
 **Alternative rejected.** Presenting the product as a saving without stating what it adds.
 
 **Limit.** The prototype can measure what the gate adds. Only a pilot can measure what it saves.
+
+### ADR-019 — Frame: tooling for evidence-driven development
+
+| | |
+|---|---|
+| Status | Decided 2026-10-05. Label checked the same day; no owner found, trademark registers not searched. |
+| Plan reference | `PLAN.md` §2.1, T14; `PROPOSAL.md` §2.5 |
+
+**Decision.** The product is framed as tooling for evidence-driven development: a tool for the team's delivery process, not a plug-in for an assistant. The team defines what "done" means as executable checks before the work starts, and every change, whoever or whatever wrote it, is accepted on that evidence. The frame presents the practice as the continuation of test-driven development, covering eval-driven development for software built on models, and supporting spec-driven development and "software factory" working without carrying either name. The product's scope does not change.
+
+**Rationale.**
+- Pedro's aim: keep the verification, safety and checking features, and market them in a frame with a future.
+- "Plug-in" was inaccurate. The product starts by helping the team define its checks, attaches to the build pipeline first, and keeps the record.
+- A product described as checking the agent is needed less with each model release (E-36). A team's standard for what counts as done is needed whoever writes the code.
+- The buyer decided in ADR-016, engineering leaders, buys tooling for how teams deliver.
+- The asset that accumulates, the team's executable definition of done, sits in the team's process and not in an assistant.
+
+**Alternatives rejected.**
+- *"SDLC implementation tool"* as the category: too broad, and the ground of GitHub, GitLab and Atlassian; it also reads as the wider control plane excluded in ADR-016.
+- *Spec-driven development* as the banner: already offered by large vendors, placed at "Assess" by Thoughtworks, and criticised as a return to heavy up-front specification. Pedro's own principle is that a specification nobody enforces is a wish; the product is the enforcement half.
+- *"Factory"* as the banner: it is a company name in this market, and it implies high-throughput autonomy, the setting in which a frontier lab says corrections are cheap (E-57) and the product pays least.
+- *Eval-driven development* as the lead: proposed first in discussion; Pedro chose the broader label, which covers tests and evaluations alike and matches the product's name.
+
+**Consequences.**
+- The verdict applies to changes written by people as well as by agents. Agent-written changes remain the reason to adopt now, and the prototype still tests agent-written changes only.
+- "Mature process" is kept as targeting, not as a slogan: the product suits teams with version control, tests, a pipeline and review, which is also where it was expected to pay.
+- The label is one we are naming. Establishing a label costs a newcomer effort, and its initials are those of eval-driven development, so it is not abbreviated.
+
+**Result of the label check** (`docs/research/positioning-label-check.md`).
+- No company, product or book was found that owns "evidence-driven development" as a category. Its only uses in the AI-agent context are small open-source items.
+- It will be confused with three things: eval-driven development; evidence-based software engineering, an academic field about empirical research on software practice; and, faintly, experiment-driven product development.
+- "EDD" already means eval-driven development. Braintrust, OpenAI's documentation and Anthropic's documentation all use that phrase. The abbreviation is avoided.
+- The strongest objection: the practice is acceptance-test-driven development joined to eval-driven development. The proposal therefore claims only what is added: one gate for changes from people and from agents, a kept record, and a measured error rate.
+- Closest in substance under another name: StrongDM's published "Software Factory" method, in which specifications and externally held scenarios drive agents. It is a method, not a product.
+- Not done: a search of trademark registers.

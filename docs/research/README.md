@@ -22,6 +22,7 @@ Everything we read or looked up for the ASSIST exercise, recorded so the repo st
 | `check-procurement-claims.md` | Check of the enterprise procurement checklist against vendors' official documentation | Quotations confirmed in raw pages |
 | `review-verification-segment.md` | Funding, scale and actual behaviour of AI code review and verification products; what vendor audit logs record; the products closest to our idea | Figures confirmed in raw pages; the assessment of how occupied the space is belongs to the researcher |
 | `paper-harness-ablation.md` | arXiv 2609.20804, an ablation study of planning, tools and context management across four models | Read end to end from the full text |
+| `positioning-label-check.md` | Who already uses "evidence-driven development" and neighbouring labels, and whether the practice is an existing one under a new name | Names confirmed in raw pages; negative findings rest on few searches; trademarks not checked |
 | `market-and-limits-evidence.md` | Evidence on market structure and the measured limits of coding agents, traced from Pedro's notes to public sources, with corrections | Overview of the two check files below |
 | `check-agent-limits-claims.md` | Fifteen claims about agent limits checked at their papers and benchmark pages | Figures confirmed in raw pages or paper text |
 | `check-market-and-strategy-claims.md` | Twelve claims about market structure, adoption and harness strategy checked at their public sources | Figures confirmed in raw pages; a few sources blocked |

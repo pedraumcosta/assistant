@@ -16,7 +16,9 @@ The leadership question is "why build another AI coding product when the largest
 
 **What we would not build**, because it exists or is funded: a coding assistant; an agent loop; a cross-agent policy, sandbox and budget layer (Omnigent, open source); a model-based review bot (CodeRabbit and others); the wider delivery control plane.
 
-**The candidate product** is an evidence layer delivered as a plug-in to the tools a team already uses:
+**How it is framed.** As tooling for **evidence-driven development**: the team defines what "done" means as executable checks before the work starts, and every change, whoever or whatever wrote it, is accepted on that evidence. It is a tool for the team's delivery process, not a plug-in for an assistant. It continues test-driven development, covers eval-driven development for software built on models, and supports spec-driven development and "software factory" ways of working without being any of them (§2.1 T14).
+
+**The candidate product** is the evidence layer of that practice. It works with the tools a team already uses:
 
 - a first process that guides the user to create the checks (a test suite or an evaluation), in the manner of test-driven or eval-driven development;
 - a change contract written before the agent runs (scope, acceptance checks, budget), protected from the agent by mechanism;
@@ -51,6 +53,7 @@ In Pedro's own terms (from his working notes): "Reliability, not capability, is 
 | 2026-10-05 | The same, for teams where a wrong change is expensive; a funded competitor owns the adjacent ground | Market check of the review and verification segment (§3.8) |
 | 2026-10-05 | Verdict widened from fixed checks to executable evidence; brownfield evaluated as a second thesis | Evaluation of the brownfield specialisation (§3.11) |
 | 2026-10-05 | Decided: the first thesis, pursued as a three-stage probe; buyer, differentiation, exclusions, kill criteria and prototype scope settled | Thesis discussion (§2.1) |
+| 2026-10-05 | Framed as tooling for evidence-driven development, applying to every change whoever wrote it; not a plug-in for an assistant | Pedro's reframe (§2.1 T14) |
 
 The decisions behind this position are in §2 and §2.1. What the probe will show is not yet known.
 
@@ -103,7 +106,7 @@ Decisions are recorded here as they are made. All ten are decided. The thesis de
 
 | ID | Decision | Recommendation | Why |
 |---|---|---|---|
-| D1 | Which wedge do we defend? | **Decided 2026-10-05:** the evidence layer, as a plug-in to existing tools, entered through per-repository measurement and pursued as a three-stage probe. Details in §2.1. | The first thesis was chosen over the brownfield specialisation, which there is no time to validate in this exercise. |
+| D1 | Which wedge do we defend? | **Decided 2026-10-05:** the evidence layer, working with a team's existing tools and framed as tooling for evidence-driven development (T14), entered through per-repository measurement and pursued as a three-stage probe. Details in §2.1. | The first thesis was chosen over the brownfield specialisation, which there is no time to validate in this exercise. |
 | D2 | What does the company already own? | **Decided 2026-10-03:** nothing. No proprietary model, no harness, no captive vertical, no special moat. | The strategy must stand without an inherited advantage. |
 | D3 | Prototype inner loop | **Decided 2026-10-03, refined 2026-10-05:** a minimal single loop behind a provider interface, taken from the 90-line scaffold published in the harness paper (Listing 3, CC BY 4.0) and specialised only where needed, with every departure recorded in the journal. | It shows every design topic in readable code and makes the point that the loop is small. Using a published, citable agent removes the objection that we tuned the agent to suit our gate. Rejected alternatives: writing our own from nothing; wrapping an agent SDK or hosted agent service. |
 | D4 | Prototype language | **Decided 2026-10-03:** Python. | Fastest for one day. |
@@ -135,10 +138,11 @@ Taken in the thesis discussion. Each has its rationale in `docs/JOURNAL.md` (ADR
 | T11 | The verdict | **"Executable evidence."** In the prototype: the customer's fixed checks, a scope check on the diff, and a check that the agent's own tests fail against the original code. The counterexample search is the next enhancement, alongside the decision-model judge. | Fixed checks alone pass bad changes where tests under-describe behaviour (E-68). "Executable" is accurate where "deterministic" would overclaim once a model helps search for counterexamples. |
 | T12 | Is the verdict always deterministic | **No. It is always executable.** For conventional code the verdict comes from tests and is a yes or no. For an LLM application it is an evaluation: fixed cases, some hidden from the agent, run repeatedly and scored against a threshold, reported as pass, fail or inconclusive. Code-based scoring first; a model scores only where code cannot, and then its agreement with human labels is measured and stated. **The prototype starts with the conventional case. The evaluation path is designed in `DESIGN.md`; implementing it is a bonus if time allows.** | Raised by Pedro: software built on an LLM cannot be verified by one deterministic run. What the product promises does not depend on determinism: checks fixed beforehand and protected, run outside the agent, recorded, and their own error rate measured. The conventional case gives the cleanest comparison against a model reviewer within one day. |
 | T13 | Does the product add time and cost to delivery | **Yes, and the proposal says so.** It adds cost before the work (writing the checks), during it (extra attempts), after it (running the checks; for evaluations, many model calls) and over time (upkeep and re-measurement), and it adds waiting before merge. It is meant to remove review time, rework and incidents. Whether that nets out is not established; the pilot has to show it. The product limits its cost by applying checks by risk, reusing the team's existing pipeline, capping its own budget, and measuring wrongly failed changes as well as wrongly passed ones. | Raised by Pedro. A product that adds checks and hides their cost will not survive a CFO's first question, and the research itself warns that checking everything is waste (E-36) and that waiting has a price (E-57). |
+| T14 | How the product is framed | **Tooling for evidence-driven development: a tool for the team's delivery process, not a plug-in for an assistant.** The team defines "done" as executable checks before work starts; every change, whoever or whatever wrote it, is accepted on that evidence. It continues test-driven development, covers eval-driven development, and supports spec-driven development and "software factory" working without carrying either name. It suits teams that already take their process seriously. **The product's scope does not change, and the exclusions in T6 stand.** | Pedro's reframe, sharpened in discussion. "Plug-in" was inaccurate and made the product an accessory to another vendor's. A standard for what counts as done does not shrink as models improve, and it is bought by engineering leaders. "SDLC tool" was rejected as too broad and as GitHub's and GitLab's ground. Spec-driven development and "factory" were rejected as banners: the first is offered by large vendors and has drawn a backlash; the second is a company name here and implies the setting where the product pays least. |
 
 Still open: the review date in T7, and T8.
 
-Journal references: ADR-014 to ADR-018.
+Journal references: ADR-014 to ADR-019.
 
 ## 3. What the research says
 
@@ -538,7 +542,8 @@ IDE plugin, any UI beyond the CLI, cloud or background agents, multi-agent orche
 | Contracts for ordinary changes may be too costly to write | Named as the largest open assumption; first question for a pilot. |
 | The check's value shrinks as models improve | Aim the gate at work beyond what the current model does reliably, apply it by risk, and treat measurement as recurring. If the prototype shows no gap on the current frontier model, the answer is Wait. |
 | The vendor ships contract plus evaluator natively | Our claim rests on independence, a deterministic verdict and a measured error rate, none of which a vendor's own evaluator provides. If buyers do not value those three, there is no product. |
-| A plug-in depends on extension points the vendor controls | Keep CI as an attachment point that needs no vendor hook. |
+| Attaching to assistants depends on extension points their vendors control | Keep CI as an attachment point that needs no vendor hook. |
+| "Evidence-driven development" is a label we are naming, and a newcomer pays to establish one. It may also be confused with eval-driven development, which shares its initials | Present it as the continuation of test-driven development; do not abbreviate it. A check found no owner of the label (`docs/research/positioning-label-check.md`); trademark registers were not searched. The strongest objection is that the practice is acceptance-test-driven development joined to eval-driven development, so we claim only what is added: one gate for people and agents, a kept record, and a measured error rate. |
 | A funded review vendor joins its existing parts into a contract-then-evidence flow within a year | Named in the proposal as the most likely way the opportunity closes. Our answer has to be a measured difference between a deterministic verdict and a model reviewer's, or the recommendation is Wait. |
 | One day is not enough for all nine phases | Stretch slice dropped first, then the artifact and deck reduced to a single diagram. The evidence ledger and the results are not cut. |
 | Research figures that fail re-verification | Dropped, not softened. |
@@ -566,3 +571,4 @@ The issue register lives in `docs/ROADMAP.md` §5. It is the only copy.
 - Thesis discussion held; decisions in §2.1.
 - Evidence ledger rows E-01 to E-29 re-checked against raw sources and corrected.
 - Proposal sections 1 and 2 drafted (`docs/PROPOSAL.md`); item on the verdict widened to cover evaluations for LLM applications (T12).
+- Product reframed as tooling for evidence-driven development (T14).

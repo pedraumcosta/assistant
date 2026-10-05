@@ -11,7 +11,9 @@
 
 **Do not build another AI coding assistant. Run a small, dated probe on the one part of this market nobody yet sells, and decide Build or Wait on what it shows.**
 
-The part is a trustworthy verdict on code that AI agents write: one built from executable evidence, independent of the model vendor, and measured for error on the customer's own repository.
+The part is tooling for **evidence-driven development**: a team defines what "done" means as executable checks before the work starts, and every change, whoever or whatever wrote it, is accepted on that evidence. The verdict is independent of the model vendor and measured for error on the team's own repository.
+
+This is not a plug-in for an assistant. It is a tool for how a software team runs its delivery process, and it works with whichever assistants the team uses.
 
 The probe has three stages, each able to end it: a one-day prototype, a measurement pilot with one or two design partners, and a build only if the pilot clears thresholds set in advance. If it does not clear them, the recommendation is to wait, with a review date.
 
@@ -77,7 +79,9 @@ These are the reasons the recommendation is a probe with fixed exits, and not an
 
 ### 2.1 What it is
 
-An **evidence layer** for code written by AI agents. It sits beside whatever assistant a team already uses and answers one question for each change: is there executable evidence that this change does what was asked, and nothing else?
+Tooling for **evidence-driven development**. The practice is simple to state: the team writes down what "done" means as executable checks before the work starts, and a change is accepted on that evidence. It continues test-driven development and extends it to two things that practice did not have to handle: code written by AI agents, and software whose behaviour is itself produced by a model.
+
+The product is the part of that practice a team cannot do by hand at the pace agents work: it holds the checks, runs them where the author of the change cannot interfere, records the outcome, and measures how far the verdict can be trusted. We call that part the evidence layer. It answers one question for each change: is there executable evidence that this change does what was asked, and nothing else?
 
 It has five parts.
 
@@ -93,7 +97,9 @@ It has five parts.
 
 ### 2.2 The core value proposition
 
-**For engineering leaders who answer for what AI agents merge: know, with evidence and a stated error rate, which agent-written changes are safe to accept, on your code, with your tools.**
+**For engineering leaders who answer for what their teams merge: one standard of evidence for every change, whoever or whatever wrote it, with a stated error rate, on your code and with your tools.**
+
+The reason to adopt it now is AI agents: they made writing code cheap and left the question of trust open. The reason it stays useful is that the standard does not depend on who the author is.
 
 The unit it reports is the one a finance team can use. Published research puts the question as "how much production-qualified value an engineering system can deliver per dollar, per reviewer-hour, and per unit of operational risk" (E-40). We adopt that vocabulary.
 
@@ -113,23 +119,49 @@ We expect the need to be sharpest where a wrong change is expensive: long-lived 
 | The vendor's evaluator agent | A second model from the same vendor | Independence, and a stated error rate |
 | Vendor audit logs | What the agent did | Whether the result was verified |
 
-### 2.5 Adopt, supplement or replace
+### 2.5 How it is positioned
 
-**Supplement.** The team keeps its assistant, its repository host and its pipeline. The evidence layer attaches first as a check in the team's existing build pipeline, which needs nothing from the assistant's vendor. It replaces no tool. It aims to replace a share of manual review, and it must show that it does: a review stage that does not remove a human stage is not a saving.
+**It is a tool for the team's delivery process, not an accessory to an assistant.** That distinction matters for three reasons.
 
-### 2.6 What we deliberately leave out
+- *It is what the product is.* It starts by helping the team define its checks, attaches to the build pipeline, and keeps the record. None of that lives inside an assistant.
+- *It does not shrink as models improve.* A product described as "checking the agent" is needed less with each model release. A team's standard for what counts as done is needed whoever writes the code.
+- *It is bought by the right person.* Engineering leaders buy tooling for how their teams deliver. An add-on to another vendor's product is a small line and a dependency.
+
+**It supports the ways of working now being adopted, without being any one of them.**
+
+| Way of working | How evidence-driven development relates to it |
+|---|---|
+| Test-driven development | Its direct continuation, extended to agent-written changes and to evaluations |
+| Eval-driven development, for software built on models | The same practice for that kind of software: the checks are evaluations |
+| Spec-driven development | The enforcement half. A specification states intent; the evidence shows it was met |
+| The "software factory", with agents working unattended | The quality-control step, and the record of what was produced and whether it passed |
+
+**What is new in it, and what is not.** Writing acceptance tests before the code is an established practice, known as acceptance-test-driven development. Writing evaluations first for software built on models is already recommended by the model vendors under the name eval-driven development. Evidence-driven development joins the two and adds what neither has: one gate for changes from people and from agents, a kept record of every outcome, and a measured error rate for the verdict. We claim those three additions, not the idea of testing first.
+
+We lead with evidence-driven development and not with the last two rows of the table. Spec-driven development is already offered by large vendors and has drawn criticism as a return to heavy up-front specification. "Factory" is a company name in this market, and the term implies a high-throughput setting where this product pays least.
+
+**What the positioning does not change.** The product is the same five parts. It is not a platform for the whole delivery lifecycle, and the list in §2.7 of what we leave out stands.
+
+**Who it suits.** Teams that already take their process seriously: version control, tests, a build pipeline, review. Evidence on AI adoption points the same way: the 2025 DORA report is introduced under the heading "AI, the great amplifier" (E-85).
+
+### 2.6 Adopt, supplement or replace
+
+**Supplement.** The team keeps its assistants, its repository host and its pipeline. The evidence layer attaches first as a check in the team's existing build pipeline, which needs nothing from any assistant's vendor, and applies to changes from people and from agents alike. It replaces no tool. It aims to replace a share of manual review, and it must show that it does: a review stage that does not remove a human stage is not a saving.
+
+### 2.7 What we deliberately leave out
 
 - A coding assistant, or an agent loop of our own.
 - A layer that orchestrates several assistants.
 - Policy, sandboxing and spending controls across agents.
 - A reviewer that comments on code using a model's judgment.
 - The wider control plane for software delivery: model routing, cost attribution, scheduling.
+- A platform for the whole delivery lifecycle: planning, issue tracking, source hosting, deployment.
 - A model of our own, or any fine-tuning.
 - Editor plug-ins, autocomplete, background or cloud agents.
 
 Each of these exists, is funded, or is a model vendor's home ground.
 
-### 2.7 Customer data
+### 2.8 Customer data
 
 The product works on the customer's code, checks and outcomes. This is stated here because it is what makes the product useful and what makes it sensitive.
 
@@ -138,13 +170,13 @@ The product works on the customer's code, checks and outcomes. This is stated he
 - The checks and the history that accumulate belong to the customer.
 - Customers are told exactly what is used and for what, and nothing is used beyond that.
 
-### 2.8 How it stays worth paying for
+### 2.9 How it stays worth paying for
 
 The measurement is not done once. Models change every few months, and the right amount of checking changes with them. One study found that the same scaffolding helps one model and hinders another; its conclusion is that each component "should be selected for the target model, task type, and resource budget rather than adopted as a default" (E-58).
 
 So the product re-measures for each model and each assistant the customer uses, and adapts its checks and risk tiers to each. A customer changing model is when it is needed most.
 
-### 2.9 What it costs, and what it changes in the delivery process
+### 2.10 What it costs, and what it changes in the delivery process
 
 More checks add time and cost to building software. That is true of this product, and it should be said before anyone else says it.
 
@@ -193,7 +225,7 @@ If the first three do not improve for a design partner, the product has made del
 
 **Where we expect it not to pay.** Small, low-risk changes. Fast new builds where a mistake is cheap to undo. Teams with few tests today, for whom writing the checks is most of the cost.
 
-### 2.10 How we proceed, and when we stop
+### 2.11 How we proceed, and when we stop
 
 | Stage | What it is | Continue only if |
 |---|---|---|
@@ -203,7 +235,7 @@ If the first three do not improve for a design partner, the product has made del
 
 If a stage fails, the recommendation is to wait, with a date to look again.
 
-### 2.11 What we do not yet know
+### 2.12 What we do not yet know
 
 - Whether teams will pay for this, and how much.
 - What it costs a team to write the checks for ordinary work. The prototype writes them by hand.
@@ -211,5 +243,6 @@ If a stage fails, the recommendation is to wait, with a date to look again.
 - Whether a result measured on today's models holds on the next ones.
 - Whether the need is in fact sharpest where we expect it.
 - Whether a customer's accumulated checks and history amount to something a competitor cannot offer.
+- Whether "evidence-driven development" is a label buyers will recognise and adopt. We found no owner of the label, but it sits close to eval-driven development and to an academic field called evidence-based software engineering, and trademark registers have not been searched.
 
 The prototype can inform the first stage only. The rest are what the pilot is for.
