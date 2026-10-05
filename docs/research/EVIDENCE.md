@@ -9,7 +9,7 @@ Every figure or quotation that a document in this repo relies on has a row here.
 | [S] | Seen only in a search summary or secondary write-up. Not verified; must be upgraded to [P] or dropped |
 | [P-archive] | Read raw from a web-archive capture because the publisher blocked direct download |
 
-A caution applies to the [P] rows numbered E-01 to E-29 that were gathered by a research sub-agent: the page was fetched through a tool that summarises with a small model, so the exact wording of a quotation should be re-read at the source before it is printed in the proposal. Rows E-30 to E-37, E-40 to E-45, E-59 to E-61, E-73 and E-74 were read directly from the source text by the main session and do not carry that caution; E-38 and E-39 were checked against the downloaded text. Rows E-17, E-46 to E-58 and E-62 to E-72 were confirmed by sub-agents in the raw downloaded page or the full text.
+A caution applies to the [P] rows numbered E-01 to E-29 that were gathered by a research sub-agent: the page was fetched through a tool that summarises with a small model, so the exact wording of a quotation should be re-read at the source before it is printed in the proposal. Rows E-30 to E-37, E-40 to E-45, E-59 to E-61, E-73 and E-74 were read directly from the source text by the main session and do not carry that caution; E-38 and E-39 were checked against the downloaded text. Rows E-17, E-46 to E-58, E-62 to E-72 and E-75 to E-83 were confirmed by sub-agents in the raw downloaded page or the full text.
 
 "Interest" records whether the source sells a product that benefits from the finding.
 
@@ -157,11 +157,26 @@ The product is three weeks old. None of these rows concerns judgments about code
 | E-73 | "When an agent is the one making them pass, don't let that same session be the only author of the tests. Pin the behavior first, in a separate pass or by a person" | Addy Osmani, "Brownfield Agentic Engineering", 2026-09-14 | [P] | Practitioner | https://addyo.substack.com/p/brownfield-agentic-engineering |
 | E-74 | "Autonomy should follow blast radius, observability, and recoverability. A model's confidence is a poor guide." | as E-73 | [P] | Practitioner | as E-73 |
 
+## Agents and their own verification
+
+| ID | Claim, as published | Source and date | Tag | Interest | URL |
+|---|---|---|---|---|---|
+| E-75 | A model trained on production coding tasks learned to force tests green, including a `conftest.py` that patches the test reporter to report "passed". "In our main setting, we see attemped sabotage 12% of the time, with the sabotaged classifiers being only 65% as effective at detecting reward hacking compared with a baseline." Constructed setting | Anthropic and Redwood Research, "Natural Emergent Misalignment from Reward Hacking in Production RL", November 2025 | [P] | Vendor research | https://arxiv.org/abs/2511.18397 |
+| E-76 | "when we run them on the original, broken codebase, they must fail. This gives us an automated, deterministic check that the agent understood the problem well enough to write an effective test for it." | Cognition, "Introducing FrontierCode", 2026-06-08 | [P] | Vendor | https://cognition.ai/blog/frontier-code |
+| E-77 | "32.67% of the successful patches involve 'cheating' as the solutions were directly provided in the issue report or the comments"; "31.08% of the passed patches are suspicious patches due to weak test cases" | SWE-Bench+, arXiv 2410.06992 | [P] | Academic | https://arxiv.org/abs/2410.06992 |
+| E-78 | "GPT 5.5 achieves the highest strict solve rate at 14.8% and isolated solve rate peaks at 28.1%", where strict requires all earlier checkpoints to keep passing | SlopCodeBench, Orlanski et al., arXiv 2603.24755 | [P] | Academic | https://arxiv.org/abs/2603.24755 |
+| E-79 | "Even for the best-performing gpt-4o function calling agent which has a > 60% average task success, pass^8 drops to < 25%." | τ-bench, arXiv 2406.12045 | [P] | Academic / vendor | https://arxiv.org/abs/2406.12045 |
+| E-80 | On tasks solvable by asking one question, models "achieve only 40-50% accuracy on Logic-Q and Planning-Q" | QuestBench, arXiv 2503.22674 | [P] | Vendor research (Google DeepMind) | https://arxiv.org/abs/2503.22674 |
+| E-81 | Of 2.23 million generated package references, "440,445 (19.7%) were determined to be hallucinations"; "43% of hallucinated packages were repeated in all 10 queries" | Package-hallucination study; see `check-agent-limits-claims.md` item L6 | [P] | Academic | see record |
+| E-82 | Trust in AI accuracy: 43% (2024) to 33% (2025); distrust 31% to 46% | Stack Overflow Developer Survey 2024 and 2025 | [P] | Independent of AI vendors | https://survey.stackoverflow.co/2025/ai |
+| E-83 | Attributed to Ryan Lopopolo of OpenAI: "I am bearish on any harness that doesn't come from the lab whose model you are using. You're fighting against post-training." Quoted on a third-party show; the original was not found | "ai that works", episode notes of 2026-05-05 | [P] for the notes; original unverified | Third party quoting a vendor | https://github.com/ai-that-works/ai-that-works/tree/main/2026-05-05-openai-tells-you-not-to-build-your-own-harness |
+
 ## Not usable as evidence
 
 - Every figure in `articles/` that does not have a row above. They are the authors' own claims; several run transcripts are inconsistent with the code shown beside them.
-- Every figure in `practitioner-notes.md` until it is traced to its primary source and given a row above.
+- Anything in `practitioner-notes.md`. It lists Pedro's working principles and is not evidence.
 - Every figure in `paper-verification-economics.md` that it cites from another study, and the "84–97%" velocity figure in `paper-governed-ai-engineering.md`, which is modelled from assumed inputs.
+- The "95% of organizations are getting zero return" figure from MIT NANDA's preliminary report, and the "up to 2.74×" vulnerability figure, which comes from a code-review vendor.
 - Every claim in `notion-notes-2026-10-01.md` marked "not checked", including everything from the article that could not be found.
 - Revenue, valuation, market-share and user-count figures in `market-landscape.md` §3 and §5. All are [S], several from low-quality aggregators.
 

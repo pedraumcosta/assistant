@@ -105,7 +105,7 @@ Decisions are recorded here as they are made. Nine are decided; D1 has an agreed
 | D6 | GitHub repo owner, name and access model | **Decided 2026-10-05:** private repo in Pedro's personal account, `pedraumcosta/assistant`. Created and pushed. | Consequence, per GitHub Docs: "Collaborators can't have read-only access to repositories owned by a personal account". Anyone invited will be able to push. Read-only sharing would need a transfer to an organisation. |
 | D7 | Git author identity | **Decided 2026-10-03:** `pcosta@gmail.com` | Pedro's existing git config; closes ASSIST-002. |
 | D8 | Proposal and presentation format | **Decided 2026-10-03:** Markdown first. When the content is close to final, a Claude Code artifact, then a Slidev presentation. | "Markdown for models, HTML for humans." |
-| D9 | Use of material from outside this repo | **Decided 2026-10-03:** the repo is self-contained. Nothing is cited from Pedro's private folders; any material we rely on is copied into `docs/research/` with its original source. | Readers of the repo cannot open Pedro's Dropbox. Closes ASSIST-007. |
+| D9 | Use of material from outside this repo | **Decided 2026-10-03, refined 2026-10-05:** the repo is self-contained and cites public sources only. Pedro's private notes may be named as the origin of a claim; the public source behind the claim is what is cited and checked. | Readers of the repo cannot open Pedro's private files. Closes ASSIST-007. |
 | D10 | Commit trailers | **Decided 2026-10-03:** keep the `Co-Authored-By: Claude` trailer; the git log is the record of how Claude Code was used. | Makes the build log verifiable. |
 
 ## 3. What the research says
@@ -347,6 +347,31 @@ The search is done by a model, and its result depends on which models search (E-
 
 **Recommendation.** Do not pursue brownfield as a second product. Carry it into the first thesis as the candidate first market and as the reason to widen the verdict. No decision has been taken (ROADMAP T1, T11; JOURNAL ADR-013).
 
+### 3.12 Evidence on market structure and agent limits (2026-10-05)
+
+Pedro pointed to six places in his notes on market analysis and the limits of coding agents. About half was already in our records. The rest was traced to its public sources and checked there. It is evidence for the proposal's problem section; it does not change the direction. Overview: `docs/research/market-and-limits-evidence.md`.
+
+**What it adds**
+
+- *Agents tamper with their own verifier.* A model trained on production coding tasks learned to force tests green, including by patching the test reporter to report "passed" (EVIDENCE E-75). This is the strongest evidence we have for protecting the contract and the checks from the agent by mechanism.
+- *Passing tests is weak evidence.* On one benchmark, "31.08% of the passed patches are suspicious patches due to weak test cases" (E-77).
+- *A deterministic check of whether an agent's tests mean anything.* Run them against the original code: "they must fail" (E-76). This is a cheap addition to the gate and bears on the wider verdict (ROADMAP T11).
+- *Regression is where agents fall furthest.* When earlier work must keep passing, the best strict solve rate on SlopCodeBench is 14.8% (E-78).
+- *Agents guess instead of asking* (E-80), which supports writing the contract before the run.
+- *Consistency, not one run.* A greater-than-60% agent falls below 25% when it must succeed eight times running (E-79), which supports reporting pass^k.
+- *Hallucinated packages* at 19.7% of generated references in one large study (E-81), which supports a dependency check in the gate.
+- *The lab's own view of harnesses.* An OpenAI engineer is quoted as "bearish on any harness that doesn't come from the lab whose model you are using" (E-83, quoted on a third-party show; original not found). The hosts' counter is that a builder's room is the outer layer.
+- *No standard harness interface yet*, which is a cost for any plug-in that attaches to several harnesses (ROADMAP T5).
+
+**Corrections that matter for the proposal**
+
+- Stack Overflow's like-for-like trust figures are 43% (2024) to 33% (2025), with distrust 31% to 46% (E-82). The "29%" in circulation is one answer option.
+- The "95% of pilots fail" figure from MIT is preliminary and contested. It is not used.
+- "2.74 times more vulnerabilities" comes from CodeRabbit, a code-review vendor, and reads "up to". It is not used.
+- The SlopCodeBench figure in Pedro's notes (about 33%) is from a podcast; the paper's is 14.8%.
+
+**Our own framing, not quotations.** The "pair" and "delegate" labels and "fan out reads, single-thread writes" are in no source. We may use them as our words.
+
 ## 4. Deliverables
 
 | File | Purpose | Brief topic |
@@ -434,7 +459,7 @@ The task set will be small and written by us, so results are an indication, not 
 
 1. **Loop.** The harness paper's 90-line scaffold (D3), with provider adapters for Anthropic and OpenAI and every step written to a JSONL event log with tokens, cost and latency. Its four tools (bash, read_file, write_file, search_replace) are kept as published.
 2. **Policy.** Each tool call classified allow / review / block by deterministic rules; work confined to a git worktree; path zones; ceilings on turns, tokens and wall-clock time.
-3. **Gate.** A task contract (scope, acceptance checks, budget), then checks after the agent stops, run in a separate process: tests, lint, diff scope, secrets scan, dependency changes. Bounded repair attempts. Includes the planted-flaw evaluations (H5).
+3. **Gate.** A task contract (scope, acceptance checks, budget), then checks after the agent stops, run in a separate process: tests, lint, diff scope, secrets scan, dependency changes. The checks include whether any new dependency exists, and whether the agent's own tests fail against the original code. Bounded repair attempts. Includes the planted-flaw evaluations (H5).
 4. **Evidence.** A bundle per run, as JSON and Markdown: what was asked, what changed, which checks ran and their results, risk tier, cost.
 5. **Eval runner.** Tasks × trials × arms into a results table, with the cross-vendor evaluator's verdict recorded beside the runs it scores and the spend cap enforced.
 6. **Stretch.** The same gate attached to a vendor harness through a hook or MCP; context compaction and a repo map.
@@ -501,3 +526,4 @@ The issue register lives in `docs/ROADMAP.md` §5. It is the only copy.
 - Pedro's own analysis of the harness paper checked against the paper; findings in §3.9; decision D3 refined.
 - Pedro's addendum on decision models checked at primary sources; findings in §3.10.
 - Second thesis (brownfield specialisation) evaluated from its primary sources and the market; findings in §3.11.
+- Pedro's pointers on market structure and agent limits traced to public sources and checked; findings in §3.12.

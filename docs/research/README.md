@@ -14,7 +14,7 @@ Everything we read or looked up for the ASSIST exercise, recorded so the repo st
 | `paper-verification-economics.md` | arXiv 2609.04681, a synthesis proposing Production-Qualified Change, the Verification Tax and an SDLC control plane. Prior art for our framing | Read end to end by the main session |
 | `paper-governed-ai-engineering.md` | arXiv 2606.22484, a governance framework with three human-oversight tiers for agent-written code in regulated domains | Read end to end from the full text |
 | `articles/` | One record per article, from the brief and from Pedro's Notion notes (table below) | Varies; see table |
-| `practitioner-notes.md` | Digest of Pedro's private working notes on AI, software engineering and management | Digest of curated notes; figures not yet traced to primary sources |
+| `practitioner-notes.md` | Pedro's working principles that shaped this exercise | Not evidence; no sources and no figures |
 | `notion-notes-2026-10-01.md` | Pedro's summary of nine strategy reads from his Notion database, with each claim checked against the source | Checked where the source was read in full; one source not found |
 | `web-research-notes-2026-10-01.md` | Pedro's web research notes of 2026-10-01, with an overview of what held, what was corrected and what could not be verified | Overview of the four check files below |
 | `check-market-claims.md` | Claim-by-claim check of the competitive snapshot and CFO-case data, including six conflicts with our earlier records | Figures confirmed in raw pages; some publishers blocked |
@@ -22,6 +22,9 @@ Everything we read or looked up for the ASSIST exercise, recorded so the repo st
 | `check-procurement-claims.md` | Check of the enterprise procurement checklist against vendors' official documentation | Quotations confirmed in raw pages |
 | `review-verification-segment.md` | Funding, scale and actual behaviour of AI code review and verification products; what vendor audit logs record; the products closest to our idea | Figures confirmed in raw pages; the assessment of how occupied the space is belongs to the researcher |
 | `paper-harness-ablation.md` | arXiv 2609.20804, an ablation study of planning, tools and context management across four models | Read end to end from the full text |
+| `market-and-limits-evidence.md` | Evidence on market structure and the measured limits of coding agents, traced from Pedro's notes to public sources, with corrections | Overview of the two check files below |
+| `check-agent-limits-claims.md` | Fifteen claims about agent limits checked at their papers and benchmark pages | Figures confirmed in raw pages or paper text |
+| `check-market-and-strategy-claims.md` | Twelve claims about market structure, adoption and harness strategy checked at their public sources | Figures confirmed in raw pages; a few sources blocked |
 | `second-thesis-brownfield.md` | Evaluation of a second thesis, a brownfield / enterprise-legacy specialisation: its evidence read in full, the market, and what it changes in the first thesis | Overview of the four records below; the assessment and recommendation are ours |
 | `paper-swe-refactor-bench.md` | arXiv 2608.23564: whole-repository migrations judged in three stages; the best measurement we have of a behaviour-only check passing bad changes | Read end to end from the full text |
 | `paper-legacy-modernization-case-study.md` | arXiv 2608.28972: a VB6 to C# migration of twelve features, assessed by hand | Read end to end; one system, internally inconsistent on some figures |
@@ -50,6 +53,10 @@ Everything we read or looked up for the ASSIST exercise, recorded so the repo st
 | `articles/osmani-brownfield-agentic-engineering.md` | Brownfield Agentic Engineering | Addy Osmani | Full text, by the main session |
 
 The article records are digests written for this exercise, not copies of the articles.
+
+## Citation rule
+
+Records in this folder cite public sources. Where a claim came to us through Pedro's private notes, the notes are named as the origin and the public source behind the claim is what is cited and checked.
 
 ## How the research was done
 
@@ -91,6 +98,8 @@ Token, tool-call and duration figures are as reported by the Claude Code harness
 | 2026-10-05 | Check: decision-model risks and crowdedness | Raw-page verification | 201,366 | 59 | 502 s |
 | 2026-10-05 | SWE Refactor Bench and VB6 case-study papers | Full text | 141,226 | 18 | 311 s |
 | 2026-10-05 | Legacy modernisation and brownfield market | Raw-page research | 155,264 | 56 | 570 s |
+| 2026-10-05 | Check: market structure and harness-strategy claims | Raw-page verification | 110,957 | 40 | 356 s |
+| 2026-10-05 | Check: agent-limits claims | Raw-page verification | 144,255 | 33 | 370 s |
 
 Anthropic's harness design post and the verification-economics paper were read by the main session itself, so they have no row above.
 

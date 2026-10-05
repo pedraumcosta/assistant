@@ -47,6 +47,7 @@ Two kinds of entry:
 - Plan §1 rewritten to state the current position and how it moved. All of the day's research rounds committed together at Pedro's confirmation.
 - Pedro raised decision models (TypeSafe's Jev) as a possible new element and supplied his addendum of 2026-10-02. Two sub-agents checked it at primary sources. Finding: useful for cost at harness call sites we do not build; a component, never the verdict, in the evidence layer; the valuable link is recalibrating a cheap classifier from the labels our layer produces. Records added; plan §3.10 written; roadmap inputs updated. Pedro decided to treat it as the next enhancement after the first prototype (ADR-012).
 - Pedro raised a second thesis from his own list of candidates: a brownfield / enterprise-legacy specialisation. Its section in his notes and Osmani's article were read by the main session; the two papers behind it were read in full and the legacy-modernisation market researched by sub-agents. Evaluation recorded; plan §3.11 written; roadmap question T11 added (ADR-013).
+- Pedro pointed to six places in his notes on market analysis and agent limits, asking whether they are useful as evidence, and set the citation rule: records cite public sources, not his notes. The claims were traced to their public sources and checked by two sub-agents. Useful as evidence, no change of direction. Records added; plan §3.12 written; two checks added to the prototype's gate; roadmap inputs updated.
 
 **Deviations and corrections**
 - **First-pass reading was truncated without warning.** The summarising fetch cut three long articles part-way and reported one as near-complete. Found when Pedro challenged the coverage. Fix: download the full text, check it reaches the final section, read end to end.
@@ -67,6 +68,8 @@ Two kinds of entry:
 - **The decision-model addendum needed ten corrections**, among them the context limit (about 32,000 usable tokens, not 64,000), the mechanism (unpublished, not as described), and two integration claims that had changed state. Its central caution, that such judges fail where LLM judges fail, was confirmed with a figure, for text rubrics only.
 - **Evaluating the second thesis exposed a weakness in the first.** We had worded the verdict as deterministic and drawn from the customer's own checks. On a migration benchmark such checks alone accepted 118 runs of which 28 deserved it. A wider verdict is proposed and not yet agreed.
 - **Pedro's notes described the VB6 study as equivalence-tested.** It was assessed by hand by the system's maintainer; there was no test suite.
+- **Fourteen claims in Pedro's market and limits notes needed correcting** at their public sources, among them a benchmark figure that came from a podcast (about 33%, against 14.8% in the paper) and a vulnerability figure attributed to the wrong vendor. Four phrases turned out to be his own framing, in no source.
+- **One committed file broke the new citation rule.** The digest of Pedro's notes named his private files and carried untraced figures. It was replaced with a list of his principles.
 - **A push failed** for lack of git credentials and was retried through the GitHub CLI's login (ASSIST-011).
 
 ---
@@ -193,7 +196,9 @@ Two kinds of entry:
 
 **Rationale.** Readers of the repo cannot open private files.
 
-**Consequence.** `docs/research/practitioner-notes.md` is a digest with private paths removed; its figures are not usable until traced to a primary source.
+**Refined 2026-10-05.** Research records cite public sources. Where a claim reached us through Pedro's notes, the notes are named as the origin and the public source behind the claim is what is cited and checked.
+
+**Consequence.** `docs/research/practitioner-notes.md` first held a digest of Pedro's notes with their file names and untraced figures. On 2026-10-05 it was replaced by a short list of his working principles, with no file names and no figures. The earlier version remains in the git history.
 
 ### ADR-008 — Document formats
 
