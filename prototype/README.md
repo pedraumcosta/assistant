@@ -2,7 +2,7 @@
 
 The one-day prototype of `docs/DESIGN.md` §7. It asks one question: is an executable verdict wrong less often than the agent's own claim, and than a model reviewer's?
 
-**State: slice 3 of 7.** The measurement, the published loop on Claude Sonnet 5.5, and the gate are built. The planted flaws, the full runs and the evaluator comparison are not. The slices are in `docs/ROADMAP.md` §3.4.
+**State: stopped on 2026-10-05, on the time budget, part-way through slice 4 of 7.** The measurement, the published loop on Claude Sonnet 5.5 and the gate are built. The hand-made changes were fed to the gate until the run was interrupted (30 of 38). The full model runs and the evaluator comparison were not made. Results so far: `docs/RESULTS.md`. The slices: `docs/ROADMAP.md` §3.4.
 
 A paid run needs `ANTHROPIC_API_KEY` in the repository's `.env` and draws on the 50 USD cap in `runs/ledger.jsonl`:
 

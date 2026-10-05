@@ -60,6 +60,8 @@ Two kinds of entry:
 - Prototype slice 1 built: the fixture library, eleven tasks with their contracts and ground-truth checks, a correct and a wrong or unsafe reference change for each, the containers, the event log, the spend ledger, the unsafe-action rules, the results table and a fake agent. The dry run puts 72 runs through the unedited listing and the containers in all three arms, with no unexpected outcome and no spend. Every wrong or unsafe reference change passes the repository's own tests and is rejected by ground truth.
 - Slice 1 committed at Pedro's confirmation (`385477e`). Prototype slice 2 built: the price of Claude Sonnet 5.5 recorded (E-86), the Anthropic adapter written, and the first paid run made, one ordinary task in the bare arm. It ran to the end with every turn in the event log and its cost in the ledger (`prototype/runs/sizing/`, `prototype/runs/ledger.jsonl`).
 - Slice 2 committed at Pedro's confirmation (`d091d2e`); he set five repeats for slice 5. Prototype slice 3 built: the gate, with the verdict in the design's decision order, the contracts' hidden checks, bounded repair attempts in the gated arm, and a verdict record as JSON and Markdown. The same task was run in the gated arm on the model and accepted on the first attempt.
+- Slice 3 committed at Pedro's confirmation (`f369e39`). Slice 4 begun: ten planted flaws and six known-good changes written, each with the outcome expected of the gate recorded first, and a runner to feed them to the gate.
+- **Pedro stopped the prototype: the time budget for the exercise had run out.** He interrupted the slice-4 run and asked for the state to be committed and the results written up. The tree was committed as it stood (`5014b44`). The interrupted run had completed 30 of 38 verdicts. `docs/RESULTS.md` written from the run files. Slices 5 to 7 were not started.
 
 **Deviations and corrections**
 - **First-pass reading was truncated without warning.** The summarising fetch cut three long articles part-way and reported one as near-complete. Found when Pedro challenged the coverage. Fix: download the full text, check it reaches the final section, read end to end.
@@ -96,6 +98,10 @@ Two kinds of entry:
 - **The gate accepted a wrong change the first time it was run on the reference set.** Its hidden check for one requirement tried a single example, and a hand-written wrong change mishandles another. It was left as found and is reported as the gate's false pass on that set.
 - **A container read stale content** when a test reused a path it had just deleted (ASSIST-020, second sighting). The gate now checks, inside the container, that what is mounted is the change it was asked to judge.
 - **The first gated run's timing was spoiled** by running it alongside the dry run on the same Docker machine. The cost and the verdict are unaffected; the timing is not used.
+- **The prototype did not reach the measurement it was built for.** The plan allowed 150 minutes for it. Three slices and part of a fourth were built; the 165 model runs and the reviewer comparison were not. The plan's own response to an overrun was to drop the stretch slice first and keep the evidence and the results; in the event the cut fell on the measurement itself.
+- **One of the three conditions for continuing is not met as worded.** Nine of ten planted flaws were rejected. The tenth drops behaviour no check covers, and was planted to find that limit.
+- **Our own ground truth accepted that same wrong change** (ASSIST-021). The measure the verdicts were to be compared with has the gap it was meant to expose.
+- **A summary given to Pedro was wrong and was corrected.** It said the planted-flaw runner had been neither written nor run. The command had in fact written it and judged 30 changes before it was interrupted. Found when the files were listed for the commit; the commit message was corrected before anything was pushed.
 - **A push failed** for lack of git credentials and was retried through the GitHub CLI's login (ASSIST-011).
 
 ---
@@ -534,4 +540,23 @@ Each line is the decision, then why.
 | The task text in every arm asks for a last line stating whether the work is done; a run that returns without one counts as a claim of done | The listing has no notion of done, and the agent's own claim is a verdict source we compare |
 
 **Beyond this exercise.** The product ships no loop and no container; it attaches to the team's pipeline, where the runner's isolation is the team's.
+
+### ADR-022 — The prototype is stopped on the time budget, and reported as incomplete
+
+| | |
+|---|---|
+| Status | Decided by Pedro, 2026-10-05 |
+| Plan reference | `PLAN.md` §6 (P5, P6), §9 ("One day is not enough for all nine phases") |
+
+**Decision.** Work on the prototype stops with three of seven slices finished and the fourth interrupted. The tree is committed as it stands. `docs/RESULTS.md` reports what was measured and says plainly that the comparison the prototype was built to make was not run.
+
+**Why.** The exercise has one working day. The prototype was built in the order the design set, measurement first, so that nothing would be measured on an unproven instrument. That order was kept, and it used the time.
+
+**What this costs.** The stage-1 conditions for continuing (`PLAN.md` T7, T20) cannot be judged from a model's behaviour. Of the three: one was not measured; one is not met as worded, on hand-made changes (nine of ten planted flaws rejected); one is met on hand-made changes only.
+
+**What it does not change.** Nothing was tuned to improve a result. The two wrong changes the gate accepted are reported as found, with their cause.
+
+**Alternatives not taken.** Running the 165 model runs without the planted-flaw results, which would have compared the gate with the agent's claim before knowing the gate's own error on known cases. Cutting the gate's tests to save time, which would have left the stale-file fault (ASSIST-020) unfound.
+
+**Left for whoever continues.** `RESULTS.md` §8 lists each missing piece and what it needs. The first is free: finish the interrupted run. Before any model runs are compared with the ground truth, the ground truth should be widened (ASSIST-021).
 

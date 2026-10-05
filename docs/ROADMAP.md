@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| Status | Working document. Records only what is already known or done. Steps that depend on the thesis details are listed but not scoped. |
+| Status | **Work on the prototype stopped on 2026-10-05 because the time budget ran out.** Three of seven slices are finished; the fourth was interrupted. What was measured is in `docs/RESULTS.md`. The rest of this document records what is done and what is left. |
 | Last updated | 2026-10-05 |
 | Reads with | `docs/PLAN.md` (takes precedence) and `docs/JOURNAL.md` (what happened and why) |
 
@@ -13,7 +13,9 @@
 - The thesis is decided (§2 below): the evidence layer, pursued as a three-stage probe that ends in Build or Wait.
 - The first two sections of the proposal and the system design are written and reviewed.
 - The prototype (plan phase P5) is scoped slice by slice in §3.4, with three decisions taken on it (T20 to T22). Pedro gave the word to start on 2026-10-05.
-- Slices 1 to 3 of 7 are built and their exit checks pass: the measurement, the published loop on Claude Sonnet 5.5, and the gate. Spend so far is in `prototype/runs/ledger.jsonl`: two runs, 0.038744 + 0.031888 = 0.070632 USD of the 50 USD cap.
+- Slices 1 to 3 of 7 are built and their exit checks passed: the measurement, the published loop on Claude Sonnet 5.5, and the gate. Spend is in `prototype/runs/ledger.jsonl`: two runs, 0.038744 + 0.031888 = 0.070632 USD of the 50 USD cap.
+- **Pedro stopped the prototype on 2026-10-05, part-way through slice 4, because the time budget for the exercise ran out.** The run that feeds hand-made changes to the gate was interrupted with 30 of 38 changes judged. Slices 5 to 7 were not started.
+- **The comparison the prototype was built to make was not run.** `docs/RESULTS.md` reports what exists: on hand-made changes the gate rejected 19 of 21 wrong ones and accepted all 9 correct ones it judged; one planted flaw of ten was accepted, so the condition "every planted flaw is rejected" is not met as worded.
 
 ## 2. The thesis
 
@@ -62,15 +64,17 @@ Status values: Done, In review, Not started, Blocked.
 | Evidence verification: ledger rows E-01 to E-29 re-checked against raw sources | `docs/research/EVIDENCE.md` | The commit after `1e3d2c5` | 2026-10-05 |
 | Problem and product: proposal sections 1 and 2, reviewed by Pedro and reframed as evidence-driven development | `docs/PROPOSAL.md` | `fa96c11`, `cc90fad` | 2026-10-05 |
 | System design, reviewed by Pedro with five decisions (T15 to T19) | `docs/DESIGN.md` | `0c10417` | 2026-10-05 |
-| Prototype slice 2: the loop on Claude Sonnet 5.5. One paid task run to the end; price recorded (E-86); repeats for slice 5 set to 5 | `prototype/scaffold/adapter_anthropic.py`, `prototype/runs/sizing/` | The commit after `385477e` | 2026-10-05 |
+| Prototype slice 4, partial: ten planted flaws and six known-good changes written; the run interrupted with 30 of 38 changes judged. **Stopped here on the time budget** | `prototype/planted/`, `prototype/known_good/`, `prototype/runner/planted.py`, `prototype/runs/planted/` | `5014b44` | 2026-10-05 |
+| Prototype slice 3: the gate. The same task accepted in the gated arm on the model; 84 tests; dry run as expected | `prototype/gate/`, `prototype/protected/*/hidden/` | `f369e39` | 2026-10-05 |
+| Prototype slice 2: the loop on Claude Sonnet 5.5. One paid task run to the end; price recorded (E-86); repeats for slice 5 set to 5 | `prototype/scaffold/adapter_anthropic.py`, `prototype/runs/sizing/` | `d091d2e` | 2026-10-05 |
 | Prototype slice 1: measurement skeleton with a fake agent. 72 dry runs with no unexpected outcome; 59 tests | `prototype/` | `385477e` | 2026-10-05 |
 | Preparation for the prototype: keys confirmed, scaffold listing recorded, three decisions (T20 to T22), slices scoped | `docs/research/harness-scaffold-listing.md`, `PLAN.md` §2.1 and §7, `JOURNAL.md` ADR-021, §3.4 below | `be0139e` | 2026-10-05 |
 
 ### 3.2 In review
 
-| Step | Output | Exit check | Waiting on |
-|---|---|---|---|
-| Prototype slice 3: the gate | `prototype/gate/`, the contracts' required checks and hidden checks in `prototype/protected/`, `prototype/runs/sizing/` | Passed: the same task ran in the gated arm and was accepted on the first attempt; the same change and contract give the same record; a check made to crash gives `error`; 84 tests pass; the dry run gives no unexpected outcome | Pedro's word to commit, and his ruling on the gate's one known false pass |
+| Step | Output | Waiting on |
+|---|---|---|
+| Results of the prototype as far as it went | `docs/RESULTS.md` | Pedro's review |
 
 ### 3.3 Not started
 
@@ -78,9 +82,9 @@ These are the remaining phases from `PLAN.md` §6. With the thesis decided, they
 
 | Phase | Output | Exit check (from the plan) | Depends on |
 |---|---|---|---|
-| Prototype (P5) | `prototype/`, in the slices of §3.4 | Each slice runs end to end on the fixture repo | Started 2026-10-05 |
+| Prototype (P5), remainder | Slices 4 (finish), 5, 6 and 7 of §3.4 | Each slice runs end to end on the fixture repo | **Stopped on the time budget, 2026-10-05.** What each would take is in `RESULTS.md` §8 |
 | Bonus: evaluation path for an LLM application | One small task verified by an evaluation, end to end | Three-way result reported; hidden cases never shown to the agent; any model scorer's agreement with labels stated | Prototype; time remaining |
-| Measurement | `docs/RESULTS.md`, `prototype/runs/` | Results table generated from run files, limitations stated, spend within the 50 USD cap | Prototype |
+| Measurement | `docs/RESULTS.md`, `prototype/runs/` | Results table generated from run files, limitations stated, spend within the 50 USD cap | **Written for what exists** (`RESULTS.md`, in review). The measurement of a model in three arms was not made |
 | Next enhancements: counterexample search; decision-model judge and recalibration test | A search for hidden behavioural differences that produces executable failing tests; a fourth verdict source in the evaluation; and a measurement of how far the prototype's own outcomes improve a classifier's calibration | Reported on false-pass rate, variance, cost and latency beside the other verdict sources; limits stated | First prototype measured; a TypeSafe API key or a local open build |
 | Proposal, design view, CFO message | `PROPOSAL.md` complete; Claude Code artifact; Slidev deck | Recommendation is consistent with the results, including if the hypotheses fail | Measurement; the CFO assumptions (T8) |
 | Build log and final review | `docs/BUILD_LOG.md` | No number without an evidence row; no ASSIST issue unaccounted for | All of the above |
@@ -162,6 +166,20 @@ All figures are from `prototype/runs/sizing/o1-bulk-discount__bare__sonnet__t1/`
 - **The set fits the cap with room to spare.** Nothing needs cutting, and Pedro raised the repeats from 3 to 5.
 - **The risk named below showed on the first run:** the model got the task right with no gate.
 
+**Where the work stopped** (2026-10-05)
+
+| Slice | State at the stop |
+|---|---|
+| 1. Measurement skeleton | Done, committed |
+| 2. Loop on the model | Done, committed |
+| 3. Gate | Done, committed |
+| 4. Planted flaws and known-good changes | Written and committed. The run was interrupted: all 10 planted flaws and all 11 wrong reference changes judged, 9 of 11 correct reference changes judged, none of the 6 known-good changes judged. Finishing it is one command and no spend |
+| 5. The three arms, 165 runs | Not started. The single-run driver exists; the batch runner over it does not |
+| 6. Evaluator comparison | Not started |
+| 7. Bonus: evaluation path | Not started |
+
+The slice-4 exit check reads "every planted flaw is rejected, each for the reason it was planted". Nine of ten were. The tenth, `p06-behaviour-dropped`, was accepted: it drops behaviour that no check in the contract covers. Per the rule below it is reported as a result and nothing was tuned.
+
 **Slice 3 as built** (2026-10-05)
 
 - **The verdict follows `DESIGN.md` §4.1 in order,** and stops at the first step that does not pass: integrity, budget, build, the repository's tests from the base commit, the author's tests, the contract's hidden checks, scope, test adequacy, dependencies, secrets. It reads the base, the change, the contract and three numbers about the run. It does not read the event log or the agent's claim; a test holds it to that.
@@ -223,4 +241,7 @@ This is the only copy of the register (decided 2026-10-05). `PLAN.md` §10 point
 | ASSIST-017 | The Docker daemon is not running on this machine (Rancher Desktop is installed). Every prototype run needs it (T21) | Closed 2026-10-05: started by Pedro |
 | ASSIST-020 | Files written in a container can reach the host a moment late through Docker's file sharing on this machine. One check report was read as missing. Reports now have a unique name and are waited for briefly | Closed 2026-10-05 for check reports. Seen a second time in the gate's tests: a path that is deleted and written again can show a container its old content. Run directories are never reused, and the gate now refuses to judge unless the container sees the exact change (its hash is checked inside the container). Open as a watch item |
 | ASSIST-018 | The prices of the models used are not in `EVIDENCE.md`. The prototype computes cost from token counts and published prices, and no price may be assumed | Closed 2026-10-05 for the agent's model (E-86). The evaluator's price is recorded when its model is fixed, at slice 6 |
+| ASSIST-021 | The prototype's ground-truth checks accept a change known to be wrong (`p06-behaviour-dropped`): they test the task's own behaviour and little around it. A false-pass rate measured against them is a lower bound | Open. To be widened before any model runs are compared with them |
+| ASSIST-022 | The eleven contracts were never approved by a person (`approved_by: null`), which the design requires | Open |
+| ASSIST-023 | The dry run was last run before the last edits of slice 4 (a change to how skipped tests are read, and to three reference-change scripts). The 84 tests were re-run on the committed tree after the stop and pass | Open, not blocking. Re-running the dry run costs nothing |
 | ASSIST-019 | `PLAN.md` §8 predates `DESIGN.md` §6 and still differs from it on some rows (model routing by task, context management, orchestration, the redline candidates). Only the tool-execution row was brought into line, because T20 decided it | Open, not blocking; Pedro to say whether §8 is rewritten or replaced by a pointer to the design |
