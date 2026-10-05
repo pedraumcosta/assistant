@@ -29,7 +29,7 @@ https://freedium-mirror.cfd/https://medium.com/data-science-collective/the-compl
 https://freedium-mirror.cfd/https://medium.com/intuitively-and-exhaustively-explained/agent-harnesses-with-claude-intuitively-and-exhaustively-explained-1ab5a3697d5f
 https://freedium-mirror.cfd/https://pub.towardsai.net/claude-managed-agents-stop-building-your-own-agent-loop-anthropic-already-built-it-06525f23c04c#harness-engineering-articles
 https://freedium-mirror.cfd/https://levelup.gitconnected.com/building-claude-from-scratch-62-components-behind-anthropics-thinking-engine-cd38ee3daf93
-https://freedium-mirror.cfd/https://ai.gopubby.com/how-i-used-sft-distillation-and-preference-tuning-to-create-a-high-performance-slm-6612a631a775https://levelup.gitconnected.com/building-a-senior-staff-engineer-with-sub-agent-teams-in-claude-code-771298151392
+https://freedium-mirror.cfd/https://levelup.gitconnected.com/building-a-senior-staff-engineer-with-sub-agent-teams-in-claude-code-771298151392
 https://freedium-mirror.cfd/https://levelup.gitconnected.com/building-claude-code-with-harness-engineering-d2e8c0da85f0
 - Make a deep research to figure out what are the main features in this field they are talking about that we might want in our product.
 - Proceed to the deliverables described in the output section below.
