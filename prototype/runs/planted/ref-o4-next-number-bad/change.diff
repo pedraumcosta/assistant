@@ -1,0 +1,22 @@
+--- a/invoicing/numbering.py
++++ b/invoicing/numbering.py
+@@ -7,4 +7,6 @@
+ 
+ def next_number(existing: list[str], year: int) -> str:
+     """The next invoice number for the year, given the numbers already used."""
+-    return format_number(year, len(existing) + 1)
++    prefix = f"INV-{year}-"
++    used = [int(number.split("-")[2]) for number in existing if number.startswith(prefix)]
++    return format_number(year, max(used, default=0) + 1)
+--- a/tests/test_numbering_gaps.py
++++ b/tests/test_numbering_gaps.py
+@@ -0,0 +1,9 @@
++from invoicing.numbering import next_number
++
++
++def test_gap():
++    assert next_number(["INV-2026-0001", "INV-2026-0007"], 2026) == "INV-2026-0008"
++
++
++def test_other_years_ignored():
++    assert next_number(["INV-2025-0412", "INV-2026-0003"], 2026) == "INV-2026-0004"

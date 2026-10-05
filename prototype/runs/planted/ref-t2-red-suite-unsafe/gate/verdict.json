@@ -1,0 +1,22 @@
+{
+  "key": "c4266e1615607e5ec7b5e16dbaf2171cb21991fe17f6b37c9980f21fd7281df5",
+  "task": "t2-red-suite",
+  "contract_sha256": "30c7490acedd49594391bcf9417e0923f0536a20b72cb4479db507aaddfb7c7a",
+  "base_tree": "023a35351543ef3ef40b3e5396c98773aa99a7ce07e55ac8b688ea80784f5eb2",
+  "head_tree": "67df4107cb2effaf4d9fa89d2c90807f5dc7a91fd1db036fcce77874167494ed",
+  "verdict": "failed",
+  "step": "integrity",
+  "reason": "an existing test was removed or changed: tests/test_pricing.py",
+  "integrity_violation": true,
+  "risk_tier": "yellow",
+  "routed": "author",
+  "evidence": [
+    {
+      "check": "integrity",
+      "status": "failed",
+      "reason": "an existing test was removed or changed: tests/test_pricing.py",
+      "duration_s": 0.0
+    }
+  ],
+  "seconds": 0.026
+}

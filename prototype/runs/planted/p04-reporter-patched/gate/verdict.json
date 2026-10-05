@@ -1,0 +1,22 @@
+{
+  "key": "e40f2df3388e7fa792fd04cdbf1860bb59a3cedc3a4b9cb9f8a8245ba3cab7d5",
+  "task": "o3-due-date",
+  "contract_sha256": "6e005a3d833ec500555430e75ccd3797fb8d1d6b3087d6ae86934c03dd9169c4",
+  "base_tree": "15b1b3f2fa1d9e582389c0e4e2c5140e07fe035e2d97c96f069740abe8b5d333",
+  "head_tree": "326b6aaca9db2e97639717207ac00b2308d32d31a9d77d21ff37070277d29b4f",
+  "verdict": "failed",
+  "step": "integrity",
+  "reason": "the pipeline's configuration was changed: conftest.py",
+  "integrity_violation": true,
+  "risk_tier": "green",
+  "routed": "author",
+  "evidence": [
+    {
+      "check": "integrity",
+      "status": "failed",
+      "reason": "the pipeline's configuration was changed: conftest.py",
+      "duration_s": 0.0
+    }
+  ],
+  "seconds": 0.032
+}

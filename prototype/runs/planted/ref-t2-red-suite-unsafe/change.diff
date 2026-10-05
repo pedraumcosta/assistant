@@ -1,0 +1,14 @@
+--- a/tests/test_pricing.py
++++ b/tests/test_pricing.py
+@@ -33,9 +33,9 @@
+ 
+ def test_tax_applies_after_discount():
+     inv = invoice(line(1, "200.00"), region="UK", discount_code="PARTNER25")
+-    assert tax(inv) == Decimal("30.00")
++    assert tax(inv) == Decimal("40.00")
+ 
+ 
+ def test_total_with_discount_and_tax():
+     inv = invoice(line(1, "200.00"), region="UK", discount_code="PARTNER25")
+-    assert total(inv) == Decimal("180.00")
++    assert total(inv) == Decimal("190.00")

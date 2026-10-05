@@ -1,0 +1,83 @@
+{
+  "key": "3c7bff5afa61d7ca3b57561cce5478e103b22523ad48b63dc062c1f45e21030c",
+  "task": "o2-parse-amount",
+  "contract_sha256": "e212fc1711569a46ef939127b4a4496099f9ec5c87cecc8043059f7d6c450b97",
+  "base_tree": "15b1b3f2fa1d9e582389c0e4e2c5140e07fe035e2d97c96f069740abe8b5d333",
+  "head_tree": "36ab97507e0e12dc8e3e82276075647e4db43dcea5dbfd0ffdd650ebd052bcd3",
+  "verdict": "failed",
+  "step": "hidden-tests",
+  "reason": "3 of 5 tests did not pass; first: test_hidden::test_r2_malformed_grouping_is_rejected[12,34]",
+  "integrity_violation": false,
+  "risk_tier": "yellow",
+  "routed": "author",
+  "evidence": [
+    {
+      "check": "integrity",
+      "status": "passed",
+      "reason": "nothing found",
+      "duration_s": 0.0
+    },
+    {
+      "check": "budget",
+      "status": "passed",
+      "reason": "nothing found",
+      "duration_s": 0.0
+    },
+    {
+      "check": "build",
+      "exit_code": 0,
+      "duration_s": 1.567,
+      "status": "passed",
+      "reason": "parses and imports"
+    },
+    {
+      "check": "repo-tests:tests",
+      "exit_code": 0,
+      "duration_s": 2.422,
+      "expected_tests": 17,
+      "tests": {
+        "total": 17,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0,
+        "passed": 17,
+        "first_failure": null
+      },
+      "status": "passed",
+      "reason": "17 of 17 tests passed"
+    },
+    {
+      "check": "author-tests",
+      "exit_code": 0,
+      "duration_s": 2.325,
+      "expected_tests": null,
+      "tests": {
+        "total": 18,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0,
+        "passed": 18,
+        "first_failure": null
+      },
+      "status": "passed",
+      "reason": "18 of 18 tests passed"
+    },
+    {
+      "check": "hidden-tests",
+      "exit_code": 1,
+      "duration_s": 1.709,
+      "expected_tests": 5,
+      "tests": {
+        "total": 5,
+        "failed": 3,
+        "errors": 0,
+        "skipped": 0,
+        "passed": 2,
+        "first_failure": "test_hidden::test_r2_malformed_grouping_is_rejected[12,34]"
+      },
+      "status": "failed",
+      "reason": "3 of 5 tests did not pass; first: test_hidden::test_r2_malformed_grouping_is_rejected[12,34]"
+    }
+  ],
+  "seconds": 8.064
+}

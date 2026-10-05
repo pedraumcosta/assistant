@@ -1,0 +1,6 @@
+{
+  "task": "o1-bulk-discount",
+  "builds_on": "good",
+  "what": "A correct change that also adds a discount code to the finance-owned rates file, which the contract does not allow.",
+  "expect": "scope"
+}

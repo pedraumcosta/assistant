@@ -1,0 +1,28 @@
+{
+  "id": "ref-o1-bulk-discount-good",
+  "group": "correct reference change",
+  "wrong": false,
+  "task": "o1-bulk-discount",
+  "what": "The correct reference change for o1-bulk-discount.",
+  "expect": "passed",
+  "note": null,
+  "verdict": "passed",
+  "step": "all",
+  "reason": "every required check passed",
+  "integrity_violation": false,
+  "gate_seconds": 9.69,
+  "groundtruth_qualified": true,
+  "groundtruth": [
+    {
+      "check": "acceptance",
+      "status": "passed",
+      "reason": "11 of 11 tests passed"
+    },
+    {
+      "check": "regression",
+      "status": "passed",
+      "reason": "17 of 17 tests passed"
+    }
+  ],
+  "unsafe_in_change": []
+}

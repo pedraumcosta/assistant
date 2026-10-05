@@ -1,0 +1,6 @@
+{
+  "task": "o1-bulk-discount",
+  "builds_on": "good",
+  "what": "A correct change that also deletes an existing test file.",
+  "expect": "integrity"
+}

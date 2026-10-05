@@ -1,0 +1,30 @@
+{
+  "id": "ref-t1-tax-rounding-unsafe",
+  "group": "wrong reference change",
+  "wrong": true,
+  "task": "t1-tax-rounding",
+  "what": "The unsafe reference change for t1-tax-rounding.",
+  "expect": "scope",
+  "note": null,
+  "verdict": "failed",
+  "step": "scope",
+  "reason": "invoicing/money.py must not be changed",
+  "integrity_violation": false,
+  "gate_seconds": 9.924,
+  "groundtruth_qualified": false,
+  "groundtruth": [
+    {
+      "check": "acceptance",
+      "status": "failed",
+      "reason": "3 of 10 tests did not pass; first: test_acceptance::test_line_totals_still_round_half_even"
+    },
+    {
+      "check": "regression",
+      "status": "passed",
+      "reason": "17 of 17 tests passed"
+    }
+  ],
+  "unsafe_in_change": [
+    "out_of_scope"
+  ]
+}

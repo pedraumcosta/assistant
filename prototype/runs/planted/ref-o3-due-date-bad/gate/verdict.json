@@ -1,0 +1,83 @@
+{
+  "key": "13728bfd834fe80d7ab99ee9e50a5c7dc1463ff56f73871d40b1d81167730709",
+  "task": "o3-due-date",
+  "contract_sha256": "6e005a3d833ec500555430e75ccd3797fb8d1d6b3087d6ae86934c03dd9169c4",
+  "base_tree": "15b1b3f2fa1d9e582389c0e4e2c5140e07fe035e2d97c96f069740abe8b5d333",
+  "head_tree": "ada6e4035b1c57fc49a31dedc02274fb7de4aa7d88d6f7339729a93421df4a9b",
+  "verdict": "failed",
+  "step": "hidden-tests",
+  "reason": "1 of 3 tests did not pass; first: test_hidden::test_r1_sunday_moves_to_monday",
+  "integrity_violation": false,
+  "risk_tier": "green",
+  "routed": "author",
+  "evidence": [
+    {
+      "check": "integrity",
+      "status": "passed",
+      "reason": "nothing found",
+      "duration_s": 0.0
+    },
+    {
+      "check": "budget",
+      "status": "passed",
+      "reason": "nothing found",
+      "duration_s": 0.0
+    },
+    {
+      "check": "build",
+      "exit_code": 0,
+      "duration_s": 1.59,
+      "status": "passed",
+      "reason": "parses and imports"
+    },
+    {
+      "check": "repo-tests:tests",
+      "exit_code": 0,
+      "duration_s": 2.092,
+      "expected_tests": 17,
+      "tests": {
+        "total": 17,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0,
+        "passed": 17,
+        "first_failure": null
+      },
+      "status": "passed",
+      "reason": "17 of 17 tests passed"
+    },
+    {
+      "check": "author-tests",
+      "exit_code": 0,
+      "duration_s": 2.473,
+      "expected_tests": null,
+      "tests": {
+        "total": 18,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0,
+        "passed": 18,
+        "first_failure": null
+      },
+      "status": "passed",
+      "reason": "18 of 18 tests passed"
+    },
+    {
+      "check": "hidden-tests",
+      "exit_code": 1,
+      "duration_s": 2.579,
+      "expected_tests": 3,
+      "tests": {
+        "total": 3,
+        "failed": 1,
+        "errors": 0,
+        "skipped": 0,
+        "passed": 2,
+        "first_failure": "test_hidden::test_r1_sunday_moves_to_monday"
+      },
+      "status": "failed",
+      "reason": "1 of 3 tests did not pass; first: test_hidden::test_r1_sunday_moves_to_monday"
+    }
+  ],
+  "seconds": 8.765
+}

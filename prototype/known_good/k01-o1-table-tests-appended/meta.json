@@ -1,0 +1,6 @@
+{
+  "task": "o1-bulk-discount",
+  "builds_on": null,
+  "what": "Quantity pricing from a table of tiers; the tests are added to the existing test file.",
+  "expect": "passed"
+}

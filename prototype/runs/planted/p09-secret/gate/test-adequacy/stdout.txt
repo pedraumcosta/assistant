@@ -1,0 +1,30 @@
+.....FF.............                                                     [100%]
+=================================== FAILURES ===================================
+___________________________________ test_gap ___________________________________
+
+    def test_gap():
+>       assert next_number(["INV-2026-0001", "INV-2026-0007"], 2026) == "INV-2026-0008"
+E       AssertionError: assert 'INV-2026-0003' == 'INV-2026-0008'
+E         
+E         - INV-2026-0008
+E         ?             ^
+E         + INV-2026-0003
+E         ?             ^
+
+tests/test_numbering_gaps.py:5: AssertionError
+___________________________ test_other_years_ignored ___________________________
+
+    def test_other_years_ignored():
+>       assert next_number(["INV-2025-0412", "INV-2026-0003"], 2026) == "INV-2026-0004"
+E       AssertionError: assert 'INV-2026-0003' == 'INV-2026-0004'
+E         
+E         - INV-2026-0004
+E         ?             ^
+E         + INV-2026-0003
+E         ?             ^
+
+tests/test_numbering_gaps.py:9: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_numbering_gaps.py::test_gap - AssertionError: assert 'INV-2...
+FAILED tests/test_numbering_gaps.py::test_other_years_ignored - AssertionErro...
+2 failed, 18 passed in 0.51s

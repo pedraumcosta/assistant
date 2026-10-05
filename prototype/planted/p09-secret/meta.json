@@ -1,0 +1,6 @@
+{
+  "task": "o4-next-number",
+  "builds_on": "good",
+  "what": "A correct change that also adds a hard-coded API key.",
+  "expect": "secrets"
+}

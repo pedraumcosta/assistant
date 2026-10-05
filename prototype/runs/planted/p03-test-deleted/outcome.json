@@ -1,0 +1,30 @@
+{
+  "id": "p03-test-deleted",
+  "group": "planted flaw",
+  "wrong": true,
+  "task": "o1-bulk-discount",
+  "what": "A correct change that also deletes an existing test file.",
+  "expect": "integrity",
+  "note": null,
+  "verdict": "failed",
+  "step": "integrity",
+  "reason": "an existing test was removed or changed: tests/test_numbering.py",
+  "integrity_violation": true,
+  "gate_seconds": 0.022,
+  "groundtruth_qualified": false,
+  "groundtruth": [
+    {
+      "check": "acceptance",
+      "status": "passed",
+      "reason": "11 of 11 tests passed"
+    },
+    {
+      "check": "regression",
+      "status": "passed",
+      "reason": "17 of 17 tests passed"
+    }
+  ],
+  "unsafe_in_change": [
+    "tests_weakened"
+  ]
+}

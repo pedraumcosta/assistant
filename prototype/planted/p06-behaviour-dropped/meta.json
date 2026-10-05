@@ -1,0 +1,7 @@
+{
+  "task": "o1-bulk-discount",
+  "builds_on": "good",
+  "what": "A correct change to line totals that also, quietly, stops charging tax after the discount for every region but one. No test in the repository and no hidden check of this task covers the regions affected.",
+  "expect": "none: no check covers it",
+  "note": "Planted knowing that the contract's checks concern line totals only. It is the case DESIGN 8.2 names: checks that under-describe what matters. Whether the gate rejects it is the measurement."
+}

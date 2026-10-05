@@ -1,0 +1,70 @@
+FFF..                                                                    [100%]
+=================================== FAILURES ===================================
+___ test_tax_is_charged_after_the_discount[200.00-UK-PARTNER25-30.00-180.00] ___
+
+price = '200.00', region = 'UK', code = 'PARTNER25', tax = '30.00'
+total = '180.00'
+
+    @pytest.mark.parametrize("price,region,code,tax,total", [
+        ("200.00", "UK", "PARTNER25", "30.00", "180.00"),
+        ("100.00", "DE", "WELCOME10", "17.10", "107.10"),
+        ("80.00", "PT", "PARTNER25", "13.80", "73.80"),
+        ("100.00", "UK", None, "20.00", "120.00"),
+        ("100.00", "US", "WELCOME10", "0.00", "90.00"),
+    ])
+    def test_tax_is_charged_after_the_discount(price, region, code, tax, total):
+>       assert pricing.tax(inv(price, region, code)) == Decimal(tax)
+E       AssertionError: assert Decimal('40.00') == Decimal('30.00')
+E        +  where Decimal('40.00') = <function tax at 0x7f2383c51120>(Invoice(number='INV-2026-0001', customer='Acme Ltd', issued=datetime.date(2026, 10, 5), lines=(LineItem(sku='W-1', description='Widget', quantity=1, unit_price=Decimal('200.00')),), region='UK', discount_code='PARTNER25'))
+E        +    where <function tax at 0x7f2383c51120> = pricing.tax
+E        +    and   Invoice(number='INV-2026-0001', customer='Acme Ltd', issued=datetime.date(2026, 10, 5), lines=(LineItem(sku='W-1', description='Widget', quantity=1, unit_price=Decimal('200.00')),), region='UK', discount_code='PARTNER25') = inv('200.00', 'UK', 'PARTNER25')
+E        +  and   Decimal('30.00') = Decimal('30.00')
+
+test_acceptance.py:23: AssertionError
+___ test_tax_is_charged_after_the_discount[100.00-DE-WELCOME10-17.10-107.10] ___
+
+price = '100.00', region = 'DE', code = 'WELCOME10', tax = '17.10'
+total = '107.10'
+
+    @pytest.mark.parametrize("price,region,code,tax,total", [
+        ("200.00", "UK", "PARTNER25", "30.00", "180.00"),
+        ("100.00", "DE", "WELCOME10", "17.10", "107.10"),
+        ("80.00", "PT", "PARTNER25", "13.80", "73.80"),
+        ("100.00", "UK", None, "20.00", "120.00"),
+        ("100.00", "US", "WELCOME10", "0.00", "90.00"),
+    ])
+    def test_tax_is_charged_after_the_discount(price, region, code, tax, total):
+>       assert pricing.tax(inv(price, region, code)) == Decimal(tax)
+E       AssertionError: assert Decimal('19.00') == Decimal('17.10')
+E        +  where Decimal('19.00') = <function tax at 0x7f2383c51120>(Invoice(number='INV-2026-0001', customer='Acme Ltd', issued=datetime.date(2026, 10, 5), lines=(LineItem(sku='W-1', description='Widget', quantity=1, unit_price=Decimal('100.00')),), region='DE', discount_code='WELCOME10'))
+E        +    where <function tax at 0x7f2383c51120> = pricing.tax
+E        +    and   Invoice(number='INV-2026-0001', customer='Acme Ltd', issued=datetime.date(2026, 10, 5), lines=(LineItem(sku='W-1', description='Widget', quantity=1, unit_price=Decimal('100.00')),), region='DE', discount_code='WELCOME10') = inv('100.00', 'DE', 'WELCOME10')
+E        +  and   Decimal('17.10') = Decimal('17.10')
+
+test_acceptance.py:23: AssertionError
+____ test_tax_is_charged_after_the_discount[80.00-PT-PARTNER25-13.80-73.80] ____
+
+price = '80.00', region = 'PT', code = 'PARTNER25', tax = '13.80'
+total = '73.80'
+
+    @pytest.mark.parametrize("price,region,code,tax,total", [
+        ("200.00", "UK", "PARTNER25", "30.00", "180.00"),
+        ("100.00", "DE", "WELCOME10", "17.10", "107.10"),
+        ("80.00", "PT", "PARTNER25", "13.80", "73.80"),
+        ("100.00", "UK", None, "20.00", "120.00"),
+        ("100.00", "US", "WELCOME10", "0.00", "90.00"),
+    ])
+    def test_tax_is_charged_after_the_discount(price, region, code, tax, total):
+>       assert pricing.tax(inv(price, region, code)) == Decimal(tax)
+E       AssertionError: assert Decimal('18.40') == Decimal('13.80')
+E        +  where Decimal('18.40') = <function tax at 0x7f2383c51120>(Invoice(number='INV-2026-0001', customer='Acme Ltd', issued=datetime.date(2026, 10, 5), lines=(LineItem(sku='W-1', description='Widget', quantity=1, unit_price=Decimal('80.00')),), region='PT', discount_code='PARTNER25'))
+E        +    where <function tax at 0x7f2383c51120> = pricing.tax
+E        +    and   Invoice(number='INV-2026-0001', customer='Acme Ltd', issued=datetime.date(2026, 10, 5), lines=(LineItem(sku='W-1', description='Widget', quantity=1, unit_price=Decimal('80.00')),), region='PT', discount_code='PARTNER25') = inv('80.00', 'PT', 'PARTNER25')
+E        +  and   Decimal('13.80') = Decimal('13.80')
+
+test_acceptance.py:23: AssertionError
+=========================== short test summary info ============================
+FAILED test_acceptance.py::test_tax_is_charged_after_the_discount[200.00-UK-PARTNER25-30.00-180.00]
+FAILED test_acceptance.py::test_tax_is_charged_after_the_discount[100.00-DE-WELCOME10-17.10-107.10]
+FAILED test_acceptance.py::test_tax_is_charged_after_the_discount[80.00-PT-PARTNER25-13.80-73.80]
+3 failed, 2 passed in 0.19s

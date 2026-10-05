@@ -1,0 +1,6 @@
+{
+  "task": "o3-due-date",
+  "builds_on": null,
+  "what": "The weekend rule written as a loop; tests added to the existing test file.",
+  "expect": "passed"
+}

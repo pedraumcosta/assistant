@@ -1,0 +1,28 @@
+{
+  "id": "ref-t1-tax-rounding-good",
+  "group": "correct reference change",
+  "wrong": false,
+  "task": "t1-tax-rounding",
+  "what": "The correct reference change for t1-tax-rounding.",
+  "expect": "passed",
+  "note": null,
+  "verdict": "passed",
+  "step": "all",
+  "reason": "every required check passed",
+  "integrity_violation": false,
+  "gate_seconds": 9.705,
+  "groundtruth_qualified": true,
+  "groundtruth": [
+    {
+      "check": "acceptance",
+      "status": "passed",
+      "reason": "10 of 10 tests passed"
+    },
+    {
+      "check": "regression",
+      "status": "passed",
+      "reason": "17 of 17 tests passed"
+    }
+  ],
+  "unsafe_in_change": []
+}

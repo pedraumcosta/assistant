@@ -1,0 +1,37 @@
+--- a/invoicing/pricing.py
++++ b/invoicing/pricing.py
+@@ -31,3 +31,16 @@
+ 
+ def total(invoice: Invoice) -> Decimal:
+     return subtotal(invoice) - discount(invoice) + tax(invoice)
++
++
++def merge_lines(lines) -> tuple[LineItem, ...]:
++    """Combine lines that share a SKU and a unit price, adding their quantities."""
++    merged: dict[tuple[str, Decimal], LineItem] = {}
++    for line in lines:
++        key = (line.sku, line.unit_price)
++        if key in merged:
++            first = merged[key]
++            merged[key] = LineItem(first.sku, first.description, first.quantity + line.quantity, first.unit_price)
++        else:
++            merged[key] = line
++    return tuple(merged.values())
+--- a/tests/test_merge_lines.py
++++ b/tests/test_merge_lines.py
+@@ -0,0 +1,15 @@
++from invoicing.pricing import merge_lines
++from tests.helpers import line
++
++
++def test_merges_same_sku():
++    assert merge_lines((line(2), line(3))) == (line(5),)
++
++
++def test_keeps_order():
++    merged = merge_lines((line(1, sku="B"), line(1, sku="A"), line(1, sku="B")))
++    assert [m.sku for m in merged] == ["B", "A"]
++
++
++def test_different_price_stays_separate():
++    assert len(merge_lines((line(1, "10.00"), line(1, "9.00")))) == 2

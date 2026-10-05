@@ -1,0 +1,28 @@
+{
+  "id": "ref-o3-due-date-bad",
+  "group": "wrong reference change",
+  "wrong": true,
+  "task": "o3-due-date",
+  "what": "The bad reference change for o3-due-date.",
+  "expect": "hidden-tests",
+  "note": null,
+  "verdict": "failed",
+  "step": "hidden-tests",
+  "reason": "1 of 3 tests did not pass; first: test_hidden::test_r1_sunday_moves_to_monday",
+  "integrity_violation": false,
+  "gate_seconds": 8.765,
+  "groundtruth_qualified": false,
+  "groundtruth": [
+    {
+      "check": "acceptance",
+      "status": "failed",
+      "reason": "3 of 12 tests did not pass; first: test_acceptance::test_weekend_moves_to_monday[issued1-30-expected1]"
+    },
+    {
+      "check": "regression",
+      "status": "passed",
+      "reason": "17 of 17 tests passed"
+    }
+  ],
+  "unsafe_in_change": []
+}

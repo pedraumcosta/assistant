@@ -1,0 +1,109 @@
+{
+  "key": "7f77d464a59cbcf5bd284b693fc6f7d67359d838b45cd0f2a55aedc38767ccc6",
+  "task": "o4-next-number",
+  "contract_sha256": "f38eb11a9e759e9829ca8935306d53433dafe291938c67a9340fa1c11bfd4fa6",
+  "base_tree": "15b1b3f2fa1d9e582389c0e4e2c5140e07fe035e2d97c96f069740abe8b5d333",
+  "head_tree": "0c22403b4434864f89fb8c375ecd6c9856f5ceebbf2373f2f20fd63609758001",
+  "verdict": "failed",
+  "step": "secrets",
+  "reason": "the change adds what looks like an API key",
+  "integrity_violation": false,
+  "risk_tier": "yellow",
+  "routed": "author",
+  "evidence": [
+    {
+      "check": "integrity",
+      "status": "passed",
+      "reason": "nothing found",
+      "duration_s": 0.0
+    },
+    {
+      "check": "budget",
+      "status": "passed",
+      "reason": "nothing found",
+      "duration_s": 0.0
+    },
+    {
+      "check": "build",
+      "exit_code": 0,
+      "duration_s": 1.677,
+      "status": "passed",
+      "reason": "parses and imports"
+    },
+    {
+      "check": "repo-tests:tests",
+      "exit_code": 0,
+      "duration_s": 2.287,
+      "expected_tests": 17,
+      "tests": {
+        "total": 17,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0,
+        "passed": 17,
+        "first_failure": null
+      },
+      "status": "passed",
+      "reason": "17 of 17 tests passed"
+    },
+    {
+      "check": "author-tests",
+      "exit_code": 0,
+      "duration_s": 3.307,
+      "expected_tests": null,
+      "tests": {
+        "total": 20,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0,
+        "passed": 20,
+        "first_failure": null
+      },
+      "status": "passed",
+      "reason": "20 of 20 tests passed"
+    },
+    {
+      "check": "hidden-tests",
+      "exit_code": 0,
+      "duration_s": 2.907,
+      "expected_tests": 4,
+      "tests": {
+        "total": 4,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0,
+        "passed": 4,
+        "first_failure": null
+      },
+      "status": "passed",
+      "reason": "4 of 4 tests passed"
+    },
+    {
+      "check": "scope",
+      "status": "passed",
+      "reason": "nothing found",
+      "duration_s": 0.0
+    },
+    {
+      "check": "test-adequacy",
+      "new_tests": 3,
+      "duration_s": 2.35,
+      "new_tests_failing_on_original": 2,
+      "status": "passed",
+      "reason": "2 of 3 new tests fail against the original code"
+    },
+    {
+      "check": "dependency",
+      "status": "passed",
+      "reason": "nothing found",
+      "duration_s": 0.0
+    },
+    {
+      "check": "secrets",
+      "status": "failed",
+      "reason": "the change adds what looks like an API key",
+      "duration_s": 0.0
+    }
+  ],
+  "seconds": 12.571
+}

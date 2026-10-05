@@ -1,0 +1,35 @@
+{
+  "key": "c140526f049fedaf639f77d6c9a4151d80d25a7dc190fa1a986a163155240a05",
+  "task": "o2-parse-amount",
+  "contract_sha256": "e212fc1711569a46ef939127b4a4496099f9ec5c87cecc8043059f7d6c450b97",
+  "base_tree": "15b1b3f2fa1d9e582389c0e4e2c5140e07fe035e2d97c96f069740abe8b5d333",
+  "head_tree": "cf67a419d93b8ed5fed0d9049162047e8d9efedaa9870e221264a52cc53e74ab",
+  "verdict": "failed",
+  "step": "build",
+  "reason": "invoicing.money does not import: ModuleNotFoundError: No module named 'decimal_grouping'",
+  "integrity_violation": false,
+  "risk_tier": "yellow",
+  "routed": "author",
+  "evidence": [
+    {
+      "check": "integrity",
+      "status": "passed",
+      "reason": "nothing found",
+      "duration_s": 0.0
+    },
+    {
+      "check": "budget",
+      "status": "passed",
+      "reason": "nothing found",
+      "duration_s": 0.0
+    },
+    {
+      "check": "build",
+      "exit_code": 1,
+      "duration_s": 1.598,
+      "status": "failed",
+      "reason": "invoicing.money does not import: ModuleNotFoundError: No module named 'decimal_grouping'"
+    }
+  ],
+  "seconds": 1.615
+}

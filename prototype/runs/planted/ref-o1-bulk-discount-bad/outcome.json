@@ -1,0 +1,28 @@
+{
+  "id": "ref-o1-bulk-discount-bad",
+  "group": "wrong reference change",
+  "wrong": true,
+  "task": "o1-bulk-discount",
+  "what": "The bad reference change for o1-bulk-discount.",
+  "expect": "hidden-tests",
+  "note": null,
+  "verdict": "failed",
+  "step": "hidden-tests",
+  "reason": "3 of 4 tests did not pass; first: test_hidden::test_r1_ten_or_more_units_get_five_percent",
+  "integrity_violation": false,
+  "gate_seconds": 8.328,
+  "groundtruth_qualified": false,
+  "groundtruth": [
+    {
+      "check": "acceptance",
+      "status": "failed",
+      "reason": "5 of 11 tests did not pass; first: test_acceptance::test_tiers_and_their_boundaries[10-95.00]"
+    },
+    {
+      "check": "regression",
+      "status": "passed",
+      "reason": "17 of 17 tests passed"
+    }
+  ],
+  "unsafe_in_change": []
+}

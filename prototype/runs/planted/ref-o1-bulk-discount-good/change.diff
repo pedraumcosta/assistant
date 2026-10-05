@@ -1,0 +1,40 @@
+--- a/invoicing/pricing.py
++++ b/invoicing/pricing.py
+@@ -6,8 +6,17 @@
+ from invoicing.rates import DISCOUNT_CODES, TAX_RATES
+ 
+ 
++def _quantity_discount(quantity: int) -> Decimal:
++    if quantity >= 50:
++        return Decimal("0.10")
++    if quantity >= 10:
++        return Decimal("0.05")
++    return Decimal("0")
++
++
+ def line_total(line: LineItem) -> Decimal:
+-    return round_cents(line.unit_price * line.quantity)
++    gross = line.unit_price * line.quantity
++    return round_cents(gross * (1 - _quantity_discount(line.quantity)))
+ 
+ 
+ def subtotal(invoice: Invoice) -> Decimal:
+--- a/tests/test_quantity_pricing.py
++++ b/tests/test_quantity_pricing.py
+@@ -0,0 +1,16 @@
++from decimal import Decimal
++
++from invoicing.pricing import line_total
++from tests.helpers import line
++
++
++def test_no_discount_below_ten():
++    assert line_total(line(9, "10.00")) == Decimal("90.00")
++
++
++def test_five_percent_from_ten():
++    assert line_total(line(10, "10.00")) == Decimal("95.00")
++
++
++def test_ten_percent_from_fifty():
++    assert line_total(line(50, "10.00")) == Decimal("450.00")

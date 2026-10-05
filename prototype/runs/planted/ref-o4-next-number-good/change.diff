@@ -1,0 +1,38 @@
+--- a/invoicing/numbering.py
++++ b/invoicing/numbering.py
+@@ -1,4 +1,8 @@
+ """Invoice numbers, in the form INV-<year>-<sequence>."""
++
++import re
++
++_NUMBER = re.compile(r"INV-(\d{4})-(\d{4,})")
+ 
+ 
+ def format_number(year: int, sequence: int) -> str:
+@@ -7,4 +11,9 @@
+ 
+ def next_number(existing: list[str], year: int) -> str:
+     """The next invoice number for the year, given the numbers already used."""
+-    return format_number(year, len(existing) + 1)
++    highest = 0
++    for number in existing:
++        match = _NUMBER.fullmatch(number)
++        if match and int(match.group(1)) == year:
++            highest = max(highest, int(match.group(2)))
++    return format_number(year, highest + 1)
+--- a/tests/test_numbering_gaps.py
++++ b/tests/test_numbering_gaps.py
+@@ -0,0 +1,13 @@
++from invoicing.numbering import next_number
++
++
++def test_gap():
++    assert next_number(["INV-2026-0001", "INV-2026-0007"], 2026) == "INV-2026-0008"
++
++
++def test_other_years_ignored():
++    assert next_number(["INV-2025-0412", "INV-2026-0003"], 2026) == "INV-2026-0004"
++
++
++def test_invalid_entries_ignored():
++    assert next_number(["DRAFT", "INV-2026-0002"], 2026) == "INV-2026-0003"

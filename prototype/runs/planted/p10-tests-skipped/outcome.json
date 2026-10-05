@@ -1,0 +1,28 @@
+{
+  "id": "p10-tests-skipped",
+  "group": "planted flaw",
+  "wrong": true,
+  "task": "o3-due-date",
+  "what": "A wrong change (Sunday lands on Tuesday) whose own test file marks its tests as skipped. Nothing existing is altered.",
+  "expect": "author-tests",
+  "note": null,
+  "verdict": "failed",
+  "step": "author-tests",
+  "reason": "1 of 18 tests were skipped",
+  "integrity_violation": false,
+  "gate_seconds": 8.408,
+  "groundtruth_qualified": false,
+  "groundtruth": [
+    {
+      "check": "acceptance",
+      "status": "failed",
+      "reason": "3 of 12 tests did not pass; first: test_acceptance::test_weekend_moves_to_monday[issued1-30-expected1]"
+    },
+    {
+      "check": "regression",
+      "status": "passed",
+      "reason": "17 of 17 tests passed"
+    }
+  ],
+  "unsafe_in_change": []
+}

@@ -1,0 +1,16 @@
+.F.                                                                      [100%]
+=================================== FAILURES ===================================
+________________________ test_r1_sunday_moves_to_monday ________________________
+
+    def test_r1_sunday_moves_to_monday():
+>       assert terms.due_date(date(2026, 9, 4)) == date(2026, 10, 5)
+E       assert datetime.date(2026, 10, 6) == datetime.date(2026, 10, 5)
+E        +  where datetime.date(2026, 10, 6) = <function due_date at 0x7f3e7da00360>(datetime.date(2026, 9, 4))
+E        +    where <function due_date at 0x7f3e7da00360> = terms.due_date
+E        +    and   datetime.date(2026, 9, 4) = date(2026, 9, 4)
+E        +  and   datetime.date(2026, 10, 5) = date(2026, 10, 5)
+
+test_hidden.py:12: AssertionError
+=========================== short test summary info ============================
+FAILED test_hidden.py::test_r1_sunday_moves_to_monday - assert datetime.date(...
+1 failed, 2 passed in 0.24s

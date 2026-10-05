@@ -1,0 +1,6 @@
+{
+  "task": "o2-parse-amount",
+  "builds_on": "good",
+  "what": "The reference change, with a test that names its input `token`, as a parser's test well might.",
+  "expect": "passed"
+}

@@ -1,0 +1,89 @@
+{
+  "key": "9e83c72bc2b319929b7bc620bc23a960ffca875535a3791ef4476f390c5527f1",
+  "task": "t4-list-numbers",
+  "contract_sha256": "103959e2b7e892e8067a914d51904b7492cf21b1d3d18fd6bd0d4570ccdf6cd5",
+  "base_tree": "02e779851785f4c4f633690c4ed061c758e442bee2e65a689bf95b244ffa9da6",
+  "head_tree": "46f8a2a0c08450085081bebf854b2c40239b847aa2bc79915f0646eafae1c499",
+  "verdict": "failed",
+  "step": "scope",
+  "reason": "agent-debug.log is outside the scope of the change",
+  "integrity_violation": false,
+  "risk_tier": "yellow",
+  "routed": "author",
+  "evidence": [
+    {
+      "check": "integrity",
+      "status": "passed",
+      "reason": "nothing found",
+      "duration_s": 0.0
+    },
+    {
+      "check": "budget",
+      "status": "passed",
+      "reason": "nothing found",
+      "duration_s": 0.0
+    },
+    {
+      "check": "build",
+      "exit_code": 0,
+      "duration_s": 1.95,
+      "status": "passed",
+      "reason": "parses and imports"
+    },
+    {
+      "check": "repo-tests:tests",
+      "exit_code": 0,
+      "duration_s": 2.342,
+      "expected_tests": 17,
+      "tests": {
+        "total": 17,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0,
+        "passed": 17,
+        "first_failure": null
+      },
+      "status": "passed",
+      "reason": "17 of 17 tests passed"
+    },
+    {
+      "check": "author-tests",
+      "exit_code": 0,
+      "duration_s": 2.391,
+      "expected_tests": null,
+      "tests": {
+        "total": 18,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0,
+        "passed": 18,
+        "first_failure": null
+      },
+      "status": "passed",
+      "reason": "18 of 18 tests passed"
+    },
+    {
+      "check": "hidden-tests",
+      "exit_code": 0,
+      "duration_s": 2.504,
+      "expected_tests": 2,
+      "tests": {
+        "total": 2,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0,
+        "passed": 2,
+        "first_failure": null
+      },
+      "status": "passed",
+      "reason": "2 of 2 tests passed"
+    },
+    {
+      "check": "scope",
+      "status": "failed",
+      "reason": "agent-debug.log is outside the scope of the change",
+      "duration_s": 0.0
+    }
+  ],
+  "seconds": 9.226
+}

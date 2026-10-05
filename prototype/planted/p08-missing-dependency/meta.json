@@ -1,0 +1,6 @@
+{
+  "task": "o2-parse-amount",
+  "builds_on": "good",
+  "what": "A correct change that also imports a package that does not exist.",
+  "expect": "build"
+}

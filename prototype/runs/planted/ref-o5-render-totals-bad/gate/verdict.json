@@ -1,0 +1,83 @@
+{
+  "key": "baa4b0600fb9261ca043b75983dd447251c647e218160fd3cfd8d8a6e28798d9",
+  "task": "o5-render-totals",
+  "contract_sha256": "f17aa2d718813b644c868cdde1e8efe09c1109ee89461e6b4441455509cf0a1b",
+  "base_tree": "15b1b3f2fa1d9e582389c0e4e2c5140e07fe035e2d97c96f069740abe8b5d333",
+  "head_tree": "1fb4bbab6ef6f65976621f4f0d03869c12448689061fb31b7708489f6a64f712",
+  "verdict": "failed",
+  "step": "hidden-tests",
+  "reason": "1 of 4 tests did not pass; first: test_hidden::test_r3_tax_only_when_not_zero",
+  "integrity_violation": false,
+  "risk_tier": "green",
+  "routed": "author",
+  "evidence": [
+    {
+      "check": "integrity",
+      "status": "passed",
+      "reason": "nothing found",
+      "duration_s": 0.0
+    },
+    {
+      "check": "budget",
+      "status": "passed",
+      "reason": "nothing found",
+      "duration_s": 0.0
+    },
+    {
+      "check": "build",
+      "exit_code": 0,
+      "duration_s": 1.981,
+      "status": "passed",
+      "reason": "parses and imports"
+    },
+    {
+      "check": "repo-tests:tests",
+      "exit_code": 0,
+      "duration_s": 1.908,
+      "expected_tests": 17,
+      "tests": {
+        "total": 17,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0,
+        "passed": 17,
+        "first_failure": null
+      },
+      "status": "passed",
+      "reason": "17 of 17 tests passed"
+    },
+    {
+      "check": "author-tests",
+      "exit_code": 0,
+      "duration_s": 1.742,
+      "expected_tests": null,
+      "tests": {
+        "total": 18,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0,
+        "passed": 18,
+        "first_failure": null
+      },
+      "status": "passed",
+      "reason": "18 of 18 tests passed"
+    },
+    {
+      "check": "hidden-tests",
+      "exit_code": 1,
+      "duration_s": 1.859,
+      "expected_tests": 4,
+      "tests": {
+        "total": 4,
+        "failed": 1,
+        "errors": 0,
+        "skipped": 0,
+        "passed": 3,
+        "first_failure": "test_hidden::test_r3_tax_only_when_not_zero"
+      },
+      "status": "failed",
+      "reason": "1 of 4 tests did not pass; first: test_hidden::test_r3_tax_only_when_not_zero"
+    }
+  ],
+  "seconds": 7.518
+}

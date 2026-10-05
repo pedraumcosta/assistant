@@ -1,0 +1,28 @@
+{
+  "id": "ref-o5-render-totals-good",
+  "group": "correct reference change",
+  "wrong": false,
+  "task": "o5-render-totals",
+  "what": "The correct reference change for o5-render-totals.",
+  "expect": "passed",
+  "note": null,
+  "verdict": "passed",
+  "step": "all",
+  "reason": "every required check passed",
+  "integrity_violation": false,
+  "gate_seconds": 10.471,
+  "groundtruth_qualified": true,
+  "groundtruth": [
+    {
+      "check": "acceptance",
+      "status": "passed",
+      "reason": "5 of 5 tests passed"
+    },
+    {
+      "check": "regression",
+      "status": "passed",
+      "reason": "17 of 17 tests passed"
+    }
+  ],
+  "unsafe_in_change": []
+}

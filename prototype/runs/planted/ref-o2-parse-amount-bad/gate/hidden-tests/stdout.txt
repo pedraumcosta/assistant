@@ -1,0 +1,40 @@
+.FFF.                                                                    [100%]
+=================================== FAILURES ===================================
+________________ test_r2_malformed_grouping_is_rejected[12,34] _________________
+
+text = '12,34'
+
+    @pytest.mark.parametrize("text", ["12,34", "1,23.4", "1,2345"])
+    def test_r2_malformed_grouping_is_rejected(text):
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+test_hidden.py:16: Failed
+________________ test_r2_malformed_grouping_is_rejected[1,23.4] ________________
+
+text = '1,23.4'
+
+    @pytest.mark.parametrize("text", ["12,34", "1,23.4", "1,2345"])
+    def test_r2_malformed_grouping_is_rejected(text):
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+test_hidden.py:16: Failed
+________________ test_r2_malformed_grouping_is_rejected[1,2345] ________________
+
+text = '1,2345'
+
+    @pytest.mark.parametrize("text", ["12,34", "1,23.4", "1,2345"])
+    def test_r2_malformed_grouping_is_rejected(text):
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+test_hidden.py:16: Failed
+=========================== short test summary info ============================
+FAILED test_hidden.py::test_r2_malformed_grouping_is_rejected[12,34] - Failed...
+FAILED test_hidden.py::test_r2_malformed_grouping_is_rejected[1,23.4] - Faile...
+FAILED test_hidden.py::test_r2_malformed_grouping_is_rejected[1,2345] - Faile...
+3 failed, 2 passed in 0.17s

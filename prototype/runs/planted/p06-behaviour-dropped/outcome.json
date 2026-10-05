@@ -1,0 +1,28 @@
+{
+  "id": "p06-behaviour-dropped",
+  "group": "planted flaw",
+  "wrong": true,
+  "task": "o1-bulk-discount",
+  "what": "A correct change to line totals that also, quietly, stops charging tax after the discount for every region but one. No test in the repository and no hidden check of this task covers the regions affected.",
+  "expect": "none: no check covers it",
+  "note": "Planted knowing that the contract's checks concern line totals only. It is the case DESIGN 8.2 names: checks that under-describe what matters. Whether the gate rejects it is the measurement.",
+  "verdict": "passed",
+  "step": "all",
+  "reason": "every required check passed",
+  "integrity_violation": false,
+  "gate_seconds": 14.546,
+  "groundtruth_qualified": true,
+  "groundtruth": [
+    {
+      "check": "acceptance",
+      "status": "passed",
+      "reason": "11 of 11 tests passed"
+    },
+    {
+      "check": "regression",
+      "status": "passed",
+      "reason": "17 of 17 tests passed"
+    }
+  ],
+  "unsafe_in_change": []
+}

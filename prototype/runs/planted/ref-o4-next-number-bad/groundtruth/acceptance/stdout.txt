@@ -1,0 +1,53 @@
+.....F..F..                                                              [100%]
+=================================== FAILURES ===================================
+_______________________ test_invalid_entries_are_ignored _______________________
+
+    def test_invalid_entries_are_ignored():
+>       assert nn(["DRAFT", "", "INV-2026-0002", "INV-2026-ABCD", "INV-2026", "CN-2026-0050"]) == "INV-2026-0003"
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_acceptance.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test_acceptance.py:3: in <lambda>
+    nn = lambda existing, year=2026: numbering.next_number(existing, year)
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+existing = ['DRAFT', '', 'INV-2026-0002', 'INV-2026-ABCD', 'INV-2026', 'CN-2026-0050']
+year = 2026
+
+    def next_number(existing: list[str], year: int) -> str:
+        """The next invoice number for the year, given the numbers already used."""
+        prefix = f"INV-{year}-"
+>       used = [int(number.split("-")[2]) for number in existing if number.startswith(prefix)]
+                ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: invalid literal for int() with base 10: 'ABCD'
+
+/work/invoicing/numbering.py:11: ValueError
+________ test_a_number_embedded_in_other_text_is_not_an_invoice_number _________
+
+    def test_a_number_embedded_in_other_text_is_not_an_invoice_number():
+>       assert nn(["xINV-2026-0500", "INV-2026-0500x", "INV-2026-0002"]) == "INV-2026-0003"
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_acceptance.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test_acceptance.py:3: in <lambda>
+    nn = lambda existing, year=2026: numbering.next_number(existing, year)
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+existing = ['xINV-2026-0500', 'INV-2026-0500x', 'INV-2026-0002'], year = 2026
+
+    def next_number(existing: list[str], year: int) -> str:
+        """The next invoice number for the year, given the numbers already used."""
+        prefix = f"INV-{year}-"
+>       used = [int(number.split("-")[2]) for number in existing if number.startswith(prefix)]
+                ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: invalid literal for int() with base 10: '0500x'
+
+/work/invoicing/numbering.py:11: ValueError
+=========================== short test summary info ============================
+FAILED test_acceptance.py::test_invalid_entries_are_ignored - ValueError: inv...
+FAILED test_acceptance.py::test_a_number_embedded_in_other_text_is_not_an_invoice_number
+2 failed, 9 passed in 0.24s

@@ -1,0 +1,28 @@
+{
+  "id": "ref-o4-next-number-bad",
+  "group": "wrong reference change",
+  "wrong": true,
+  "task": "o4-next-number",
+  "what": "The bad reference change for o4-next-number.",
+  "expect": "hidden-tests",
+  "note": null,
+  "verdict": "passed",
+  "step": "all",
+  "reason": "every required check passed",
+  "integrity_violation": false,
+  "gate_seconds": 9.415,
+  "groundtruth_qualified": false,
+  "groundtruth": [
+    {
+      "check": "acceptance",
+      "status": "failed",
+      "reason": "2 of 11 tests did not pass; first: test_acceptance::test_invalid_entries_are_ignored"
+    },
+    {
+      "check": "regression",
+      "status": "passed",
+      "reason": "17 of 17 tests passed"
+    }
+  ],
+  "unsafe_in_change": []
+}

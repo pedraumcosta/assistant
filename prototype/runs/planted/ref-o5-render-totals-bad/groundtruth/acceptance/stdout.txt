@@ -1,0 +1,56 @@
+F..FF                                                                    [100%]
+=================================== FAILURES ===================================
+_______________ test_plain_invoice_shows_subtotal_and_total_only _______________
+
+    def test_plain_invoice_shows_subtotal_and_total_only():
+>       assert render.render_text(inv()) == HEAD + (
+            "  2 x Widget                   200.00\n"
+            "\n"
+            "Subtotal                       200.00\n"
+            "Total                          200.00\n"
+        )
+E       AssertionError: assert 'Invoice INV-...     200.00\n' == 'Invoice INV-...     200.00\n'
+E         
+E         Skipping 129 identical leading characters in diff, use -v to show
+E             200.00
+E         + Tax                              0.00
+E           Total                          200.00
+
+test_acceptance.py:16: AssertionError
+__________________________ test_discount_without_tax ___________________________
+
+    def test_discount_without_tax():
+>       assert render.render_text(inv("US", "WELCOME10")) == HEAD + (
+            "  2 x Widget                   200.00\n"
+            "\n"
+            "Subtotal                       200.00\n"
+            "Discount (WELCOME10)           -20.00\n"
+            "Total                          180.00\n"
+        )
+E       AssertionError: assert 'Invoice INV-...     180.00\n' == 'Invoice INV-...     180.00\n'
+E         
+E         Skipping 167 identical leading characters in diff, use -v to show
+E             -20.00
+E         + Tax                              0.00
+E           Total                          180.00
+
+test_acceptance.py:46: AssertionError
+_____________ test_no_tax_line_when_a_taxed_region_yields_zero_tax _____________
+
+    def test_no_tax_line_when_a_taxed_region_yields_zero_tax():
+        text = render.render_text(inv("UK", price="0.01"))   # 0.02 at 20% rounds to 0.00
+>       assert "Tax" not in text
+E       AssertionError: assert 'Tax' not in 'Invoice INV...      0.02\n'
+E         
+E         'Tax' is contained here:
+E                0.02
+E           Tax                              0.00
+E         ? +++
+E           Total                            0.02
+
+test_acceptance.py:57: AssertionError
+=========================== short test summary info ============================
+FAILED test_acceptance.py::test_plain_invoice_shows_subtotal_and_total_only
+FAILED test_acceptance.py::test_discount_without_tax - AssertionError: assert...
+FAILED test_acceptance.py::test_no_tax_line_when_a_taxed_region_yields_zero_tax
+3 failed, 2 passed in 0.26s

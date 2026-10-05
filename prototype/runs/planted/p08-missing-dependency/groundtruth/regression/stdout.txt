@@ -1,0 +1,53 @@
+
+==================================== ERRORS ====================================
+_____________________ ERROR collecting tests/test_money.py _____________________
+ImportError while importing test module '/checks/tests/test_money.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_money.py:5: in <module>
+    from invoicing.money import parse_amount, round_cents
+/work/invoicing/money.py:9: in <module>
+    import decimal_grouping  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^
+E   ModuleNotFoundError: No module named 'decimal_grouping'
+____________________ ERROR collecting tests/test_pricing.py ____________________
+ImportError while importing test module '/checks/tests/test_pricing.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_pricing.py:5: in <module>
+    from invoicing.pricing import discount, line_total, subtotal, tax, total
+/work/invoicing/pricing.py:5: in <module>
+    from invoicing.money import round_cents
+/work/invoicing/money.py:9: in <module>
+    import decimal_grouping  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^
+E   ModuleNotFoundError: No module named 'decimal_grouping'
+____________________ ERROR collecting tests/test_render.py _____________________
+ImportError while importing test module '/checks/tests/test_render.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_render.py:1: in <module>
+    from invoicing.render import render_text
+/work/invoicing/render.py:3: in <module>
+    from invoicing.pricing import line_total, total
+/work/invoicing/pricing.py:5: in <module>
+    from invoicing.money import round_cents
+/work/invoicing/money.py:9: in <module>
+    import decimal_grouping  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^
+E   ModuleNotFoundError: No module named 'decimal_grouping'
+=========================== short test summary info ============================
+ERROR tests/test_money.py
+ERROR tests/test_pricing.py
+ERROR tests/test_render.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 3 errors during collection !!!!!!!!!!!!!!!!!!!!
+3 errors in 0.77s

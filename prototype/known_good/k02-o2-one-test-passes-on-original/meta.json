@@ -1,0 +1,6 @@
+{
+  "task": "o2-parse-amount",
+  "builds_on": "good",
+  "what": "The reference change, with one more test that guards existing behaviour and so passes on the original code too.",
+  "expect": "passed"
+}

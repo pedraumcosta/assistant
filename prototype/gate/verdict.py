@@ -223,7 +223,7 @@ def decide(task: str, base: Path, head: Path, meta: dict, out: Path) -> dict:
     if (head / "tests").is_dir():
         author = ran(lambda: checks.pytest_check(
             "author-tests", [(head, "/work", "ro"), (head / "tests", "/checks/tests", "ro")],
-            "/checks/tests", out / "author-tests", None, ENV))
+            "/checks/tests", out / "author-tests", None, ENV, skips_are="failed"))
         if author["status"] != "passed":
             return end(author["status"], "author-tests", author["reason"])
     hidden = ran(lambda: checks.pytest_check(

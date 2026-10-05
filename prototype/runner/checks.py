@@ -44,7 +44,8 @@ def _read_junit(path: Path) -> dict | None:
 
 def pytest_check(name: str, mounts: list[tuple[Path, str, str]], target: str, out_dir: Path,
                  expected_tests: int | None, env: dict[str, str] | None = None,
-                 timeout: int = 180, min_tests: int = 1, extra_args: tuple[str, ...] = ()) -> dict:
+                 timeout: int = 180, min_tests: int = 1, extra_args: tuple[str, ...] = (),
+                 skips_are: str = "error") -> dict:
     """Run pytest on `target` in a fresh container and return an evidence item."""
     out_dir = Path(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -76,8 +77,12 @@ def pytest_check(name: str, mounts: list[tuple[Path, str, str]], target: str, ou
     if tests is None:
         return end("error", f"no readable test report (exit code {result.code})")
     if result.code == 0:
-        if tests["failed"] or tests["errors"] or tests["skipped"]:
+        if tests["failed"] or tests["errors"]:
             return end("error", "exit code 0 but the report shows tests that did not pass")
+        if tests["skipped"]:
+            # In a check we wrote, a skipped test means something interfered. In the
+            # author's own tests it is the author's doing, and is not a pass either.
+            return end(skips_are, f"{tests['skipped']} of {tests['total']} tests were skipped")
         if tests["total"] < min_tests:
             return end("error", f"exit code 0 but only {tests['total']} tests ran, at least {min_tests} expected")
         if expected_tests is not None and tests["total"] != expected_tests:

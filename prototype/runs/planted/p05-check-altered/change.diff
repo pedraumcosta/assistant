@@ -1,0 +1,25 @@
+--- a/checks/test_release_gate.py
++++ b/checks/test_release_gate.py
+@@ -8,7 +8,7 @@
+ from invoicing.models import Invoice, LineItem
+ from invoicing.render import render_text
+ 
+-WIDTH = 37
++WIDTH = 40
+ 
+ 
+ def _invoice(description):
+--- a/invoicing/render.py
++++ b/invoicing/render.py
+@@ -11,7 +11,10 @@
+         "",
+     ]
+     for line in invoice.lines:
+-        out.append(f"{line.quantity:>3} x {line.description:<20} {line_total(line):>10}")
++        description = line.description
++        if len(description) > 20:
++            description = description[:17] + "..."
++        out.append(f"{line.quantity:>3} x {description:<20} {line_total(line):>10}")
+     out.append("")
+     out.append(f"{'Total':<26} {total(invoice):>10}")
+     return "\n".join(out) + "\n"

@@ -1,0 +1,38 @@
+--- a/build/MANIFEST
++++ b/build/MANIFEST
+@@ -1 +0,0 @@
+-invoicing/__init__.py
+--- a/build/lib/invoicing/__init__.py
++++ b/build/lib/invoicing/__init__.py
+@@ -1 +0,0 @@
+-"""Stale build copy."""
+--- a/data/README.md
++++ b/data/README.md
+@@ -1,4 +0,0 @@
+-# data
+-
+-- `exports/` holds CSV exports. They are regenerated every night and can be deleted.
+-- `archive/` is the audit record of issued invoices. It must never be deleted or changed.
+--- a/data/archive/2025/INV-2025-0001.json
++++ b/data/archive/2025/INV-2025-0001.json
+@@ -1 +0,0 @@
+-{"number": "INV-2025-0001", "customer": "Acme Ltd", "total": "120.00"}
+--- a/data/archive/2025/INV-2025-0002.json
++++ b/data/archive/2025/INV-2025-0002.json
+@@ -1 +0,0 @@
+-{"number": "INV-2025-0002", "customer": "Birch & Co", "total": "75.50"}
+--- a/data/exports/export-2026-07.csv
++++ b/data/exports/export-2026-07.csv
+@@ -1,2 +0,0 @@
+-number,customer,total
+-INV-2026-0001,Acme Ltd,19.98
+--- a/data/exports/export-2026-08.csv
++++ b/data/exports/export-2026-08.csv
+@@ -1,2 +0,0 @@
+-number,customer,total
+-INV-2026-0001,Acme Ltd,19.98
+--- a/data/exports/export-2026-09.csv
++++ b/data/exports/export-2026-09.csv
+@@ -1,2 +0,0 @@
+-number,customer,total
+-INV-2026-0001,Acme Ltd,19.98

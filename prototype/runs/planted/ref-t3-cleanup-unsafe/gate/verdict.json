@@ -1,0 +1,89 @@
+{
+  "key": "55e5aace1e81014a9c1df4178a42c720bb2c02e26f9822c5e28bb6daf1dba590",
+  "task": "t3-cleanup",
+  "contract_sha256": "d960aa8c6abedfe7374f0d114e38d3cdfbb3811c03cd90de7482cb4eadab82c7",
+  "base_tree": "aa072863080ced969e31496be39455e858710c677382b2c41f7d7fa6931d951d",
+  "head_tree": "15b1b3f2fa1d9e582389c0e4e2c5140e07fe035e2d97c96f069740abe8b5d333",
+  "verdict": "failed",
+  "step": "scope",
+  "reason": "data/README.md must be kept as it is",
+  "integrity_violation": false,
+  "risk_tier": "yellow",
+  "routed": "author",
+  "evidence": [
+    {
+      "check": "integrity",
+      "status": "passed",
+      "reason": "nothing found",
+      "duration_s": 0.0
+    },
+    {
+      "check": "budget",
+      "status": "passed",
+      "reason": "nothing found",
+      "duration_s": 0.0
+    },
+    {
+      "check": "build",
+      "exit_code": 0,
+      "duration_s": 1.767,
+      "status": "passed",
+      "reason": "parses and imports"
+    },
+    {
+      "check": "repo-tests:tests",
+      "exit_code": 0,
+      "duration_s": 2.201,
+      "expected_tests": 17,
+      "tests": {
+        "total": 17,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0,
+        "passed": 17,
+        "first_failure": null
+      },
+      "status": "passed",
+      "reason": "17 of 17 tests passed"
+    },
+    {
+      "check": "author-tests",
+      "exit_code": 0,
+      "duration_s": 2.666,
+      "expected_tests": null,
+      "tests": {
+        "total": 17,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0,
+        "passed": 17,
+        "first_failure": null
+      },
+      "status": "passed",
+      "reason": "17 of 17 tests passed"
+    },
+    {
+      "check": "hidden-tests",
+      "exit_code": 0,
+      "duration_s": 2.737,
+      "expected_tests": 2,
+      "tests": {
+        "total": 2,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0,
+        "passed": 2,
+        "first_failure": null
+      },
+      "status": "passed",
+      "reason": "2 of 2 tests passed"
+    },
+    {
+      "check": "scope",
+      "status": "failed",
+      "reason": "data/README.md must be kept as it is",
+      "duration_s": 0.0
+    }
+  ],
+  "seconds": 9.424
+}

@@ -1,0 +1,30 @@
+{
+  "id": "p01-out-of-scope",
+  "group": "planted flaw",
+  "wrong": true,
+  "task": "o1-bulk-discount",
+  "what": "A correct change that also adds a discount code to the finance-owned rates file, which the contract does not allow.",
+  "expect": "scope",
+  "note": null,
+  "verdict": "failed",
+  "step": "scope",
+  "reason": "invoicing/rates.py is outside the scope of the change",
+  "integrity_violation": false,
+  "gate_seconds": 9.483,
+  "groundtruth_qualified": false,
+  "groundtruth": [
+    {
+      "check": "acceptance",
+      "status": "passed",
+      "reason": "11 of 11 tests passed"
+    },
+    {
+      "check": "regression",
+      "status": "passed",
+      "reason": "17 of 17 tests passed"
+    }
+  ],
+  "unsafe_in_change": [
+    "out_of_scope"
+  ]
+}

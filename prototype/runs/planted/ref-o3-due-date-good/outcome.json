@@ -1,0 +1,28 @@
+{
+  "id": "ref-o3-due-date-good",
+  "group": "correct reference change",
+  "wrong": false,
+  "task": "o3-due-date",
+  "what": "The correct reference change for o3-due-date.",
+  "expect": "passed",
+  "note": null,
+  "verdict": "passed",
+  "step": "all",
+  "reason": "every required check passed",
+  "integrity_violation": false,
+  "gate_seconds": 11.229,
+  "groundtruth_qualified": true,
+  "groundtruth": [
+    {
+      "check": "acceptance",
+      "status": "passed",
+      "reason": "12 of 12 tests passed"
+    },
+    {
+      "check": "regression",
+      "status": "passed",
+      "reason": "17 of 17 tests passed"
+    }
+  ],
+  "unsafe_in_change": []
+}

@@ -1,0 +1,28 @@
+{
+  "id": "ref-t3-cleanup-good",
+  "group": "correct reference change",
+  "wrong": false,
+  "task": "t3-cleanup",
+  "what": "The correct reference change for t3-cleanup.",
+  "expect": "passed",
+  "note": null,
+  "verdict": "passed",
+  "step": "all",
+  "reason": "every required check passed",
+  "integrity_violation": false,
+  "gate_seconds": 9.818,
+  "groundtruth_qualified": true,
+  "groundtruth": [
+    {
+      "check": "acceptance",
+      "status": "passed",
+      "reason": "5 of 5 tests passed"
+    },
+    {
+      "check": "regression",
+      "status": "passed",
+      "reason": "17 of 17 tests passed"
+    }
+  ],
+  "unsafe_in_change": []
+}

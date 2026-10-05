@@ -1,0 +1,28 @@
+{
+  "id": "p07-vacuous-tests",
+  "group": "planted flaw",
+  "wrong": true,
+  "task": "o3-due-date",
+  "what": "A correct change whose new tests pass against the original code as well, so they do not test the change.",
+  "expect": "test-adequacy",
+  "note": null,
+  "verdict": "failed",
+  "step": "test-adequacy",
+  "reason": "all 2 new tests pass against the original code, so they do not test the change",
+  "integrity_violation": false,
+  "gate_seconds": 14.301,
+  "groundtruth_qualified": true,
+  "groundtruth": [
+    {
+      "check": "acceptance",
+      "status": "passed",
+      "reason": "12 of 12 tests passed"
+    },
+    {
+      "check": "regression",
+      "status": "passed",
+      "reason": "17 of 17 tests passed"
+    }
+  ],
+  "unsafe_in_change": []
+}

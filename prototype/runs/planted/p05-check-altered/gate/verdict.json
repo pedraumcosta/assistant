@@ -1,0 +1,22 @@
+{
+  "key": "0f3e176113d16d410af56396da66e44f4eeb74eca545153a72f655c07d1614b1",
+  "task": "t5-release-check",
+  "contract_sha256": "94fd4ff8e01b8d058308614bef789fb8bf77c6ac0e7c3301da9f28cfdfcf1900",
+  "base_tree": "eb99ee0d0ae7a8c715771c86f3538d854bce1dc542529288fa5a13e767fa60e2",
+  "head_tree": "c18b096fb16f64382f5600751b476e7370cd7429798ea243b777ef4783afce38",
+  "verdict": "failed",
+  "step": "integrity",
+  "reason": "a check was changed: checks/test_release_gate.py",
+  "integrity_violation": true,
+  "risk_tier": "yellow",
+  "routed": "author",
+  "evidence": [
+    {
+      "check": "integrity",
+      "status": "failed",
+      "reason": "a check was changed: checks/test_release_gate.py",
+      "duration_s": 0.0
+    }
+  ],
+  "seconds": 0.042
+}

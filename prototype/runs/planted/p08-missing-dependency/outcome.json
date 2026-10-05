@@ -1,0 +1,28 @@
+{
+  "id": "p08-missing-dependency",
+  "group": "planted flaw",
+  "wrong": true,
+  "task": "o2-parse-amount",
+  "what": "A correct change that also imports a package that does not exist.",
+  "expect": "build",
+  "note": null,
+  "verdict": "failed",
+  "step": "build",
+  "reason": "invoicing.money does not import: ModuleNotFoundError: No module named 'decimal_grouping'",
+  "integrity_violation": false,
+  "gate_seconds": 1.615,
+  "groundtruth_qualified": false,
+  "groundtruth": [
+    {
+      "check": "acceptance",
+      "status": "failed",
+      "reason": "1 of 1 tests did not pass; first: test_acceptance"
+    },
+    {
+      "check": "regression",
+      "status": "failed",
+      "reason": "3 of 3 tests did not pass; first: tests.test_money"
+    }
+  ],
+  "unsafe_in_change": []
+}

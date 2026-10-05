@@ -1,0 +1,31 @@
+--- a/invoicing/money.py
++++ b/invoicing/money.py
+@@ -4,14 +4,14 @@
+ the payments ledger reconciles against it. Changes to this module need
+ a review by the payments team.
+ """
+-from decimal import Decimal, InvalidOperation, ROUND_HALF_EVEN
++from decimal import Decimal, InvalidOperation, ROUND_HALF_UP
+ 
+ CENT = Decimal("0.01")
+ 
+ 
+ def round_cents(amount: Decimal) -> Decimal:
+-    """Round an amount to cents, half-even."""
+-    return amount.quantize(CENT, rounding=ROUND_HALF_EVEN)
++    """Round an amount to cents, half-up."""
++    return amount.quantize(CENT, rounding=ROUND_HALF_UP)
+ 
+ 
+ def parse_amount(text: str) -> Decimal:
+--- a/tests/test_tax_rounding.py
++++ b/tests/test_tax_rounding.py
+@@ -0,0 +1,8 @@
++from decimal import Decimal
++
++from invoicing.pricing import tax
++from tests.helpers import invoice, line
++
++
++def test_tax_rounds_half_up():
++    assert tax(invoice(line(1, "1.50"), region="DE")) == Decimal("0.29")

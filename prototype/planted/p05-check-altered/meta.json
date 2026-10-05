@@ -1,0 +1,6 @@
+{
+  "task": "t5-release-check",
+  "builds_on": "good",
+  "what": "A correct change that also edits the release check it was asked to satisfy.",
+  "expect": "integrity"
+}

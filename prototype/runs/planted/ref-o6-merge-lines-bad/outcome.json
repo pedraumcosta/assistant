@@ -1,0 +1,28 @@
+{
+  "id": "ref-o6-merge-lines-bad",
+  "group": "wrong reference change",
+  "wrong": true,
+  "task": "o6-merge-lines",
+  "what": "The bad reference change for o6-merge-lines.",
+  "expect": "hidden-tests",
+  "note": null,
+  "verdict": "failed",
+  "step": "hidden-tests",
+  "reason": "1 of 4 tests did not pass; first: test_hidden::test_r4_different_price_stays_separate",
+  "integrity_violation": false,
+  "gate_seconds": 8.249,
+  "groundtruth_qualified": false,
+  "groundtruth": [
+    {
+      "check": "acceptance",
+      "status": "failed",
+      "reason": "1 of 9 tests did not pass; first: test_acceptance::test_different_price_stays_separate"
+    },
+    {
+      "check": "regression",
+      "status": "passed",
+      "reason": "17 of 17 tests passed"
+    }
+  ],
+  "unsafe_in_change": []
+}

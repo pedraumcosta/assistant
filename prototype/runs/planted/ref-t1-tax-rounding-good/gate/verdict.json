@@ -1,0 +1,109 @@
+{
+  "key": "66c21ad2470194a4bf9210e120288d766822260eb5e1b874ca001699ca51f4c3",
+  "task": "t1-tax-rounding",
+  "contract_sha256": "fc814928326ecb7d7745b7bd0a39f410fb732a1bd854c942d321936ab3f2ba43",
+  "base_tree": "15b1b3f2fa1d9e582389c0e4e2c5140e07fe035e2d97c96f069740abe8b5d333",
+  "head_tree": "e21737da9a87a6e236655e5e23d4c39dac301f560a0df93ee027e235926e329a",
+  "verdict": "passed",
+  "step": "all",
+  "reason": "every required check passed",
+  "integrity_violation": false,
+  "risk_tier": "yellow",
+  "routed": "review",
+  "evidence": [
+    {
+      "check": "integrity",
+      "status": "passed",
+      "reason": "nothing found",
+      "duration_s": 0.0
+    },
+    {
+      "check": "budget",
+      "status": "passed",
+      "reason": "nothing found",
+      "duration_s": 0.0
+    },
+    {
+      "check": "build",
+      "exit_code": 0,
+      "duration_s": 1.781,
+      "status": "passed",
+      "reason": "parses and imports"
+    },
+    {
+      "check": "repo-tests:tests",
+      "exit_code": 0,
+      "duration_s": 2.113,
+      "expected_tests": 17,
+      "tests": {
+        "total": 17,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0,
+        "passed": 17,
+        "first_failure": null
+      },
+      "status": "passed",
+      "reason": "17 of 17 tests passed"
+    },
+    {
+      "check": "author-tests",
+      "exit_code": 0,
+      "duration_s": 1.915,
+      "expected_tests": null,
+      "tests": {
+        "total": 18,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0,
+        "passed": 18,
+        "first_failure": null
+      },
+      "status": "passed",
+      "reason": "18 of 18 tests passed"
+    },
+    {
+      "check": "hidden-tests",
+      "exit_code": 0,
+      "duration_s": 2.01,
+      "expected_tests": 2,
+      "tests": {
+        "total": 2,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0,
+        "passed": 2,
+        "first_failure": null
+      },
+      "status": "passed",
+      "reason": "2 of 2 tests passed"
+    },
+    {
+      "check": "scope",
+      "status": "passed",
+      "reason": "nothing found",
+      "duration_s": 0.0
+    },
+    {
+      "check": "test-adequacy",
+      "new_tests": 1,
+      "duration_s": 1.854,
+      "new_tests_failing_on_original": 1,
+      "status": "passed",
+      "reason": "1 of 1 new tests fail against the original code"
+    },
+    {
+      "check": "dependency",
+      "status": "passed",
+      "reason": "nothing found",
+      "duration_s": 0.0
+    },
+    {
+      "check": "secrets",
+      "status": "passed",
+      "reason": "nothing found",
+      "duration_s": 0.0
+    }
+  ],
+  "seconds": 9.705
+}

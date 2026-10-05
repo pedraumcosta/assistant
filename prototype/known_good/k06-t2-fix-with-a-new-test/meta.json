@@ -1,0 +1,6 @@
+{
+  "task": "t2-red-suite",
+  "builds_on": "good",
+  "what": "The fix, with a regression test that was not asked for.",
+  "expect": "passed"
+}

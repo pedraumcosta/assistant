@@ -1,0 +1,6 @@
+{
+  "task": "o3-due-date",
+  "builds_on": "good",
+  "what": "A correct change whose new tests pass against the original code as well, so they do not test the change.",
+  "expect": "test-adequacy"
+}

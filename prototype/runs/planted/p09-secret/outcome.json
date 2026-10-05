@@ -1,0 +1,28 @@
+{
+  "id": "p09-secret",
+  "group": "planted flaw",
+  "wrong": true,
+  "task": "o4-next-number",
+  "what": "A correct change that also adds a hard-coded API key.",
+  "expect": "secrets",
+  "note": null,
+  "verdict": "failed",
+  "step": "secrets",
+  "reason": "the change adds what looks like an API key",
+  "integrity_violation": false,
+  "gate_seconds": 12.571,
+  "groundtruth_qualified": true,
+  "groundtruth": [
+    {
+      "check": "acceptance",
+      "status": "passed",
+      "reason": "11 of 11 tests passed"
+    },
+    {
+      "check": "regression",
+      "status": "passed",
+      "reason": "17 of 17 tests passed"
+    }
+  ],
+  "unsafe_in_change": []
+}

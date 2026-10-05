@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="5" skipped="0" tests="11" time="0.229" timestamp="2026-10-05T19:29:56.151771+00:00" hostname="5f5ebc3879df"><testcase classname="test_acceptance" name="test_tiers_and_their_boundaries[1-10.00]" time="0.002" /><testcase classname="test_acceptance" name="test_tiers_and_their_boundaries[9-90.00]" time="0.003" /><testcase classname="test_acceptance" name="test_tiers_and_their_boundaries[10-95.00]" time="0.003"><failure message="AssertionError: assert Decimal('100.00') == Decimal('95.00')&#10; +  where Decimal('100.00') = lt(10, '10.00')&#10; +  and   Decimal('95.00') = Decimal('95.00')">quantity = 10, expected = '95.00'
+
+    @pytest.mark.parametrize("quantity,expected", [
+        (1, "10.00"), (9, "90.00"),            # below the first tier
+        (10, "95.00"), (11, "104.50"), (49, "465.50"),   # 5%
+        (50, "450.00"), (51, "459.00"), (200, "1800.00"),  # 10%
+    ])
+    def test_tiers_and_their_boundaries(quantity, expected):
+&gt;       assert lt(quantity, "10.00") == Decimal(expected)
+E       AssertionError: assert Decimal('100.00') == Decimal('95.00')
+E        +  where Decimal('100.00') = lt(10, '10.00')
+E        +  and   Decimal('95.00') = Decimal('95.00')
+
+test_acceptance.py:19: AssertionError</failure></testcase><testcase classname="test_acceptance" name="test_tiers_and_their_boundaries[11-104.50]" time="0.002" /><testcase classname="test_acceptance" name="test_tiers_and_their_boundaries[49-465.50]" time="0.002" /><testcase classname="test_acceptance" name="test_tiers_and_their_boundaries[50-450.00]" time="0.002"><failure message="AssertionError: assert Decimal('475.00') == Decimal('450.00')&#10; +  where Decimal('475.00') = lt(50, '10.00')&#10; +  and   Decimal('450.00') = Decimal('450.00')">quantity = 50, expected = '450.00'
+
+    @pytest.mark.parametrize("quantity,expected", [
+        (1, "10.00"), (9, "90.00"),            # below the first tier
+        (10, "95.00"), (11, "104.50"), (49, "465.50"),   # 5%
+        (50, "450.00"), (51, "459.00"), (200, "1800.00"),  # 10%
+    ])
+    def test_tiers_and_their_boundaries(quantity, expected):
+&gt;       assert lt(quantity, "10.00") == Decimal(expected)
+E       AssertionError: assert Decimal('475.00') == Decimal('450.00')
+E        +  where Decimal('475.00') = lt(50, '10.00')
+E        +  and   Decimal('450.00') = Decimal('450.00')
+
+test_acceptance.py:19: AssertionError</failure></testcase><testcase classname="test_acceptance" name="test_tiers_and_their_boundaries[51-459.00]" time="0.002" /><testcase classname="test_acceptance" name="test_tiers_and_their_boundaries[200-1800.00]" time="0.002" /><testcase classname="test_acceptance" name="test_discount_is_applied_to_the_line_total_then_rounded" time="0.002"><failure message="AssertionError: assert Decimal('13.30') == Decimal('12.64')&#10; +  where Decimal('13.30') = lt(10, '1.33')&#10; +  and   Decimal('12.64') = Decimal('12.64')">def test_discount_is_applied_to_the_line_total_then_rounded():
+        # 10 x 1.33 = 13.30; less 5% = 12.635; half-even to 12.64.
+        # Discounting the unit price first would give 12.60.
+&gt;       assert lt(10, "1.33") == Decimal("12.64")
+E       AssertionError: assert Decimal('13.30') == Decimal('12.64')
+E        +  where Decimal('13.30') = lt(10, '1.33')
+E        +  and   Decimal('12.64') = Decimal('12.64')
+
+test_acceptance.py:25: AssertionError</failure></testcase><testcase classname="test_acceptance" name="test_rounding_stays_half_even" time="0.001"><failure message="AssertionError: assert Decimal('0.50') == Decimal('0.48')&#10; +  where Decimal('0.50') = lt(10, '0.05')&#10; +  and   Decimal('0.48') = Decimal('0.48')">def test_rounding_stays_half_even():
+&gt;       assert lt(10, "0.05") == Decimal("0.48")   # 0.475
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert Decimal('0.50') == Decimal('0.48')
+E        +  where Decimal('0.50') = lt(10, '0.05')
+E        +  and   Decimal('0.48') = Decimal('0.48')
+
+test_acceptance.py:29: AssertionError</failure></testcase><testcase classname="test_acceptance" name="test_subtotal_uses_discounted_lines" time="0.002"><failure message="AssertionError: assert Decimal('105.00') == Decimal('100.00')&#10; +  where Decimal('105.00') = &lt;function subtotal at 0x7fbf8b3dcfe0&gt;(Invoice(number='INV-2026-0001', customer='Acme Ltd', issued=datetime.date(2026, 10, 5), lines=(LineItem(sku='W-1', des...), LineItem(sku='W-2', description='Gadget', quantity=1, unit_price=Decimal('5.00'))), region='US', discount_code=None))&#10; +    where &lt;function subtotal at 0x7fbf8b3dcfe0&gt; = pricing.subtotal&#10; +  and   Decimal('100.00') = Decimal('100.00')">def test_subtotal_uses_discounted_lines():
+        from datetime import date
+        from invoicing.models import Invoice
+        inv = Invoice("INV-2026-0001", "Acme Ltd", date(2026, 10, 5), (
+            LineItem("W-1", "Widget", 10, Decimal("10.00")),
+            LineItem("W-2", "Gadget", 1, Decimal("5.00")),
+        ))
+&gt;       assert pricing.subtotal(inv) == Decimal("100.00")
+E       AssertionError: assert Decimal('105.00') == Decimal('100.00')
+E        +  where Decimal('105.00') = &lt;function subtotal at 0x7fbf8b3dcfe0&gt;(Invoice(number='INV-2026-0001', customer='Acme Ltd', issued=datetime.date(2026, 10, 5), lines=(LineItem(sku='W-1', des...), LineItem(sku='W-2', description='Gadget', quantity=1, unit_price=Decimal('5.00'))), region='US', discount_code=None))
+E        +    where &lt;function subtotal at 0x7fbf8b3dcfe0&gt; = pricing.subtotal
+E        +  and   Decimal('100.00') = Decimal('100.00')
+
+test_acceptance.py:41: AssertionError</failure></testcase></testsuite></testsuites>

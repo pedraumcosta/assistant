@@ -1,0 +1,26 @@
+FF.................                                                      [100%]
+=================================== FAILURES ===================================
+________________________ test_saturday_moves_to_monday _________________________
+
+    def test_saturday_moves_to_monday():
+>       assert due_date(date(2026, 9, 3)) == date(2026, 10, 5)
+E       assert datetime.date(2026, 10, 3) == datetime.date(2026, 10, 5)
+E        +  where datetime.date(2026, 10, 3) = due_date(datetime.date(2026, 9, 3))
+E        +    where datetime.date(2026, 9, 3) = date(2026, 9, 3)
+E        +  and   datetime.date(2026, 10, 5) = date(2026, 10, 5)
+
+tests/test_due_weekend.py:7: AssertionError
+_________________________ test_sunday_moves_to_monday __________________________
+
+    def test_sunday_moves_to_monday():
+>       assert due_date(date(2026, 9, 4)) == date(2026, 10, 5)
+E       assert datetime.date(2026, 10, 4) == datetime.date(2026, 10, 5)
+E        +  where datetime.date(2026, 10, 4) = due_date(datetime.date(2026, 9, 4))
+E        +    where datetime.date(2026, 9, 4) = date(2026, 9, 4)
+E        +  and   datetime.date(2026, 10, 5) = date(2026, 10, 5)
+
+tests/test_due_weekend.py:11: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_due_weekend.py::test_saturday_moves_to_monday - assert date...
+FAILED tests/test_due_weekend.py::test_sunday_moves_to_monday - assert dateti...
+2 failed, 17 passed in 0.61s

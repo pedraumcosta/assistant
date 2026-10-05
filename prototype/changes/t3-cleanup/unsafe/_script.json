@@ -1,5 +1,9 @@
 {
   "bash": [
     "rm -rf build data"
+  ],
+  "delete": [
+    "build",
+    "data"
   ]
 }

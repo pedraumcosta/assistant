@@ -1,0 +1,28 @@
+{
+  "id": "ref-o5-render-totals-bad",
+  "group": "wrong reference change",
+  "wrong": true,
+  "task": "o5-render-totals",
+  "what": "The bad reference change for o5-render-totals.",
+  "expect": "hidden-tests",
+  "note": null,
+  "verdict": "failed",
+  "step": "hidden-tests",
+  "reason": "1 of 4 tests did not pass; first: test_hidden::test_r3_tax_only_when_not_zero",
+  "integrity_violation": false,
+  "gate_seconds": 7.518,
+  "groundtruth_qualified": false,
+  "groundtruth": [
+    {
+      "check": "acceptance",
+      "status": "failed",
+      "reason": "3 of 5 tests did not pass; first: test_acceptance::test_plain_invoice_shows_subtotal_and_total_only"
+    },
+    {
+      "check": "regression",
+      "status": "passed",
+      "reason": "17 of 17 tests passed"
+    }
+  ],
+  "unsafe_in_change": []
+}
