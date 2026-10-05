@@ -1,21 +1,29 @@
 ---
-# Slidev deck template (D8). Build only once PROPOSAL.md is near-final.
+# Slidev deck template (D8) — the spoken equivalent of presentation-template.html.
+# Same section order, same numbers, same single recommendation branch (RESULTS.md §5).
+# TIMING: 10 minutes total. Each slide's presenter note starts with its time budget;
+# the budgets sum to 10:00. Backup slides are not part of the 10 minutes.
 # Rule of the deck: no number that is not in EVIDENCE.md ([P]/[L]) or prototype/runs/.
-# Keep exactly one recommendation branch — the same one as PROPOSAL §4.1.
 theme: default
-title: Should we enter the AI software-development-assistant market?
-info: ASSIST — probe recommendation to the executive team
+title: ASSIST Recommendation
+info: Should we enter the AI software-development-assistant market? — executive recommendation
 class: text-left
 transition: none
 mdc: true
+fonts:
+  serif: Fraunces
+  sans: Source Sans 3
+  mono: JetBrains Mono
 ---
 
 # Should we enter the AI software-development-assistant market?
 
-{{date}} · prepared for the executive team
+{{date}} · executive session · 10 minutes
 
-<!-- Presenter note: the whole deck answers one question. Slide 2 gives the answer;
-     everything after is the evidence. 15 minutes, then discussion. -->
+Every number on these slides cites `EVIDENCE.md` ([P]/[L]) or `prototype/runs/`.
+
+<!-- 0:00–0:30. One breath: the question as leadership asked it, and that the answer
+     comes with measurements, not opinions. Advance. -->
 
 ---
 
@@ -23,39 +31,38 @@ mdc: true
 
 **Do not build another AI coding assistant.**
 
-{{Branch A: We probed the one part nobody sells, the prototype cleared its exits, and we ask for a six-week measurement pilot with fixed exits.}}
-{{Branch B: We probed the one part nobody sells. The prototype failed its exits. Recommendation: wait, review on {{pedro:review_date}}.}}
-{{Branch C: We probed the one part nobody sells. The sample was too small to decide. Recommendation: a budgeted re-run, or wait.}}
+We probed the one part nobody sells — a verdict on agent-written changes built from
+**executable evidence**, independent of the model vendor, measured for error — under the banner
+of **evidence-driven development**: "done" is defined as executable checks before the work
+starts, and every change is accepted on that evidence, whoever wrote it.
 
-<!-- One of the three lines survives. -->
+{{Branch A: The prototype cleared its three exits. We ask for a six-week measurement pilot with its exit fixed now.}}
+{{Branch B: The prototype failed its exits. We recommend waiting, with a review on {{pedro:review_date}}.}}
+{{Branch C: The sample could not separate the verdict sources. We ask for a budgeted re-run, or we wait.}}
 
----
-
-# "Why not simply buy their products?"
-
-**We do.** Buy generation ({{verified seat prices}}/seat) · adopt the open-source policy layer ({{E-32}}) · build only what no one sells.
-
-What cannot be bought, from anyone:
-
-- a verdict that **runs our own checks** — the funded reviewer cannot ({{E-50}})
-- **independence** — "agents reliably skew positive when grading their own work", the vendor on its own models ({{E-34}})
-- a **measured error rate** for the verdict — published by no vendor
-- an **outcome record** — no audit log keeps one ({{E-53}})
-
-<!-- Presenter note: this slide answers the CFO's question directly, third minute of
-     the talk, not the tenth. Concede the premise first: we are not competing with
-     their spend. -->
+<!-- 0:30–1:00. Keep exactly one branch line — the one RESULTS.md §5 selected.
+     Say "probe", "exits", "measured". Do not defend yet; the next slide takes the
+     hardest question head on. -->
 
 ---
 
-# The market, as the question was asked
+# "Why shouldn't we simply buy their products?"
 
-- The companies that own the models own the product ({{E-12}}, {{E-13}}, {{E-48}})
-- Independents are priced at acquisition scale ({{E-46}}, {{E-47}})
-- "Margins on all of the 'code gen' products are either neutral or negative" ({{E-17}})
-- The underlying loop is 90 lines of published code ({{E-31}})
+**We do.** By layer:
 
-**We have no model, no customers, no captive vertical. As asked: no.**
+| Layer | Decision | Why |
+|---|---|---|
+| Assistants, generation | **Buy** ({{verified seat prices}}/seat) | Vendor-subsidised; features copy in months ({{E-12}}, {{E-13}}) |
+| Policy, sandbox, budgets | **Adopt open source** ({{E-32}}) | Free, backed by a large vendor |
+| Model-opinion review | Buy if wanted | Cannot run our tests ({{E-50}}) or block ({{E-51}}) |
+| **The verdict + its error rate + the record** | **The only build** | Sold by no one ({{E-50}}, {{E-51}}, {{E-53}}) |
+
+"Agents reliably skew positive when grading their own work" — the vendor, on its own models ({{E-34}}).
+A vendor cannot sell a credible verdict on itself, whatever it spends.
+
+<!-- 1:00–2:30. The CFO's question, answered in minute two, not minute nine. Concede
+     the premise first ("we do buy them"), then the one line that holds the slide:
+     independence cannot be bought from the party being judged. -->
 
 ---
 
@@ -63,156 +70,163 @@ What cannot be bought, from anyone:
 
 Writing code got cheap. Knowing whether to trust it did not.
 
-- Roughly half of test-passing agent changes would not be merged by maintainers ({{E-01}})
-- Median time in review up 441.5%; PRs merged with no review up 31.3% ({{E-04}}, {{E-05}})
-- "Agents reliably skew positive when grading their own work" — the model vendor, on its own models ({{E-34}})
-- A model learned to force tests green by patching the test reporter ({{E-75}})
+- "Roughly half of test-passing" agent changes "would not be merged into main by repo maintainers" ({{E-01}})
+- Median time in review **up 441.5%**; PRs merged with **no review up 31.3%** ({{E-04}}, {{E-05}})
+- Trust in AI output fell 43% → 33% in a year; distrust rose 31% → 46% ({{E-82}})
+- A model learned to force tests green — **by patching the test reporter** ({{E-75}})
+
+<!-- 2:30–4:00. Four facts, no adjectives. Name the interested parties where they
+     apply (the review-time figure comes from a vendor that sells measurement).
+     The last bullet sets up the design: the author cannot keep its own evidence. -->
 
 ---
 
-# The gap is real, and it is narrow
+# The gap: four things nobody sells together
 
-Nobody sells, together:
+1. A verdict that **runs the customer's own checks** — not a model's reading of the diff
+2. **Independence** from the vendor whose model wrote the code
+3. A **measured false-pass rate**, on the customer's repository
+4. An **outcome record** an auditor can read ({{E-53}})
 
-1. a verdict that **runs the customer's own checks**
-2. **independence** from the vendor whose model wrote the code
-3. a **measured false-pass rate**, on the customer's repository
-4. an **outcome record** an auditor can read
+**Said against ourselves:** the idea and its metrics are published ({{E-40}}); a competitor at
+1.5 B USD stands next to the gap ({{E-49}}). The gap is real, and it is **narrow** — which is why
+this is a probe with fixed exits, not an investment.
 
-And next to it: CodeRabbit at 1.5 B USD positioning as "the control layer" ({{E-49}}); the framing already published as research ({{E-40}}).
-
-<!-- Presenter note: say "narrow" out loud. The case against is the next slide, undiluted. -->
-
----
-
-# The case against entering at all
-
-- The idea is published; the vendor describes contract-plus-evaluator as its own practice
-- A funded competitor has most of the parts
-- A check's value moves with every model release ({{E-36}})
-- A frontier lab argues against gates where corrections are cheap ({{E-57}})
-- We would have no moat beyond neutrality and the customer's accumulating data
-
-**This is why the recommendation is a probe with fixed exits, not an investment.**
+<!-- 4:00–5:00. Say "narrow" out loud. The honesty paragraph is the credibility of the
+     whole talk; do not rush it. -->
 
 ---
 
-# The product: tooling for evidence-driven development
+# The product, in the order a change flows
 
-The team defines "done" as executable checks **before** the work starts. Every change — written by a person or an agent — is accepted on that evidence.
+1. **Use case → checks** — the team's assistant asks clarifying questions ({{E-80}}); a person approves
+2. **Contract fixed before the agent runs** — scope, checks, budget, on a protected branch
+3. **Verdict of executable evidence after it stops** — the customer's tests; scope; the agent's new tests must fail on the original code ({{E-76}})
+4. **Outcome record** — written once, never edited
+5. **A measured error rate for the verdict itself** — per repository, re-measured per model pairing ({{E-36}}, {{E-58}})
 
-Five parts: a guided path from use case to checks · a protected contract · a verdict of executable evidence · an outcome record · a measured error rate.
+It trades **speed to merge** for a verdict **the author cannot influence**. Fail closed.
 
----
-
-# How it differs
-
-| The team has | The evidence layer adds |
-|---|---|
-| The agent's word | A verdict from outside the agent |
-| Rules in prompts | Rules enforced by mechanism |
-| A reviewer model's opinion | The customer's checks actually run, and a verdict that can block |
-| The vendor's evaluator | Independence, and a stated error rate |
-| Audit logs of actions | Whether the result was verified |
+<!-- 5:00–6:30. Walk the five steps with one finger. Step 5 is the differentiator —
+     "this is what no one else measures". Close with the trade, stated as a trade. -->
 
 ---
 
-# The design in one picture
+# What one day measured
 
-{{DESIGN §3 diagram, rendered}}
-
-**It trades speed to merge for a verdict the author cannot influence.** Fail closed. Nothing accepted by default. Everything leaves a record.
-
----
-
-# What we tested in one day
-
-Same tasks, three arms: **bare** · **prompt discipline** · **gated** — plus planted flaws and known-good changes fed straight to the gate.
-
-Three verdict sources scored against hidden acceptance checks:
-the agent's own claim · an evaluator agent from another vendor · the gate.
-
-Spend: {{runs:total_spend_usd}} of a 50 USD cap. Task set small and self-authored — an indication, not a benchmark.
-
----
-
-# The scoreboard
-
-| Exit criterion, fixed in advance | Measured | Cleared |
-|---|---|---|
-| Gate's false-pass rate below both comparators | {{runs:...}} | {{✓/✗/~}} |
-| Every planted flaw rejected | {{runs:...}}/{{runs:...}} | {{✓/✗}} |
-| No unsafe action in the gated arm | {{runs:...}} | {{✓/✗}} |
-
-<!-- This slide decides the deck. The numbers come from RESULTS.md §5 and nowhere else. -->
-
----
-
-# The numbers, paired
+Same tasks · three arms (**bare** / **prompt-disciplined** / **gated**) · {{runs:k}} repeats ·
+three verdict sources judging the **same** finished changes, against hidden acceptance checks.
 
 | | Bare | Prompt | Gated |
 |---|---|---|---|
-| pass^k (hidden checks) | | | |
-| False-pass rate of its verdict | | | |
-| Cost per production-qualified change | | | |
-| Unsafe actions | | | |
+| Unsafe actions (trap tasks) | {{runs:unsafe_bare}} | {{runs:unsafe_prompt}} | **{{runs:unsafe_gated}}** |
+| pass^k (hidden checks) | {{runs:passk_bare}} | {{runs:passk_prompt}} | **{{runs:passk_gated}}** |
+| Cost per production-qualified change | {{runs:cpq_bare}} | {{runs:cpq_prompt}} | **{{runs:cpq_gated}}** |
 
-Gate overhead: {{runs:...}} per task · false-fail rate {{runs:...}} of {{runs:...}} known-good changes.
+Spend: {{runs:total_spend_usd}} of a 50 USD cap. Task set small and ours — an indication, not a benchmark.
 
-<!-- Pairing rule: never a speed or cost figure without its quality figure. -->
+<!-- 6:30–7:15. Point at pass^k, not pass@1 ({{E-79}}: >60% average can mean <25%
+     eight-in-a-row). The limitation sentence is spoken, not skipped. -->
 
 ---
 
-# What it costs the delivery process
+# Whose "pass" can you trust?
 
-It **adds** cost: checks written up front, extra attempts, machine time, waiting before merge.
-It is meant to **remove**: review time, rework, incidents, unreviewed merges.
+The product's claim, and the number that can kill it:
 
-Whether that nets out is not established. It is what the pilot measures — four numbers, reported together, never one without the others.
+| Verdict source | False-pass rate | On |
+|---|---|---|
+| The agent's own claim | {{runs:fp_claim}} | {{runs:denominator}} changes |
+| Evaluator agent, other vendor | {{runs:fp_evaluator}} | sampled |
+| **The gate** | **{{runs:fp_gate}}** ({{runs:fp_gate_ci}}) | {{runs:denominator}} changes |
+
+Plus: **{{runs:flaws_rejected}}/{{runs:n_flaws}}** planted flaws rejected ·
+false-fail {{runs:false_fails}}/{{runs:n_good}} known-good changes ·
+gate overhead +{{runs:gate_time}} and +{{runs:gate_cost}} per task.
+
+<!-- 7:15–8:00. H4 is the slide to slow down on. Always say the denominator and the
+     range — on a sample this small, a rate without its range overclaims. The paired
+     false-fail and overhead lines keep the reporting honest. -->
+
+---
+
+# The scoreboard — exits fixed before the results existed
+
+| # | Kill criterion | Measured | Verdict |
+|---|---|---|---|
+| K1 | Gate's false-pass rate below **both** comparators | {{runs:fp_gate}} vs {{runs:fp_claim}} vs {{runs:fp_evaluator}} | {{✓ cleared / ✗ failed / ~ inconclusive}} |
+| K2 | **Every** planted flaw rejected | {{runs:flaws_rejected}}/{{runs:n_flaws}} | {{✓ / ✗}} |
+| K3 | **No** unsafe action in the gated arm | {{runs:unsafe_gated}} | {{✓ / ✗}} |
+
+<!-- 8:00–8:30. This table decides the talk and matches RESULTS.md §5 exactly.
+     Read it; do not editorialise. The recommendation on the next slides follows
+     from it mechanically. -->
+
+---
+
+# What it costs, said before anyone asks
+
+**It adds:** check-writing (the largest, least-known cost) · extra attempts · machine time ·
+re-measurement at every model release · **waiting before merge**.
+
+**It is meant to remove:** review time evidence could settle · rework and incidents from
+changes that passed and were wrong · the risk in unreviewed merges ({{E-05}}).
+
+**Whether that nets out is unproven** — the prototype measured what the gate adds; only the
+pilot measures what it saves. Four paired numbers decide it, and where it won't pay is named:
+small low-risk changes, fast new builds ({{E-57}}), teams with few tests.
+
+<!-- 8:30–9:00. Say the cost before the CFO does. "Unproven" is a word to use, not avoid. -->
 
 ---
 
 # The ask
 
-| Stage | Cost | Exit |
-|---|---|---|
-| 1. Prototype | One day, {{runs:total_spend_usd}} — **done** | Cleared / not cleared (previous slide) |
-| 2. Pilot | 6 weeks · 2 engineers · product lead at half time — **assumption**, rates from finance | A partner says the report changed a decision |
-| 3. Build | Scoped only if stage 2 clears | Set before stage 3 starts |
+| Stage | Cost | Exit, fixed in advance | Status |
+|---|---|---|---|
+| 1 · Prototype | one day · {{runs:total_spend_usd}} | the scoreboard above | **done** |
+| 2 · Pilot | 6 weeks · 2 engineers · ½ product lead · cap {{assumption:pilot_spend_cap}} — **assumption**, rates from finance | a partner says the report changed a decision | requested |
+| 3 · Build | scoped only if stage 2 clears | set before it starts | not reached |
 
-{{Branch A: Decision requested: fund stage 2.}}
-{{Branch B/C: Decision requested: agree the review date / the re-run budget.}}
+**The sentence for the board:** {{one sentence, written last, consistent with the scoreboard —
+see presentation-template.html #ask for the Branch A and Branch B/C shapes}}
+
+<!-- 9:00–10:00. End on the table and the sentence. The decision requested is one line:
+     Branch A — fund stage 2; Branch B/C — agree the review date / the re-run budget.
+     Stop talking at 10:00; the backup slides exist for the discussion. -->
 
 ---
 layout: center
 ---
 
-# Backup
-
----
-
-# What one day cannot show
-
-{{RESULTS.md §1 limitations, verbatim}}
+# Backup — for the discussion, not the 10 minutes
 
 ---
 
 # Challenges we expect
 
-<!-- Backup slide. One line per challenge; the full answers with concede/hold lines
-     are the appendix of docs/templates/cfo-message.md. Rehearsed, not read. -->
-
 | Challenge | The short answer |
 |---|---|
 | "They outspend us 1000:1" | Their spend is on generation, which we buy; independence from themselves is what they cannot sell |
 | "Buy CodeRabbit instead" | It cannot run our tests ({{E-50}}) and publishes no error rate; it closing this gap within a year is the named risk — hence a probe, not a build |
-| "This raises my AI bill and slows delivery" | Yes — stated in §2.10, capped per contract, applied by risk; four paired numbers decide it |
+| "This raises my AI bill and slows delivery" | Yes — stated before you asked; capped per contract, applied by risk; four paired numbers decide it |
 | "The next model makes it unnecessary" | The check's value moves with each release ({{E-36}}); re-measurement per model pairing **is** the product |
 | "What's the TAM?" | Not established and not invented; stage 2 tests willingness to pay before TAM matters |
 | "Margins are abysmal" | Those are generation margins ({{E-17}}); we resell no inference — the verdict runs on the customer's pipeline and model access |
+
+<!-- Full answers with concede-or-hold lines: docs/templates/cfo-message.md appendix. -->
+
+---
+
+# What one day cannot show
+
+{{RESULTS.md §1 limitations, verbatim: small self-authored task set · nothing on reviewer time
+saved, adoption or willingness to pay · contracts written by hand · a snapshot of today's models}}
 
 ---
 
 # Evidence index
 
-Every figure in this deck: `docs/research/EVIDENCE.md` (rows cited per slide) and `prototype/runs/` (results). Full documents: `PROPOSAL.md`, `DESIGN.md`, `RESULTS.md`.
+Every figure: `docs/research/EVIDENCE.md` (E-nn, verified at raw sources) · results generated
+from `prototype/runs/` · decisions `docs/JOURNAL.md` ADR-001…020 · full case `docs/PROPOSAL.md` ·
+design `docs/DESIGN.md` · the one-page version of this talk: the published design-view artifact.

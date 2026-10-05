@@ -12,9 +12,17 @@
 |---|---|---|
 | `docs/RESULTS.md` (written in P6, consumed here) | `results-template.md` | Defines the exact tables and the kill-criteria scoreboard the proposal will cite. Using it in P6 makes the P7 exit check mechanical. |
 | `PROPOSAL.md` §3 (design summary) and §4 (executive message) | `proposal-sections-3-4.md` | Three recommendation branches; exactly one survives. |
-| Slidev deck | `slides-template.md` | Slide-for-slide skeleton with presenter notes. |
+| Claude Code artifact (the design view / presentation page, D8) | `presentation-template.html` | The single-page presentation, in the format of the reference evaluation-report artifact (hero with stat tiles, pill TOC, numbered pipeline, metric cards with value strips, verdict chips, honesty boxes, conclusions, sourced footer), in English. Published as the artifact once the numbers are in. |
+| Slidev deck | `slides-template.md` | The spoken equivalent of the presentation page: same section order, same numbers, same branch. Presenter notes carry per-slide time budgets. |
 | One-page CFO recommendation | `cfo-message.md` | Answers the brief's question ("why believe we can compete, why not simply buy?") in three moves, with the challenge-and-answer appendix for the live conversation. The main objective of the exercise is to convince the CFO; this page is the deliverable that does it. |
-| Claude Code artifact (design view) | Outline at the end of this file | Built from the near-final Markdown (D8). |
+
+## The 10-minute rule
+
+The spoken presentation fits **10 minutes**. Both presentation forms enforce it the same way:
+
+- `presentation-template.html` carries minute marks in the section comments (hero+answer to 1:00 · why-not-buy to 2:30 · problem to 4:00 · gap to 5:00 · product to 6:30 · measurements to 8:00 · scoreboard 8:30 · cost 9:00 · ask 10:00). The Working-rules section and footer are leave-behind, not spoken.
+- `slides-template.md` has 11 content slides whose presenter-note time budgets sum to 10:00; backup slides (challenges, limitations, evidence index) are for the discussion afterwards.
+- Rehearse once against a clock before the session. If over, cut detail from the problem and product sections first — never from the scoreboard, the cost honesty, or the ask.
 
 ## Placeholder conventions
 
@@ -51,17 +59,15 @@ Work through this before asking Pedro to confirm the commit.
 - [ ] Every anticipated challenge in `cfo-message.md`'s appendix has an honesty tag and a concede-or-hold line; none answers with reassurance alone.
 - [ ] No vanity metric (lines of AI code, acceptance rate, seats, volume without quality) appears anywhere; only the paired, auditable set.
 - [ ] The [S] candidates in `docs/research/cfo-numbers-candidates.md` used in any document were verified at their raw sources and promoted to `EVIDENCE.md` first; unverified ones stay out or carry an explicit "unverified" tag in speech only.
+- [ ] The talk fits 10 minutes: slide time budgets untouched or re-balanced to sum to 10:00; one rehearsal against a clock done.
+- [ ] The presentation page and the deck carry the same numbers, the same section order and the same branch.
 - [ ] If time runs short: the artifact and deck reduce to a single diagram before anything else is cut (PLAN §9).
 - [ ] No commit until Pedro confirms (ADR-009).
 
-## Design-view artifact — outline
+## Filling the presentation page (`presentation-template.html`)
 
-One page, built from the Markdown once near-final. Order:
-
-1. **The question and the answer** (one line each; the kept branch).
-2. **The flow diagram** — DESIGN §3's Mermaid flow, rendered. This is the piece to keep if everything else is cut.
-3. **The verdict** — the decision ladder of DESIGN §4.1 as a vertical list, with the evaluation path beside it as a second column.
-4. **The scoreboard** — the three kill criteria with their measured values, coloured pass/fail, each linking to its run file.
-5. **The probe** — three stages, each with its cost and its exit, the current stage highlighted.
-
-No numbers on the page that are not in `RESULTS.md` or `EVIDENCE.md`.
+1. Generate `RESULTS.md` from the run files first (P6); every `{{runs:...}}` on the page maps to a cell there.
+2. Keep one recommendation branch in the hero lede and in the `#answer` callouts; delete the other two.
+3. Fill the metric cards (H4, H5, H1–H3, H6) and the scoreboard; the scoreboard verdict chips must match `RESULTS.md` §5 exactly.
+4. Write "the sentence for the board" last, from the scoreboard.
+5. Delete every template comment; check the page in light and dark; publish as the Claude Code artifact (D8) and keep the HTML in the repo beside it.
