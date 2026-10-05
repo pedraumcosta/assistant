@@ -2,33 +2,56 @@
 
 | | |
 |---|---|
-| Status | Draft for discussion with Pedro. Nothing below is executed until the decisions in §2 are settled. |
-| Date | 2026-10-03 |
+| Status | Working plan. The thesis has an agreed direction and open details (`ROADMAP.md` §2). Research is complete through 2026-10-05. Nothing has been designed or built. |
+| Date | Started 2026-10-03; last updated 2026-10-05 |
 | Brief | `docs/init-prompt.md` |
 | Source-of-truth order | `docs/PLAN.md` → `docs/ROADMAP.md` → `docs/JOURNAL.md`. If they disagree, the earlier one wins and the later one is corrected. |
 | Time budget | One working day |
 
 ## 1. The position this plan sets out to defend
 
-**Do not build another AI coding assistant. Build the layer that makes any of them safe to merge.**
+**Do not build another AI coding assistant, harness or control plane. If we build anything, build the part nobody yet sells: a verdict on agent-written changes that is deterministic, independent of the model vendor, and measured for error on the customer's own repository.**
 
 The leadership question is "why build another AI coding product when the largest companies already offer mature ones?" The research says the honest answer to that question, as asked, is: we should not. Generation is owned by the model vendors, priced by them, and copied between them within months.
 
-What the incumbents are not solving, and are paid by the token to make worse, is what happens after the code is written: review, verification, and the audit trail. ASSIST is a thin, model-agnostic **outer harness** that takes a task, runs any coding agent inside a bounded sandbox, and returns a change with the evidence a reviewer needs to accept or reject it quickly.
+**What we would not build**, because it exists or is funded: a coding assistant; an agent loop; a cross-agent policy, sandbox and budget layer (Omnigent, open source); a model-based review bot (CodeRabbit and others); the wider delivery control plane.
 
-In Pedro's own terms (from the Practices notes): "Reliability, not capability, is the wall" and "The platform is a harness around the agent, not a bet on the agent."
+**The candidate product** is an evidence layer delivered as a plug-in to the tools a team already uses:
 
-The plan keeps "do not build" alive as a real outcome. The prototype exists to test five hypotheses (§7). If they fail, the recommendation to the CXOs becomes **Wait, with a review date**, and the proposal says so.
+- a change contract written before the agent runs (scope, acceptance checks, budget), protected from the agent by mechanism;
+- a deterministic verdict after the agent stops, from the customer's own checks, run where the agent cannot interfere;
+- an evidence record of the outcome, which no vendor audit log we examined provides;
+- a measured false-pass rate for that verdict, per repository and per model and harness pairing, used to set how much human review each class of change gets.
 
-This position is a hypothesis for discussion, not a settled decision. See decision D1.
+It is entered through measurement: run the customer's own tasks and report the rate and cost of production-qualified changes.
+
+**Who it is for.** Teams where a wrong change is expensive: existing systems and regulated work. It is not for high-throughput new builds, where a frontier lab argues that "corrections are cheap, and waiting is expensive".
+
+**Where the case stands.** The idea is not new. The framing and metrics are published, the model vendor describes a contract plus a separate evaluator, and a competitor valued at 1.5 billion USD is positioning as "the control layer" for agent-written changes. What remains open is the narrow list above. The case for **Wait, with a review date** is stronger than when this plan was first written, and it remains a real outcome.
+
+**What the prototype is for.** To show whether a deterministic verdict is right more often than the agent's own claim and than a model reviewer's verdict, by a margin worth paying for (§7). If it is not, the recommendation is Wait.
+
+In Pedro's own terms (from his working notes): "Reliability, not capability, is the wall" and "The platform is a harness around the agent, not a bet on the agent."
+
+**How the position has moved**
+
+| Date | Position | What moved it |
+|---|---|---|
+| 2026-10-03 | A thin, model-agnostic outer harness: policy, sandbox, gate and evidence around any agent | First research pass |
+| 2026-10-05 | The evidence layer only, as a plug-in, entered through per-repository evaluation | The harness paper: the policy and sandbox layer already exists as open source (§1.1) |
+| 2026-10-05 | A verifier with a measured false-pass rate; the mechanism itself is cheap to copy | Full re-read of the articles (§3.4) |
+| 2026-10-05 | A deterministic, vendor-independent, measured verdict; the contract-plus-evaluator idea and the metrics are published | Anthropic's harness design post and two papers (§3.6, §3.7) |
+| 2026-10-05 | The same, for teams where a wrong change is expensive; a funded competitor owns the adjacent ground | Market check of the review and verification segment (§3.8) |
+
+This position is a working hypothesis. Decision D1 records the agreed direction; the details are open questions T1 to T10 in `ROADMAP.md` §2.
 
 ### 1.1 Narrowing the position after the harness paper (agreed 2026-10-05, D1)
 
 Pedro asked for the paper "Harness Engineering: Anatomy, Architecture, and Evolution of Coding Agents — A Source-Code Study of Eleven Systems" (Barbaste, Darrigol, Vu, Wiltberger, Wavestone AI Lab; arXiv 2609.00006v1) to be weighed before D1 closes. Selected sections were read on 2026-10-05 and the whole text afterwards; the record is `docs/research/harness-paper.md`.
 
 **What it confirms**
-- The inner loop is a commodity. Recommendation 1: "Start with a linear while loop". The paper says loop sophistication "does not predict benchmark performance" and ships a 90-line minimum viable harness.
-- No production harness uses an agent framework or embeddings over code. Recommendations 8, 15 and 16 say not to build either.
+- A basic agent loop is simple and widely replicated. Recommendation 1: "Start with a linear while loop". The paper says loop sophistication "does not predict benchmark performance" and ships a 90-line minimum viable harness. This is not the same as saying harness design does not matter: a later ablation study finds that the components around the loop change results by model, task and budget (§3.8).
+- None of the eleven harnesses studied uses an agent framework or embeddings over code. Recommendations 8, 15 and 16 say not to build either. The corpus is terminal harnesses with readable source; it does not cover closed IDE products such as Cursor and Copilot, which do index code with embeddings (§3.8).
 - Stay single-agent until parallel exploration is shown to win (Recommendation 12).
 
 **What it changes**
@@ -73,7 +96,7 @@ Decisions are recorded here as they are made. Nine are decided; D1 has an agreed
 |---|---|---|---|
 | D1 | Which wedge do we defend? | **Direction agreed 2026-10-05, details open:** option B of §1.1, the evidence layer delivered as a plug-in to existing harnesses, entered through option C, per-repo agent evaluation. | Pedro agreed the paper analysis and the narrowing, and on the same day said the thesis details are not yet chosen. The open questions are listed in `ROADMAP.md` §2. |
 | D2 | What does the company already own? | **Decided 2026-10-03:** nothing. No proprietary model, no harness, no captive vertical, no special moat. | The strategy must stand without an inherited advantage. |
-| D3 | Prototype inner loop | **Decided 2026-10-03:** write a minimal single loop ourselves, behind a provider interface. | It shows every design topic in readable code and makes the point that the loop is small, so it is not the product. Rejected alternative: wrapping an agent SDK or hosted agent service. |
+| D3 | Prototype inner loop | **Decided 2026-10-03, refined 2026-10-05:** a minimal single loop behind a provider interface, taken from the 90-line scaffold published in the harness paper (Listing 3, CC BY 4.0) and specialised only where needed, with every departure recorded in the journal. | It shows every design topic in readable code and makes the point that the loop is small. Using a published, citable agent removes the objection that we tuned the agent to suit our gate. Rejected alternatives: writing our own from nothing; wrapping an agent SDK or hosted agent service. |
 | D4 | Prototype language | **Decided 2026-10-03:** Python. | Fastest for one day. |
 | D5 | Model access and spend ceiling | **Decided 2026-10-03:** Anthropic first, hard cap of 50 USD across all runs. OpenAI may be used to cross-check results or as the adversarial reviewer. | No API key is set in the environment yet (ASSIST-006). |
 | D6 | GitHub repo owner, name and access model | **Decided 2026-10-05:** private repo in Pedro's personal account, `pedraumcosta/assistant`. Created and pushed. | Consequence, per GitHub Docs: "Collaborators can't have read-only access to repositories owned by a personal account". Anyone invited will be able to push. Read-only sharing would need a transfer to an organisation. |
@@ -118,7 +141,7 @@ This goes in the proposal undiluted.
 
 The four articles Pedro asked to be re-read were downloaded complete and read end to end; the first pass had seen truncated summaries. The other three articles on the list were read only through a summarising fetch (ASSIST-005). Each has a record in `docs/research/articles/`.
 
-**They confirm the harness is a commodity.** "Building Claude Code with Harness Engineering" rebuilds each mechanism in tens of lines and says: "That harness is fully reproducible, and that is exactly what we are going to build."
+**They show a basic harness is cheap to reproduce.** "Building Claude Code with Harness Engineering" rebuilds each mechanism in tens of lines and says: "That harness is fully reproducible, and that is exactly what we are going to build."
 
 **None of them checks the outcome from outside the model.**
 - *Senior Staff Engineer with sub-agent teams*: every gate (design approval, test-first, two-stage review, verification before completion) is skill text. The only deterministic mechanism is a session-start hook that injects text. The rule "NO COMPLETION CLAIMS WITHOUT FRESH VERIFICATION EVIDENCE" is judged by the model making the claim. The article's own test session stopped before any code was written.
@@ -154,6 +177,116 @@ All figures in these articles are their authors' claims, and several run transcr
 ### 3.5 What the notes do not cover
 
 Pedro's notes have no market sizing, competitor pricing, unit economics, latency targets, customer-code privacy design, or anything labelled "redlines". Those come from the web research and from decisions in §2. The `Strategy/` and `Product Mngmnt/` shelves are not synced to this machine (ASSIST-003).
+
+### 3.6 Second round of sources (2026-10-05)
+
+Pedro supplied his notes on nine further reads. Six were located and read in full, including Anthropic's own harness design post; two had been read earlier through a summarising fetch; one could not be found (ASSIST-012). The claim-by-claim check is `docs/research/notion-notes-2026-10-01.md`. Seven claims in the notes needed correcting.
+
+**What strengthens the direction**
+
+- The model vendor says it in its own words: "agents reliably skew positive when grading their own work", and a separate evaluator "is still an LLM that is inclined to be generous towards LLM-generated outputs" (EVIDENCE E-34, E-35).
+- Agreeing what "done" means before code is written is the vendor's published practice: generator and evaluator negotiate a contract with testable criteria and hard thresholds.
+- First outcome evidence we have seen that a contract plus a separate evaluator changes the result: one prompt, one run each, a solo build whose central feature did not work against a harness build that was playable (E-37). It is a single vendor anecdote, and the harness run cost "over 20x" more.
+- The leading harness runs a single loop with a flat message history, which supports our minimal agent under test.
+- A harness's own transcript files can be read for evidence without the vendor's cooperation. The one tool we found that does this works with a single harness and its author says nothing about the format's stability.
+
+**What weakens it**
+
+- Contract plus separate evaluator is no longer a new idea. It is Anthropic's published design and can ship natively.
+- The value of the check moves with the model. On the newer model the same author found the evaluator "unnecessary overhead" for tasks the model already does reliably: "It is worth the cost when the task sits beyond what the current model does reliably solo" (E-36).
+- Evaluation tasks decay. Anthropic's hiring task, rebuilt around where the model struggled, lasted "several months" before the next model beat it; only out-of-distribution tasks held.
+- Native features already cover the planning half of a contract (a committed spec with acceptance criteria, a task list). What they leave open is the verification half: the agent marks its own tasks complete.
+- A practitioner article we read tells readers to stop bolting tools onto the harness. That is the objection a buyer will raise.
+
+**What it changes**
+
+1. The claim narrows again. What no source provides is a verdict that is **deterministic, independent of the model vendor, and measured for error on the customer's repo**, with a record a human can audit. Everything else in the original proposal now exists somewhere.
+2. The gate is applied by risk, not uniformly. It earns its cost on work beyond what the current model does reliably, and that boundary moves with each release.
+3. Measurement is recurring, not one-off: reliability has to be re-measured per model and harness pairing.
+4. The contract must be protected by mechanism (a hook, a hash checked in CI, or storage the agent cannot write to). The sources that rely on file format or prompt wording to protect it say themselves that instructions are not guarantees.
+5. The prototype's comparison arm changes (§7.1).
+
+### 3.7 Two papers on verification economics and graduated oversight (2026-10-05)
+
+Both turned up while searching for the sources in §3.6 and were read in full at Pedro's request. Records: `docs/research/paper-verification-economics.md` and `docs/research/paper-governed-ai-engineering.md`.
+
+**Our framing is already published.** Bhati (arXiv 2609.04681, September 2026) is a synthesis of other studies that proposes:
+
+- *Production-Qualified Change*: a change counts only once it passes the gates required for its risk class. This is what we had been calling an accepted change.
+- *PQC per dollar* and *PQC per reviewer-hour*: the first is our cost per accepted change.
+- The *Verification Tax*: review, CI, security and rework cost over generation cost. Bhati gives it this formula; the phrase itself appears earlier, in a DORA insight article dated 2026-03-10.
+- A *control plane* that "records the evidence required to qualify the result" and can begin "as a policy and telemetry layer around" existing tools.
+
+It states the question in the CFO's units: "how much production-qualified value an engineering system can deliver per dollar, per reviewer-hour, and per unit of operational risk" (EVIDENCE E-40). It also names the gap we target: "the verifier itself must be treated as a first-class artifact" (E-44), and asks "if one model generates the change and another model approves it, what independent evidence remains?" (E-43).
+
+**Risk tiering is already published too.** Kang (arXiv 2606.22484) proposes three oversight tiers assigned by regulatory impact, customer proximity, reversibility and data sensitivity, with a per-tier list of audit artefacts and the principle "The agent that generates code cannot approve its own deployment."
+
+**Neither paper builds or measures anything.** Bhati: the constructs "are not claimed as validated standards. They are hypotheses" (E-45). Kang states that no production deployment data is available; the paper's headline figure for velocity preserved under oversight is modelled from assumed inputs and is not usable.
+
+**What this changes**
+
+1. We adopt the published vocabulary, with attribution, instead of inventing terms. From here the plan's "accepted change" means a Production-Qualified Change, and "cost per accepted change" means PQC per dollar.
+2. We cannot claim the framing, the metrics, the control-plane concept or the tiering logic. What is left that no source we have read provides:
+   - a contract written before the run and protected from the agent by mechanism;
+   - a verifier whose false-pass rate is measured, per repository and per model and harness pairing;
+   - a working implementation with measurements.
+3. The proposal's contribution becomes evidence, not concept: the first measurements of constructs that their own authors call hypotheses. That raises the weight of the prototype's results in the final recommendation.
+4. The prototype reports in the published metric set (§7.1).
+5. Risk tiers and redlines (ROADMAP T7) now have two published starting points in place of the formula from the article we could not find.
+
+Every figure these papers cite from other studies is second-hand and unused until checked at its source.
+
+### 3.8 Third round: Pedro's web research notes, verified (2026-10-05)
+
+Pedro supplied his web research notes of 2026-10-01. Their claims were checked in raw source pages, one cited paper was read in full, and the review and verification segment was researched from company sources. Overview: `docs/research/web-research-notes-2026-10-01.md`.
+
+**The segment we would enter is funded and moving toward our position.**
+
+- CodeRabbit raised 143 million USD at a 1.5 billion USD valuation on 2026-08-12 and launched "Agentic Change Management" as "the control layer": risk scoring, routing to humans, auto-merge of low-risk changes, a pre-work planning product, and a check of each change against its linked issue (EVIDENCE E-49).
+- Sonar sells a deterministic quality gate for agent-written code, based on static analysis.
+- Faros sells per-repository benchmarks "from your own merged code" to cut "cost per verified outcome".
+
+**What those products do not do, on their own documentation**
+
+- Their verdicts are model judgments. CodeRabbit's custom checks cannot "run your test suite" or "execute arbitrary repository code" (E-50). Claude Code's review check "always completes with a neutral conclusion so it never blocks merging" (E-51).
+- None publishes a false-pass rate for its own verdicts. Four vendors each claim first place on the same review benchmark.
+- No vendor audit log we examined records whether an agent's change was verified or accepted; they record actions and cost (E-53). Agent auditability is meanwhile emerging as a procurement requirement.
+- Not found as a product: a machine-checkable contract agreed before the agent runs and enforced afterwards; a signed evidence bundle per change; a per-repository error rate for the verifier.
+
+**A frontier lab argues the other way.** OpenAI describes running "with minimal blocking merge gates", with review "handled agent-to-agent", because "corrections are cheap, and waiting is expensive". It adds: "This would be irresponsible in a low-throughput environment" (E-56, E-57). An evidence gate is for teams where a wrong change is expensive: existing systems and regulated work. It is not for high-throughput new builds.
+
+**Harness design is conditional, not irrelevant.** The ablation paper (arXiv 2609.20804) does not show that the harness outweighs the model, as the notes had it. Its conclusion is that each component "should be selected for the target model, task type, and resource budget rather than adopted as a default" (E-58). Two consequences:
+- measuring each model and harness pairing on the customer's own work is useful and has to be repeated at each release;
+- our cheaper-model arm is confounded if it shares one harness with the frontier arm (§7.1).
+
+**A plug-in in the customer's environment sidesteps most procurement requirements.** If it runs in their CI, uses their model access and sends nothing back to us, then zero-retention and data residency do not apply to us, and SSO, model allow-lists and spend controls reduce to honouring what the customer already has. The audit record applies in full, because it is the product. This is our researcher's assessment, not a vendor statement.
+
+**Corrections to our own earlier records**
+- Cognition is valued at 48 billion USD as of 2026-09-08, not 25 billion (E-47).
+- The statement that no harness uses embeddings over code is scoped to the eleven studied (§1.1).
+- "The inner loop is a commodity" is reworded (§1.1, §3.4).
+- The TechCrunch margins quotation is now confirmed (E-17).
+
+**What it changes**
+
+1. Being early is not available. The honest position is: a funded competitor owns the adjacent ground and has the parts to close the gap, and what remains open is narrow.
+2. What remains open is the same list as §3.7, now checked against the market as well as the literature: a protected pre-run contract, a deterministic verdict that runs the customer's own checks, a measured false-pass rate, and an outcome record that no audit log provides.
+3. The buyer is narrower: teams where corrections are expensive (ROADMAP T1).
+4. The case for Wait is stronger than at any earlier point. Whether the narrow open ground justifies Build is the decision for the thesis discussion; the prototype's job is to show whether a deterministic verdict beats a model reviewer's by a margin worth paying for.
+
+### 3.9 Pedro's own analysis of the harness paper (2026-10-05)
+
+Pedro's notes of 2026-10-02 on the Wavestone paper reach the same pivot this plan reached later: from governance across agents to verification and measurement. Checked claim by claim in `docs/research/harness-paper-implications-2026-10-02.md`. Nearly all of it holds against the paper. One quotation does not: the paper does not say Omnigent "does not evaluate output correctness"; it is silent on that.
+
+Its conclusion that verification is "vacant ground, everywhere" was fair on the paper alone and is too strong after §3.6 to §3.8. The paper covers eleven harnesses and one meta-harness, not the market.
+
+Three ideas from it are adopted as inputs:
+
+1. **Omnigent as a channel, not only a rival.** Its policy plane accepts Python evaluators and enforces them through each vendor's hooks (EVIDENCE E-61). A gate shipped as an Omnigent evaluator is one integration in place of one per harness. We have no data on Omnigent's adoption, and Databricks could add the check itself (ROADMAP T5).
+2. **The paper's scaffold as the agent under test** (decision D3, refined). The listing has four tools, turn and cost caps, and threshold compaction (E-59).
+3. **Recalibration fed by outcomes.** Measured outcomes adjust the risk tiers over time, which gives each customer's accumulated data a job (ROADMAP T3).
+
+Its term "planted-flaw evaluations" replaces "verifier-integrity set" in §7.1.
 
 ## 4. Deliverables
 
@@ -209,12 +342,12 @@ P3 and P4 are deliberately lean on the first pass. They are revised in P7 once t
 
 The same task set is run several times under each arm:
 
-- **Arm A, bare:** the agent loop alone.
+- **Arm A, bare:** the published scaffold alone, in a throwaway worktree. The scaffold has no sandbox and runs shell commands directly, so every arm runs inside an isolated copy of the fixture repository.
 - **Arm P, prompt discipline:** arm A plus a "verify before you claim completion" instruction, standing in for prompt-only plugins.
 - **Arm G, gate:** the loop inside the policy, contract and deterministic gate.
 - **Arm G-low:** arm G with a cheaper model tier.
 
-Every finished run, in every arm, is also scored by a **model judge from a different vendor** (OpenAI, per D5). The judge does not change the run; it gives us a second verdict to compare.
+Finished runs are also scored by an **evaluator agent from a different vendor** (OpenAI, per D5), modelled on the evaluator Anthropic describes: it exercises the result against the contract's criteria, each with a hard threshold. It does not change the run; it gives us a second verdict to compare. A single judging call would be a weaker alternative than the one buyers will actually have. An evaluator agent costs more per run, so under the 50 USD cap it may be applied to a sample of runs.
 
 Ground truth for each task is a set of acceptance checks the agent and the gate never see.
 
@@ -222,25 +355,29 @@ Ground truth for each task is a set of acceptance checks the agent and the gate 
 |---|---|---|
 | H1 Safety | Deterministic policy stops the unsafe actions a bare or prompt-disciplined loop takes on trap tasks (out-of-scope edits, deleting or weakening tests, destructive commands, instructions planted in repo files, editing the contract) | Count of unsafe actions executed, per arm |
 | H2 Reliability | A gate with a bounded repair loop raises consistency, not just one-shot success | pass@1 and pass^k against the hidden checks, per arm |
-| H3 Economics | Cost per accepted change is no worse with the gate, and a cheaper model inside the gate approaches the frontier model without it | Tokens and dollars per accepted change, per arm |
-| H4 Trustworthy verdict | The gate's "pass" is right more often than the agent's own claim (arms A and P) and than the model judge's verdict | False-pass rate of each verdict source against the hidden checks |
-| H5 Verifier integrity | The gate itself cannot be fooled by the failure modes found in the articles | A fixed set of seeded bad changes and broken test setups; every one must be rejected |
+| H3 Economics | Cost per production-qualified change (PQC per dollar) is no worse with the gate, and a cheaper model inside the gate approaches the frontier model without it | Tokens and dollars per production-qualified change, per arm |
+| H4 Trustworthy verdict | The gate's "pass" is right more often than the agent's own claim (arms A and P) and than the evaluator agent's verdict | False-pass rate of each verdict source against the hidden checks |
+| H5 Verifier integrity | The gate itself cannot be fooled by the failure modes found in the articles | Planted-flaw evaluations: a fixed set of seeded bad changes and broken test setups; every one must be rejected |
 
 H4 is the product's claim and the number that can kill it. H3 is the CFO's number. H5 is pass or fail.
+
+**Reporting.** Results are reported in the metric set proposed by Bhati (§3.7) so that they are comparable with later work: PQC rate, PQC per dollar, first-pass qualification, retry rate, cost variance across repeats, and evidence coverage. "PQC per reviewer-hour" and "escaped-failure rate" need real reviewers and production, so they are pilot measures. The verifier's false-pass rate is our addition to that set.
 
 **What one day cannot prove**, and the proposal will say so:
 - real reviewer time saved, adoption, and willingness to pay, which are the pilot's measures;
 - that contracts can be written cheaply for ordinary changes. In the prototype we write them by hand. This is the largest open product assumption.
+- that the result holds on the next model. Anthropic's own evaluation tasks stopped discriminating within months, and tasks that resemble ordinary work fell first. Our task set will be a snapshot for the models we run.
+- that a cheaper model can carry the main loop. The one source that reports heavy use of a cheaper model has it doing auxiliary calls, not the main loop. The cheaper-model arm is also confounded: an ablation study found weak models collapse on a minimal tool interface, so a poor result could reflect our harness and not the model. We either give that arm predefined tools or state the confound beside the result.
 
 The task set will be small and written by us, so results are an indication, not a benchmark. The arms multiply the number of runs; the 50 USD cap (D5) is enforced by the runner and sets how many tasks and repeats we can afford.
 
 ### 7.2 Slices, in build order
 
-1. **Loop.** Single agent loop behind a provider interface; tools for read, search, edit, run; every step written to a JSONL trace with tokens, cost and latency.
+1. **Loop.** The harness paper's 90-line scaffold (D3), with provider adapters for Anthropic and OpenAI and every step written to a JSONL event log with tokens, cost and latency. Its four tools (bash, read_file, write_file, search_replace) are kept as published.
 2. **Policy.** Each tool call classified allow / review / block by deterministic rules; work confined to a git worktree; path zones; ceilings on turns, tokens and wall-clock time.
-3. **Gate.** A task contract (scope, acceptance checks, budget), then checks after the agent stops, run in a separate process: tests, lint, diff scope, secrets scan, dependency changes. Bounded repair attempts. Includes the verifier-integrity set (H5).
+3. **Gate.** A task contract (scope, acceptance checks, budget), then checks after the agent stops, run in a separate process: tests, lint, diff scope, secrets scan, dependency changes. Bounded repair attempts. Includes the planted-flaw evaluations (H5).
 4. **Evidence.** A bundle per run, as JSON and Markdown: what was asked, what changed, which checks ran and their results, risk tier, cost.
-5. **Eval runner.** Tasks × trials × arms into a results table, with the cross-vendor judge verdict recorded beside each run and the spend cap enforced.
+5. **Eval runner.** Tasks × trials × arms into a results table, with the cross-vendor evaluator's verdict recorded beside the runs it scores and the spend cap enforced.
 6. **Stretch.** The same gate attached to a vendor harness through a hook or MCP; context compaction and a repo map.
 
 ### 7.3 Deliberately excluded
@@ -258,15 +395,15 @@ IDE plugin, any UI beyond the CLI, cloud or background agents, multi-agent orche
 | Repo understanding | Search, glob and syntax-aware reads plus a short repo map. No embeddings index. |
 | Tool execution and permissions | Deterministic allow / review / block before every call. Worktree sandbox, no network by default, least-privilege credentials. Trust ladder: local-only, then PR, then wider. |
 | Orchestration | Single loop first. "Fan out reads, single-thread writes." A second loop only when the single loop is measured as the bottleneck. |
-| Evaluation | pass^k and cost per accepted change, not pass@1. Deterministic checks before any model judge. The agent never grades itself. |
+| Evaluation | pass^k and cost per production-qualified change, not pass@1. Deterministic checks before any model judge. The agent never grades itself. |
 | Security | Assume prompt injection succeeds; break one leg of the lethal trifecta by design. Secrets never enter context. |
 | Privacy | Customer code stays in the customer's boundary; provider chosen per customer; no training on customer code; retention stated and short. |
 | Observability | One structured event per step; the evidence bundle is the audit record ("provenance as schema, not logging"). |
 | Human layer | Humans at risk-tiered gates. "No human in the loop" is a configuration justified by evidence, never a default. |
 | Latency | Asynchronous by design: the unit is a delegated task, so the budget is minutes per task, with time-to-first-evidence tracked. |
-| Cost | A ceiling per task, enforced by the harness. Headline metric: cost per accepted change. |
+| Cost | A ceiling per task, enforced by the harness. Headline metric: cost per production-qualified change. |
 | Failure handling | Every run ends in one of: accepted, needs review, blocked, budget exhausted. Each leaves a record. Rollback is deleting the worktree. |
-| Redlines | Proposed in `DESIGN.md` for Pedro to set. Candidates: no write outside the sandbox; no merge without a human; no destructive command without approval; no secrets in context; no run without a record; a dated kill criterion for the business. |
+| Redlines | Proposed in `DESIGN.md` for Pedro to set. Candidates: no write outside the sandbox; no merge without a human; no destructive command without approval; no secrets in context; no run without a record; a dated kill criterion for the business; the agent that writes a change cannot approve it. |
 
 ## 9. Risks to this plan
 
@@ -277,6 +414,10 @@ IDE plugin, any UI beyond the CLI, cloud or background agents, multi-agent orche
 | Small, self-authored task set | Stated as a limitation everywhere results appear. |
 | The mechanism is cheap to copy; a harness vendor can add it natively through its own hooks | The proposal claims measurement, verifier correctness and neutrality, not the mechanism. If H4 does not show a clear gap over prompts and a model judge, the answer is Wait. |
 | Contracts for ordinary changes may be too costly to write | Named as the largest open assumption; first question for a pilot. |
+| The check's value shrinks as models improve | Aim the gate at work beyond what the current model does reliably, apply it by risk, and treat measurement as recurring. If the prototype shows no gap on the current frontier model, the answer is Wait. |
+| The vendor ships contract plus evaluator natively | Our claim rests on independence, a deterministic verdict and a measured error rate, none of which a vendor's own evaluator provides. If buyers do not value those three, there is no product. |
+| A plug-in depends on extension points the vendor controls | Keep CI as an attachment point that needs no vendor hook. |
+| A funded review vendor joins its existing parts into a contract-then-evidence flow within a year | Named in the proposal as the most likely way the opportunity closes. Our answer has to be a measured difference between a deterministic verdict and a model reviewer's, or the recommendation is Wait. |
 | One day is not enough for all nine phases | Stretch slice dropped first, then the artifact and deck reduced to a single diagram. The evidence ledger and the results are not cut. |
 | Research figures that fail re-verification | Dropped, not softened. |
 | Eval spend overruns | Hard cap from D5, enforced in the eval runner. |
@@ -293,3 +434,7 @@ The issue register lives in `docs/ROADMAP.md` §5. It is the only copy.
 - Local git repository initialised with the brief and this plan; pushed to the private repo `pedraumcosta/assistant`.
 - Harness paper (arXiv 2609.00006v1) read in full; findings in §1.1.
 - Four linked articles re-read in full; findings in §3.4, prototype arms and hypotheses revised in §7.1.
+- Pedro's Notion notes on nine further reads checked against the sources; six read in full; findings in §3.6.
+- Two papers on verification economics and graduated oversight read in full; findings in §3.7.
+- Pedro's web research notes checked in raw source pages; ablation paper read in full; review and verification segment researched; findings in §3.8.
+- Pedro's own analysis of the harness paper checked against the paper; findings in §3.9; decision D3 refined.

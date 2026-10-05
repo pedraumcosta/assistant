@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| Status | **Draft for Pedro's review.** Records only what has happened and what has been decided. |
+| Status | Working document. Records only what has happened and what has been decided. |
 | Purpose | Dated log of the work, and the decision record (ADR) for the project |
 | Reads with | `docs/PLAN.md` and `docs/ROADMAP.md`, which take precedence if they disagree with this file |
 
@@ -39,6 +39,12 @@ Two kinds of entry:
 - Plan revised: §3.4 rewritten from the full reads; prototype arms and hypotheses changed in §7.1.
 - Research recorded in `docs/research/` (13 files), including the evidence ledger. Commit `95e0f83`.
 - Roadmap and journal drafted for review. Pedro stated that the thesis details are not yet chosen and will be discussed further.
+- Issue register moved to the roadmap as its only copy, at Pedro's decision. Commits `208185e` and `6aedc7f`.
+- Second research round. Pedro supplied his notes on nine further reads from his Notion database and asked for them to be read in full, recorded, and reflected in the plan, roadmap and journal. Six sources were located and read in full; Anthropic's harness design post was read by the main session from the primary source. Records added under `docs/research/`; plan §3.6 and §7.1 updated; open question T10 added to the roadmap.
+- Two papers read in full at Pedro's request (arXiv 2609.04681 and 2606.22484). The first publishes the framing and metrics we had reached independently; the second publishes a risk-tiering model. Records added; plan §3.7 written; roadmap inputs updated. Pedro asked for no commit yet, pending a further round of external material.
+- Third research round. Pedro supplied his web research notes of 2026-10-01 and approved four actions: read the cited ablation paper, research the review and verification segment, resolve six conflicts with our records, and record the notes with a claim-by-claim check. Five sub-agents did this from raw source pages. Six records added; plan §3.8 written; roadmap inputs updated. No commit, at Pedro's instruction.
+- Pedro supplied his own analysis of the harness paper, dated 2026-10-02. Checked claim by claim against the paper's HTML text and PDF. He approved four actions: record it, base the agent under test on the paper's published scaffold, add Omnigent-as-channel and outcome-fed recalibration as inputs, and check two unverified items in the PDF. Both items were confirmed.
+- Plan §1 rewritten to state the current position and how it moved. All of the day's research rounds committed together at Pedro's confirmation.
 
 **Deviations and corrections**
 - **First-pass reading was truncated without warning.** The summarising fetch cut three long articles part-way and reported one as near-complete. Found when Pedro challenged the coverage. Fix: download the full text, check it reaches the final section, read end to end.
@@ -46,6 +52,16 @@ Two kinds of entry:
 - **Two plan claims were stronger than the evidence** and were corrected: the statement that three vendors share one subscription ladder, and an unverified press quotation on margins.
 - **One statement about the paper was too absolute.** "No system checks the outcome" became: two of eleven have an outer verification loop (a model judge; a verify-on-stop guard), none is described as a deterministic post-run gate with an evidence record.
 - **The paper's affiliation was first reported as unstated**, because of a faulty text search. The full read found it (Wavestone AI Lab).
+- **Pedro's Notion notes needed seven corrections** when checked against the sources (`docs/research/notion-notes-2026-10-01.md`). Two were material: a comparison between a model and job candidates was reversed, and a result described as "16 working features" was a 16-feature specification.
+- **One article from those notes could not be found** (ASSIST-012), and three further leads turned up that have not been read (ASSIST-013).
+- **We had been inventing terms that already exist.** "Accepted change" and "cost per accepted change" are published as Production-Qualified Change and PQC per dollar. The plan now uses the published terms with attribution.
+- **An earlier journal statement no longer holds as written.** ADR-001 said no source shows that verification gates improve outcomes. Anthropic's harness design post gives one such example, a single run reported by the vendor.
+- **Of six conflicts between Pedro's web notes and our records, our records were right on three, the notes on one, and neither fully on two.** Our stale item was Cognition's valuation.
+- **Two of our own statements were too broad** and were reworded: that no harness uses embeddings over code (true of the eleven studied, not of closed IDE products), and that the inner loop "is a commodity" (a basic loop is cheap to write; harness design still changes results).
+- **We had credited one paper with a term it did not coin.** "Verification tax" appears in a DORA article six months before the paper that formalises it.
+- **The market check changed the picture more than the literature did.** A competitor valued at 1.5 billion USD is positioning as "the control layer" for agent-written changes.
+- **One quotation in Pedro's paper analysis is not in the paper** (that Omnigent "does not evaluate output correctness"). The paper is silent on the point.
+- **Decision D3 was refined, not reversed.** We still run our own minimal loop, but take it from the paper's published listing.
 - **A push failed** for lack of git credentials and was retried through the GitHub CLI's login (ASSIST-011).
 
 ---
@@ -56,16 +72,17 @@ Two kinds of entry:
 
 | | |
 |---|---|
-| Status | **Direction agreed 2026-10-05. Details open** (`ROADMAP.md` §2, questions T1 to T9). Not final. |
+| Status | **Direction agreed 2026-10-05. Details open** (`ROADMAP.md` §2, questions T1 to T10). Not final. |
 | Plan reference | D1, `PLAN.md` §1 and §1.1 |
 
 **Decision.** We do not propose building a coding assistant, an agent harness, or a meta-harness. The candidate is an evidence layer (change contract, deterministic verification after the agent stops, evidence bundle, risk routing) delivered as a plug-in to existing harnesses and entered through per-repo agent evaluation. "Wait, with a review date" stays a possible conclusion.
 
 **Rationale.**
 - Generation is owned and priced by the model vendors, and features copy between them quickly (`docs/research/market-landscape.md`).
-- The inner loop is a commodity and the outer policy layer is being commoditised (`docs/research/harness-paper.md`).
+- A basic agent loop is cheap to reproduce and the outer policy layer is being commoditised (`docs/research/harness-paper.md`). Harness design still changes results by model, task and budget (`docs/research/paper-harness-ablation.md`), which is a reason not to compete on it.
 - The evidence that the problem sits after generation is the best-triangulated we have (`docs/research/EVIDENCE.md`, rows E-01 to E-09).
 - None of the sources describes a deterministic post-run gate with an evidence record and a measured false-pass rate.
+- The model vendor itself reports that agents grade their own work too generously and that a same-family evaluator remains lenient (E-34, E-35).
 
 **Alternatives rejected.**
 - An outer harness with policy, sandbox and budgets: already exists as open source.
@@ -75,7 +92,12 @@ Two kinds of entry:
 
 **Known weaknesses.**
 - The verification mechanism is cheap to copy; the paper puts the half-life of a distinctive feature at weeks.
-- No source shows that verification gates improve outcomes. That evidence would have to come from our own prototype.
+- Outcome evidence is one vendor anecdote: a single pair of runs in which a contract plus a separate evaluator produced a working build where a solo agent did not, at more than twenty times the cost (E-37). Evidence for a deterministic, independent gate would have to come from our own prototype.
+- Contract plus separate evaluator is the model vendor's published design, so the idea itself is not ours (added 2026-10-05).
+- The framing, the metrics and the risk tiering are also published (two 2026 papers, neither with an implementation or measurements). What remains unclaimed is a protected contract, a verifier with a measured false-pass rate, and measurements. The proposal's contribution would be evidence, not concept (added 2026-10-05).
+- The adjacent market is funded and moving toward this position: CodeRabbit sells risk routing and merge blocking on model judgment and has the parts to add a contract-then-evidence flow (E-49). Still open, on vendors' own documentation: a protected pre-run contract, a deterministic verdict that runs the customer's checks, a measured false-pass rate, and an outcome record (E-50, E-51, E-53). The case for Wait is stronger than at any earlier point (added 2026-10-05).
+- A frontier lab argues against blocking gates where corrections are cheap (E-57). The candidate buyer narrows to teams where a wrong change is expensive (added 2026-10-05).
+- The vendor found its evaluator "unnecessary overhead" on a newer model for tasks inside the model's reliable range (E-36). The check's value moves with each release (added 2026-10-05; roadmap question T10).
 - With no inherited moat, what is defensible is unsettled (T3).
 
 ### ADR-002 — Assume no inherited advantage
@@ -91,18 +113,26 @@ Two kinds of entry:
 
 **Alternative rejected.** Assuming a model or a regulated customer base, which would have strengthened the sovereign and brownfield options.
 
-### ADR-003 — The prototype uses its own minimal agent loop
+### ADR-003 — The agent under test is the harness paper's published scaffold
 
 | | |
 |---|---|
-| Status | Decided 2026-10-03 |
+| Status | Decided 2026-10-03; refined 2026-10-05 |
 | Plan reference | D3 |
 
-**Decision.** Write a minimal single agent loop ourselves, behind a provider interface.
+**Decision.** The prototype's agent is a minimal single loop behind a provider interface, taken from the 90-line scaffold in arXiv 2609.00006v1 (Listing 3, CC BY 4.0, with attribution) and specialised only where needed. Every departure from the listing is recorded in this journal when it is made.
 
-**Rationale.** It shows every design topic in the brief in readable code, and it makes the strategic point that the loop is small. The paper's first recommendation is "Start with a linear while loop" and it includes a 90-line scaffold (E-31). Under ADR-001 the loop is the agent under test, not the product.
+**Rationale.**
+- It shows every design topic in the brief in readable code, and makes the strategic point that the loop is small. The paper's first recommendation is "Start with a linear while loop" (E-31).
+- The listing is published to be reused: "it is a scaffold to be copied and specialized" (E-59).
+- A published, citable agent removes the objection that we tuned the agent to suit our gate.
+- Under ADR-001 the loop is the agent under test, not the product.
 
-**Alternative rejected.** Wrapping an agent SDK or a hosted agent service. One of the articles argues for exactly that (`docs/research/articles/claude-managed-agents.md`).
+**Alternatives rejected.**
+- Writing our own loop from nothing (the decision of 2026-10-03).
+- Wrapping an agent SDK or a hosted agent service. One of the articles argues for exactly that (`docs/research/articles/claude-managed-agents.md`).
+
+**Known departures to expect.** Provider adapters for Anthropic and OpenAI; an event log; running inside an isolated copy of the repository, because the listing has no sandbox and runs shell commands directly.
 
 **Beyond this exercise.** A real product would attach to vendor harnesses and would not ship its own loop.
 
@@ -194,3 +224,18 @@ Two kinds of entry:
 **Rationale.** The brief's uncertainty policy, and the audience.
 
 **Applied so far.** Two plan claims corrected on 2026-10-05; five ledger rows remain unverified (ASSIST-004).
+
+### ADR-011 — Use the published vocabulary
+
+| | |
+|---|---|
+| Status | Adopted 2026-10-05 |
+| Plan reference | `PLAN.md` §3.7 |
+
+**Decision.** The project uses the published terms, with attribution, in place of its own: Production-Qualified Change for what we had called an accepted change, PQC per dollar for cost per accepted change, and Verification Tax for the cost of assurance relative to generation. Prototype results are reported in the published metric set, with the verifier's false-pass rate added as ours.
+
+**Rationale.** The terms are defined in arXiv 2609.04681 (E-40 to E-42). Citing them is more credible to executives than inventing equivalents, and makes our results comparable with later work.
+
+**Alternative rejected.** Keeping our own terms, which would hide that the framing is already public.
+
+**Note.** "Verification tax" as a phrase predates that paper; it appears in a DORA article of 2026-03-10. The paper supplies the formula.
