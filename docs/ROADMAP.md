@@ -76,7 +76,7 @@ These are the remaining phases from `PLAN.md` §6. Their content depends on §2;
 
 ## 5. Issue register
 
-This is the live copy. `PLAN.md` §10 holds the same list as of 2026-10-05 and will be replaced by a pointer here once this roadmap is approved.
+This is the only copy of the register (decided 2026-10-05). `PLAN.md` §10 points here.
 
 | ID | Issue | Status |
 |---|---|---|

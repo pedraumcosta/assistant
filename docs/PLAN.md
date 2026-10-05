@@ -175,7 +175,7 @@ Pedro's notes have no market sizing, competitor pricing, unit economics, latency
 
 **Numbers.** No number is invented or estimated. Every figure in any document traces to a row in `EVIDENCE.md` or to a file under `prototype/runs/`. Targets and thresholds are decisions, not data; they are labelled "proposed" until Pedro sets them.
 
-**Issues.** Registered as `ASSIST-001` … `ASSIST-999` in a table in `ROADMAP.md`, referenced by ID in commits and journal entries.
+**Issues.** Registered as `ASSIST-001` … `ASSIST-999` in `ROADMAP.md` §5, the only copy, and referenced by ID in commits and journal entries.
 
 **Commits.** One commit per meaningful step in §6, made after the step's exit check passes **and after Pedro confirms** (rule set 2026-10-05). `docs/scratchpad.md` and `.env` are never committed. Conventional prefix (`docs:`, `feat:`, `test:`, `chore:`), a body that says what changed and why, and the ASSIST IDs touched.
 
@@ -283,18 +283,7 @@ IDE plugin, any UI beyond the CLI, cloud or background agents, multi-agent orche
 
 ## 10. Known issues
 
-| ID | Issue | Status |
-|---|---|---|
-| ASSIST-001 | "Others read, only Pedro writes" is not available on a personal private repo as far as I know; to be confirmed against GitHub's documentation at setup | Accepted by D6: personal private repo; any collaborator added will have write access |
-| ASSIST-002 | Git identity mismatch: `pcosta@gmail.com` (git config) vs `pcosta@clone.me` (session account) | Closed: commits use `pcosta@gmail.com` |
-| ASSIST-003 | Parts of the Practices notes are Dropbox online-only and read as 0 bytes, including `Mngmnt/Strategy/`, `Mngmnt/Product Mngmnt/` and eight `Coding/` shelves | Open, not blocking |
-| ASSIST-004 | Many research figures are tagged [S] and need primary-source verification before CXO use | Open, handled in P2 |
-| ASSIST-005 | Article coverage is uneven: four articles were re-read in full on 2026-10-05; three (Claude Code source leak, architect study guide, managed agents) were read only through a summarising fetch. No article figure is usable as evidence | Open, not blocking |
-| ASSIST-006 | No model API key or spend ceiling confirmed for the prototype | Closed: cap 50 USD (D5); Anthropic and OpenAI keys are in a git-ignored `.env` |
-| ASSIST-007 | Some of the richest source material is interview preparation for another company | Closed by D9 |
-| ASSIST-008 | One link in the brief was malformed; corrected in `docs/init-prompt.md` to the senior-staff-engineer article | Closed |
-| ASSIST-009 | No cost inputs (team size, loaded cost, budget envelope) for the CFO message; without them the ask is stated in people and weeks, not money | Closed: no inputs exist. The CFO message states the ask in people and weeks, with every figure labelled as an assumption and listed in an assumptions table |
-| ASSIST-010 | Omnigent (Databricks, open source, June 2026) already provides cross-harness policy, sandboxing, budgets and shared sessions, per the harness paper. The original "outer harness" framing overlaps with it | Closed by D1: we do not build the policy / sandbox / budget layer |
+The issue register lives in `docs/ROADMAP.md` §5. It is the only copy.
 
 ## 11. Done so far
 
