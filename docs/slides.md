@@ -2,8 +2,9 @@
 # ASSIST — slides for the executive session (D8).
 # Three parts: the recommendation (10:00 sharp), the technical walkthrough (~14 min),
 # backup for the discussion and for a changing business scenario.
-# Every number cites EVIDENCE.md ([P]/[L]); run-derived numbers are marked ⏳ pending
-# and land from prototype/runs/ when the prototype session completes (see RESULTS.md).
+# Every number cites EVIDENCE.md ([P]/[L]) or docs/RESULTS.md (generated from
+# prototype/runs/). The prototype stopped on the time budget (ADR-022): the central
+# comparison was not run, and the deck says so where it matters.
 # Presenter-note time budgets: part 1 sums to 10:00.
 theme: default
 title: ASSIST Recommendation
@@ -21,8 +22,8 @@ fonts:
 
 Executive session · 10 minutes, then the technical walkthrough
 
-Every number on these slides cites `docs/research/EVIDENCE.md`, verified at its raw source.
-Prototype results marked ⏳ land from `prototype/runs/`.
+Every number on these slides cites `docs/research/EVIDENCE.md`, verified at its raw
+source, or `docs/RESULTS.md`, generated from `prototype/runs/`.
 
 <!-- 0:00–0:30. One breath: leadership's question, and that the answer comes with
      measurements and fixed exits, not opinions. Advance. -->
@@ -38,8 +39,10 @@ We probed the one part nobody sells — a verdict on agent-written changes built
 **evidence-driven development**: the team defines "done" as executable checks before the work
 starts, and every change is accepted on that evidence, whoever or whatever wrote it.
 
-**The decision this session asks for is staged:** a one-day prototype (⏳ finishing now),
-a six-week measurement pilot, a build only past exits fixed in advance. Each stage can end it.
+**The decision this session asks for is staged:** a one-day prototype (built; stopped on
+the time budget with its central comparison unrun — the scoreboard says exactly what is
+known), a cheap completion, a six-week measurement pilot, a build only past exits fixed
+in advance. Each stage can end it.
 
 <!-- 0:30–1:00. The recommendation is the probe, not a product bet. The branch line
      (pilot / wait with a date / budgeted re-run) is read off the scoreboard on slide 9
@@ -113,61 +116,60 @@ It trades **speed to merge** for a verdict **the author cannot influence**. Fail
 
 ---
 
-# What one day measures
+# What one day was built to measure — and what it ran
 
-Same tasks · three arms — **bare** scaffold (the published 90-line agent, E-59) /
-**prompt-disciplined** / **gated** — each task run repeatedly in an isolated copy.
+**Designed:** 11 tasks × 3 arms (bare 90-line scaffold / prompt-disciplined / gated),
+three verdict sources on the same changes, every run in its own container (T21).
+**Run, before the time budget stopped it** (`RESULTS.md`) — spend **0.07 of 50 USD**:
 
-Three verdict sources judge the **same finished changes**, against hidden acceptance
-checks neither the agent nor the gate ever sees:
+| What ran | Result |
+|---|---|
+| The measurement, proven on a fake agent first | 72 dry runs, every one as expected; simulated provider failures read `error`, never a pass |
+| The gate on hand-made **wrong** changes | **19 of 21 rejected**, each at the expected step; the E-75 reporter patch stopped at integrity, before any test ran |
+| The gate on hand-made **correct** changes | **9 of 9 accepted**; the 6 probes for wrongly failed work were not judged — run interrupted |
+| A model (claude-sonnet-5-5), 2 runs, 1 task | Correct in both arms, claimed so truthfully; the gate passed it first attempt |
+| **Not run** | The 165-run arm comparison (H2–H4, H6), the cross-vendor evaluator, the evaluation path |
 
-| | Bare | Prompt | Gated |
-|---|---|---|---|
-| Unsafe actions (trap tasks) | ⏳ | ⏳ | ⏳ |
-| pass^k against hidden checks | ⏳ | ⏳ | ⏳ |
-| Cost per production-qualified change (E-40) | ⏳ | ⏳ | ⏳ |
+All 11 wrong reference changes **pass the fixture's own test suite** — the problem, in one line.
 
-Spend capped at 50 USD, enforced by the runner. The task set is small and ours —
-**an indication, not a benchmark**.
-
-<!-- 6:30–7:15. pass^k, not pass@1: an agent above 60% on average can fall below 25%
-     when it must succeed eight times running (E-79). Speak the limitation sentence. -->
-
----
-
-# Whose "pass" can you trust?
-
-The product's claim, and the number that can kill it:
-
-| Verdict source | False-pass rate | On |
-|---|---|---|
-| The agent's own claim | ⏳ | all finished changes |
-| Evaluator agent, other vendor | ⏳ | a sample of runs |
-| **The gate** | **⏳ (with range)** | all finished changes |
-
-Plus, fed straight to the gate: **planted flaws** (changes built to be wrong in known
-ways — every one must be rejected) and **known-good changes** (to measure good work
-wrongly blocked). Both error rates are reported, always together.
-
-<!-- 7:15–8:00. H4 is the slide to slow down on. When the numbers land: always say the
-     denominator and the range — on a sample this small, a rate without its range
-     overclaims. -->
+<!-- 6:30–7:15. The honesty is the slide: the instrument is proven; the central
+     comparison is still open. Limitation to speak: every judged change was written by
+     the gate's own author, expected outcomes recorded first. -->
 
 ---
 
-# The scoreboard — exits fixed before the results exist
+# Whose "pass" can you trust? — still open, and here is what we know
 
-| # | Kill criterion (set 2026-10-05, before any run) | Verdict |
+| Verdict source | What we have |
+|---|---|
+| The agent's own claim | **Not measured.** In the two model runs the model was right and said so truthfully — the main risk to the comparison: on tasks this small there may be no gap for a gate to close |
+| Evaluator agent, other vendor | **Not run** (the slice was never reached) |
+| **The gate** | **False pass 2 of 21** wrong hand-made changes · **false fail 0 of 9** correct ones judged |
+
+**Both false passes are one weakness seen twice:** behaviour no check in the contract
+covers — one planted precisely to find that limit, one found by accident. **The ground
+truth shared the blind spot.** The gate is only as good as the checks: the design's
+first-listed risk, now with a measured face.
+
+<!-- 7:15–8:00. Slow down here. Finding 5 in RESULTS.md: the contract's quality is the
+     product's quality — the guided first process and the counterexample search are the
+     answer, and neither is built. Denominators always spoken: 21 and 9, author-written. -->
+
+---
+
+# The scoreboard — exits fixed before the results existed
+
+| # | Kill criterion (T7, T20) | Verdict (`RESULTS.md` §3) |
 |---|---|---|
-| K1 | The gate's false-pass rate is lower than the agent's claim **and** the evaluator's | ⏳ |
-| K2 | **Every** planted flaw rejected | ⏳ |
-| K3 | **No** unsafe action runs in the gated arm | ⏳ |
+| K1 | The gate's false-pass rate is lower than the agent's claim **and** the evaluator's | **Not measured** — the comparison runs were not made |
+| K2 | **Every** planted flaw rejected | **Not met as worded: 9 of 10** — the one accepted was planted to find the limit of uncovered behaviour, and the ground truth shares it |
+| K3 | The gate accepts **no change containing an unsafe action** (reworded before any run, T20) | **Met on hand-made changes: 0 of 5** (0 of 15 in the dry run) — not measured on a model |
 
-All three cleared → fund the pilot. Any failed → **wait, with a review date**.
-Underpowered sample → a budgeted re-run, or wait.
+**Read strictly, the stage-1 answer today is Wait.** Read with its cause: the instrument
+works, the deciding comparison was never run — and it is cheap to run.
 
-<!-- 8:00–8:30. This table decides the talk, mechanically. The verdicts are read from
-     RESULTS.md §5 and nowhere else; read them, do not editorialise. -->
+<!-- 8:00–8:30. Read the verdicts; do not soften K2. The strict/with-cause double
+     reading is RESULTS.md §3's own wording — both are said out loud. -->
 
 ---
 
@@ -193,14 +195,17 @@ is expensive" (E-57); teams with few tests.
 
 | Stage | Cost | Exit, fixed in advance | Status |
 |---|---|---|---|
-| 1 · Prototype | one day · ≤ 50 USD | the scoreboard | ⏳ finishing |
-| 2 · Measurement pilot | 6 weeks · 2 engineers · product lead at half time · **assumption**, rates from finance | a design partner says the report changed a decision they were about to make | requested |
+| 1 · Prototype | one day · **0.07 of 50 USD spent** | the scoreboard | **stopped on the time budget; comparison unrun** |
+| 1b · Completion | finish the interrupted run (free) · the 165-run comparison (~6.4 USD by one-run arithmetic, not a forecast) · the cross-vendor evaluator · **widen the ground truth first** (ASSIST-021) | the same scoreboard, now measurable | **requested** |
+| 2 · Measurement pilot | 6 weeks · 2 engineers · product lead at half time · **assumption**, rates from finance | a partner says the report changed a decision they were about to make | gated on 1b |
 | 3 · Build | scoped only if stage 2 clears — estimating it now would be an invented number | set before it starts | not reached |
 
 The pilot is also the entry product: we run the partner's own tasks and report the rate
 and cost of production-qualified changes on their repository.
 
-<!-- 9:00–9:30. The stages are the risk management. Stage 2 doubles as the first sale. -->
+<!-- 9:00–9:30. The ask changed shape with the results: before funding six weeks, fund
+     the hours and dollars that finish stage 1 (RESULTS.md §8 lists each piece and what
+     it needs). The stages are the risk management; stage 2 doubles as the first sale. -->
 
 ---
 
@@ -210,11 +215,11 @@ and cost of production-qualified changes on their repository.
 
 1. **We agree with the premise.** Microsoft, OpenAI and Anthropic own generation; we buy their products at their subsidised tiers (E-12, E-13) and adopt the open-source control layer (E-32). Margins for anyone reselling generation are "neutral or negative" (E-17).
 2. **We probe the one thing their position prevents them from selling:** an independent, executable, measured verdict on their agents' output (E-34, E-50, E-53). No vendor publishes an error rate for its own reviewer; no audit log records outcomes.
-3. **The ask is priced so belief is unnecessary.** One day, then six weeks of 2.5 people (assumption — rates from finance), then a build only past exits fixed before the results existed. Every stage can end it; "wait, with a review date" is a real outcome.
-4. **The unit is yours:** cost per production-qualified change, checking included (E-40) — always reported with the verdict's own error rates. No vanity metrics: no lines of AI code, no acceptance rates, no seats.
-5. **What we do not know, said first:** market size, willingness to pay, and whether the added cost nets out. The stages are designed to answer each before it costs much.
+3. **The ask is priced so belief is unnecessary.** One day spent 0.07 USD and built a working gate and measurement; it also found that the deciding comparison was not reachable inside the day. Completing it costs hours and about ten dollars — then six weeks of 2.5 people (assumption — rates from finance), then a build only past exits fixed before the results existed. Every stage can end it; "wait, with a review date" is a real outcome, and it is today's strict reading.
+4. **The unit is yours:** cost per production-qualified change, checking included (E-40) — always reported with the verdict's own error rates. The gate's first measured rates: 2 of 21 wrong changes passed, 0 of 9 good ones blocked, on author-written changes. No vanity metrics.
+5. **What we do not know, said first:** whether the gate beats the agent's claim and a model reviewer (unmeasured), market size, willingness to pay, and whether the added cost nets out. The one day also taught us where the risk lives: the coverage of the checks, not the mechanism — which is 350 lines and confirms our own claim that the mechanism is not the moat.
 
-**Decision requested:** read from the scoreboard — fund stage 2, or set the review date.
+**Decision requested:** fund the completion of stage 1 and read the scoreboard then — or set the review date now.
 
 <!-- 9:30–10:00. The last slide of the recommendation, left on screen for the
      discussion. It is the one-page CFO message condensed; the full page with the
@@ -320,22 +325,24 @@ same record, not two.
 
 ---
 
-# The verdict: a decision ladder, cheap and decisive first
+# The verdict: a decision ladder, as built and exercised
 
-For conventional code — first match wins:
+For conventional code — first match wins (`prototype/runner`, 21 gate tests hold the order):
 
-1. Verdict process failed → **error**, re-queued. A crashed check never reads as clean
-2. Contract or protected path altered → **failed**, integrity violation
-3. Budget or time exceeded → **failed**
-4. Static screens — scope, dependency exists, no secrets → **failed**
-5. Build fails → **failed**
-6. A required test fails, visible or hidden → **failed**
-7. The author's new tests **pass against the original code** → **failed** — tests that cannot tell old from new prove nothing (E-76)
-8. Otherwise → **passed**
+1. Verdict process failed → **error**, re-queued. A crashed check never reads as clean — held by 8 broken-check tests
+2. Contract, protected path, test or check altered → **failed**, integrity. Decided in **0.0 s**, no code run: this rung stopped the E-75 reporter patch before any test executed
+3. Budget exceeded → **failed**
+4. Build fails → **failed**
+5. A required test fails — the repository's, the author's, or the **hidden** ones → **failed**
+6. Out of scope → **failed**
+7. The author's new tests **pass against the original code** → **failed** — tests that cannot tell old from new prove nothing (E-76); caught `p07-vacuous-tests`
+8. Missing dependency, or a secret in the change → **failed**
+9. Otherwise → **passed**
 
-<!-- 1:30. Two things to say: the ladder fails closed at every rung, and the static
-     screens run before any of the change's code executes — the review moved them up
-     from the drafted order. Rung 7 is the favourite: it catches test theatre. -->
+<!-- 1:30. Two things to say: the ladder fails closed at every rung, and integrity is
+     decided before any code runs — 6 of the 19 hand-made rejections took 0.0 s. The
+     self-review proposes moving scope/dependency/secrets (also static) before the
+     tests too; noted, not yet done. Rung 7 catches test theatre. -->
 
 ---
 
@@ -393,35 +400,38 @@ is the product's subscription logic, not an afterthought.
 
 ---
 
-# What we already know is weak
+# What we already know is weak — and what the build confirmed
 
-Reviewed against our own design before building (`docs/DESIGN-REVIEW.md`):
+Reviewed against our own design before building (`docs/DESIGN-REVIEW.md`), then tested by it:
 
-1. **The integrity boundary needs real isolation.** Running the customer's tests executes the author's code — where hidden checks are mounted (the E-75 scenario). Production design: each check in a throwaway sandbox; the verdict assembled outside it; test infrastructure protected by default
-2. **The enforcement anchor must be the host's required status check** — CI config is author-writable; a protected branch writable only by a role no agent assumes
-3. **Flaky tests** threaten idempotency, replay and the false-fail rate — retry policy, quarantine state, flakiness as its own metric
-4. In the prototype: the gate scores **every arm's output offline** (no selection bias), and unsafe actions are **recorded and refused**, never executed on the host
+1. **The integrity boundary needs real isolation.** Running the customer's tests executes the author's code — the E-75 scenario. The prototype's answer: every run, verdict and ground-truth check in its own container, no network, no key (T21); the gate's source provably reads neither the ground truth nor the agent's account (held by tests)
+2. **The enforcement anchor must be the host's required status check** — CI config is author-writable; a protected branch writable only by a role no agent assumes. Not exercised by the prototype (the protected branch was simulated, T19)
+3. **Flaky tests** threaten idempotency, replay and the false-fail rate — retry policy, quarantine, flakiness as a metric. Its cousin showed up in the build: **Docker's file sharing served stale content twice** (ASSIST-020); the gate now confirms by hash, inside the container, that it judges the change it was asked to judge
+4. **Confirmed by measurement: the checks' coverage carries the risk.** Both false passes were behaviour no check covered — and the ground truth shared the blind spot. The guided first process and the counterexample search are the named answers; neither is built
 
-<!-- 1:30. Volunteering the weaknesses is the walkthrough's strongest slide. Each has
-     a named fix and a stage where it lands; none blocks the probe. -->
+<!-- 1:30. Volunteering the weaknesses is the walkthrough's strongest slide — more so
+     now that one of them has a measured face. A verifier that judges the wrong files
+     is worse than none; the stale-file fault would not have been found without tests. -->
 
 ---
 
-# The prototype, kept deliberately small
+# The prototype: what was built, in the order the design set
 
-**One day. One question:** is an executable verdict wrong less often than the agent's
-claim and a model reviewer's?
+**One day. One question** — is an executable verdict wrong less often than the agent's
+claim and a model reviewer's? **The question is still open; the instrument that will
+answer it exists and is tested.**
 
-- **Agent under test:** the published 90-line scaffold (arXiv 2609.00006, CC BY 4.0, E-59) — a citable agent nobody can claim we tuned to suit our gate
-- **Built first:** the measurement skeleton with a fake agent that costs nothing — proves a crashed check reads as error, before any money is spent
-- **Simulated, by decision (T19):** the guided first process (contracts by hand), the protected branch (a directory outside the agent's copy), hooks
-- **Three arms × repeated runs × 3 verdict sources**, hidden ground truth, planted flaws, known-good changes, 50 USD cap enforced by the runner
+- **Built, in order:** the measurement skeleton on a fake agent (slice 1) · the published 82-line scaffold on a real model, in containers (slice 2, T21) · the gate — 350 lines, 84 tests across gate, unsafe-action rules, broken checks, containers, spend cap (slice 3) · hand-made changes through the gate (slice 4, interrupted)
+- **Not reached:** the 165-run arm comparison, the cross-vendor evaluator, the evaluation path. `RESULTS.md` §8 prices each: the first is free, the comparison ≈ 6.4 USD by one-run arithmetic
+- **Why this order:** nothing is measured on an unproven instrument (ADR-022). The alternative — run the model comparison first — would have compared the gate with the agent's claim before knowing the gate's own error on known cases
+- **Simulated, by decision (T19):** the guided first process, the protected branch, hooks
 
 Beyond this exercise: no loop of our own ships — the product attaches to the team's
 pipeline and the vendors' harnesses.
 
-<!-- 1:30. "Kept very simple" was a decision, not a shortcut — cite T19. The fake-agent
-     skeleton first is the discipline point. -->
+<!-- 1:30. The order is the discipline point: measurement first used the day, and that
+     was a choice, defended in ADR-022. The mechanism came out small — 350 lines —
+     which is the proposal's own "cheap to copy" claim, now self-demonstrated. -->
 
 ---
 

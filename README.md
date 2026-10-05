@@ -38,7 +38,7 @@ It is the working record and the deliverable at once. A reader should be able to
 | `docs/templates/` | The fill-in templates that make the final phase mechanical: results, proposal sections 3–4, the CFO message with its challenge-and-answer appendix, and both presentation forms |
 | `docs/presentation.html` | The presentation page (single-page, 10-minute spoken walkthrough, leave-behind sections); published as the session artifact once results land |
 | `docs/slides.md` | The Slidev deck: the 10-minute recommendation ending on the executive recommendation to the CFO, a ~13-minute technical walkthrough, and discussion backup |
-| `prototype/` | The one-day prototype (in progress in a parallel session): the agent under test, the gate, the eval runner, and `runs/` with the raw results |
+| `prototype/` | The one-day prototype: the agent under test, the gate (350 lines, 84 tests), the runners, and `runs/` with the raw records. Built measurement-first and stopped on the time budget with the central comparison unrun (ADR-022) |
 | `docs/RESULTS.md` | What the prototype measured — generated from the run files, never typed in |
 | `docs/BUILD_LOG.md` | (Final phase) how Claude Code was used to produce this repository |
 
@@ -99,8 +99,9 @@ reviewer's?**
   claim we tuned to suit our gate.
 - **Three arms** run the same tasks: the bare scaffold, the scaffold under prompt
   discipline ("verify before claiming completion"), and the scaffold inside the contract
-  and gate. **Three verdict sources** are scored on the same finished changes: the agent's
-  own claim, an evaluator agent from a different vendor, and the gate.
+  and gate — every run in its own container. **Three verdict sources** are scored on the
+  same finished changes: the agent's own claim, an evaluator agent from a different
+  vendor, and the gate.
 - **Ground truth is hidden**: acceptance checks neither the agent nor the gate ever sees.
   **Planted flaws** (changes built to be wrong in known ways) and **known-good changes**
   measure the gate's two error rates — wrongly passed and wrongly failed — because a gate
@@ -111,12 +112,18 @@ reviewer's?**
 
 The link to the proposal is mechanical. The prototype's results fill `docs/RESULTS.md`,
 whose kill-criteria scoreboard (false-pass rate below both comparators; every planted flaw
-rejected; no unsafe action in the gated arm) selects the recommendation branch in the
-proposal and both presentation forms. If the criteria clear, the ask is a measurement
-pilot; if they fail, the recommendation is to wait, with a review date — and the proposal
-says so in the same breath it would have claimed success. What one day cannot show is
-stated wherever results appear: reviewer time saved, willingness to pay, the cost of
-writing checks for ordinary work, and whether results on today's models hold on the next.
+rejected; the gate accepts no change containing an unsafe action) selects the
+recommendation in the proposal and both presentation forms. **What the day produced:** a
+tested instrument that rejected 19 of 21 wrong hand-made changes (each at the expected
+step, the E-75 reporter patch among them) and blocked none of the 9 correct ones judged,
+for 0.07 USD of the 50 USD cap — and the honest finding that both false passes were
+behaviour no check covered, a blind spot the ground truth shared. **What it could not
+produce** is the comparison it was built to make: the run was stopped on the time budget
+(ADR-022) before the 165-run arm comparison and the cross-vendor evaluator. Read
+strictly, the stage-1 answer is Wait; `RESULTS.md` §8 prices the completion (the first
+step is free). What one day cannot show is stated wherever results appear: reviewer time
+saved, willingness to pay, the cost of writing checks for ordinary work, and whether
+results on today's models hold on the next.
 
 ## Reading order
 
@@ -127,6 +134,7 @@ For the conclusion: `docs/PROPOSAL.md`, then `docs/presentation.html`. For the r
 ## Status
 
 As of 2026-10-05: research complete and verified; thesis decided; proposal sections 1–2,
-design, design review, templates and both presentation forms written; the prototype is
-being implemented in a parallel session. Pending: prototype results into `RESULTS.md`,
-the scoreboard verdicts, proposal sections 3–4 filled, and `BUILD_LOG.md`.
+design, design review, templates and both presentation forms written; the prototype built
+measurement-first and stopped on the time budget with `docs/RESULTS.md` reporting what was
+and was not measured (ADR-022). Pending: the stage-1 completion priced in `RESULTS.md`
+§8, proposal sections 3–4, and `BUILD_LOG.md`.
