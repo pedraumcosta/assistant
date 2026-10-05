@@ -8,7 +8,7 @@
 | Read on | 2026-10-05, from the arXiv HTML full text of v2 |
 | Method | Read end to end by a Claude Code sub-agent, including references and both appendices. |
 | Status | Digest with quotations, not a copy. The paper is a framework proposal with no deployment data; its headline velocity figure is modelled from assumed inputs and is not usable as evidence. |
-| Used for | PLAN §3.7, ROADMAP open questions T1, T6 and T7 |
+| Used for | PLAN §3.7, PLAN §2.1 decisions T1, T6 and T7 |
 
 ## Read record
 

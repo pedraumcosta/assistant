@@ -7,7 +7,7 @@
 | Read on | 2026-10-05, from the arXiv HTML full text |
 | Method | Read end to end by a Claude Code sub-agent and checked against Pedro's notes. |
 | Status | Digest with quotations. Figures marked as sums or subtractions were computed by the reader from the paper's numbers. |
-| Used for | PLAN §3.11; ROADMAP open questions T1 and T11; prototype design |
+| Used for | PLAN §3.11; PLAN §2.1 decisions T1 and T11; prototype design |
 
 ## Read record
 

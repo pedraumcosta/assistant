@@ -6,7 +6,7 @@
 | What this file is | The overview: what a decision model is, what the check confirmed and corrected, and our reading of where it fits. Detail is in `check-decision-model-product.md` and `check-decision-model-risks.md`. |
 | Method | Two Claude Code sub-agents checked the claims on 2026-10-05 in raw source pages; one paper was read in full. The reading in the last two sections is ours. |
 | Status | The product is three weeks old. Independent evidence is thin, and none of it concerns judgments about code. |
-| Used for | PLAN §3.10, ROADMAP open questions T3, T7 and T9 |
+| Used for | PLAN §3.10, PLAN §2.1 decisions T3, T7 and T9 |
 
 ## What it is
 

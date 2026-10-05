@@ -48,6 +48,7 @@ Two kinds of entry:
 - Pedro raised decision models (TypeSafe's Jev) as a possible new element and supplied his addendum of 2026-10-02. Two sub-agents checked it at primary sources. Finding: useful for cost at harness call sites we do not build; a component, never the verdict, in the evidence layer; the valuable link is recalibrating a cheap classifier from the labels our layer produces. Records added; plan §3.10 written; roadmap inputs updated. Pedro decided to treat it as the next enhancement after the first prototype (ADR-012).
 - Pedro raised a second thesis from his own list of candidates: a brownfield / enterprise-legacy specialisation. Its section in his notes and Osmani's article were read by the main session; the two papers behind it were read in full and the legacy-modernisation market researched by sub-agents. Evaluation recorded; plan §3.11 written; roadmap question T11 added (ADR-013).
 - Pedro pointed to six places in his notes on market analysis and agent limits, asking whether they are useful as evidence, and set the citation rule: records cite public sources, not his notes. The claims were traced to their public sources and checked by two sub-agents. Useful as evidence, no change of direction. Records added; plan §3.12 written; two checks added to the prototype's gate; roadmap inputs updated.
+- Thesis discussion held. Pedro accepted the three-stage probe, chose the first thesis over the brownfield specialisation for lack of time to validate the latter, and settled the remaining questions with four changes to the proposals put to him: the buyer is engineering leaders as sponsors in organisations that build software; customer data must be handled with everyone aware and every precaution taken; guiding the user to create the checks is the product's first process, not an open question; adaptation to each and every model is to be emphasised. The CFO's numbers are deferred until the prototype is ready (ADR-014 to ADR-016).
 
 **Deviations and corrections**
 - **First-pass reading was truncated without warning.** The summarising fetch cut three long articles part-way and reported one as near-complete. Found when Pedro challenged the coverage. Fix: download the full text, check it reaches the final section, read end to end.
@@ -80,7 +81,7 @@ Two kinds of entry:
 
 | | |
 |---|---|
-| Status | **Direction agreed 2026-10-05. Details open** (`ROADMAP.md` §2, questions T1 to T11). Not final. |
+| Status | **Decided 2026-10-05.** Direction agreed that morning; details settled in the thesis discussion the same day (ADR-014 to ADR-016). |
 | Plan reference | D1, `PLAN.md` §1 and §1.1 |
 
 **Decision.** We do not propose building a coding assistant, an agent harness, or a meta-harness. The candidate is an evidence layer (change contract, deterministic verification after the agent stops, evidence bundle, risk routing) delivered as a plug-in to existing harnesses and entered through per-repo agent evaluation. "Wait, with a review date" stays a possible conclusion.
@@ -275,7 +276,7 @@ Two kinds of entry:
 
 | | |
 |---|---|
-| Status | Evaluated 2026-10-05. Recommendation recorded; decision pending the thesis discussion. |
+| Status | Evaluated and decided 2026-10-05: not pursued. |
 | Plan reference | `PLAN.md` §3.11; `docs/research/second-thesis-brownfield.md` |
 
 **What was evaluated.** A product specialised for agent work in old codebases, built on four practices from Osmani's article: zoning by blast radius, a durable comprehension memo, characterization tests first, and the harness as institutional memory.
@@ -298,4 +299,74 @@ Two kinds of entry:
 - Brownfield as the main thesis, replacing the first: rejected in the recommendation for the reasons above.
 - Ignoring brownfield: rejected; it is the best answer found to who the buyer is.
 
-**Open.** Whether to accept the wider verdict (ROADMAP T11) and brownfield as the first market (T1).
+**Outcome.** Pedro chose the first thesis: there is no time in this exercise to validate a solution for brownfield. Brownfield is therefore not pursued as a product and not claimed as a first market; the proposal may name legacy teams as a hypothesis for the pilot. The wider verdict was accepted (ADR-016).
+
+### ADR-014 — Posture: a three-stage probe
+
+| | |
+|---|---|
+| Status | Decided 2026-10-05 |
+| Plan reference | `PLAN.md` §2.1, P1 and T7 |
+
+**Decision.** We do not enter the assistant market. We make one narrow bet with fixed exits and decide Build or Wait on what it shows:
+
+1. a one-day prototype;
+2. a measurement pilot with one or two design partners, on their own repository and tasks;
+3. a build of the gate, only if the pilot clears thresholds set in advance.
+
+**Kill criteria.** After the prototype, continue only if the gate's false-pass rate is lower than both comparators, every planted flaw is rejected, and no unsafe action runs in the gated arm. After the pilot, continue only if at least one design partner says the report changed a decision they were about to make. Otherwise the recommendation is Wait, with a review date.
+
+**Rationale.**
+- The idea, the metrics and the risk tiering are published; a funded competitor owns the adjacent ground; a check's value moves with each model release; we have no model, customers or vertical. That rules out a straight Build.
+- No vendor audit log records the outcome of an agent's work; no vendor publishes a false-pass rate; and the test costs a day and then a few weeks. That rules out a straight Wait.
+- The measurement pilot is both the entry product and the cheapest way to learn whether anyone will pay.
+
+**Alternatives rejected.** Build now; Wait now.
+
+**Open.** The review date that applies if the recommendation becomes Wait. The staffing assumption for the pilot (two engineers and a part-time product lead for six weeks) was judged reasonable and is to be revisited once the prototype is ready.
+
+### ADR-015 — Thesis: the evidence layer, not the brownfield specialisation
+
+| | |
+|---|---|
+| Status | Decided 2026-10-05 |
+| Plan reference | `PLAN.md` §2.1, P2; ADR-001; ADR-013 |
+
+**Decision.** The exercise carries the first thesis forward. The brownfield / enterprise-legacy specialisation is not pursued, and brownfield is not presented as a validated first market.
+
+**Rationale.** Pedro: there is no time to validate a solution for brownfield. The evaluation in ADR-013 had also found it weaker as a product.
+
+**Consequence.** The proposal may name teams working in legacy systems as a hypothesis for the pilot to test. It must not present that as a finding.
+
+**Alternative rejected.** Carrying brownfield as the declared first market, which was the recommendation in ADR-013.
+
+### ADR-016 — Thesis details
+
+| | |
+|---|---|
+| Status | Decided 2026-10-05, except the CFO's numbers (deferred) |
+| Plan reference | `PLAN.md` §2.1, T1 to T11 |
+
+Each line is the decision, then why.
+
+**Buyer.** Engineering leaders, as sponsors, in organisations that build software. *Why:* they own delivery risk and the tooling budget, and answer for what agents merge. That the need is sharpest where a wrong change is expensive is a hypothesis for the pilot.
+
+**How we differ.** A verdict that runs the customer's own checks; independence from the model vendor; a measured false-pass rate; an outcome record. *Why:* no product we found offers these together (E-50, E-51, E-53).
+
+**Defensibility.** Stated as thin: neutrality, and each customer's accumulating checks and labels. *Why:* the mechanism is cheap to copy and the idea is published. *Condition set by Pedro:* the product works on the customer's data, so everyone involved must be aware of what is used and for what, and all relevant precautions are taken. The data stays in the customer's environment, is not used for training or shared across customers, and belongs to the customer.
+
+**Where contracts come from.** The product's first process is guiding the user to create the checks, a test suite or an evaluation, in the manner of test-driven or eval-driven development, kept simple. *Why:* Pedro reframed this from an open question to the first step of the workflow. Without checks there is nothing to verify against, and agents guess when a task is underspecified (E-80). In the prototype the contracts are written by hand.
+
+**Attachment.** A CI check first; one harness hook as a demonstration if time allows. *Why:* CI needs no vendor hook, and the harness layer has no standard interface yet.
+
+**Exclusions.** No assistant, agent loop, meta-harness, policy or sandbox layer, review bot, wider control plane, or model of our own. *Why:* each exists, is funded, or is a model vendor's home ground.
+
+**Staying valuable as models improve.** Measurement is repeated for each and every model and harness pairing, and the product adapts to each. Pedro asked for this to be emphasised. *Why:* a check's value moves with each release (E-36), and harness effects change in size and sign by model (E-58).
+
+**The verdict.** Called executable evidence. In the prototype: the customer's fixed checks, a scope check on the diff, and a check that the agent's own tests fail against the original code (E-76). The counterexample search is a later enhancement. *Why:* fixed checks alone pass bad changes where tests under-describe behaviour (E-68); "deterministic" would overclaim once a model helps search.
+
+**Prototype scope.** Three arms (bare, prompt discipline, gated) and two comparators (the agent's own claim; an evaluator agent on a sample of runs). The cheaper-model arm is a stretch goal. *Why:* that arm is confounded by sharing a harness and costs runs under the cap.
+
+**The CFO's numbers.** Deferred until the prototype is ready. The working assumption was judged reasonable.
+
+**Alternatives rejected.** Brownfield teams as the declared buyer (ADR-015); describing the verdict as deterministic; treating contract creation as something to discover in the pilot.

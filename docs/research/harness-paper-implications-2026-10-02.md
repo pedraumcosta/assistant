@@ -6,7 +6,7 @@
 | What this file is | The analysis restated point by point, each claim checked against the paper, then set against what we have learned since |
 | Method | Checked by the main Claude Code session on 2026-10-05 by searching the paper's HTML text and, for items the HTML conversion had damaged, the PDF. The paper's own record is `harness-paper.md`. |
 | Status | The "Finding" column is what the paper says. The comparison in the last section uses our later research and is our reading. |
-| Used for | PLAN §3.9, decision D3, ROADMAP open questions T3, T5 and T9 |
+| Used for | PLAN §3.9, decision D3, PLAN §2.1 decisions T3, T5 and T9 |
 
 The analysis was written before this project's research and reaches the same pivot independently: from governance across agents to verification and quality measurement.
 

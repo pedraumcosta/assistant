@@ -8,7 +8,7 @@
 | Read on | 2026-10-05, from the publisher's page, downloaded complete |
 | Method | Read end to end by the main Claude Code session. Quotations below were copied from the downloaded text. |
 | Status | Digest with quotations, not a copy. A practitioner's essay: the practices are the author's judgment, and the case studies are second-hand. The article carries a sponsored insert, quoted twice in the text, which is advertising and not part of the argument. |
-| Used for | PLAN §3.11 (evaluation of the brownfield thesis), ROADMAP open questions T1, T4 and T7 |
+| Used for | PLAN §3.11 (evaluation of the brownfield thesis), PLAN §2.1 decisions T1, T4 and T7 |
 
 ## What the article says
 

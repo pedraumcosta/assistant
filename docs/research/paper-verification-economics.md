@@ -8,7 +8,7 @@
 | Read on | 2026-10-05, from the arXiv HTML full text |
 | Method | Read end to end by the main Claude Code session, abstract through conclusion and the research-integrity note. Quotations below were copied from the downloaded text. The six figures were not viewable in the text conversion. |
 | Status | Digest with quotations, not a copy. The paper is a synthesis: "It does not report new model experiments." Every figure in it belongs to another study and is second-hand here. |
-| Used for | PLAN §3.7, ROADMAP open questions T2, T3, T7 and T9 |
+| Used for | PLAN §3.7, PLAN §2.1 decisions T2, T3, T7 and T9 |
 
 ## Why it matters to us
 

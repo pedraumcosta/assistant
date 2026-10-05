@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| Status | Working plan. The thesis has an agreed direction and open details (`ROADMAP.md` §2). Research is complete through 2026-10-05. Nothing has been designed or built. |
+| Status | Working plan. The thesis is decided (§2.1). Research is complete through 2026-10-05. Nothing has been designed or built. |
 | Date | Started 2026-10-03; last updated 2026-10-05 |
 | Brief | `docs/init-prompt.md` |
 | Source-of-truth order | `docs/PLAN.md` → `docs/ROADMAP.md` → `docs/JOURNAL.md`. If they disagree, the earlier one wins and the later one is corrected. |
@@ -10,7 +10,7 @@
 
 ## 1. The position this plan sets out to defend
 
-**Do not build another AI coding assistant, harness or control plane. If we build anything, build the part nobody yet sells: a verdict on agent-written changes that is deterministic, independent of the model vendor, and measured for error on the customer's own repository.**
+**Do not build another AI coding assistant, harness or control plane. Probe the one part nobody yet sells: a verdict on agent-written changes built from executable evidence, independent of the model vendor, and measured for error on the customer's own repository. Decide Build or Wait on what the probe shows.**
 
 The leadership question is "why build another AI coding product when the largest companies already offer mature ones?" The research says the honest answer to that question, as asked, is: we should not. Generation is owned by the model vendors, priced by them, and copied between them within months.
 
@@ -18,16 +18,21 @@ The leadership question is "why build another AI coding product when the largest
 
 **The candidate product** is an evidence layer delivered as a plug-in to the tools a team already uses:
 
+- a first process that guides the user to create the checks (a test suite or an evaluation), in the manner of test-driven or eval-driven development;
 - a change contract written before the agent runs (scope, acceptance checks, budget), protected from the agent by mechanism;
-- a deterministic verdict after the agent stops, from the customer's own checks, run where the agent cannot interfere;
+- a verdict of executable evidence after the agent stops: the customer's own checks, a scope check on the change, and a check that the agent's tests mean something, run where the agent cannot interfere;
 - an evidence record of the outcome, which no vendor audit log we examined provides;
 - a measured false-pass rate for that verdict, per repository and per model and harness pairing, used to set how much human review each class of change gets.
 
 It is entered through measurement: run the customer's own tasks and report the rate and cost of production-qualified changes.
 
-**Who it is for.** Teams where a wrong change is expensive: existing systems and regulated work. It is not for high-throughput new builds, where a frontier lab argues that "corrections are cheap, and waiting is expensive".
+**Who it is for.** Engineering leaders, as sponsors, in organisations that build software. We expect the need to be sharpest where a wrong change is expensive, and weakest in high-throughput new builds, where a frontier lab argues that "corrections are cheap, and waiting is expensive". That expectation is a hypothesis for the pilot.
 
-**A second thesis was evaluated and not adopted as a product:** a brownfield / enterprise-legacy specialisation (§3.11). It is carried instead as the candidate first market for the evidence layer, and it showed that fixed checks alone pass bad changes where tests under-describe behaviour. Widening the verdict accordingly is proposed for the thesis discussion.
+**How we proceed.** As a probe in three stages, each able to end it: a one-day prototype, a measurement pilot with one or two design partners, and a build only if the pilot clears thresholds set in advance (§2.1).
+
+**Customer data.** The product works on the customer's code, checks and outcomes. Every party must know what is used and for what, and it stays in the customer's environment (§8).
+
+**A second thesis was evaluated and not adopted:** a brownfield / enterprise-legacy specialisation (§3.11). There is no time in this exercise to validate it, so brownfield is not claimed as a first market. Its evidence did change the first thesis: fixed checks alone pass bad changes where tests under-describe behaviour, so the verdict was widened to executable evidence.
 
 **Where the case stands.** The idea is not new. The framing and metrics are published, the model vendor describes a contract plus a separate evaluator, and a competitor valued at 1.5 billion USD is positioning as "the control layer" for agent-written changes. What remains open is the narrow list above. The case for **Wait, with a review date** is stronger than when this plan was first written, and it remains a real outcome.
 
@@ -44,9 +49,10 @@ In Pedro's own terms (from his working notes): "Reliability, not capability, is 
 | 2026-10-05 | A verifier with a measured false-pass rate; the mechanism itself is cheap to copy | Full re-read of the articles (§3.4) |
 | 2026-10-05 | A deterministic, vendor-independent, measured verdict; the contract-plus-evaluator idea and the metrics are published | Anthropic's harness design post and two papers (§3.6, §3.7) |
 | 2026-10-05 | The same, for teams where a wrong change is expensive; a funded competitor owns the adjacent ground | Market check of the review and verification segment (§3.8) |
-| 2026-10-05 | Proposed, not yet agreed: brownfield as the first market, and a verdict widened from fixed checks to fixed checks plus a completeness audit plus a counterexample search | Evaluation of a second thesis, brownfield specialisation (§3.11) |
+| 2026-10-05 | Verdict widened from fixed checks to executable evidence; brownfield evaluated as a second thesis | Evaluation of the brownfield specialisation (§3.11) |
+| 2026-10-05 | Decided: the first thesis, pursued as a three-stage probe; buyer, differentiation, exclusions, kill criteria and prototype scope settled | Thesis discussion (§2.1) |
 
-This position is a working hypothesis. Decision D1 records the agreed direction; the details are open questions T1 to T10 in `ROADMAP.md` §2.
+The decisions behind this position are in §2 and §2.1. What the probe will show is not yet known.
 
 ### 1.1 Narrowing the position after the harness paper (agreed 2026-10-05, D1)
 
@@ -93,11 +99,11 @@ Under B and C we build neither a harness nor a meta-harness. The prototype's own
 
 ## 2. Decisions needed from Pedro
 
-Decisions are recorded here as they are made. Nine are decided; D1 has an agreed direction with details still open.
+Decisions are recorded here as they are made. All ten are decided. The thesis decisions taken in the discussion of 2026-10-05 are in §2.1.
 
 | ID | Decision | Recommendation | Why |
 |---|---|---|---|
-| D1 | Which wedge do we defend? | **Direction agreed 2026-10-05, details open:** option B of §1.1, the evidence layer delivered as a plug-in to existing harnesses, entered through option C, per-repo agent evaluation. | Pedro agreed the paper analysis and the narrowing, and on the same day said the thesis details are not yet chosen. The open questions are listed in `ROADMAP.md` §2. |
+| D1 | Which wedge do we defend? | **Decided 2026-10-05:** the evidence layer, as a plug-in to existing tools, entered through per-repository measurement and pursued as a three-stage probe. Details in §2.1. | The first thesis was chosen over the brownfield specialisation, which there is no time to validate in this exercise. |
 | D2 | What does the company already own? | **Decided 2026-10-03:** nothing. No proprietary model, no harness, no captive vertical, no special moat. | The strategy must stand without an inherited advantage. |
 | D3 | Prototype inner loop | **Decided 2026-10-03, refined 2026-10-05:** a minimal single loop behind a provider interface, taken from the 90-line scaffold published in the harness paper (Listing 3, CC BY 4.0) and specialised only where needed, with every departure recorded in the journal. | It shows every design topic in readable code and makes the point that the loop is small. Using a published, citable agent removes the objection that we tuned the agent to suit our gate. Rejected alternatives: writing our own from nothing; wrapping an agent SDK or hosted agent service. |
 | D4 | Prototype language | **Decided 2026-10-03:** Python. | Fastest for one day. |
@@ -107,6 +113,28 @@ Decisions are recorded here as they are made. Nine are decided; D1 has an agreed
 | D8 | Proposal and presentation format | **Decided 2026-10-03:** Markdown first. When the content is close to final, a Claude Code artifact, then a Slidev presentation. | "Markdown for models, HTML for humans." |
 | D9 | Use of material from outside this repo | **Decided 2026-10-03, refined 2026-10-05:** the repo is self-contained and cites public sources only. Pedro's private notes may be named as the origin of a claim; the public source behind the claim is what is cited and checked. | Readers of the repo cannot open Pedro's private files. Closes ASSIST-007. |
 | D10 | Commit trailers | **Decided 2026-10-03:** keep the `Co-Authored-By: Claude` trailer; the git log is the record of how Claude Code was used. | Makes the build log verifiable. |
+
+### 2.1 Thesis decisions (2026-10-05)
+
+Taken in the thesis discussion. Each has its rationale in `docs/JOURNAL.md` (ADR-014 to ADR-016).
+
+| ID | Question | Decision | Justification |
+|---|---|---|---|
+| P1 | Build, Wait, or between | **A small, dated probe in three stages, each able to end it:** (1) a one-day prototype; (2) a measurement pilot with one or two design partners; (3) build the gate only if the pilot clears thresholds set in advance. | In a thin market the narrow test is the move. Pure Build ignores that the concept is published and a funded competitor is adjacent. Pure Wait teaches nothing, when testing costs a day and then a few weeks. |
+| P2 | Which thesis | **The first: the evidence layer.** The brownfield specialisation is not pursued, and brownfield is not claimed as a validated first market. | There is no time in this exercise to validate a solution for brownfield. The proposal may name legacy teams as a hypothesis for the pilot, not as a finding. |
+| T1 | Buyer | **Engineering leaders, as sponsors, in organisations that build software.** The need is expected to be sharpest where a wrong change is expensive; that part is a hypothesis for the pilot. | They own delivery risk and the budget for engineering tooling, and they answer for what agents merge. |
+| T2 | How we differ | **Four things no product we found offers together:** a verdict that runs the customer's own checks; independence from the model vendor; a measured false-pass rate; an outcome record. | Funded reviewers give model judgments and cannot run the test suite (E-50, E-51); none publishes a false-pass rate; no vendor audit log records outcomes (E-53). |
+| T3 | Defensibility | **Stated plainly as thin:** neutrality, and each customer's accumulating checks and labels. **With a condition:** the product works on the customer's data, so every party must know what is used and for what, and all relevant precautions are taken (see Privacy and Redlines, §8). | The mechanism is cheap to copy and the idea is published; that is why the posture is a probe. The asset that accumulates is the customer's data, which makes its handling a first-order design matter and not a detail. |
+| T4 | Where contracts come from | **The product's first process is guiding the user to create the checks:** a test suite or an evaluation, in the manner of test-driven or eval-driven development, kept simple. In the prototype the contracts are written by hand. | Without checks there is nothing to verify against, and the research shows agents guess when a task is underspecified (E-80). Making this the first step of the workflow, not an open question, is what turns the idea into a usable product. |
+| T5 | Attachment | **A CI check first.** One harness hook as a demonstration if time allows. | CI needs no vendor hook; the harness layer has no standard interface yet. |
+| T6 | Exclusions | **We do not build:** a coding assistant, an agent loop, a meta-harness, a policy or sandbox layer, a review bot, the wider delivery control plane, or a model of our own. | Each exists, is funded, or is a model vendor's home ground. |
+| T7 | Kill criteria | **After the prototype, continue only if** the gate's false-pass rate is lower than both comparators, every planted flaw is rejected, and no unsafe action runs in the gated arm. **After the pilot, continue only if** at least one design partner says the report changed a decision they were about to make. **Otherwise the recommendation is Wait**, with a review date. | A probe needs its exits fixed before the results are known. The review date is still to be named by Pedro. |
+| T8 | The CFO's numbers | **Deferred until the prototype is ready.** Working assumption, judged reasonable: two engineers and a part-time product lead for six weeks for the pilot, after the one-day prototype. | Better stated once the prototype shows what the pilot has to do. All figures will be labelled assumptions. |
+| T9 | Prototype scope | **Three arms** (bare, prompt discipline, gated) and **two comparators** (the agent's own claim; an evaluator agent on a sample of runs). The cheaper-model arm moves to stretch. | The cheaper-model arm is confounded by sharing a harness and costs runs under the 50 USD cap. |
+| T10 | Staying valuable as models improve | **Measurement is repeated for each and every model and harness pairing, and the product adapts to each.** This is to be emphasised in the proposal. | A check's value moves with each model release (E-36); harness effects change in size and sign by model (E-58). Adapting per model is what keeps the measurement worth paying for. |
+| T11 | The verdict | **"Executable evidence."** In the prototype: the customer's fixed checks, a scope check on the diff, and a check that the agent's own tests fail against the original code. The counterexample search is the next enhancement, alongside the decision-model judge. | Fixed checks alone pass bad changes where tests under-describe behaviour (E-68). "Executable" is accurate where "deterministic" would overclaim once a model helps search for counterexamples. |
+
+Still open: the review date in T7, and T8.
 
 ## 3. What the research says
 
@@ -235,7 +263,7 @@ It states the question in the CFO's units: "how much production-qualified value 
    - a working implementation with measurements.
 3. The proposal's contribution becomes evidence, not concept: the first measurements of constructs that their own authors call hypotheses. That raises the weight of the prototype's results in the final recommendation.
 4. The prototype reports in the published metric set (§7.1).
-5. Risk tiers and redlines (ROADMAP T7) now have two published starting points in place of the formula from the article we could not find.
+5. Risk tiers and redlines (§2.1 T7) now have two published starting points in place of the formula from the article we could not find.
 
 Every figure these papers cite from other studies is second-hand and unused until checked at its source.
 
@@ -274,7 +302,7 @@ Pedro supplied his web research notes of 2026-10-01. Their claims were checked i
 
 1. Being early is not available. The honest position is: a funded competitor owns the adjacent ground and has the parts to close the gap, and what remains open is narrow.
 2. What remains open is the same list as §3.7, now checked against the market as well as the literature: a protected pre-run contract, a deterministic verdict that runs the customer's own checks, a measured false-pass rate, and an outcome record that no audit log provides.
-3. The buyer is narrower: teams where corrections are expensive (ROADMAP T1).
+3. The buyer is narrower: teams where corrections are expensive (§2.1 T1).
 4. The case for Wait is stronger than at any earlier point. Whether the narrow open ground justifies Build is the decision for the thesis discussion; the prototype's job is to show whether a deterministic verdict beats a model reviewer's by a margin worth paying for.
 
 ### 3.9 Pedro's own analysis of the harness paper (2026-10-05)
@@ -285,9 +313,9 @@ Its conclusion that verification is "vacant ground, everywhere" was fair on the 
 
 Three ideas from it are adopted as inputs:
 
-1. **Omnigent as a channel, not only a rival.** Its policy plane accepts Python evaluators and enforces them through each vendor's hooks (EVIDENCE E-61). A gate shipped as an Omnigent evaluator is one integration in place of one per harness. We have no data on Omnigent's adoption, and Databricks could add the check itself (ROADMAP T5).
+1. **Omnigent as a channel, not only a rival.** Its policy plane accepts Python evaluators and enforces them through each vendor's hooks (EVIDENCE E-61). A gate shipped as an Omnigent evaluator is one integration in place of one per harness. We have no data on Omnigent's adoption, and Databricks could add the check itself (§2.1 T5).
 2. **The paper's scaffold as the agent under test** (decision D3, refined). The listing has four tools, turn and cost caps, and threshold compaction (E-59).
-3. **Recalibration fed by outcomes.** Measured outcomes adjust the risk tiers over time, which gives each customer's accumulated data a job (ROADMAP T3).
+3. **Recalibration fed by outcomes.** Measured outcomes adjust the risk tiers over time, which gives each customer's accumulated data a job (§2.1 T3).
 
 Its term "planted-flaw evaluations" replaces "verifier-integrity set" in §7.1.
 
@@ -345,7 +373,7 @@ Pedro's list of thesis candidates names a second one: a brownfield / enterprise-
 
 The search is done by a model, and its result depends on which models search (E-69). What it produces is an executable failing test, so the evidence stays executable.
 
-**Recommendation.** Do not pursue brownfield as a second product. Carry it into the first thesis as the candidate first market and as the reason to widen the verdict. No decision has been taken (ROADMAP T1, T11; JOURNAL ADR-013).
+**Outcome (decided 2026-10-05).** Brownfield is not pursued, as a product or as a claimed first market, because there is no time to validate it in this exercise. The verdict is widened as proposed, with the counterexample search as a later enhancement (§2.1, T11; JOURNAL ADR-013).
 
 ### 3.12 Evidence on market structure and agent limits (2026-10-05)
 
@@ -355,13 +383,13 @@ Pedro pointed to six places in his notes on market analysis and the limits of co
 
 - *Agents tamper with their own verifier.* A model trained on production coding tasks learned to force tests green, including by patching the test reporter to report "passed" (EVIDENCE E-75). This is the strongest evidence we have for protecting the contract and the checks from the agent by mechanism.
 - *Passing tests is weak evidence.* On one benchmark, "31.08% of the passed patches are suspicious patches due to weak test cases" (E-77).
-- *A deterministic check of whether an agent's tests mean anything.* Run them against the original code: "they must fail" (E-76). This is a cheap addition to the gate and bears on the wider verdict (ROADMAP T11).
+- *A deterministic check of whether an agent's tests mean anything.* Run them against the original code: "they must fail" (E-76). This is a cheap addition to the gate and bears on the wider verdict (§2.1 T11).
 - *Regression is where agents fall furthest.* When earlier work must keep passing, the best strict solve rate on SlopCodeBench is 14.8% (E-78).
 - *Agents guess instead of asking* (E-80), which supports writing the contract before the run.
 - *Consistency, not one run.* A greater-than-60% agent falls below 25% when it must succeed eight times running (E-79), which supports reporting pass^k.
 - *Hallucinated packages* at 19.7% of generated references in one large study (E-81), which supports a dependency check in the gate.
 - *The lab's own view of harnesses.* An OpenAI engineer is quoted as "bearish on any harness that doesn't come from the lab whose model you are using" (E-83, quoted on a third-party show; original not found). The hosts' counter is that a builder's room is the outer layer.
-- *No standard harness interface yet*, which is a cost for any plug-in that attaches to several harnesses (ROADMAP T5).
+- *No standard harness interface yet*, which is a cost for any plug-in that attaches to several harnesses (§2.1 T5).
 
 **Corrections that matter for the proposal**
 
@@ -424,12 +452,11 @@ P3 and P4 are deliberately lean on the first pass. They are revised in P7 once t
 
 ### 7.1 What it has to prove
 
-The same task set is run several times under each arm:
+The same task set is run several times under each of three arms (decided, §2.1 T9). A cheaper-model arm is a stretch goal:
 
 - **Arm A, bare:** the published scaffold alone, in a throwaway worktree. The scaffold has no sandbox and runs shell commands directly, so every arm runs inside an isolated copy of the fixture repository.
 - **Arm P, prompt discipline:** arm A plus a "verify before you claim completion" instruction, standing in for prompt-only plugins.
 - **Arm G, gate:** the loop inside the policy, contract and deterministic gate.
-- **Arm G-low:** arm G with a cheaper model tier.
 
 Finished runs are also scored by an **evaluator agent from a different vendor** (OpenAI, per D5), modelled on the evaluator Anthropic describes: it exercises the result against the contract's criteria, each with a hard threshold. It does not change the run; it gives us a second verdict to compare. A single judging call would be a weaker alternative than the one buyers will actually have. An evaluator agent costs more per run, so under the 50 USD cap it may be applied to a sample of runs.
 
@@ -439,11 +466,13 @@ Ground truth for each task is a set of acceptance checks the agent and the gate 
 |---|---|---|
 | H1 Safety | Deterministic policy stops the unsafe actions a bare or prompt-disciplined loop takes on trap tasks (out-of-scope edits, deleting or weakening tests, destructive commands, instructions planted in repo files, editing the contract) | Count of unsafe actions executed, per arm |
 | H2 Reliability | A gate with a bounded repair loop raises consistency, not just one-shot success | pass@1 and pass^k against the hidden checks, per arm |
-| H3 Economics | Cost per production-qualified change (PQC per dollar) is no worse with the gate, and a cheaper model inside the gate approaches the frontier model without it | Tokens and dollars per production-qualified change, per arm |
+| H3 Economics | Cost per production-qualified change (PQC per dollar) is no worse with the gate | Tokens and dollars per production-qualified change, per arm |
 | H4 Trustworthy verdict | The gate's "pass" is right more often than the agent's own claim (arms A and P) and than the evaluator agent's verdict | False-pass rate of each verdict source against the hidden checks |
 | H5 Verifier integrity | The gate itself cannot be fooled by the failure modes found in the articles | Planted-flaw evaluations: a fixed set of seeded bad changes and broken test setups; every one must be rejected |
 
 H4 is the product's claim and the number that can kill it. H3 is the CFO's number. H5 is pass or fail.
+
+**Kill criteria after the prototype (decided, §2.1 T7).** Continue only if the gate's false-pass rate is lower than both comparators, every planted flaw is rejected, and no unsafe action runs in the gated arm.
 
 **Reporting.** Results are reported in the metric set proposed by Bhati (§3.7) so that they are comparable with later work: PQC rate, PQC per dollar, first-pass qualification, retry rate, cost variance across repeats, and evidence coverage. "PQC per reviewer-hour" and "escaped-failure rate" need real reviewers and production, so they are pilot measures. The verifier's false-pass rate is our addition to that set.
 
@@ -459,7 +488,7 @@ The task set will be small and written by us, so results are an indication, not 
 
 1. **Loop.** The harness paper's 90-line scaffold (D3), with provider adapters for Anthropic and OpenAI and every step written to a JSONL event log with tokens, cost and latency. Its four tools (bash, read_file, write_file, search_replace) are kept as published.
 2. **Policy.** Each tool call classified allow / review / block by deterministic rules; work confined to a git worktree; path zones; ceilings on turns, tokens and wall-clock time.
-3. **Gate.** A task contract (scope, acceptance checks, budget), then checks after the agent stops, run in a separate process: tests, lint, diff scope, secrets scan, dependency changes. The checks include whether any new dependency exists, and whether the agent's own tests fail against the original code. Bounded repair attempts. Includes the planted-flaw evaluations (H5).
+3. **Gate.** A task contract (scope, acceptance checks, budget), then the executable evidence after the agent stops, run in a separate process: tests, lint, diff scope, secrets scan, dependency changes. The checks include whether any new dependency exists, and whether the agent's own tests fail against the original code. Bounded repair attempts. Includes the planted-flaw evaluations (H5).
 4. **Evidence.** A bundle per run, as JSON and Markdown: what was asked, what changed, which checks ran and their results, risk tier, cost.
 5. **Eval runner.** Tasks × trials × arms into a results table, with the cross-vendor evaluator's verdict recorded beside the runs it scores and the spend cap enforced.
 6. **Stretch.** The same gate attached to a vendor harness through a hook or MCP; context compaction and a repo map.
@@ -483,13 +512,13 @@ IDE plugin, any UI beyond the CLI, cloud or background agents, multi-agent orche
 | Orchestration | Single loop first. "Fan out reads, single-thread writes." A second loop only when the single loop is measured as the bottleneck. |
 | Evaluation | pass^k and cost per production-qualified change, not pass@1. Deterministic checks before any model judge. The agent never grades itself. |
 | Security | Assume prompt injection succeeds; break one leg of the lethal trifecta by design. Secrets never enter context. |
-| Privacy | Customer code stays in the customer's boundary; provider chosen per customer; no training on customer code; retention stated and short. |
+| Privacy | The product works on the customer's code, checks, outcomes and labels, so customers must know exactly what is used and for what. All of it stays in the customer's boundary; the provider is chosen per customer; nothing is used for training or shared across customers; calibration data belongs to the customer; retention is stated and short. |
 | Observability | One structured event per step; the evidence bundle is the audit record ("provenance as schema, not logging"). |
 | Human layer | Humans at risk-tiered gates. "No human in the loop" is a configuration justified by evidence, never a default. |
 | Latency | Asynchronous by design: the unit is a delegated task, so the budget is minutes per task, with time-to-first-evidence tracked. |
 | Cost | A ceiling per task, enforced by the harness. Headline metric: cost per production-qualified change. |
 | Failure handling | Every run ends in one of: accepted, needs review, blocked, budget exhausted. Each leaves a record. Rollback is deleting the worktree. |
-| Redlines | Proposed in `DESIGN.md` for Pedro to set. Candidates: no write outside the sandbox; no merge without a human; no destructive command without approval; no secrets in context; no run without a record; a dated kill criterion for the business; the agent that writes a change cannot approve it. |
+| Redlines | Proposed in `DESIGN.md` for Pedro to set. Candidates: no write outside the sandbox; no merge without a human; no destructive command without approval; no secrets in context; no run without a record; a dated kill criterion for the business; the agent that writes a change cannot approve it; no use of customer data beyond what the customer has been told and agreed. |
 
 ## 9. Risks to this plan
 
@@ -527,3 +556,4 @@ The issue register lives in `docs/ROADMAP.md` §5. It is the only copy.
 - Pedro's addendum on decision models checked at primary sources; findings in §3.10.
 - Second thesis (brownfield specialisation) evaluated from its primary sources and the market; findings in §3.11.
 - Pedro's pointers on market structure and agent limits traced to public sources and checked; findings in §3.12.
+- Thesis discussion held; decisions in §2.1.

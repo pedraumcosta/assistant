@@ -6,7 +6,7 @@
 | Checked on | 2026-10-05 |
 | Method | Checked at primary sources by a Claude Code sub-agent. arXiv 2609.29769 was read in full for the main text, limitations and most appendices. Negative findings ("none found") rest on a handful of searches. |
 | Status | Record as received. |
-| Used for | PLAN §3.10, ROADMAP open questions T3, T7 and T9 |
+| Used for | PLAN §3.10, PLAN §2.1 decisions T3, T7 and T9 |
 
 Tags in this file: **[P]** confirmed in the publisher's raw page; **[P-summary]** seen only through a summarising fetch or a reader proxy; **[S]** secondary source or search snippet only.
 

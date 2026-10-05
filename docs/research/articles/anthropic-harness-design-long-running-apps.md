@@ -8,7 +8,7 @@
 | Read on | 2026-10-05, from the publisher's page, downloaded complete |
 | Method | Read end to end by the main Claude Code session. Quotations below were copied from the downloaded text. |
 | Status | Digest with quotations, not a copy. The figures are the author's own measurements of two runs, published by the model vendor; they are single runs, not a study. |
-| Used for | PLAN §3.6, ROADMAP open questions T2, T3, T4 and T9 |
+| Used for | PLAN §3.6, PLAN §2.1 decisions T2, T3, T4 and T9 |
 
 Pedro's notes cited a Medium summary of Anthropic's harness playbook. This record is of the primary post instead.
 

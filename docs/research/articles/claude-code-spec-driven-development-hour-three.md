@@ -8,7 +8,7 @@
 | Read on | 2026-10-05, via a Freedium mirror |
 | Method | Read end to end by a Claude Code sub-agent from the complete downloaded text, and checked against Pedro's prior notes on the article. |
 | Status | Digest. Feature and version claims are the author's and were not checked against vendor documentation. No measured data. |
-| Used for | PLAN §3.6; ROADMAP open questions T2 and T4 |
+| Used for | PLAN §3.6; PLAN §2.1 decisions T2 and T4 |
 
 ## Read record
 

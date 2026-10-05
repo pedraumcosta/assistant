@@ -8,7 +8,7 @@
 | Read on | 2026-10-05, from the publisher's page |
 | Method | Read end to end by a Claude Code sub-agent from the complete downloaded text, and checked against Pedro's prior notes on the article. |
 | Status | Digest. One hiring task at one company, written by the model vendor. |
-| Used for | PLAN §3.6; ROADMAP open questions T3 and T9 |
+| Used for | PLAN §3.6; PLAN §2.1 decisions T3 and T9 |
 
 ## Read record
 

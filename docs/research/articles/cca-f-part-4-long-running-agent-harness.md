@@ -8,7 +8,7 @@
 | Read on | 2026-10-05, via a Freedium mirror |
 | Method | Read end to end by a Claude Code sub-agent from the complete downloaded text, and checked against Pedro's prior notes on the article. |
 | Status | Digest of a second-hand, exam-preparation summary of an Anthropic engineering post, which we have not read (ASSIST-013). Same author as the "hour three" article, so the two do not corroborate each other. No measured data. |
-| Used for | PLAN §3.6; ROADMAP open question T4 |
+| Used for | PLAN §3.6; PLAN §2.1 decision T4 |
 
 ## Read record
 

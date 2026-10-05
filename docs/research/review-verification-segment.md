@@ -5,7 +5,7 @@
 | Research date | 2026-10-05 |
 | Method | Web research by a Claude Code sub-agent from company blogs, docs, pricing pages and press releases. Figures were confirmed in the raw downloaded page, not in a summary. |
 | Status | Record as received. Funding and usage figures are the companies' own announcements unless marked otherwise. "How occupied is the space" is the researcher's assessment. |
-| Used for | PLAN §3.8, ROADMAP open questions T2 and T3 |
+| Used for | PLAN §3.8, PLAN §2.1 decisions T2 and T3 |
 
 Tags in this file: **[P]** confirmed in the publisher's raw page (downloaded and searched, not a summary); **[P-archive]** read raw from a web-archive capture because the publisher blocked direct download; **[P-summary]** publisher's page seen only through a summarising fetch; **[S]** secondary source or search snippet only.
 

@@ -6,7 +6,7 @@
 | What this file is | The evaluation: what the thesis proposes, what its evidence says when read in full, how occupied the market is, and our reading of what to do with it |
 | Method | The brownfield section of Pedro's notes and Osmani's article were read by the main Claude Code session. The two papers were read in full by a sub-agent. The market was researched by another from vendor sources. All on 2026-10-05. |
 | Status | The findings sections report sources. The last two sections are our assessment and a recommendation for the thesis discussion; no decision has been taken. |
-| Used for | PLAN §3.11, ROADMAP open questions T1 and T11, JOURNAL ADR-013 |
+| Used for | PLAN §3.11, PLAN §2.1 decisions T1 and T11, JOURNAL ADR-013 |
 
 Records behind this file: `articles/osmani-brownfield-agentic-engineering.md`, `paper-swe-refactor-bench.md`, `paper-legacy-modernization-case-study.md`, `brownfield-market.md`.
 
