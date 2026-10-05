@@ -9,7 +9,7 @@ Every figure or quotation that a document in this repo relies on has a row here.
 | [S] | Seen only in a search summary or secondary write-up. Not verified; must be upgraded to [P] or dropped |
 | [P-archive] | Read raw from a web-archive capture because the publisher blocked direct download |
 
-A caution applies to the [P] rows numbered E-01 to E-29 that were gathered by a research sub-agent: the page was fetched through a tool that summarises with a small model, so the exact wording of a quotation should be re-read at the source before it is printed in the proposal. Rows E-30 to E-37, E-40 to E-45, E-59 to E-61, E-73 and E-74 were read directly from the source text by the main session and do not carry that caution; E-38 and E-39 were checked against the downloaded text. Rows E-17, E-46 to E-58, E-62 to E-72 and E-75 to E-83 were confirmed by sub-agents in the raw downloaded page or the full text.
+Rows E-01 to E-29 were first gathered through a tool that summarises pages. All 29 were re-checked against raw downloads on 2026-10-05 and corrected where the wording or a figure differed. Rows E-30 to E-37, E-40 to E-45, E-59 to E-61, E-73, E-74 and E-84 were read directly from the source text by the main session. The remaining rows were confirmed by sub-agents in the raw downloaded page or the full text.
 
 "Interest" records whether the source sells a product that benefits from the finding.
 
@@ -18,15 +18,15 @@ A caution applies to the [P] rows numbered E-01 to E-29 that were gathered by a 
 | ID | Claim, as published | Source and date | Tag | Interest | URL |
 |---|---|---|---|---|---|
 | E-01 | "roughly half of test-passing SWE-bench Verified PRs … would not be merged into main by repo maintainers"; merge decisions "about 24 percentage points" below grader scores (296 PRs, 4 maintainers, 3 repos) | METR, 2026-03-10 | [P] | Independent | https://metr.org/notes/2026-03-10-many-swe-bench-passing-prs-would-not-be-merged-into-main/ |
-| E-02 | "Tasks involving code specifically have increased 210%" | Faros, AI Engineering Report 2026, 22,000 developers and 4,000 teams | [L] | Vendor (sells measurement) | https://www.faros.ai/blog/ai-acceleration-whiplash-takeaways |
-| E-03 | "Bugs per developer are up 54%" | Faros 2026 | [L], also [P] on the blog | Vendor | as E-02 |
-| E-04 | "Median review time has increased 5X" (report PDF); "+441.5%" median time in review (blog) | Faros 2026 | [L] and [P] | Vendor | as E-02 |
-| E-05 | "31% more PRs are merging without any review" (PDF); "+31.3%" (blog) | Faros 2026 | [L] and [P] | Vendor | as E-02 |
-| E-06 | "+242.7% incidents per PR"; "+861% code churn" | Faros 2026 | [L] and [P] | Vendor | as E-02 |
-| E-07 | 66% cite "AI solutions that are almost right, but not quite"; 46% distrust accuracy vs 33% who trust it; 84% use or plan to use AI tools; 48,854 respondents | Stack Overflow Developer Survey 2025, July 2025 | [P] | Independent of AI vendors | https://survey.stackoverflow.co/2025/ai |
-| E-08 | "only 55% of generation tasks result in secure code"; "No meaningful security gains materialized" | Veracode Spring 2026 GenAI Code Security Update, 2026-03-24 | [P] | Vendor (sells AppSec) | https://www.veracode.com/blog/spring-2026-genai-code-security/ |
-| E-09 | An agent deleted a production volume and its backups in 9 seconds; agent's statement: "I violated every principle I was given: I guessed instead of verifying, I ran a destructive action without being asked." | ACS Information Age, 2026-05-05, on the PocketOS incident of 2026-04-25 | [P] | Independent press | https://ia.acs.org.au/article/2026/gone-in-9-seconds--ai-agent-deletes-company-database.html |
-| E-10 | 96% don't fully trust AI code to be functionally correct; only 48% always check before committing | Sonar State of Code 2026, Jan 2026 | [S] | Vendor | https://www.sonarsource.com/blog/state-of-code-developer-survey-report-the-current-reality-of-ai-coding/ |
+| E-02 | "Tasks involving code specifically have increased 210%". Not on Faros's public pages; the nearest public figure is a different metric, "Task throughput per developer is up 33.7%." | Faros, AI Engineering Report 2026, "22,000 developers. More than 4,000 teams." | [L] | Vendor (sells measurement) | https://www.faros.ai/blog/ai-acceleration-whiplash-takeaways |
+| E-03 | Public: "bugs per developer were up 9% as AI adoption grew. In this dataset, that figure has risen to 54%." Report PDF: "Bugs per developer are up 54%" | Faros 2026 | [P] for the blog sentence; [L] for the PDF sentence | Vendor | https://www.faros.ai/blog/ai-acceleration-whiplash-takeaways |
+| E-04 | Public: "Median time in review is up 441.5%." Report PDF: "Median review time has increased 5X" | Faros 2026 | [P] for the blog sentence; [L] for the PDF sentence | Vendor | https://www.faros.ai/blog/ai-acceleration-whiplash-takeaways |
+| E-05 | Public: "Pull requests merged without any review, human or agentic, are up 31.3%." Report PDF: "31% more PRs are merging without any review" | Faros 2026 | [P] for the blog sentence; [L] for the PDF sentence | Vendor | https://www.faros.ai/blog/ai-acceleration-whiplash-takeaways |
+| E-06 | "The incidents-to-PR ratio is up 242.7%"; code churn "has increased 861% under high AI adoption" | Faros 2026 | [P] | Vendor | https://www.faros.ai/blog/ai-acceleration-whiplash-takeaways |
+| E-07 | 66% cite "AI solutions that are almost right, but not quite"; 46% distrust accuracy vs 33% who trust it; 84% are using or planning to use AI tools; "49,009 responses from 177 countries" | Stack Overflow Developer Survey 2025, July 2025 | [P] | Independent of AI vendors | https://survey.stackoverflow.co/2025/ai |
+| E-08 | "only 55% of generation tasks result in secure code". Of OpenAI's GPT-5.1 and 5.2 specifically: "No meaningful security gains materialized." | Veracode Spring 2026 GenAI Code Security Update, 2026-03-24 | [P] | Vendor (sells AppSec) | https://www.veracode.com/blog/spring-2026-genai-code-security/ |
+| E-09 | An agent deleted a production database and its backups in nine seconds; the agent's statement began: "I violated every principle I was given: I guessed instead of verifying, I ran a destructive action without being asked, …" | ACS Information Age, 2026-05-05, on the PocketOS incident | [P] | Independent press | https://ia.acs.org.au/article/2026/gone-in-9-seconds--ai-agent-deletes-company-database.html |
+| E-10 | "96% of developers report they do not fully trust that AI-generated code is functionally correct, only 48% state they always check their AI-assisted code before committing it" | Sonar press release, 2026-01-08 | [P] | Vendor (sells code verification) | https://www.sonarsource.com/blog/state-of-code-developer-survey-report-the-current-reality-of-ai-coding/ |
 | E-11 | Public frontier models: 80% time horizon "~1.5h [50m-2h40m]" against a 50% horizon of "~12h [5h-61h]" | METR Frontier Risk Report, 2026-05-19 | [P] | Independent | https://metr.org/blog/2026-05-19-frontier-risk-report/ |
 
 ## Where not to compete
@@ -35,21 +35,21 @@ A caution applies to the [P] rows numbered E-01 to E-29 that were gathered by a 
 |---|---|---|---|---|---|
 | E-12 | Claude: Pro 20 USD, Max from 100 USD | Anthropic pricing page, as displayed 2026-10-03 | [P] | Vendor | https://claude.com/pricing |
 | E-13 | ChatGPT / Codex: Plus 20 USD, Pro 100 / 200 / 500 USD | OpenAI pricing page, as displayed 2026-10-03 | [P] | Vendor | https://learn.chatgpt.com/docs/pricing |
-| E-14 | Google AI plans at 19.99 / 99.99 / 199.99 USD | Secondary coverage | [S] | — | https://www.cloudzero.com/blog/google-antigravity-pricing/ |
-| E-15 | Copilot moved all plans to token-based "AI Credits" on 2026-06-01; "agentic usage is becoming the default, and it brings significantly higher compute and inference demands" | GitHub blog, 2026-04-27 | [P] | Vendor | https://github.blog/news-insights/company-news/github-copilot-is-moving-to-usage-based-billing/ |
-| E-16 | "Compared to today, this works out to a 17% reduction in weekly limits on Claude Code" | BleepingComputer quoting Anthropic, 2026-08-29 | [P] | Independent press | https://www.bleepingcomputer.com/news/artificial-intelligence/anthropic-is-cutting-claude-codes-current-weekly-limits-by-17-percent/ |
+| E-14 | Google AI plans: AI Plus 4.99 USD, AI Pro 19.99 USD, AI Ultra 99.99 and 199.99 USD | Google subscriptions page, as displayed 2026-10-05 | [P] | Vendor | https://gemini.google/us/subscriptions/ |
+| E-15 | GitHub announced that "all GitHub Copilot plans will transition to usage-based billing on June 1, 2026" ("GitHub AI Credits"); "Agentic usage is becoming the default, and it brings significantly higher compute and inference demands." Annual Pro and Pro+ subscribers stayed on the previous scheme until their plan expired | GitHub blog, 2026-04-27 | [P] | Vendor | https://github.blog/news-insights/company-news/github-copilot-is-moving-to-usage-based-billing/ |
+| E-16 | "Compared to today, this works out to a 17% reduction in weekly limits on Claude Code" | BleepingComputer quoting Anthropic, 2026-08-29 | [P-mirror] | Independent press | https://www.bleepingcomputer.com/news/artificial-intelligence/anthropic-is-cutting-claude-codes-current-weekly-limits-by-17-percent/ |
 | E-17 | "Margins on all of the 'code gen' products are either neutral or negative. They're absolutely abysmal", said by Nicholas Charriere, founder of Mocha | TechCrunch, 2025-08-07 | [P] | Independent press, quoting a founder | https://techcrunch.com/2025/08/07/the-high-costs-and-thin-margins-threatening-ai-coding-startups/ |
-| E-18 | Windsurf, Continue, Tabnine and Roo Code absorbed or closed | Various secondary sources; see `market-landscape.md` §5 | [S] | — | — |
+| E-18 | Windsurf: Cognition "has signed a definitive agreement to acquire Windsurf" (2025-07-14). Continue: "Continue was acquired by Cursor."; its repository is read-only, not archived. Tabnine: Tricentis "today announced the acquisition of Tabnine" (2026-07-30). Roo Code: repository archived, last push 2026-05-15 | Company blogs, a press release and the GitHub API, read 2026-10-05 | [P] | Vendors | see `market-landscape.md` §5 |
 | E-19 | IBM introduced self-hosted, air-gapped deployment for IBM Bob | IBM newsroom, 2026-10-01 | [P] | Vendor | https://newsroom.ibm.com/2026-10-01-ibm-introduces-self-hosted-deployment-for-ibm-bob-to-help-enterprises-advance-ai-sovereignty-and-governance |
 
 ## The case against entering
 
 | ID | Claim, as published | Source and date | Tag | Interest | URL |
 |---|---|---|---|---|---|
-| E-20 | "(90%) use AI"; "(30%) currently report little to no trust in the code generated by AI"; nearly 5,000 respondents | DORA, State of AI-assisted Software Development 2025 | [L] | Vendor-run (Google) | https://cloud.google.com/blog/products/ai-machine-learning/announcing-the-2025-dora-report |
+| E-20 | "(90%) use AI"; "(30%) currently report little to no trust in the code generated by AI"; nearly 5,000 respondents | DORA, State of AI-assisted Software Development 2025 | [P] | Vendor-run (Google) | https://services.google.com/fh/files/misc/2025_state_of_ai_assisted_software_development.pdf |
 | E-21 | Agent use rose from 31% to "59%" | Stack Overflow blog, 2026-09-30 | [P] | Independent of AI vendors | https://stackoverflow.blog/2026/09/30/getting-ready-for-2026-results-a-look-back-on-developer-survey-findings |
 | E-22 | Follow-up to the slowdown study: returning developers "-18% with a confidence interval between -38% and +9%"; METR calls the data unreliable ("30% to 50% of developers told us that they were choosing not to submit some tasks") | METR, 2026-02-24 | [P] | Independent | https://metr.org/blog/2026-02-24-uplift-update/ |
-| E-23 | Original study: 16 experienced open-source developers took "19% longer" with AI while estimating they were 20% faster | METR, July 2025, arXiv 2507.09089 | [S] | Independent | https://arxiv.org/abs/2507.09089 |
+| E-23 | "When developers are allowed to use AI tools, they take 19% longer to complete issues—a significant slowdown that goes against developer beliefs and expert forecasts." And: "developers expected AI to speed them up by 24%, and even after experiencing the slowdown, they still believed AI had sped them up by 20%." 16 developers, 246 tasks | METR, 2025-07-10 | [P] | Independent | https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/ |
 | E-24 | Adopters "merged roughly 24% more pull requests than they would have otherwise" | Microsoft, arXiv 2607.01418, 2026-07-01 (observational) | [P] | Vendor | https://arxiv.org/abs/2607.01418 |
 
 ## Cost and model routing
@@ -57,13 +57,13 @@ A caution applies to the [P] rows numbered E-01 to E-29 that were gathered by a 
 | ID | Claim, as published | Source and date | Tag | Interest | URL |
 |---|---|---|---|---|---|
 | E-25 | 211 real tasks, 12 repos, judged by a model: Claude Code + GLM-5.2 at 0.92 USD per task (score 0.568); Claude Code + Opus 4.8 at 1.76 USD (0.521); Codex + GPT-5.5 at 2.06 USD (0.466) | Faros, 2026-06-25 | [P] | Vendor | https://www.faros.ai/blog/open-models-vs-frontier-models |
-| E-26 | SWE-bench Pro: top entry 89.9%, best open-weight entry 65.1% | benchlm.ai aggregator, 2026-10-02; mostly vendor-reported scores, harnesses differ | [P] on the aggregator | Aggregator | https://benchlm.ai/benchmarks/swe-bench-pro |
+| E-26 | SWE-bench Pro: top entry 89.9%, best open-weight entry 67.7% | benchlm.ai aggregator, as displayed 2026-10-05; mostly vendor-reported scores, harnesses differ | [P] on the aggregator | Aggregator | https://benchlm.ai/benchmarks/swe-bench-pro |
 
 ## GitHub access model
 
 | ID | Claim, as published | Source and date | Tag | URL |
 |---|---|---|---|---|
-| E-27 | "In a private repository, repository owners can only grant write access to collaborators. Collaborators can't have read-only access to repositories owned by a personal account." | GitHub Docs, read 2026-10-05 | [P] | https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-user-account-settings/permission-levels-for-a-personal-account-repository |
+| E-27 | "In a private repository, repository owners can only grant write access to collaborators. Collaborators can't have read-only access to repositories owned by a personal account." | GitHub Docs, read 2026-10-05 | [P] | https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/repository-access-and-collaboration/permission-levels-for-a-personal-account-repository |
 | E-28 | Organisation repositories have five roles; the Read role cannot push | GitHub Docs, read 2026-10-05 | [P] | https://docs.github.com/en/organizations/managing-user-access-to-your-organizations-repositories/managing-repository-roles/repository-roles-for-an-organization |
 | E-29 | GitHub Free includes unlimited private repositories "with a limited feature set"; protected branches on private repositories are listed under Pro and Team | GitHub Docs, read 2026-10-05 | [P] | https://docs.github.com/en/get-started/learning-about-github/githubs-plans |
 
@@ -93,6 +93,7 @@ Both sources are the model vendor's own engineering blog. Run figures are single
 | E-37 | Same prompt, one run each: solo agent "20 min", "$9"; full harness "6 hr", "$200"; "The harness was over 20x more expensive". The solo build's central feature did not work; the harness build was playable | as E-34 | [P] | Vendor | as E-34 |
 | E-38 | "By May 2025, Claude 3.7 Sonnet had already crept up to the point where over 50% of candidates would have been better off delegating to Claude Code entirely." | Anthropic, "Designing AI-resistant technical evaluations", 2026-01-21 | [P] | Vendor | https://www.anthropic.com/engineering/AI-resistant-technical-evaluations |
 | E-39 | "Human experts retain an advantage over current models at sufficiently long time horizons." | as E-38 | [P] | Vendor | as E-38 |
+| E-84 | One run of the updated harness, by phase: planner "4.7 min", "$0.46"; three build rounds "$71.08", "$36.89", "$5.88"; three QA rounds "8.8 min" "$3.24", "6.8 min" "$3.09", "9.6 min" "$4.06"; total "3 hr 50 min", "$124.70" | as E-34 | [P] | Vendor | as E-34 |
 
 ## Published framing we build on
 
@@ -180,8 +181,11 @@ The product is three weeks old. None of these rows concerns judgments about code
 - Every claim in `notion-notes-2026-10-01.md` marked "not checked", including everything from the article that could not be found.
 - Revenue, valuation, market-share and user-count figures in `market-landscape.md` §3 and §5. All are [S], several from low-quality aggregators.
 
-## Open verification work (ASSIST-004)
+## Verification status
 
-1. Upgrade or drop E-10, E-14 and E-18. E-17 was confirmed on 2026-10-05. E-23 is confirmed in `check-harness-and-repo-claims.md` item P2 and can be upgraded when its row is rewritten with the exact wording.
-2. Re-read the exact wording of each [P] quotation gathered by a sub-agent before it is printed in the proposal.
-3. Decide whether the proposal needs any market-size or revenue figure at all. If it does, it needs a primary source that we do not yet have.
+All rows were checked against raw sources by 2026-10-05. What remains:
+
+- E-02 and the PDF sentences in E-03 to E-05 are tagged [L]: they exist only in the report PDF, which is not public. The proposal uses the public blog sentences.
+- E-16 is [P-mirror]: the publisher blocks direct download.
+- E-83 is a statement quoted on a third-party show; its original was not found.
+- The proposal uses no market-size or revenue forecast.

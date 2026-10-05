@@ -20,7 +20,7 @@ The leadership question is "why build another AI coding product when the largest
 
 - a first process that guides the user to create the checks (a test suite or an evaluation), in the manner of test-driven or eval-driven development;
 - a change contract written before the agent runs (scope, acceptance checks, budget), protected from the agent by mechanism;
-- a verdict of executable evidence after the agent stops: the customer's own checks, a scope check on the change, and a check that the agent's tests mean something, run where the agent cannot interfere;
+- a verdict of executable evidence after the agent stops, run where the agent cannot interfere. For conventional code: the customer's own checks, a scope check on the change, and a check that the agent's tests mean something. For an LLM application: an evaluation over fixed cases, some hidden from the agent, reported as pass, fail or inconclusive;
 - an evidence record of the outcome, which no vendor audit log we examined provides;
 - a measured false-pass rate for that verdict, per repository and per model and harness pairing, used to set how much human review each class of change gets.
 
@@ -133,8 +133,12 @@ Taken in the thesis discussion. Each has its rationale in `docs/JOURNAL.md` (ADR
 | T9 | Prototype scope | **Three arms** (bare, prompt discipline, gated) and **two comparators** (the agent's own claim; an evaluator agent on a sample of runs). The cheaper-model arm moves to stretch. | The cheaper-model arm is confounded by sharing a harness and costs runs under the 50 USD cap. |
 | T10 | Staying valuable as models improve | **Measurement is repeated for each and every model and harness pairing, and the product adapts to each.** This is to be emphasised in the proposal. | A check's value moves with each model release (E-36); harness effects change in size and sign by model (E-58). Adapting per model is what keeps the measurement worth paying for. |
 | T11 | The verdict | **"Executable evidence."** In the prototype: the customer's fixed checks, a scope check on the diff, and a check that the agent's own tests fail against the original code. The counterexample search is the next enhancement, alongside the decision-model judge. | Fixed checks alone pass bad changes where tests under-describe behaviour (E-68). "Executable" is accurate where "deterministic" would overclaim once a model helps search for counterexamples. |
+| T12 | Is the verdict always deterministic | **No. It is always executable.** For conventional code the verdict comes from tests and is a yes or no. For an LLM application it is an evaluation: fixed cases, some hidden from the agent, run repeatedly and scored against a threshold, reported as pass, fail or inconclusive. Code-based scoring first; a model scores only where code cannot, and then its agreement with human labels is measured and stated. **The prototype starts with the conventional case. The evaluation path is designed in `DESIGN.md`; implementing it is a bonus if time allows.** | Raised by Pedro: software built on an LLM cannot be verified by one deterministic run. What the product promises does not depend on determinism: checks fixed beforehand and protected, run outside the agent, recorded, and their own error rate measured. The conventional case gives the cleanest comparison against a model reviewer within one day. |
+| T13 | Does the product add time and cost to delivery | **Yes, and the proposal says so.** It adds cost before the work (writing the checks), during it (extra attempts), after it (running the checks; for evaluations, many model calls) and over time (upkeep and re-measurement), and it adds waiting before merge. It is meant to remove review time, rework and incidents. Whether that nets out is not established; the pilot has to show it. The product limits its cost by applying checks by risk, reusing the team's existing pipeline, capping its own budget, and measuring wrongly failed changes as well as wrongly passed ones. | Raised by Pedro. A product that adds checks and hides their cost will not survive a CFO's first question, and the research itself warns that checking everything is waste (E-36) and that waiting has a price (E-57). |
 
 Still open: the review date in T7, and T8.
+
+Journal references: ADR-014 to ADR-018.
 
 ## 3. What the research says
 
@@ -147,8 +151,8 @@ Verification tags used throughout the repo: **[L]** read in a PDF in Pedro's loc
 - METR, 2026-03-10 [P]: "roughly half of test-passing SWE-bench Verified PRs … would not be merged into main by repo maintainers".
 - Faros AI Engineering Report 2026, 22,000 developers [L]: "Tasks involving code specifically have increased 210%", "Bugs per developer are up 54%", "Median review time has increased 5X", "31% more PRs are merging without any review". Faros sells measurement tooling, so it is an interested party.
 - Stack Overflow Developer Survey 2025 [P]: 66% cite "AI solutions that are almost right, but not quite"; 46% distrust accuracy against 33% who trust it.
-- Veracode, 2026-03-24 [P]: "only 55% of generation tasks result in secure code" and "No meaningful security gains materialized" in newer models. Veracode sells application security.
-- Destructive action is real: on 2026-04-25 an agent deleted a production volume and its backups in 9 seconds [P, ACS Information Age].
+- Veracode, 2026-03-24 [P]: "only 55% of generation tasks result in secure code"; of two newer OpenAI models specifically, "No meaningful security gains materialized". Veracode sells application security.
+- Destructive action is real: an agent deleted a production database and its backups in nine seconds [P, ACS Information Age, 2026-05-05].
 - Pedro's notes agree: "Review is the verifier", "The throughput gain and the quality debt are the same event", brownfield is "where our money is".
 
 ### 3.2 Where not to compete
@@ -469,8 +473,9 @@ Ground truth for each task is a set of acceptance checks the agent and the gate 
 | H3 Economics | Cost per production-qualified change (PQC per dollar) is no worse with the gate | Tokens and dollars per production-qualified change, per arm |
 | H4 Trustworthy verdict | The gate's "pass" is right more often than the agent's own claim (arms A and P) and than the evaluator agent's verdict | False-pass rate of each verdict source against the hidden checks |
 | H5 Verifier integrity | The gate itself cannot be fooled by the failure modes found in the articles | Planted-flaw evaluations: a fixed set of seeded bad changes and broken test setups; every one must be rejected |
+| H6 Overhead | The gate's added time and cost per task are small next to the agent's own, and it does not block good changes | Elapsed time and dollars added by the gate, per task; extra agent attempts it triggers; the false-fail rate (good changes wrongly failed) beside the false-pass rate |
 
-H4 is the product's claim and the number that can kill it. H3 is the CFO's number. H5 is pass or fail.
+H4 is the product's claim and the number that can kill it. H3 is the CFO's number. H5 is pass or fail. H6 is what the product costs the delivery process; the prototype can measure what the gate adds, and only a pilot can measure what it saves.
 
 **Kill criteria after the prototype (decided, §2.1 T7).** Continue only if the gate's false-pass rate is lower than both comparators, every planted flaw is rejected, and no unsafe action runs in the gated arm.
 
@@ -493,7 +498,9 @@ The task set will be small and written by us, so results are an indication, not 
 5. **Eval runner.** Tasks × trials × arms into a results table, with the cross-vendor evaluator's verdict recorded beside the runs it scores and the spend cap enforced.
 6. **Stretch.** The same gate attached to a vendor harness through a hook or MCP; context compaction and a repo map.
 
-**Next enhancement, after the first prototype is measured:** a decision-model judge and a recalibration test (§3.10).
+**Bonus, if time allows:** the evaluation path for an LLM application (§2.1 T12), shown end to end on one small task. It is designed in `DESIGN.md` whether or not it is built.
+
+**Next enhancements, after the first prototype is measured:** a counterexample search (§3.11), and a decision-model judge with a recalibration test (§3.10). The decision model belongs with the evaluation path, as a low-variance scorer.
 
 ### 7.3 Deliberately excluded
 
@@ -510,13 +517,13 @@ IDE plugin, any UI beyond the CLI, cloud or background agents, multi-agent orche
 | Repo understanding | Search, glob and syntax-aware reads plus a short repo map. No embeddings index. |
 | Tool execution and permissions | Deterministic allow / review / block before every call. Worktree sandbox, no network by default, least-privilege credentials. Trust ladder: local-only, then PR, then wider. |
 | Orchestration | Single loop first. "Fan out reads, single-thread writes." A second loop only when the single loop is measured as the bottleneck. |
-| Evaluation | pass^k and cost per production-qualified change, not pass@1. Deterministic checks before any model judge. The agent never grades itself. |
+| Evaluation | pass^k and cost per production-qualified change, not pass@1. Deterministic checks before any model judge. The agent never grades itself. Where the software under change is itself an LLM application, the check is an evaluation with a three-way result (pass, fail, inconclusive), hidden cases, and a stated error rate for any model scorer. |
 | Security | Assume prompt injection succeeds; break one leg of the lethal trifecta by design. Secrets never enter context. |
 | Privacy | The product works on the customer's code, checks, outcomes and labels, so customers must know exactly what is used and for what. All of it stays in the customer's boundary; the provider is chosen per customer; nothing is used for training or shared across customers; calibration data belongs to the customer; retention is stated and short. |
 | Observability | One structured event per step; the evidence bundle is the audit record ("provenance as schema, not logging"). |
 | Human layer | Humans at risk-tiered gates. "No human in the loop" is a configuration justified by evidence, never a default. |
-| Latency | Asynchronous by design: the unit is a delegated task, so the budget is minutes per task, with time-to-first-evidence tracked. |
-| Cost | A ceiling per task, enforced by the harness. Headline metric: cost per production-qualified change. |
+| Latency | Asynchronous by design: the unit is a delegated task, so the budget is minutes per task. The gate adds waiting before merge; time from task to accepted change is measured with and without it, and checks are applied by risk so that low-risk changes wait least. |
+| Cost | A ceiling per task, enforced by the harness, covering verification as well as the agent's work. Headline metric: cost per production-qualified change, with the cost of checking included. For evaluations the cost is cases times repeats times model calls, so sample sizes are set by risk. |
 | Failure handling | Every run ends in one of: accepted, needs review, blocked, budget exhausted. Each leaves a record. Rollback is deleting the worktree. |
 | Redlines | Proposed in `DESIGN.md` for Pedro to set. Candidates: no write outside the sandbox; no merge without a human; no destructive command without approval; no secrets in context; no run without a record; a dated kill criterion for the business; the agent that writes a change cannot approve it; no use of customer data beyond what the customer has been told and agreed. |
 
@@ -557,3 +564,5 @@ The issue register lives in `docs/ROADMAP.md` §5. It is the only copy.
 - Second thesis (brownfield specialisation) evaluated from its primary sources and the market; findings in §3.11.
 - Pedro's pointers on market structure and agent limits traced to public sources and checked; findings in §3.12.
 - Thesis discussion held; decisions in §2.1.
+- Evidence ledger rows E-01 to E-29 re-checked against raw sources and corrected.
+- Proposal sections 1 and 2 drafted (`docs/PROPOSAL.md`); item on the verdict widened to cover evaluations for LLM applications (T12).

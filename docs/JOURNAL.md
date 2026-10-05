@@ -49,6 +49,9 @@ Two kinds of entry:
 - Pedro raised a second thesis from his own list of candidates: a brownfield / enterprise-legacy specialisation. Its section in his notes and Osmani's article were read by the main session; the two papers behind it were read in full and the legacy-modernisation market researched by sub-agents. Evaluation recorded; plan §3.11 written; roadmap question T11 added (ADR-013).
 - Pedro pointed to six places in his notes on market analysis and agent limits, asking whether they are useful as evidence, and set the citation rule: records cite public sources, not his notes. The claims were traced to their public sources and checked by two sub-agents. Useful as evidence, no change of direction. Records added; plan §3.12 written; two checks added to the prototype's gate; roadmap inputs updated.
 - Thesis discussion held. Pedro accepted the three-stage probe, chose the first thesis over the brownfield specialisation for lack of time to validate the latter, and settled the remaining questions with four changes to the proposals put to him: the buyer is engineering leaders as sponsors in organisations that build software; customer data must be handled with everyone aware and every precaution taken; guiding the user to create the checks is the product's first process, not an open question; adaptation to each and every model is to be emphasised. The CFO's numbers are deferred until the prototype is ready (ADR-014 to ADR-016).
+- Evidence ledger rows E-01 to E-29 re-checked against raw sources by a sub-agent: 20 exact, 6 with wording that differed, 2 with a figure that differed, 1 not found publicly. Ledger corrected; three unverified rows confirmed at primary sources. Proposal sections 1 and 2 drafted.
+- Pedro reviewed the proposal draft, judged it sound, and questioned one point: whether the verdict is always deterministic, given that software built on an LLM has to be checked by an evaluation. The item was reworded and the scope decided (ADR-017).
+- Pedro asked for the costs and the effect on the delivery process to be elaborated: more tests and checks add latency, time and cost. A section was added to the proposal and a sixth hypothesis to the prototype (ADR-018).
 
 **Deviations and corrections**
 - **First-pass reading was truncated without warning.** The summarising fetch cut three long articles part-way and reported one as near-complete. Found when Pedro challenged the coverage. Fix: download the full text, check it reaches the final section, read end to end.
@@ -71,6 +74,7 @@ Two kinds of entry:
 - **Pedro's notes described the VB6 study as equivalence-tested.** It was assessed by hand by the system's maintainer; there was no test suite.
 - **Fourteen claims in Pedro's market and limits notes needed correcting** at their public sources, among them a benchmark figure that came from a podcast (about 33%, against 14.8% in the paper) and a vulnerability figure attributed to the wrong vendor. Four phrases turned out to be his own framing, in no source.
 - **One committed file broke the new citation rule.** The digest of Pedro's notes named his private files and carried untraced figures. It was replaced with a list of his principles.
+- **Nine early ledger rows were not exact.** They had been gathered through a summarising fetch. Corrections that changed meaning: a security quotation applied to two models, not to all newer models; a billing change was an announcement with an exception for annual subscribers; an incident date was not in its source; one repository reported as archived is read-only. The plan carried three of these and was corrected.
 - **A push failed** for lack of git credentials and was retried through the GitHub CLI's login (ASSIST-011).
 
 ---
@@ -370,3 +374,54 @@ Each line is the decision, then why.
 **The CFO's numbers.** Deferred until the prototype is ready. The working assumption was judged reasonable.
 
 **Alternatives rejected.** Brownfield teams as the declared buyer (ADR-015); describing the verdict as deterministic; treating contract creation as something to discover in the pilot.
+
+### ADR-017 — The verdict is executable, not always deterministic; evaluations for LLM applications
+
+| | |
+|---|---|
+| Status | Decided 2026-10-05 |
+| Plan reference | `PLAN.md` §2.1, T12; `PROPOSAL.md` §2.1 |
+
+**Decision.**
+- The verdict covers two cases. For conventional code it comes from the customer's tests and is a yes or no. For an LLM application it is an evaluation: fixed cases, some hidden from the agent, run repeatedly and scored against a threshold, reported as pass, fail or inconclusive.
+- Scoring uses code wherever it can. A model scores only where code cannot, and then its agreement with human labels is measured and stated.
+- The prototype starts with the conventional case. The evaluation path is designed in the design document. Implementing it is a bonus if time allows.
+
+**Rationale.**
+- Pedro's point: an LLM application answers differently each time, so one deterministic run cannot verify it.
+- What the product promises does not depend on determinism: checks fixed before the agent runs and protected from it, run outside the agent, recorded, and their own error rate measured.
+- "Inconclusive" is an honest third result when the uncertainty straddles the threshold; it routes to a human or to more samples.
+- The conventional case gives the cleanest comparison against a model reviewer within a one-day budget.
+
+**Alternatives rejected.**
+- Describing the verdict as deterministic, which would exclude LLM applications or overclaim.
+- Adding an LLM-application task to the first prototype, which would take time and budget from the main comparison.
+
+**Consequences.**
+- A model scorer reintroduces judgment, so it carries conditions: checked against human labels, pinned to a version and prompt, from a different vendor than the model under test where possible.
+- The evaluation's own error has two sources, too few samples and scorer error, and both have to be reported.
+- The decision model set aside in ADR-012 belongs with this path, as a low-variance scorer.
+- Evaluations cost tokens, so the contract's budget covers verification as well as the agent's work.
+
+### ADR-018 — State the cost the product adds to delivery, and measure it
+
+| | |
+|---|---|
+| Status | Decided 2026-10-05 |
+| Plan reference | `PLAN.md` §2.1, T13; `PROPOSAL.md` §2.9 |
+
+**Decision.** The proposal states that the evidence layer adds time and cost to building software, shows where in the delivery process that cost lands, and commits to measuring it. The prototype gains a sixth hypothesis on overhead, including the rate at which the gate wrongly fails good changes.
+
+**Rationale.**
+- Pedro's point: more tests and checks add latency, time and cost.
+- The product's case is a trade, not a free gain: cost moves from review, rework and incidents to checks written once and machine time. No evidence we hold shows the trade nets out.
+- The research gives reasons for caution in both directions. Checking can be cheap next to generating (E-84), but checking everything is waste (E-36), waiting has a price (E-57), and a cheap check that passes bad work is worse than none (E-42).
+- A verdict that blocks good changes creates rework and teaches people to bypass it, so the false-fail rate matters as much as the false-pass rate.
+
+**How the product limits its own cost.** Checks applied by risk; reuse of the team's existing pipeline; a budget that covers verification; both error rates reported.
+
+**Where it is expected not to pay.** Small low-risk changes; fast new builds where a mistake is cheap to undo; teams with few tests, for whom writing the checks is most of the cost.
+
+**Alternative rejected.** Presenting the product as a saving without stating what it adds.
+
+**Limit.** The prototype can measure what the gate adds. Only a pilot can measure what it saves.

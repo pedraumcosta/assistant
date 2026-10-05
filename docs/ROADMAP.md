@@ -11,7 +11,7 @@
 - The plan exists and ten working decisions are recorded in it (`PLAN.md` §2).
 - Research is done and recorded in `docs/research/`: the first pass, the full re-reads, and three sets of Pedro's own material checked against their sources (his Notion notes, his web research notes, and his analysis of the harness paper), with four papers read in full along the way.
 - The thesis is decided (§2 below): the evidence layer, pursued as a three-stage probe that ends in Build or Wait.
-- Nothing has been designed or built yet. No proposal text exists.
+- The first two sections of the proposal are drafted. Nothing has been designed or built yet.
 
 ## 2. The thesis
 
@@ -21,6 +21,8 @@
 - **Thesis:** the evidence layer. The brownfield specialisation was evaluated and is not pursued; brownfield is not claimed as a first market.
 - **Buyer:** engineering leaders, as sponsors, in organisations that build software.
 - **Product:** a first process that guides the user to create the checks; a protected contract; a verdict of executable evidence; an outcome record; a measured false-pass rate, repeated and adapted for each model and harness pairing.
+- **The verdict is always executable, not always deterministic:** tests for conventional code; an evaluation for an LLM application. The prototype starts with the conventional case; the evaluation path is designed, and built only as a bonus.
+- **Cost to the delivery process is stated, not hidden:** the product adds time and cost at four stages and adds waiting before merge. Whether it repays that in review, rework and incidents avoided is what the pilot must show.
 - **Customer data:** used only as the customer has been told and agreed, and kept in their environment.
 - **Not built:** an assistant, an agent loop, a meta-harness, a policy or sandbox layer, a review bot, the wider control plane, a model.
 
@@ -54,10 +56,13 @@ Status values: Done, In review, Not started, Blocked.
 | Second thesis (brownfield specialisation) evaluated from its primary sources and the market | `docs/research/second-thesis-brownfield.md` and four records, `PLAN.md` §3.11 | The commit after `4986533` | 2026-10-05 |
 | Pedro's pointers on market structure and agent limits traced to public sources and checked | `docs/research/market-and-limits-evidence.md` and two check files, `PLAN.md` §3.12; `practitioner-notes.md` replaced by a list of principles | The commit after `b2f1985` | 2026-10-05 |
 | Thesis discussion: posture, thesis, buyer, differentiation, exclusions, kill criteria and prototype scope decided | `PLAN.md` §2.1, `JOURNAL.md` ADR-014 to ADR-016 | The commit after `5b7fef5` | 2026-10-05 |
+| Evidence verification: ledger rows E-01 to E-29 re-checked against raw sources | `docs/research/EVIDENCE.md` | The commit after `1e3d2c5` | 2026-10-05 |
 
 ### 3.2 In review
 
-Nothing is in review. The thesis discussion closed on 2026-10-05, apart from the two open items in §2.
+| Step | Output | Exit check | Waiting on |
+|---|---|---|---|
+| Problem and product | `docs/PROPOSAL.md` sections 1 and 2, drafted 2026-10-05 | Includes the case against entering; exclusions are explicit | Pedro's review |
 
 ### 3.3 Not started
 
@@ -65,10 +70,9 @@ These are the remaining phases from `PLAN.md` §6. With the thesis decided, they
 
 | Phase | Output | Exit check (from the plan) | Depends on |
 |---|---|---|---|
-| Evidence verification | `docs/research/EVIDENCE.md` with no [S] row in use | Every figure we intend to use is tagged [P] or [L], or is dropped | Nothing; can start |
-| Problem and product | `docs/PROPOSAL.md` §1–2 | Includes the case against entering; exclusions are explicit | Nothing; can start |
-| System design | `docs/DESIGN.md` | Each design topic has a position, a rejected alternative and a way to measure it; risks, assumptions and redlines stated | Problem and product |
+| System design | `docs/DESIGN.md` | Each design topic has a position, a rejected alternative and a way to measure it; risks, assumptions and redlines stated | Nothing; can start |
 | Prototype | `prototype/` | Each slice runs end to end on the fixture repo | System design |
+| Bonus: evaluation path for an LLM application | One small task verified by an evaluation, end to end | Three-way result reported; hidden cases never shown to the agent; any model scorer's agreement with labels stated | Prototype; time remaining |
 | Measurement | `docs/RESULTS.md`, `prototype/runs/` | Results table generated from run files, limitations stated, spend within the 50 USD cap | Prototype |
 | Next enhancements: counterexample search; decision-model judge and recalibration test | A search for hidden behavioural differences that produces executable failing tests; a fourth verdict source in the evaluation; and a measurement of how far the prototype's own outcomes improve a classifier's calibration | Reported on false-pass rate, variance, cost and latency beside the other verdict sources; limits stated | First prototype measured; a TypeSafe API key or a local open build |
 | Proposal, design view, CFO message | `PROPOSAL.md` complete; Claude Code artifact; Slidev deck | Recommendation is consistent with the results, including if the hypotheses fail | Measurement; the CFO assumptions (T8) |
@@ -93,7 +97,7 @@ This is the only copy of the register (decided 2026-10-05). `PLAN.md` §10 point
 | ASSIST-001 | Read-only collaborators are not possible on a private repo owned by a personal account (GitHub Docs, `EVIDENCE.md` E-27) | Accepted: decision D6 keeps the repo on the personal account; anyone invited will have write access |
 | ASSIST-002 | Git identity mismatch between git config and the session account | Closed: commits use `pcosta@gmail.com` (D7) |
 | ASSIST-003 | Parts of Pedro's notes were not synced to the machine and could not be read, including the strategy and product-management material | Open, not blocking |
-| ASSIST-004 | Research figures tagged [S] are unverified; quotations gathered through a summarising fetch need their wording re-checked at the source | Open; rows E-10, E-14, E-18 remain [S]. E-17 confirmed 2026-10-05. `market-landscape.md` is partly superseded by `check-market-claims.md` |
+| ASSIST-004 | Research figures tagged [S] were unverified, and early quotations had been gathered through a summarising fetch | Closed 2026-10-05: rows E-01 to E-29 re-checked against raw sources; no [S] row remains. `market-landscape.md` is still partly superseded by `check-market-claims.md` |
 | ASSIST-005 | Three articles were read only through a summarising fetch; no article figure is usable as evidence unless it has a row in `EVIDENCE.md` | Open, not blocking |
 | ASSIST-006 | Model access and spend ceiling | Closed: keys in a git-ignored `.env`, cap 50 USD (D5) |
 | ASSIST-007 | Some source material sits in Pedro's private folders | Closed by D9 |
