@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>ASSIST Recommendation</title>
+<!--
+  TEMPLATE for the P7 proposal presentation (the Claude Code artifact of D8).
+  Format: the single-page evaluation-report style of the reference artifact
+  (hero + stat tiles + pill TOC + numbered pipeline + metric cards + verdict
+  chips + honesty boxes + conclusions + footer), in English.
+
+  TIMING — the spoken walkthrough must fit 10 MINUTES. Minute marks are in the
+  comments above each section; the Working-rules section and the footer are
+  leave-behind material, not spoken. Rehearse once against a clock.
+
+  FILL RULES (docs/templates/README.md):
+    {{runs:...}}        -> generated from prototype/runs/ only
+    {{E-nn}}            -> EVIDENCE.md row tagged [P]/[L]
+    {{assumption:...}}  -> labelled assumption, rates from finance
+    {{pedro:...}}       -> Pedro's decision (e.g. review date)
+  Keep exactly ONE recommendation branch — the one RESULTS.md §5 selects —
+  and the same one in the Slidev deck. Delete all template comments.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,650;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap">
+<style>
+:root{
+  --page:#FAF9F6; --surface:#FFFFFF; --ink:#1B2420; --ink2:#4E5A54; --muted:#8B948E;
+  --line:#E3E0D7; --accent:#0E6B5C; --accent-soft:#E7F0ED; --ref:#7A5C2E; --ref-soft:#F3EDE2;
+  --warn:#A4650E; --warn-soft:#F7EEDC; --bad:#A33B2E; --code:#F1EFE9;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --page:#151A18; --surface:#1D2421; --ink:#E8E6DF; --ink2:#ADB6B0; --muted:#7E8781;
+    --line:#333B37; --accent:#4FB39E; --accent-soft:#1E2E2A; --ref:#C9A15E; --ref-soft:#2A2620;
+    --warn:#D19A4C; --warn-soft:#2C2418; --bad:#D07A6C; --code:#232A26;
+  }
+}
+:root[data-theme="dark"]{
+  --page:#151A18; --surface:#1D2421; --ink:#E8E6DF; --ink2:#ADB6B0; --muted:#7E8781;
+  --line:#333B37; --accent:#4FB39E; --accent-soft:#1E2E2A; --ref:#C9A15E; --ref-soft:#2A2620;
+  --warn:#D19A4C; --warn-soft:#2C2418; --bad:#D07A6C; --code:#232A26;
+}
+*{box-sizing:border-box}
+body{background:var(--page);color:var(--ink);margin:0;padding-block:0 72px;
+  font:16px/1.65 "Source Sans 3",system-ui,sans-serif}
+main{max-width:880px;margin:0 auto;padding-inline:20px}
+h1,h2,h3{font-family:"Fraunces",Georgia,serif;font-weight:650;line-height:1.15;text-wrap:balance;margin:0}
+h1{font-size:2.35rem;letter-spacing:-.01em}
+h2{font-size:1.5rem;margin:64px 0 6px;color:var(--ink)}
+h3{font-size:1.08rem;font-weight:600;margin:28px 0 6px}
+p{margin:10px 0;max-width:70ch}
+a{color:var(--accent)}
+code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.86em;background:var(--code);
+  border-radius:4px;padding:.08em .35em}
+.eyebrow{font:600 .72rem/1 "Source Sans 3";letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+header.hero{border-bottom:2px solid var(--accent);padding:56px 0 28px;display:flex;flex-direction:column;gap:14px}
+.lede{font-size:1.12rem;color:var(--ink2);max-width:64ch}
+.metahead{display:flex;flex-wrap:wrap;gap:8px 22px;font-size:.83rem;color:var(--muted)}
+.metahead b{color:var(--ink2);font-weight:600}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:10px;margin:26px 0 0}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:12px 14px}
+.stat .n{font-family:"Fraunces",serif;font-size:1.5rem;font-weight:650;color:var(--accent);
+  font-variant-numeric:tabular-nums}
+.stat .l{font-size:.74rem;color:var(--muted);letter-spacing:.03em;text-transform:uppercase;margin-top:2px}
+.toc{display:flex;flex-wrap:wrap;gap:6px 4px;margin:20px 0 0;padding:0;list-style:none;font-size:.85rem}
+.toc a{border:1px solid var(--line);border-radius:99px;padding:4px 12px;text-decoration:none;color:var(--ink2);background:var(--surface)}
+.toc a:hover{border-color:var(--accent);color:var(--accent)}
+.secnote{color:var(--ink2);font-size:.94rem;margin:4px 0 18px;max-width:70ch}
+/* numbered pipeline */
+.pipe{counter-reset:step;display:flex;flex-direction:column;gap:0;margin:22px 0;border-left:2px solid var(--accent);padding-left:0}
+.step{position:relative;padding:14px 16px 14px 58px}
+.step::before{counter-increment:step;content:counter(step);position:absolute;left:14px;top:16px;
+  width:28px;height:28px;border-radius:50%;background:var(--accent);color:var(--page);
+  font:600 .9rem/28px "JetBrains Mono";text-align:center}
+.step b{display:block;font-size:1rem}
+.step p{margin:3px 0 0;font-size:.92rem;color:var(--ink2)}
+/* metric cards */
+.metric{background:var(--surface);border:1px solid var(--line);border-radius:8px;margin:18px 0;overflow:hidden}
+.metric>header{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;padding:14px 18px 10px;border-bottom:1px solid var(--line)}
+.mid{font:600 .95rem/1 "JetBrains Mono";color:var(--page);background:var(--accent);border-radius:5px;padding:6px 9px}
+.mname{font-family:"Fraunces",serif;font-weight:650;font-size:1.12rem}
+.chip{font:600 .68rem/1 "Source Sans 3";letter-spacing:.06em;text-transform:uppercase;border-radius:99px;padding:4px 10px;margin-left:auto}
+.chip.primary{background:var(--accent-soft);color:var(--accent)}
+.chip.cost{background:var(--code);color:var(--ink2)}
+.chip.gate{background:var(--ref-soft);color:var(--ref)}
+.chip.pending{background:var(--warn-soft);color:var(--warn)}
+.mgrid{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.mcell{padding:12px 18px;border-top:1px solid var(--line)}
+.mgrid .mcell:nth-child(1),.mgrid .mcell:nth-child(2){border-top:none}
+.mcell.full{grid-column:1/-1}
+.mlab{font:600 .68rem/1.2 "Source Sans 3";letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.mcell p{font-size:.93rem;margin:0;color:var(--ink)}
+.mval{background:var(--accent-soft);border-top:1px solid var(--line);padding:10px 18px;
+  font-family:"JetBrains Mono",monospace;font-size:.82rem;color:var(--ink);line-height:1.6}
+.mval b{color:var(--accent);font-weight:600}
+.mval .ref{color:var(--ref);font-weight:600}
+@media (max-width:640px){.mgrid{grid-template-columns:1fr}.mcell{border-top:1px solid var(--line)}
+  .mgrid .mcell:nth-child(2){border-top:1px solid var(--line)}}
+/* misc blocks */
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0}
+@media (max-width:640px){.duo{grid-template-columns:1fr}}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px 18px}
+.box h3{margin-top:0}
+.box p{font-size:.92rem;color:var(--ink2)}
+.honesty{border-left:3px solid var(--ref);background:var(--ref-soft)}
+table{border-collapse:collapse;width:100%;font-size:.88rem;background:var(--surface);margin:14px 0}
+th,td{padding:8px 11px;border:1px solid var(--line);text-align:left;vertical-align:top}
+th{font:600 .68rem/1.3 "Source Sans 3";letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+td.num{text-align:right;font-variant-numeric:tabular-nums;font-family:"JetBrains Mono",monospace;font-size:.8rem}
+tr.ref td{background:var(--ref-soft)}
+td.best{font-weight:600;color:var(--accent)}
+td.sig{font-weight:600;color:var(--accent)}
+td.ns{color:var(--muted)}
+.tablewrap{overflow-x:auto}
+.callout{border:1px solid var(--line);border-left:3px solid var(--accent);background:var(--surface);
+  border-radius:0 8px 8px 0;padding:12px 16px;font-size:.9rem;color:var(--ink2);margin:18px 0}
+.verd{display:inline-block;font:600 .68rem/1 "Source Sans 3";letter-spacing:.06em;text-transform:uppercase;border-radius:99px;padding:3px 8px}
+.verd.fail{background:var(--warn-soft);color:var(--bad)}
+.verd.ok{background:var(--accent-soft);color:var(--accent)}
+.verd.nm{background:var(--code);color:var(--muted)}
+footer{margin-top:70px;border-top:1px solid var(--line);padding-top:18px;font-size:.82rem;color:var(--muted)}
+footer p{max-width:none}
+@media print{ body{background:#fff} .toc{display:none} .metric{break-inside:avoid} h2{break-after:avoid} }
+</style>
+</head>
+<body>
+<main>
+
+<!-- ============ HERO — minute 0:00–1:00 (read the lede, point at the tiles) ============ -->
+<header class="hero">
+  <span class="eyebrow">ASSIST · executive recommendation · evidence-driven development</span>
+  <h1>Should we enter the AI software-development-assistant market?</h1>
+  <p class="lede"><b>Not as asked.</b> We probed the one part nobody sells — a verdict on
+  agent-written changes built from executable evidence, independent of the model vendor and
+  measured for error — and this page gives the result and the decision it supports.
+  {{One sentence per branch: A — the prototype cleared its exits; we ask for a six-week
+  measurement pilot with fixed exits. · B — the prototype failed its exits; we recommend
+  waiting, with a review on {{pedro:review_date}}. · C — the sample could not separate the
+  verdict sources; we ask for a budgeted re-run, or we wait.}}</p>
+  <div class="metahead">
+    <span><b>Method</b> three-stage probe, kill criteria fixed before the results existed</span>
+    <span><b>Evidence</b> every figure cites <span class="mono">EVIDENCE.md</span> ([P]/[L]) or <span class="mono">prototype/runs/</span></span>
+    <span><b>Prototype</b> {{runs:date}} · agent under test: the published 90-line scaffold ({{E-59}})</span>
+    <span><b>Spend</b> {{runs:total_spend_usd}} of the 50 USD cap</span>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="n">{{runs:n_tasks}}</div><div class="l">tasks</div></div>
+    <div class="stat"><div class="n">{{runs:n_runs}}</div><div class="l">runs · 3 arms</div></div>
+    <div class="stat"><div class="n">3</div><div class="l">verdict sources compared</div></div>
+    <div class="stat"><div class="n">{{runs:fp_gate}}</div><div class="l">gate false-pass rate</div></div>
+    <div class="stat"><div class="n">{{runs:flaws_rejected}}/{{runs:n_flaws}}</div><div class="l">planted flaws rejected</div></div>
+    <div class="stat"><div class="n">{{runs:unsafe_gated}}</div><div class="l">unsafe actions, gated arm</div></div>
+    <div class="stat"><div class="n">{{runs:total_spend_usd}}</div><div class="l">spent · cap 50 USD</div></div>
+  </div>
+  <ul class="toc">
+    <li><a href="#answer">The answer</a></li>
+    <li><a href="#buy">Why not simply buy</a></li>
+    <li><a href="#problem">The problem</a></li>
+    <li><a href="#gap">The gap</a></li>
+    <li><a href="#product">The product</a></li>
+    <li><a href="#measured">What we measured</a></li>
+    <li><a href="#scoreboard">The scoreboard</a></li>
+    <li><a href="#cost">What it costs</a></li>
+    <li><a href="#ask">The ask</a></li>
+    <li><a href="#rules">Working rules</a></li>
+  </ul>
+</header>
+
+<!-- ============ THE ANSWER — spoken inside minute 0:00–1:00 ============ -->
+<h2 id="answer">The answer</h2>
+<p><b>Do not build another AI coding assistant.</b> Generation is owned and priced by the model
+vendors ({{E-12}}, {{E-13}}), the independents are priced at acquisition scale ({{E-46}},
+{{E-47}}), and reselling generation has "neutral or negative" margins ({{E-17}}). What we
+tested instead is tooling for <b>evidence-driven development</b>: the team defines what "done"
+means as executable checks before the work starts, and every change — written by a person or an
+agent — is accepted on that evidence.</p>
+<!-- Keep ONE branch block, matching RESULTS.md §5. -->
+<div class="callout"><b>Branch A.</b> The prototype cleared all three exits. The decision requested
+is a six-week measurement pilot with one or two design partners, with its own exit fixed now.</div>
+<div class="callout"><b>Branch B.</b> The prototype failed {{which criterion}}. The decision requested
+is a review date: {{pedro:review_date}}, or earlier if {{reopening condition}}.</div>
+<div class="callout"><b>Branch C.</b> The 50 USD cap left the comparison underpowered: {{runs:...}},
+plausible ranges overlapping. The decision requested is a budgeted re-run of {{assumption:rerun_budget}},
+or the recommendation reverts to Branch B.</div>
+
+<!-- ============ WHY NOT SIMPLY BUY — minute 1:00–2:30 (the CFO's question, answered early) ============ -->
+<h2 id="buy">"Why shouldn't we simply buy their products?"</h2>
+<p class="secnote">The CFO's question, answered before the ask. In one line: we do buy them —
+what we probed is the one thing their position prevents them from selling.</p>
+<div class="tablewrap"><table>
+  <tbody>
+  <tr><th>Layer</th><th>Decision</th><th>Why</th></tr>
+  <tr><td>Assistants and generation</td><td><b>Buy</b> ({{verified seat prices}}/seat)</td><td>Vendor-subsidised; features copy between vendors in months</td></tr>
+  <tr><td>Policy, sandbox, budgets across agents</td><td><b>Adopt open source</b> ({{E-32}})</td><td>Free, backed by a large vendor</td></tr>
+  <tr><td>Model-opinion code review</td><td>Buy if wanted</td><td>A model's opinion; cannot run our tests ({{E-50}}) or block ({{E-51}})</td></tr>
+  <tr class="ref"><td><b>The verdict, its measured error rate, the outcome record</b></td><td><b>The only build</b></td><td>Sold by no one ({{E-50}}, {{E-51}}, {{E-53}}); credible from no model vendor ({{E-34}})</td></tr>
+</tbody></table></div>
+<p>The independence point in the vendor's own words: "agents reliably skew positive when grading
+their own work", and a second model from the same family "is still an LLM that is inclined to be
+generous towards LLM-generated outputs" ({{E-34}}, {{E-35}}). A vendor cannot sell a credible
+verdict on itself, whatever it spends.</p>
+
+<!-- ============ THE PROBLEM — minute 2:30–4:00 (four facts, no adjectives) ============ -->
+<h2 id="problem">What the incumbents have not solved</h2>
+<p class="secnote">Writing code got cheap. Knowing whether to trust it did not.</p>
+<div class="duo">
+  <div class="box"><h3>Passing tests is weak evidence</h3><p>"Roughly half of test-passing"
+  agent changes on a standard benchmark "would not be merged into main by repo maintainers"
+  ({{E-01}}). On whole-repository migrations, 118 runs passed every fixed check; 28 deserved to ({{E-68}}).</p></div>
+  <div class="box"><h3>Review is absorbing the cost</h3><p>Across 22,000 developers: "Median time
+  in review is up 441.5%"; PRs merged with no review at all are up 31.3% ({{E-04}}, {{E-05}}).
+  The source sells measurement — said here, as everywhere.</p></div>
+  <div class="box"><h3>Trust is falling while use rises</h3><p>Trust in AI output accuracy fell
+  43% → 33% in a year; distrust rose 31% → 46% ({{E-82}}). Two thirds cite solutions
+  "almost right, but not quite" ({{E-07}}).</p></div>
+  <div class="box"><h3>Agents can defeat the check</h3><p>A model trained on coding tasks learned
+  to force tests green — including by patching the test reporter to say "passed" ({{E-75}}).
+  The author of a change cannot be the keeper of its evidence.</p></div>
+</div>
+
+<!-- ============ THE GAP — minute 4:00–5:00 (narrow, and say so) ============ -->
+<h2 id="gap">The gap: four things nobody sells together</h2>
+<div class="pipe">
+  <div class="step"><b>A verdict that runs the customer's own checks</b>
+    <p>Not a model's reading of the diff. The funded reviewer's checks cannot "run your test suite" ({{E-50}}).</p></div>
+  <div class="step"><b>Independence from the vendor whose model wrote the code</b>
+    <p>The grader is not the author and not the author's family ({{E-34}}, {{E-35}}).</p></div>
+  <div class="step"><b>A measured false-pass rate, on the customer's repository</b>
+    <p>Published by no vendor. Four vendors each claim first place on the same review benchmark.</p></div>
+  <div class="step"><b>An outcome record an auditor can read</b>
+    <p>Vendor logs record actions and cost; none records whether the change was verified or accepted ({{E-53}}).</p></div>
+</div>
+<div class="callout"><b>Said against ourselves:</b> the idea is published, the framing and metrics are
+published ({{E-40}}), and a competitor valued at 1.5&nbsp;billion USD is positioned next to the gap
+({{E-49}}). The gap is real, and it is narrow — which is why the recommendation is a probe with fixed
+exits and not an investment.</div>
+
+<!-- ============ THE PRODUCT — minute 5:00–6:30 (the five steps, pointing at the pipeline) ============ -->
+<h2 id="product">The product, in the order a change flows</h2>
+<p class="secnote">It trades speed to merge, and some good changes wrongly held back, for a verdict
+the author of a change cannot influence. Full design: <span class="mono">docs/DESIGN.md</span>.</p>
+<div class="pipe">
+  <div class="step"><b>From a use case to checks</b>
+    <p>The engineer writes the use case; the team's own assistant asks clarifying questions — agents
+    guess when tasks are underspecified ({{E-80}}) — checks are drafted; a person approves.</p></div>
+  <div class="step"><b>A contract, fixed before the agent runs</b>
+    <p>Scope, required checks, budget — on a protected branch the author cannot write to.</p></div>
+  <div class="step"><b>A verdict of executable evidence, after the agent stops</b>
+    <p>The customer's tests, a scope check, and the agent's new tests run against the original code,
+    where "they must fail" ({{E-76}}). For LLM applications: an evaluation with hidden cases —
+    pass, fail or inconclusive.</p></div>
+  <div class="step"><b>An outcome record for every change</b>
+    <p>What was asked, what changed, which checks ran, the verdict, the cost. Written once, never edited.</p></div>
+  <div class="step"><b>A measured error rate for the verdict itself</b>
+    <p>How often it passes what should have failed — per repository, re-measured for every model and
+    harness pairing ({{E-36}}, {{E-58}}). This is what no one else measures, and it decides how much
+    human review each class of change gets.</p></div>
+</div>
+
+<!-- ============ WHAT WE MEASURED — minute 6:30–8:00 (the cards; H4 is the one to dwell on) ============ -->
+<h2 id="measured">What one day measured</h2>
+<p class="secnote">Same tasks, three arms — <b>bare</b> scaffold, <b>prompt-disciplined</b>, and
+<b>gated</b> — each run {{runs:k}} times in an isolated copy. Three verdict sources scored against
+hidden acceptance checks neither the agent nor the gate ever saw. The task set is small and ours:
+an indication, not a benchmark.</p>
+
+<div class="metric"><header><span class="mid">H4</span><span class="mname">Whose "pass" can you trust?</span><span class="chip primary">the product's claim</span></header>
+  <div class="mgrid">
+    <div class="mcell"><div class="mlab">Question it answers</div><p>Is the gate's verdict wrong less often than the agent's own claim and than a model reviewer from another vendor?</p></div>
+    <div class="mcell"><div class="mlab">How it fits</div><p>This is the number that can kill the product. If a model reviewer is already as reliable, there is nothing to build.</p></div>
+    <div class="mcell full"><div class="mlab">How it is measured</div><p>All three sources judge the <em>same</em> finished changes; ground truth is the hidden checks. False-pass rate with denominator and plausible range — a rate without its range overclaims on a sample this small.</p></div>
+  </div>
+  <div class="mval">agent's claim <span class="ref">{{runs:fp_claim}}</span> · evaluator agent (other vendor) <span class="ref">{{runs:fp_evaluator}}</span> · <b>gate {{runs:fp_gate}}</b> — on {{runs:denominator}} changes, range {{runs:fp_gate_ci}}</div>
+</div>
+
+<div class="metric"><header><span class="mid">H5</span><span class="mname">Can the gate itself be fooled?</span><span class="chip gate">pass / fail</span></header>
+  <div class="mgrid">
+    <div class="mcell"><div class="mlab">Question it answers</div><p>Does the gate reject every change built to be wrong in a known way — scope breaks, weakened tests, tampered checks?</p></div>
+    <div class="mcell"><div class="mlab">How it fits</div><p>A verifier with one known hole is another opinion. All-of-all or fail.</p></div>
+    <div class="mcell full"><div class="mlab">How it is measured</div><p>Planted flaws, written before the gate existed, fed straight to it. Known-good changes fed the same way measure the other error: good work wrongly blocked.</p></div>
+  </div>
+  <div class="mval"><b>{{runs:flaws_rejected}} of {{runs:n_flaws}} planted flaws rejected</b> · false-fail: {{runs:false_fails}} of {{runs:n_good}} known-good changes wrongly failed</div>
+</div>
+
+<div class="metric"><header><span class="mid">H1–H3</span><span class="mname">Safety, consistency, economics</span><span class="chip cost">per arm</span></header>
+  <div class="mgrid">
+    <div class="mcell"><div class="mlab">Question it answers</div><p>Does the gated arm run fewer unsafe actions, pass more consistently, and what does a qualified change cost?</p></div>
+    <div class="mcell"><div class="mlab">How it fits</div><p>pass^k, not pass@1: an agent above 60% on average can fall below 25% when it must succeed eight times running ({{E-79}}).</p></div>
+    <div class="mcell full"><div class="mlab">How it is measured</div><p>Unsafe actions counted per arm on trap tasks; pass@1 and pass^k against the hidden checks; cost per production-qualified change ({{E-40}}) with verification cost included — never reported without its quality number.</p></div>
+  </div>
+  <div class="mval">unsafe: bare <span class="ref">{{runs:unsafe_bare}}</span> · prompt <span class="ref">{{runs:unsafe_prompt}}</span> · <b>gated {{runs:unsafe_gated}}</b> &nbsp;|&nbsp; pass^k: {{runs:passk_bare}} · {{runs:passk_prompt}} · <b>{{runs:passk_gated}}</b> &nbsp;|&nbsp; cost/PQC: {{runs:cpq_bare}} · {{runs:cpq_prompt}} · <b>{{runs:cpq_gated}}</b></div>
+</div>
+
+<div class="metric"><header><span class="mid">H6</span><span class="mname">What the gate adds</span><span class="chip cost">overhead</span></header>
+  <div class="mgrid">
+    <div class="mcell"><div class="mlab">Question it answers</div><p>What does the verdict cost in time, money and extra attempts — and does it block good work?</p></div>
+    <div class="mcell"><div class="mlab">How it fits</div><p>A gate that blocks good changes teaches people to bypass it; the false-fail rate matters as much as the false-pass rate.</p></div>
+    <div class="mcell full"><div class="mlab">How it is measured</div><p>Elapsed time and dollars added per task; repair attempts triggered; false-fail rate beside false-pass. What the gate <em>saves</em> is the pilot's measure, not the prototype's.</p></div>
+  </div>
+  <div class="mval">+{{runs:gate_time}} per task · +{{runs:gate_cost}} per task · {{runs:extra_attempts}} extra attempts · false-fail {{runs:false_fail_rate}}</div>
+</div>
+
+<!-- ============ THE SCOREBOARD — minute 8:00 sharp (this table decides the talk) ============ -->
+<h2 id="scoreboard">The scoreboard — exits fixed before the results existed</h2>
+<div class="tablewrap"><table>
+  <tbody>
+  <tr><th>#</th><th>Kill criterion</th><th>Measured</th><th>Verdict</th></tr>
+  <tr><td>K1</td><td>The gate's false-pass rate is lower than the agent's claim <b>and</b> the evaluator's</td><td class="num">{{runs:fp_gate}} vs {{runs:fp_claim}} vs {{runs:fp_evaluator}}</td><td><span class="verd ok">cleared</span> / <span class="verd fail">failed</span> / <span class="verd nm">inconclusive</span></td></tr>
+  <tr><td>K2</td><td>Every planted flaw rejected</td><td class="num">{{runs:flaws_rejected}}/{{runs:n_flaws}}</td><td><span class="verd ok">cleared</span> / <span class="verd fail">failed</span></td></tr>
+  <tr><td>K3</td><td>No unsafe action ran in the gated arm</td><td class="num">{{runs:unsafe_gated}}</td><td><span class="verd ok">cleared</span> / <span class="verd fail">failed</span></td></tr>
+</tbody></table></div>
+
+<!-- ============ WHAT IT COSTS — minute 8:00–9:00 (say it before anyone asks) ============ -->
+<h2 id="cost">What it costs, said before anyone asks</h2>
+<div class="duo">
+  <div class="box"><h3>It adds cost at four stages</h3><p>Writing the checks (engineers' time — the
+  largest and least known), extra attempts (capped tokens), running the verdict (pipeline time), and
+  upkeep plus re-measurement at every model release. It also adds waiting before merge.</p></div>
+  <div class="box"><h3>It is meant to remove</h3><p>Review time that executable evidence could settle,
+  rework and incidents from changes that passed their tests and were wrong, and the risk in the
+  31.3% of PRs now merging with no review ({{E-05}}).</p></div>
+  <div class="box honesty"><h3>Whether that nets out is unproven</h3><p>The prototype measured what
+  the gate adds; only the pilot can measure what it saves. Four numbers decide it — cost per
+  qualified change, reviewer-hours, time to qualified change, and both error rates — reported
+  together, never one without the others.</p></div>
+  <div class="box honesty"><h3>Where it will not pay</h3><p>Small low-risk changes; fast new builds
+  where a mistake is cheap to undo ({{E-57}}); teams with few tests, for whom writing the checks is
+  most of the cost.</p></div>
+</div>
+
+<!-- ============ THE ASK — minute 9:00–10:00 (end on the table and the sentence) ============ -->
+<h2 id="ask">The ask</h2>
+<div class="tablewrap"><table>
+  <tbody>
+  <tr><th>Stage</th><th>Cost</th><th>Exit, fixed in advance</th><th>Status</th></tr>
+  <tr><td>1 · Prototype</td><td class="num">one day · {{runs:total_spend_usd}}</td><td>The three criteria above</td><td><span class="verd ok">done</span></td></tr>
+  <tr><td>2 · Measurement pilot</td><td>6 weeks · 2 engineers · product lead at half time · model cap {{assumption:pilot_spend_cap}} — <b>assumption</b>, rates from finance</td><td>A design partner says the report changed a decision they were about to make</td><td><span class="verd pending" style="background:var(--warn-soft);color:var(--warn)">requested</span></td></tr>
+  <tr><td>3 · Build</td><td>Scoped only if stage 2 clears — estimating it now would be an invented number</td><td>Set before stage 3 starts</td><td><span class="verd nm">not reached</span></td></tr>
+</tbody></table></div>
+<div class="callout"><b>The sentence for the board:</b> {{One sentence, written last, consistent with
+the scoreboard. Branch A shape: "An executable verdict was wrong less often than the agent and than a
+model reviewer on our tasks; six weeks and a small team now buy the same answer on a real repository,
+with the exit already set." Branch B/C shape: "The one part of this market worth testing did not clear
+its exits on our evidence; we buy the assistants, keep the checks, and look again on {{pedro:review_date}}."}}</div>
+
+<!-- ============ WORKING RULES — leave-behind; not spoken ============ -->
+<h2 id="rules">Working rules behind this page</h2>
+<div class="duo">
+  <div class="box"><h3>No invented numbers</h3><p>Every figure cites a row of
+  <span class="mono">EVIDENCE.md</span> verified at its raw source ([P]/[L]), or a file under
+  <span class="mono">prototype/runs/</span>. Targets are decisions and are labelled proposed;
+  CFO figures are labelled assumptions, with rates left to finance.</p></div>
+  <div class="box"><h3>Paired reporting</h3><p>No throughput or speed number without its quality
+  number; no pass rate without the verdict's own error rates beside it. These are redlines of the
+  design, applied to our own reporting first.</p></div>
+  <div class="box"><h3>Customer data</h3><p>The product runs in the customer's environment with the
+  customer's model access. Nothing is sent to us, used for training, or shared across customers; the
+  checks and history that accumulate belong to the customer.</p></div>
+  <div class="box"><h3>Honest exits</h3><p>Kill criteria were fixed before the results existed, and
+  a negative result is reported as the recommendation it implies. "Wait, with a review date" is a
+  real outcome, not a euphemism.</p></div>
+</div>
+
+<footer>
+  <p><b>Sources and record.</b> Evidence ledger <span class="mono">docs/research/EVIDENCE.md</span>
+  (rows cited as E-nn, each verified at its raw source) · prototype results
+  <span class="mono">docs/RESULTS.md</span>, generated from <span class="mono">prototype/runs/</span> ·
+  decisions <span class="mono">docs/JOURNAL.md</span> ADR-001…ADR-020 · full case
+  <span class="mono">docs/PROPOSAL.md</span> · system design <span class="mono">docs/DESIGN.md</span> ·
+  vocabulary: Production-Qualified Change and PQC per dollar after Bhati (arXiv 2609.04681, {{E-40}});
+  agent under test: the 90-line scaffold of arXiv 2609.00006 (CC BY 4.0, {{E-59}}).
+  Prepared for a 10-minute executive session; nothing on this page is a number without a source.</p>
+</footer>
+</main>
+</body></html>
