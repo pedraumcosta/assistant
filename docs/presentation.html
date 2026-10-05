@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>ASSIST Recommendation</title>
+<!--
+  The presentation page for the executive session (D8): the spoken 10-minute
+  walkthrough follows the minute marks in the section comments; the Working-rules
+  section and footer are leave-behind. The Slidev deck (docs/slides.md) is the
+  spoken equivalent, same order and numbers.
+  Every figure cites EVIDENCE.md ([P]/[L]). Slots marked "pending" are filled from
+  prototype/runs/ via docs/RESULTS.md when the prototype completes; the verdict
+  chips on the scoreboard then switch, and the recommendation branch is read from
+  them. Built from docs/templates/presentation-template.html.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,650;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap">
+<style>
+:root{
+  --page:#FAF9F6; --surface:#FFFFFF; --ink:#1B2420; --ink2:#4E5A54; --muted:#8B948E;
+  --line:#E3E0D7; --accent:#0E6B5C; --accent-soft:#E7F0ED; --ref:#7A5C2E; --ref-soft:#F3EDE2;
+  --warn:#A4650E; --warn-soft:#F7EEDC; --bad:#A33B2E; --code:#F1EFE9;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --page:#151A18; --surface:#1D2421; --ink:#E8E6DF; --ink2:#ADB6B0; --muted:#7E8781;
+    --line:#333B37; --accent:#4FB39E; --accent-soft:#1E2E2A; --ref:#C9A15E; --ref-soft:#2A2620;
+    --warn:#D19A4C; --warn-soft:#2C2418; --bad:#D07A6C; --code:#232A26;
+  }
+}
+:root[data-theme="dark"]{
+  --page:#151A18; --surface:#1D2421; --ink:#E8E6DF; --ink2:#ADB6B0; --muted:#7E8781;
+  --line:#333B37; --accent:#4FB39E; --accent-soft:#1E2E2A; --ref:#C9A15E; --ref-soft:#2A2620;
+  --warn:#D19A4C; --warn-soft:#2C2418; --bad:#D07A6C; --code:#232A26;
+}
+*{box-sizing:border-box}
+body{background:var(--page);color:var(--ink);margin:0;padding-block:0 72px;
+  font:16px/1.65 "Source Sans 3",system-ui,sans-serif}
+main{max-width:880px;margin:0 auto;padding-inline:20px}
+h1,h2,h3{font-family:"Fraunces",Georgia,serif;font-weight:650;line-height:1.15;text-wrap:balance;margin:0}
+h1{font-size:2.35rem;letter-spacing:-.01em}
+h2{font-size:1.5rem;margin:64px 0 6px;color:var(--ink)}
+h3{font-size:1.08rem;font-weight:600;margin:28px 0 6px}
+p{margin:10px 0;max-width:70ch}
+a{color:var(--accent)}
+code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.86em;background:var(--code);
+  border-radius:4px;padding:.08em .35em}
+.eyebrow{font:600 .72rem/1 "Source Sans 3";letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+header.hero{border-bottom:2px solid var(--accent);padding:56px 0 28px;display:flex;flex-direction:column;gap:14px}
+.lede{font-size:1.12rem;color:var(--ink2);max-width:64ch}
+.metahead{display:flex;flex-wrap:wrap;gap:8px 22px;font-size:.83rem;color:var(--muted)}
+.metahead b{color:var(--ink2);font-weight:600}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:10px;margin:26px 0 0}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:12px 14px}
+.stat .n{font-family:"Fraunces",serif;font-size:1.5rem;font-weight:650;color:var(--accent);
+  font-variant-numeric:tabular-nums}
+.stat .l{font-size:.74rem;color:var(--muted);letter-spacing:.03em;text-transform:uppercase;margin-top:2px}
+.toc{display:flex;flex-wrap:wrap;gap:6px 4px;margin:20px 0 0;padding:0;list-style:none;font-size:.85rem}
+.toc a{border:1px solid var(--line);border-radius:99px;padding:4px 12px;text-decoration:none;color:var(--ink2);background:var(--surface)}
+.toc a:hover{border-color:var(--accent);color:var(--accent)}
+.secnote{color:var(--ink2);font-size:.94rem;margin:4px 0 18px;max-width:70ch}
+.pipe{counter-reset:step;display:flex;flex-direction:column;gap:0;margin:22px 0;border-left:2px solid var(--accent);padding-left:0}
+.step{position:relative;padding:14px 16px 14px 58px}
+.step::before{counter-increment:step;content:counter(step);position:absolute;left:14px;top:16px;
+  width:28px;height:28px;border-radius:50%;background:var(--accent);color:var(--page);
+  font:600 .9rem/28px "JetBrains Mono";text-align:center}
+.step b{display:block;font-size:1rem}
+.step p{margin:3px 0 0;font-size:.92rem;color:var(--ink2)}
+.metric{background:var(--surface);border:1px solid var(--line);border-radius:8px;margin:18px 0;overflow:hidden}
+.metric>header{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;padding:14px 18px 10px;border-bottom:1px solid var(--line)}
+.mid{font:600 .95rem/1 "JetBrains Mono";color:var(--page);background:var(--accent);border-radius:5px;padding:6px 9px}
+.mname{font-family:"Fraunces",serif;font-weight:650;font-size:1.12rem}
+.chip{font:600 .68rem/1 "Source Sans 3";letter-spacing:.06em;text-transform:uppercase;border-radius:99px;padding:4px 10px;margin-left:auto}
+.chip.primary{background:var(--accent-soft);color:var(--accent)}
+.chip.cost{background:var(--code);color:var(--ink2)}
+.chip.gate{background:var(--ref-soft);color:var(--ref)}
+.chip.pending{background:var(--warn-soft);color:var(--warn)}
+.mgrid{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.mcell{padding:12px 18px;border-top:1px solid var(--line)}
+.mgrid .mcell:nth-child(1),.mgrid .mcell:nth-child(2){border-top:none}
+.mcell.full{grid-column:1/-1}
+.mlab{font:600 .68rem/1.2 "Source Sans 3";letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.mcell p{font-size:.93rem;margin:0;color:var(--ink)}
+.mval{background:var(--accent-soft);border-top:1px solid var(--line);padding:10px 18px;
+  font-family:"JetBrains Mono",monospace;font-size:.82rem;color:var(--ink);line-height:1.6}
+.mval b{color:var(--accent);font-weight:600}
+.mval .ref{color:var(--ref);font-weight:600}
+@media (max-width:640px){.mgrid{grid-template-columns:1fr}.mcell{border-top:1px solid var(--line)}
+  .mgrid .mcell:nth-child(2){border-top:1px solid var(--line)}}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0}
+@media (max-width:640px){.duo{grid-template-columns:1fr}}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px 18px}
+.box h3{margin-top:0}
+.box p{font-size:.92rem;color:var(--ink2)}
+.honesty{border-left:3px solid var(--ref);background:var(--ref-soft)}
+table{border-collapse:collapse;width:100%;font-size:.88rem;background:var(--surface);margin:14px 0}
+th,td{padding:8px 11px;border:1px solid var(--line);text-align:left;vertical-align:top}
+th{font:600 .68rem/1.3 "Source Sans 3";letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+td.num{text-align:right;font-variant-numeric:tabular-nums;font-family:"JetBrains Mono",monospace;font-size:.8rem}
+tr.ref td{background:var(--ref-soft)}
+td.best{font-weight:600;color:var(--accent)}
+.tablewrap{overflow-x:auto}
+.callout{border:1px solid var(--line);border-left:3px solid var(--accent);background:var(--surface);
+  border-radius:0 8px 8px 0;padding:12px 16px;font-size:.9rem;color:var(--ink2);margin:18px 0}
+.verd{display:inline-block;font:600 .68rem/1 "Source Sans 3";letter-spacing:.06em;text-transform:uppercase;border-radius:99px;padding:3px 8px}
+.verd.fail{background:var(--warn-soft);color:var(--bad)}
+.verd.ok{background:var(--accent-soft);color:var(--accent)}
+.verd.nm{background:var(--code);color:var(--muted)}
+.verd.pending{background:var(--warn-soft);color:var(--warn)}
+footer{margin-top:70px;border-top:1px solid var(--line);padding-top:18px;font-size:.82rem;color:var(--muted)}
+footer p{max-width:none}
+@media print{ body{background:#fff} .toc{display:none} .metric{break-inside:avoid} h2{break-after:avoid} }
+</style>
+</head>
+<body>
+<main>
+
+<!-- Spoken walkthrough: hero + answer to 1:00 · buy 2:30 · problem 4:00 · gap 5:00 ·
+     product 6:30 · measured 8:00 · scoreboard 8:30 · cost 9:00 · ask + recommendation 10:00.
+     Working rules and footer: leave-behind. -->
+<header class="hero">
+  <span class="eyebrow">ASSIST · executive recommendation · evidence-driven development</span>
+  <h1>Should we enter the AI software-development-assistant market?</h1>
+  <p class="lede"><b>Not as asked.</b> Generation is owned by the model vendors, and entering
+  their contest with their supplies is a poor trade. We probed the one part nobody sells —
+  a verdict on agent-written changes built from <b>executable evidence</b>, independent of the
+  model vendor and measured for its own error — and this page is the case, the design in brief,
+  and the staged ask. The prototype's numbers land in the marked slots; the recommendation is
+  then read off the scoreboard, mechanically.</p>
+  <div class="metahead">
+    <span><b>Method</b> a three-stage probe; kill criteria fixed 2026-10-05, before any run</span>
+    <span><b>Evidence</b> every figure cites <span class="mono">EVIDENCE.md</span>, verified at its raw source</span>
+    <span><b>Agent under test</b> the published 90-line scaffold, arXiv 2609.00006, CC BY 4.0 (E-59)</span>
+    <span><b>Spend</b> capped at 50 USD, enforced by the runner</span>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="n">1 day</div><div class="l">stage-1 prototype</div></div>
+    <div class="stat"><div class="n">3</div><div class="l">arms: bare · prompt · gated</div></div>
+    <div class="stat"><div class="n">3</div><div class="l">verdict sources compared</div></div>
+    <div class="stat"><div class="n">6</div><div class="l">hypotheses, H1–H6</div></div>
+    <div class="stat"><div class="n">50 USD</div><div class="l">hard spend cap</div></div>
+    <div class="stat"><div class="n">3</div><div class="l">kill criteria · <b>pending</b></div></div>
+  </div>
+  <ul class="toc">
+    <li><a href="#answer">The answer</a></li>
+    <li><a href="#buy">Why not simply buy</a></li>
+    <li><a href="#problem">The problem</a></li>
+    <li><a href="#gap">The gap</a></li>
+    <li><a href="#product">The product</a></li>
+    <li><a href="#verdict">How the verdict is computed</a></li>
+    <li><a href="#measured">What we measure</a></li>
+    <li><a href="#scoreboard">The scoreboard</a></li>
+    <li><a href="#cost">What it costs</a></li>
+    <li><a href="#ask">The ask</a></li>
+    <li><a href="#recommendation">The recommendation</a></li>
+    <li><a href="#rules">Working rules</a></li>
+  </ul>
+</header>
+
+<h2 id="answer">The answer</h2>
+<p><b>Do not build another AI coding assistant.</b> The model owners sell their assistants over
+models they do not have to buy, at 20 and 100 USD tiers (E-12, E-13); Claude Code alone reports
+a run-rate above 2.5 billion USD (E-48); the independents are priced at acquisition scale —
+Cursor's maker at an implied 60 billion USD, Cognition at 48 (E-46, E-47); and a founder in the
+segment puts reseller margins at "neutral or negative… absolutely abysmal" (E-17). We have no
+model, no customers, no captive vertical.</p>
+<p>What we tested instead is tooling for <b>evidence-driven development</b>: the team defines
+what "done" means as executable checks before the work starts, and every change — written by a
+person or an agent — is accepted on that evidence. The product is the part a team cannot do by
+hand at the pace agents work: it holds the checks, runs them where the author cannot interfere,
+records the outcome, and measures how far its own verdict can be trusted.</p>
+<div class="callout"><b>The decision requested is staged:</b> a one-day prototype
+(<span class="verd pending">finishing</span>), a six-week measurement pilot, a build only past
+exits fixed in advance. Each stage can end it; "wait, with a review date" is a real outcome.
+Which branch we stand on is read from the <a href="#scoreboard">scoreboard</a>.</div>
+
+<h2 id="buy">"Why shouldn't we simply buy their products?"</h2>
+<p class="secnote">The question answered before the ask. In one line: we do buy them — what we
+probed is the one thing their position prevents them from selling.</p>
+<div class="tablewrap"><table>
+  <tbody>
+  <tr><th>Layer</th><th>Decision</th><th>Why</th></tr>
+  <tr><td>Assistants and generation</td><td><b>Buy</b> — the vendors' 20 and 100 USD tiers (E-12, E-13)</td><td>Vendor-subsidised; features copy between vendors in months</td></tr>
+  <tr><td>Policy, sandbox, budgets across agents</td><td><b>Adopt open source</b> — Omnigent, from Databricks (E-32)</td><td>Free, backed by a large vendor</td></tr>
+  <tr><td>Model-opinion code review</td><td>Buy if wanted</td><td>A model's opinion; cannot run our tests (E-50) or block a merge (E-51)</td></tr>
+  <tr class="ref"><td><b>The verdict, its measured error rate, the outcome record</b></td><td><b>The only build</b></td><td>Sold by no one (E-50, E-51, E-53); credible from no model vendor (E-34)</td></tr>
+</tbody></table></div>
+<p>The independence point, in the vendor's own words: "agents reliably skew positive when grading
+their own work", and a second model from the same family "is still an LLM that is inclined to be
+generous towards LLM-generated outputs" (E-34, E-35). A vendor cannot sell a credible verdict on
+itself, whatever it spends.</p>
+
+<h2 id="problem">What the incumbents have not solved</h2>
+<p class="secnote">Writing code got cheap. Knowing whether to trust it did not.</p>
+<div class="duo">
+  <div class="box"><h3>Passing tests is weak evidence</h3><p>"Roughly half of test-passing"
+  agent changes on a standard benchmark "would not be merged into main by repo maintainers"
+  (E-01). On whole-repository migrations, 118 runs passed every fixed check; 28 deserved to (E-68).</p></div>
+  <div class="box"><h3>Review is absorbing the cost</h3><p>Across 22,000 developers: "Median time
+  in review is up 441.5%", and PRs merged with no review at all are up 31.3% (E-04, E-05). The
+  source sells measurement — said here, as everywhere.</p></div>
+  <div class="box"><h3>Trust is falling while use rises</h3><p>Trust in AI output accuracy fell
+  43% → 33% in a year; distrust rose 31% → 46% (E-82). Two thirds cite solutions "almost right,
+  but not quite" (E-07).</p></div>
+  <div class="box"><h3>Agents can defeat the check</h3><p>A model trained on coding tasks learned
+  to force tests green — including by patching the test reporter to report "passed" (E-75). The
+  author of a change cannot be the keeper of its evidence.</p></div>
+</div>
+
+<h2 id="gap">The gap: four things nobody sells together</h2>
+<div class="pipe">
+  <div class="step"><b>A verdict that runs the customer's own checks</b>
+    <p>Not a model's reading of the diff. The funded reviewer's checks cannot "run your test suite"
+    or "execute arbitrary repository code" (E-50).</p></div>
+  <div class="step"><b>Independence from the vendor whose model wrote the code</b>
+    <p>The grader is not the author, and not the author's family (E-34, E-35).</p></div>
+  <div class="step"><b>A measured false-pass rate, on the customer's repository</b>
+    <p>Published by no vendor. Four vendors each claim first place on the same review benchmark.</p></div>
+  <div class="step"><b>An outcome record an auditor can read</b>
+    <p>Vendor logs record actions and cost; none records whether the change was verified or
+    accepted (E-53) — while agent auditability emerges as a procurement requirement.</p></div>
+</div>
+<div class="callout"><b>Said against ourselves:</b> the framing and its metrics are published
+research — "production-qualified change", the "verification tax" (E-40) — whose own authors call
+them hypotheses; the model vendor describes contract-plus-evaluator as its practice; and
+CodeRabbit, 143 million USD raised at a 1.5 billion valuation, is positioned as "the control
+layer" beside this gap (E-49). The gap is real, and it is <b>narrow</b> — which is why the
+recommendation is a probe with fixed exits and not an investment.</div>
+
+<h2 id="product">The product, in the order a change flows</h2>
+<p class="secnote">The design in one sentence: it trades speed to merge, and some good changes
+wrongly held back, for a verdict the author of a change cannot influence. Full design:
+<span class="mono">docs/DESIGN.md</span>; self-review: <span class="mono">docs/DESIGN-REVIEW.md</span>.</p>
+<div class="pipe">
+  <div class="step"><b>From a use case to checks</b>
+    <p>The engineer writes the use case with its functional requirements; the team's own assistant
+    asks clarifying questions — agents guess when tasks are underspecified (E-80) — checks are
+    drafted, each requirement linked to at least one; a person approves.</p></div>
+  <div class="step"><b>A contract, fixed before the agent runs</b>
+    <p>Scope, required checks, budget — on a protected branch the author cannot write to.</p></div>
+  <div class="step"><b>A verdict of executable evidence, after the agent stops</b>
+    <p>The customer's tests, a scope check on the diff, and the agent's new tests run against the
+    original code, where "they must fail" (E-76). For software built on a model: an evaluation over
+    fixed cases, some hidden from the agent — pass, fail or inconclusive. Always executable; not
+    always deterministic.</p></div>
+  <div class="step"><b>An outcome record for every change</b>
+    <p>What was asked, what changed, which checks ran, the verdict and its reason, the risk tier,
+    the cost. Written once, never edited.</p></div>
+  <div class="step"><b>A measured error rate for the verdict itself</b>
+    <p>How often it passes what should have failed — per repository, re-measured for every model
+    and harness pairing, because a check's value moves with each release (E-36) and harness effects
+    change sign by model (E-58). This is what no one else measures, and it decides how much human
+    review each class of change gets.</p></div>
+</div>
+
+<!-- Technical detail for the walkthrough and the leave-behind; not part of the 10 minutes. -->
+<h2 id="verdict">How the verdict is computed — and whether it is deterministic</h2>
+<p class="secnote">The first technical question the verdict invites, answered in full.
+Design detail: <span class="mono">docs/DESIGN.md</span> §2 and §4.</p>
+<p><b>A verdict is computed, not judged.</b> Every check in the contract is executable and
+versioned. Each run produces an <b>evidence item</b>: the check's exit status, its structured
+report, its duration and cost, and the versions of everything involved. The verdict is a fold
+over those items — <b>worst case wins, fail closed</b> — taken in a fixed ladder where the
+cheap, decisive screens run before any of the change's code executes: integrity of the contract
+and protected paths, budget, scope, dependencies and secrets, then the build, then the tests
+(visible and hidden), then test-adequacy — the author's new tests run against the original code,
+where "they must fail" (E-76). First match wins; a check that crashes reads as <b>error</b>,
+never as a pass, and an error is re-queued, never counted either way.</p>
+<p>Three properties follow from how it is built, rather than from policy:</p>
+<div class="duo">
+  <div class="box"><h3>It is a function of its inputs</h3><p>The verdict depends only on the
+  base commit, the head commit, the contract's hash and the checks' results — never on the
+  agent's conversation. A verifier that reads the author's account of its work inherits the
+  author's mistakes. Idempotency follows: running the same verdict twice gives the same record,
+  not two.</p></div>
+  <div class="box"><h3>It can be replayed</h3><p>Every evidence item carries the versions of the
+  check, the contract, the model and the assistant involved, so any verdict can be reproduced
+  from its record. That is what makes the outcome record an audit record rather than a log.</p></div>
+  <div class="box"><h3>Its own error is measured</h3><p>Planted flaws measure how often it
+  passes what should fail; known-good changes measure how often it blocks what should pass.
+  Both rates are reported with the verdict, with denominators — a verdict of unknown
+  reliability is another opinion.</p></div>
+  <div class="box honesty"><h3>The honest caveat</h3><p>Determinism is bounded by the team's own
+  checks: a flaky test makes the verdict flaky. Flaky checks are retried within a bound and
+  quarantined to a person — never silently passed or failed (<span class="mono">docs/DESIGN-REVIEW.md</span>,
+  finding 3).</p></div>
+</div>
+
+<h3>So: is it deterministic?</h3>
+<div class="tablewrap"><table>
+  <tbody>
+  <tr><th></th><th>Conventional code</th><th>LLM application</th></tr>
+  <tr><td>The checks</td><td>Tests, diff scope, test-adequacy, dependency existence, secrets scan</td><td>A versioned set of evaluation cases covering every functional requirement — some <b>hidden</b> from the agent, so it cannot fit the set instead of the task</td></tr>
+  <tr><td>Computed as</td><td>One run per check; exit status and structured report</td><td>Cases × repeats, bounded by the contract's budget; scored <b>code-first</b> (exact match, schema, tolerance); a model scores only what code cannot — pinned to a version and prompt, from another vendor where possible, its agreement with human labels measured and stated</td></tr>
+  <tr><td>Decided by</td><td>The ladder above, first match wins</td><td>The measured pass rate with its uncertainty: <b>passed</b> only if the whole plausible range clears the pass mark and the change is no worse than the previous version on the same cases; <b>failed</b> if the whole range misses; otherwise <b>inconclusive</b> — more samples while budget remains, then a person</td></tr>
+  <tr><td>Deterministic?</td><td><b>Yes</b> — the same inputs give the same verdict, with the flaky-check caveat above</td><td><b>No — and the promise never depended on it.</b> One deterministic run of a system that answers differently each time proves little. What holds in both cases: checks fixed before the agent runs and protected from it, run outside the agent, recorded, and their own error rate measured</td></tr>
+  <tr><td>Outcomes</td><td>passed · failed · error</td><td>passed · failed · <b>inconclusive</b> · error</td></tr>
+  <tr><td>Error sources, both reported</td><td>The checks under-describing behaviour (E-68); flaky checks</td><td>Too few samples, and a scorer that is wrong</td></tr>
+</tbody></table></div>
+<div class="callout"><b>The one-line answer:</b> the verdict is always <b>executable</b>, not
+always deterministic. For conventional code it is a pure function of the inputs; for software
+built on a model it is an evaluation with hidden cases and an honest third outcome. The
+guarantees that matter — fixed beforehand, protected from the author, run outside the agent,
+recorded, error-measured — hold identically in both.</div>
+
+<h2 id="measured">What one day measures</h2>
+<p class="secnote">Same tasks, three arms — <b>bare</b> scaffold, <b>prompt-disciplined</b>,
+<b>gated</b> — each run repeatedly in an isolated copy; three verdict sources judging the
+<em>same</em> finished changes against hidden acceptance checks neither the agent nor the gate
+ever sees. The task set is small and ours: an indication, not a benchmark.</p>
+
+<div class="metric"><header><span class="mid">H4</span><span class="mname">Whose "pass" can you trust?</span><span class="chip primary">the product's claim</span></header>
+  <div class="mgrid">
+    <div class="mcell"><div class="mlab">Question it answers</div><p>Is the gate's verdict wrong less often than the agent's own claim and than a model reviewer from another vendor?</p></div>
+    <div class="mcell"><div class="mlab">How it fits</div><p>The number that can kill the product. If a model reviewer is already as reliable, there is nothing to build.</p></div>
+    <div class="mcell full"><div class="mlab">How it is measured</div><p>All three sources judge the same finished changes; ground truth is the hidden checks. False-pass rate reported with denominator and plausible range — on a small sample, a rate without its range overclaims.</p></div>
+  </div>
+  <div class="mval">agent's claim <span class="ref">pending</span> · evaluator agent, other vendor <span class="ref">pending</span> · <b>gate: pending</b> — from <span class="mono">prototype/runs/</span>, via <span class="mono">RESULTS.md</span></div>
+</div>
+
+<div class="metric"><header><span class="mid">H5</span><span class="mname">Can the gate itself be fooled?</span><span class="chip gate">pass / fail</span></header>
+  <div class="mgrid">
+    <div class="mcell"><div class="mlab">Question it answers</div><p>Does the gate reject every change built to be wrong in a known way — out-of-scope edits, weakened tests, tampered checks, behaviour quietly dropped?</p></div>
+    <div class="mcell"><div class="mlab">How it fits</div><p>A verifier with one known hole is another opinion. All-of-all or fail.</p></div>
+    <div class="mcell full"><div class="mlab">How it is measured</div><p>Planted flaws, written before the gate, fed straight to it. Known-good changes fed the same way measure the other error: good work wrongly blocked.</p></div>
+  </div>
+  <div class="mval"><b>planted flaws rejected: pending</b> · false-fail on known-good changes: <span class="ref">pending</span></div>
+</div>
+
+<div class="metric"><header><span class="mid">H1–H3</span><span class="mname">Safety, consistency, economics</span><span class="chip cost">per arm</span></header>
+  <div class="mgrid">
+    <div class="mcell"><div class="mlab">Question it answers</div><p>Does the gated arm run fewer unsafe actions on trap tasks, pass more consistently, and what does a qualified change cost?</p></div>
+    <div class="mcell"><div class="mlab">How it fits</div><p>pass^k, not pass@1: an agent above 60% on average can fall below 25% when it must succeed eight times running (E-79).</p></div>
+    <div class="mcell full"><div class="mlab">How it is measured</div><p>Unsafe actions counted per arm (recorded and refused, never executed on the host); pass@1 and pass^k against hidden checks; cost per production-qualified change (E-40), verification included — never without its quality number.</p></div>
+  </div>
+  <div class="mval">unsafe · pass^k · cost per PQC, per arm: <b>pending</b></div>
+</div>
+
+<div class="metric"><header><span class="mid">H6</span><span class="mname">What the gate adds</span><span class="chip cost">overhead</span></header>
+  <div class="mgrid">
+    <div class="mcell"><div class="mlab">Question it answers</div><p>What does the verdict cost in time, money and extra attempts — and does it block good work?</p></div>
+    <div class="mcell"><div class="mlab">How it fits</div><p>A gate that blocks good changes teaches people to bypass it; the false-fail rate matters as much as the false-pass rate.</p></div>
+    <div class="mcell full"><div class="mlab">How it is measured</div><p>Elapsed time and dollars added per task; repair attempts triggered; false-fail beside false-pass. What the gate <em>saves</em> is the pilot's measure, not the prototype's.</p></div>
+  </div>
+  <div class="mval">time added · dollars added · extra attempts · false-fail rate: <b>pending</b></div>
+</div>
+
+<h2 id="scoreboard">The scoreboard — exits fixed before the results exist</h2>
+<div class="tablewrap"><table>
+  <tbody>
+  <tr><th>#</th><th>Kill criterion (decided 2026-10-05)</th><th>Measured</th><th>Verdict</th></tr>
+  <tr><td>K1</td><td>The gate's false-pass rate is lower than the agent's claim <b>and</b> the evaluator's</td><td class="num">—</td><td><span class="verd pending">pending</span></td></tr>
+  <tr><td>K2</td><td>Every planted flaw rejected</td><td class="num">—</td><td><span class="verd pending">pending</span></td></tr>
+  <tr><td>K3</td><td>No unsafe action runs in the gated arm</td><td class="num">—</td><td><span class="verd pending">pending</span></td></tr>
+</tbody></table></div>
+<p>All three cleared → fund the pilot. Any failed on an adequate sample → wait, with a review
+date. Underpowered under the cap → a budgeted re-run, or wait. The branch is read from this
+table and nowhere else.</p>
+
+<h2 id="cost">What it costs, said before anyone asks</h2>
+<div class="duo">
+  <div class="box"><h3>It adds cost at four stages</h3><p>Writing the checks (engineers' time —
+  the largest and least-known cost), extra attempts (capped tokens), running the verdict
+  (pipeline time; for evaluations, model calls), and upkeep plus re-measurement at every model
+  release. It also adds waiting before merge.</p></div>
+  <div class="box"><h3>It is meant to remove</h3><p>Review time that executable evidence could
+  settle, rework and incidents from changes that passed their tests and were wrong, and the risk
+  in the 31.3% of PRs now merging with no review (E-05).</p></div>
+  <div class="box honesty"><h3>Whether that nets out is unproven</h3><p>The prototype measures
+  what the gate adds; only the pilot can measure what it saves. Four numbers decide it — cost per
+  qualified change, reviewer-hours, time to qualified change, both error rates — reported
+  together, never one without the others.</p></div>
+  <div class="box honesty"><h3>Where it will not pay</h3><p>Small low-risk changes; fast new
+  builds, where a frontier lab's own words are "corrections are cheap, and waiting is expensive"
+  (E-57); teams with few tests, for whom writing the checks is most of the cost.</p></div>
+</div>
+
+<h2 id="ask">The ask</h2>
+<div class="tablewrap"><table>
+  <tbody>
+  <tr><th>Stage</th><th>Cost</th><th>Exit, fixed in advance</th><th>Status</th></tr>
+  <tr><td>1 · Prototype</td><td class="num">one day · ≤ 50 USD</td><td>The three criteria of the scoreboard</td><td><span class="verd pending">finishing</span></td></tr>
+  <tr><td>2 · Measurement pilot</td><td>6 weeks · 2 engineers · a product lead at half time · model spend capped — <b>assumption</b>, rates from finance</td><td>A design partner says the report changed a decision they were about to make</td><td><span class="verd pending">requested</span></td></tr>
+  <tr><td>3 · Build</td><td>Scoped only if stage 2 clears — estimating it now would be an invented number</td><td>Set before stage 3 starts</td><td><span class="verd nm">not reached</span></td></tr>
+</tbody></table></div>
+<p>The pilot is also the entry product: we run the partner's own tasks and report the rate and
+cost of production-qualified changes on their repository, per model and assistant they use.</p>
+
+<h2 id="recommendation">The executive recommendation, in one page</h2>
+<p class="secnote">The closing of the spoken walkthrough, left on screen for the discussion.
+The full one-page message with the challenge-and-answer appendix accompanies this page.</p>
+<div class="pipe">
+  <div class="step"><b>We agree with the premise</b>
+    <p>Microsoft, OpenAI and Anthropic own generation; we buy their products at their subsidised
+    tiers (E-12, E-13) and adopt the open-source control layer (E-32). Reselling generation has
+    "neutral or negative" margins (E-17).</p></div>
+  <div class="step"><b>We probe the one thing their position prevents them from selling</b>
+    <p>An independent, executable, measured verdict on their agents' output (E-34, E-50, E-53).
+    No vendor publishes an error rate for its own reviewer; no audit log records outcomes.</p></div>
+  <div class="step"><b>The ask is priced so belief is unnecessary</b>
+    <p>One day, then six weeks of two and a half people (an assumption, rates from finance), then
+    a build only past exits fixed before the results existed. Every stage can end it.</p></div>
+  <div class="step"><b>The unit is the CFO's</b>
+    <p>Cost per production-qualified change, checking included (E-40), always beside the verdict's
+    own error rates. No vanity metrics: no lines of AI code, no acceptance rates, no seats.</p></div>
+  <div class="step"><b>What we do not know, said first</b>
+    <p>Market size, willingness to pay, and whether the added cost nets out. The stages are
+    designed to answer each before it costs much.</p></div>
+</div>
+<div class="callout"><b>Decision requested:</b> read from the scoreboard — fund stage&nbsp;2, or
+set the review date. <b>The sentence for the board</b> is written when the scoreboard fills, from
+its verdicts and nothing else.</div>
+
+<h2 id="rules">Working rules behind this page</h2>
+<div class="duo">
+  <div class="box"><h3>No invented numbers</h3><p>Every figure cites a row of
+  <span class="mono">EVIDENCE.md</span> verified at its raw source ([P]/[L]) or a file under
+  <span class="mono">prototype/runs/</span>. Targets are decisions, labelled proposed; CFO figures
+  are labelled assumptions, with rates left to finance.</p></div>
+  <div class="box"><h3>Paired reporting</h3><p>No throughput or speed number without its quality
+  number; no pass rate without the verdict's own error rates beside it. These are redlines of the
+  design, applied to our own reporting first.</p></div>
+  <div class="box"><h3>Customer data</h3><p>The product runs in the customer's environment with
+  the customer's model access. Nothing is sent to us, used for training, or shared across
+  customers; the checks and history that accumulate belong to the customer.</p></div>
+  <div class="box"><h3>Honest exits</h3><p>Kill criteria were fixed before the results existed,
+  and a negative result is reported as the recommendation it implies. "Wait, with a review date"
+  is a real outcome, not a euphemism.</p></div>
+</div>
+
+<footer>
+  <p><b>Sources and record.</b> Evidence ledger <span class="mono">docs/research/EVIDENCE.md</span>
+  (rows cited as E-nn, each verified at its raw source by 2026-10-05) · prototype results land in
+  <span class="mono">docs/RESULTS.md</span>, generated from <span class="mono">prototype/runs/</span> ·
+  decisions <span class="mono">docs/JOURNAL.md</span> ADR-001…ADR-020 · full case
+  <span class="mono">docs/PROPOSAL.md</span> · system design <span class="mono">docs/DESIGN.md</span>
+  and its self-review <span class="mono">docs/DESIGN-REVIEW.md</span> · spoken deck
+  <span class="mono">docs/slides.md</span> · vocabulary: Production-Qualified Change and PQC per
+  dollar after Bhati, arXiv 2609.04681 (E-40); agent under test: the 90-line scaffold of arXiv
+  2609.00006, CC BY 4.0 (E-59). Prepared for a 10-minute executive walkthrough with a technical
+  session to follow; nothing on this page is a number without a source.</p>
+</footer>
+</main>
+</body></html>
