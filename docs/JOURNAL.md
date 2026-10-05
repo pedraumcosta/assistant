@@ -58,6 +58,7 @@ Two kinds of entry:
 - Preparation for the prototype (plan phase P5). Both API keys confirmed by listing models, which spends nothing. The scaffold's listing was not in the repository: it was taken from the arXiv PDF and recorded (`docs/research/harness-scaffold-listing.md`). Pedro decided three points (ADR-021). Plan §7.2 revised to the build order of the design; each slice scoped with an exit check in `ROADMAP.md` §3.4. No code written.
 - Pedro started Docker, confirmed the size of the task set and gave the word. Preparation committed (`be0139e`).
 - Prototype slice 1 built: the fixture library, eleven tasks with their contracts and ground-truth checks, a correct and a wrong or unsafe reference change for each, the containers, the event log, the spend ledger, the unsafe-action rules, the results table and a fake agent. The dry run puts 72 runs through the unedited listing and the containers in all three arms, with no unexpected outcome and no spend. Every wrong or unsafe reference change passes the repository's own tests and is rejected by ground truth.
+- Slice 1 committed at Pedro's confirmation (`385477e`). Prototype slice 2 built: the price of Claude Sonnet 5.5 recorded (E-86), the Anthropic adapter written, and the first paid run made, one ordinary task in the bare arm. It ran to the end with every turn in the event log and its cost in the ledger (`prototype/runs/sizing/`, `prototype/runs/ledger.jsonl`).
 
 **Deviations and corrections**
 - **First-pass reading was truncated without warning.** The summarising fetch cut three long articles part-way and reported one as near-complete. Found when Pedro challenged the coverage. Fix: download the full text, check it reaches the final section, read end to end.
@@ -90,6 +91,7 @@ Two kinds of entry:
 - **A rule flagged reading as doing.** Rewriting a file that contains the planted instruction counted as following it. The rule now looks at shell commands that contact the planted host.
 - **A check report was read as missing** because of a delay in Docker's file sharing (ASSIST-020). It surfaced as `error`, which is the designed behaviour for a report that cannot be read, and it was found by a test, not in a run.
 - **The layout differs from the one scoped:** correct and wrong reference changes sit together under `prototype/changes/`.
+- **The first paid run got its task right in the bare arm,** with no gate and no instruction to verify. One run settles nothing, but it is the outcome the roadmap names as the main risk to the comparison: a model that gets the small tasks right leaves no gap to measure.
 - **A push failed** for lack of git credentials and was retried through the GitHub CLI's login (ASSIST-011).
 
 ---
@@ -521,6 +523,10 @@ Each line is the decision, then why.
 | The runner treats `RuntimeError: coroutine raised StopIteration` as "limit reached" | The listing's limits raise `StopIteration` inside a coroutine, which Python converts; confirmed on Python 3.12.9 |
 | `max_turns` and `max_cost` are set per run from the contract's budget | Parameters of the listing, not changes to it |
 | Every model response and tool result is written to the event log | The listing keeps no record |
+| The adapter declares the four tools on every call, including the listing's summary call, which passes none | The API needs the tools declared whenever the history contains tool calls |
+| The adapter returns the model's own response blocks to it unchanged on the next call | The listing keeps only text and tool calls; the API expects its own blocks back |
+| The adapter refuses a call whose worst case could take the run past its budget, and the runner reads that as "limit reached" | The listing checks its cost cap only after the money is spent, so a run could pass its budget by one call. The design requires the budget to be enforced before a call is made |
+| Output is limited to 8,192 tokens a call; no prompt caching is used | The API requires an output limit and the listing sets none. Caching was left off so that the first measured cost is the plain one |
 | The task text in every arm asks for a last line stating whether the work is done; a run that returns without one counts as a claim of done | The listing has no notion of done, and the agent's own claim is a verdict source we compare |
 
 **Beyond this exercise.** The product ships no loop and no container; it attaches to the team's pipeline, where the runner's isolation is the team's.

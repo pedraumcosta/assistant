@@ -2,7 +2,13 @@
 
 The one-day prototype of `docs/DESIGN.md` §7. It asks one question: is an executable verdict wrong less often than the agent's own claim, and than a model reviewer's?
 
-**State: slice 1 of 7.** The measurement works end to end with a fake agent that costs nothing. No model has been called and the gate is not built. The slices are in `docs/ROADMAP.md` §3.4.
+**State: slice 2 of 7.** The measurement works end to end, with a fake agent that costs nothing and with Claude Sonnet 5.5 on one task. The gate is not built. The slices are in `docs/ROADMAP.md` §3.4.
+
+A paid run needs `ANTHROPIC_API_KEY` in the repository's `.env` and draws on the 50 USD cap in `runs/ledger.jsonl`:
+
+```sh
+python -m prototype.runner.run --batch <name> --task o1-bulk-discount --arm bare --agent sonnet
+```
 
 ## Run it
 

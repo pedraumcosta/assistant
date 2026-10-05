@@ -173,6 +173,12 @@ The product is three weeks old. None of these rows concerns judgments about code
 | E-83 | Attributed to Ryan Lopopolo of OpenAI: "I am bearish on any harness that doesn't come from the lab whose model you are using. You're fighting against post-training." Quoted on a third-party show; the original was not found | "ai that works", episode notes of 2026-05-05 | [P] for the notes; original unverified | Third party quoting a vendor | https://github.com/ai-that-works/ai-that-works/tree/main/2026-05-05-openai-tells-you-not-to-build-your-own-harness |
 | E-85 | Heading "AI, the great amplifier"; "AI adoption does continue to have a negative relationship with software delivery stability" | Google's announcement of the 2025 DORA report, 2025-09-23 | [P] | Vendor-run (Google) | https://cloud.google.com/blog/products/ai-machine-learning/announcing-the-2025-dora-report |
 
+## Prices the prototype computes cost from
+
+| ID | Claim, as published | Source and date | Tag | Interest | URL |
+|---|---|---|---|---|---|
+| E-86 | Claude Sonnet 5.5: base input tokens "$2 / MTok", output tokens "$10 / MTok", 5-minute cache writes "$2.50 / MTok", cache hits and refreshes "$0.20 / MTok". "MTok: Million tokens." Models from Claude 4.6 on "include the full 1M token context window at standard pricing" | Anthropic, Claude Platform documentation, "Pricing", read 2026-10-05 | [P] | Vendor price list | https://platform.claude.com/docs/en/about-claude/pricing |
+
 ## Not usable as evidence
 
 - Every figure in `articles/` that does not have a row above. They are the authors' own claims; several run transcripts are inconsistent with the code shown beside them.

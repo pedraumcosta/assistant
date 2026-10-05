@@ -22,10 +22,19 @@ from prototype.runner.ledger import Ledger
 from prototype.runner.sandbox import AgentBox, SandboxError
 
 
-def make_model(agent: str, task: str):
+MODELS = {"sonnet": "claude-sonnet-5-5"}    # PLAN T22
+
+
+def make_model(agent: str, task: str, budget_usd: float):
     if agent.startswith("fake:"):
         return FakeModel(task, agent.split(":", 1)[1]), agent
-    raise SystemExit(f"no adapter for {agent!r} yet: real models arrive with slice 2")
+    if agent in MODELS:
+        # The key is read here, on the host. It never enters a container.
+        from dotenv import dotenv_values
+        from prototype.scaffold.adapter_anthropic import AnthropicModel
+        key = dotenv_values(paths.ROOT.parent / ".env").get("ANTHROPIC_API_KEY")
+        return AnthropicModel(MODELS[agent], budget_usd, api_key=key), MODELS[agent]
+    raise SystemExit(f"unknown agent {agent!r}")
 
 
 def run_id(task: str, arm: str, agent: str, trial: int) -> str:
@@ -47,7 +56,7 @@ def run(batch: str, task: str, arm: str, agent: str, trial: int, ledger_path: Pa
     ledger = Ledger(ledger_path or paths.RUNS / "ledger.jsonl")
     ledger.reserve(f"{batch}/{rid}", budget["max_cost_usd"])   # refused here if it would pass the cap
 
-    model, model_name = make_model(agent, task)
+    model, model_name = make_model(agent, task, budget["max_cost_usd"])
     scaffold = paths.sha256_file(paths.SCAFFOLD / "listing.py")
     log = EventLog(rdir / "events.jsonl", run=rid, batch=batch, task=task, arm=arm, trial=trial,
                    model=model_name, scaffold_sha256=scaffold[:16], contract_sha256=paths.contract_hash(task)[:16])

@@ -37,7 +37,7 @@ class LoggedModel:
         response = await self.inner.complete(messages, tools)
         self.log.emit("model_response", latency_s=round(time.monotonic() - start, 3),
                       content=response.get("content", ""), tool_calls=response.get("tool_calls") or [],
-                      usage=response.get("usage"), cost_usd=response.get("cost", 0.0))
+                      usage=response.get("usage"), cost_usd=response.get("cost", 0.0), meta=response.get("_meta"))
         return response
 
 
@@ -87,7 +87,10 @@ def run_agent(model, prompt: str, box: AgentBox, log: EventLog, max_turns: int, 
     except ContainerFailed as e:
         end.update(stop_reason="container_error", detail=str(e))
     except Exception as e:
-        end.update(stop_reason="provider_error", detail=f"{type(e).__name__}: {e}")
+        if type(e).__name__ == "BudgetStop":    # the adapter refused a call that could pass the budget
+            end.update(stop_reason="limit", detail=str(e))
+        else:
+            end.update(stop_reason="provider_error", detail=f"{type(e).__name__}: {e}")
     end.update(turns=agent.n_turns, cost_usd=agent.cost)
     log.emit("agent_stopped", **{k: v for k, v in end.items() if k != "final_text"},
              final_text=end["final_text"][:LOG_CHARS])
