@@ -22,6 +22,9 @@ Everything we read or looked up for the ASSIST exercise, recorded so the repo st
 | `check-procurement-claims.md` | Check of the enterprise procurement checklist against vendors' official documentation | Quotations confirmed in raw pages |
 | `review-verification-segment.md` | Funding, scale and actual behaviour of AI code review and verification products; what vendor audit logs record; the products closest to our idea | Figures confirmed in raw pages; the assessment of how occupied the space is belongs to the researcher |
 | `paper-harness-ablation.md` | arXiv 2609.20804, an ablation study of planning, tools and context management across four models | Read end to end from the full text |
+| `decision-models-2026-10-02.md` | Pedro's addendum on the Jev decision model: what it is, what held, and where it fits an assistant and our evidence layer | Overview of the two check files below; the product is three weeks old and independent evidence is thin |
+| `check-decision-model-product.md` | Claim-by-claim check of what Jev is, its limits, deployment and the measurements cited for it | Figures confirmed in raw pages |
+| `check-decision-model-risks.md` | Check of the risk and crowdedness claims, including a full read of arXiv 2609.29769 on shared errors between decision models and LLM judges | Figures confirmed in raw pages; negative findings are weak |
 
 ### Articles
 
@@ -79,6 +82,8 @@ Token, tool-call and duration figures are as reported by the Claude Code harness
 | 2026-10-05 | Check: market claims and six conflicts | Raw-page verification | 122,057 | 39 | 347 s |
 | 2026-10-05 | Check: procurement checklist | Raw-page verification | 147,894 | 30 | 379 s |
 | 2026-10-05 | Review and verification segment | Raw-page research | 219,065 | 68 | 615 s |
+| 2026-10-05 | Check: Jev decision model, product claims | Raw-page verification | 148,790 | 34 | 395 s |
+| 2026-10-05 | Check: decision-model risks and crowdedness | Raw-page verification | 201,366 | 59 | 502 s |
 
 Anthropic's harness design post and the verification-economics paper were read by the main session itself, so they have no row above.
 
@@ -92,6 +97,7 @@ The harness paper was read twice on 2026-10-05: selected sections by the main se
 ## Leads found but not read
 
 - Anthropic's earlier engineering post on long-running agent harnesses (initializer agent, feature list, context resets), which the CCA-F article summarises and the harness design post builds on (ASSIST-013).
+- arXiv 2609.28919 (Accenture, "Harness Tokenomics"), which models token-spend savings from routing coding-agent work with a decision model on an emulated enterprise.
 - The primary studies cited by `paper-verification-economics.md` (for example the MIT / NBER study of commits against releases, Stanford SWE-chat, Meta TestGen-LLM, SWE-Marathon). Their figures are second-hand until read.
 
 ## Known gaps

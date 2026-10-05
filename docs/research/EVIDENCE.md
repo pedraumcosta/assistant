@@ -9,7 +9,7 @@ Every figure or quotation that a document in this repo relies on has a row here.
 | [S] | Seen only in a search summary or secondary write-up. Not verified; must be upgraded to [P] or dropped |
 | [P-archive] | Read raw from a web-archive capture because the publisher blocked direct download |
 
-A caution applies to the [P] rows numbered E-01 to E-29 that were gathered by a research sub-agent: the page was fetched through a tool that summarises with a small model, so the exact wording of a quotation should be re-read at the source before it is printed in the proposal. Rows E-30 to E-37, E-40 to E-45 and E-59 to E-61 were read directly from the source text by the main session and do not carry that caution; E-38 and E-39 were checked against the downloaded text. Rows E-17 and E-46 to E-58 were confirmed by sub-agents in the raw downloaded page.
+A caution applies to the [P] rows numbered E-01 to E-29 that were gathered by a research sub-agent: the page was fetched through a tool that summarises with a small model, so the exact wording of a quotation should be re-read at the source before it is printed in the proposal. Rows E-30 to E-37, E-40 to E-45 and E-59 to E-61 were read directly from the source text by the main session and do not carry that caution; E-38 and E-39 were checked against the downloaded text. Rows E-17, E-46 to E-58 and E-62 to E-66 were confirmed by sub-agents in the raw downloaded page.
 
 "Interest" records whether the source sells a product that benefits from the finding.
 
@@ -131,6 +131,18 @@ Confirmed in the raw downloaded page on 2026-10-05. Company figures are the comp
 | E-56 | "Humans may review pull requests, but aren't required to. Over time, we've pushed almost all review effort towards being handled agent-to-agent." | OpenAI, "Harness engineering: leveraging Codex in an agent-first world", 2026-02-11 | [P-archive], capture of 2026-09-24 | Vendor | https://openai.com/index/harness-engineering/ |
 | E-57 | "The repository operates with minimal blocking merge gates. … In a system where agent throughput far exceeds human attention, corrections are cheap, and waiting is expensive." Followed by: "This would be irresponsible in a low-throughput environment." | as E-56 | [P-archive] | Vendor | as E-56 |
 | E-58 | "Harness design is thus a conditional systems problem in which each component should be selected for the target model, task type, and resource budget rather than adopted as a default." | Fan et al., arXiv 2609.20804, 2026-09-17 | [P] | Academic | https://arxiv.org/abs/2609.20804 |
+
+## Decision models
+
+The product is three weeks old. None of these rows concerns judgments about code.
+
+| ID | Claim, as published | Source and date | Tag | Interest | URL |
+|---|---|---|---|---|---|
+| E-62 | Jev: "Input tokens: $0.042 / MTok ($42 per billion tokens). Output tokens: FREE"; "The Services are hosted in the United States"; "64k tokens per request; 32k tokens for `state` plus the longest question" | TypeSafe AI documentation and privacy policy, read 2026-10-05 | [P] | Vendor | https://docs.typesafe.ai/models |
+| E-63 | "On Jev's most confident errors, 96.0% of LLM verdicts repeat its answer, against 50.3% under independence." Text rubrics only | Rao and Callison-Burch, arXiv 2609.29769, 2026-09-24 | [P] | Academic | https://arxiv.org/abs/2609.29769 |
+| E-64 | "Use a Jev-first cascade to lower cost, and expect little gain in accuracy" | as E-63, Appendix P | [P] | Academic | as E-63 |
+| E-65 | Post-hoc calibration: calibration error "0.117" raw, "0.008" with isotonic regression; "a few hundred labeled examples is enough to get most of the benefit". One constructed sentiment dataset | AnthusAI/Jev-Calibration repository | [P] | Independent project | see `check-decision-model-risks.md` item R2 |
+| E-66 | "Jev matched the oracle on all 500 repeated decisions." Five frozen agent runs, one reviewer's labels; "not a general ranking of judge accuracy" | LangChain blog | [P] | Vendor of evaluation tooling | see `check-decision-model-product.md` item 4 |
 
 ## Not usable as evidence
 

@@ -288,6 +288,34 @@ Three ideas from it are adopted as inputs:
 
 Its term "planted-flaw evaluations" replaces "verifier-integrity set" in §7.1.
 
+### 3.10 Decision models (2026-10-05)
+
+Pedro asked whether a new kind of model, sold as Jev by TypeSafe AI, could be used to enhance an assistant. A decision model returns one option from a fixed set, with a confidence, instead of generated text. Overview and checks: `docs/research/decision-models-2026-10-02.md`.
+
+**For an assistant: yes for cost and latency, and not for us.** Tool-risk gating, loop control, model routing and context triage are sensible uses. They sit inside the harness, which we do not build, and vendors already make cheap classifier calls at those points.
+
+**It does not buy accuracy or independence.** On text rubrics, "On Jev's most confident errors, 96.0% of LLM verdicts repeat its answer, against 50.3% under independence" (EVIDENCE E-63). The same paper: "Use a Jev-first cascade to lower cost, and expect little gain in accuracy" (E-64). No code-related judgments were tested. This is the first measured support we have for keeping the verdict deterministic.
+
+**For our evidence layer it is a component, never the verdict.** Three places: risk tiering; criteria with no executable check, as the middle step between deterministic checks and a stronger judge or a human; and triage such as real against flaky test failures.
+
+**The useful link is calibration.** A decision model's raw confidence is overconfident, and "a few hundred labeled examples is enough to get most of the benefit" of recalibration (E-65). Our layer produces those labels on each repository: the deterministic outcome of every change and every human override. This gives a concrete form to the recalibration idea of §3.9, and no shipped product was found doing it.
+
+**Constraints**
+
+- Jev is hosted only, in the United States (E-62). Using it would send customer diffs to a new vendor and give up the tenancy advantage of §3.8. A self-hosted open build would keep it; its accuracy is not established.
+- About 32,000 tokens for the material being judged.
+- The idea is reproducible on small open models, so it is not a moat.
+- The product is three weeks old and independent evidence is thin.
+
+**Design consequence.** Any model judgment in the layer sits behind an interface, with a self-hostable classifier as the default and a hosted decision model as an option the customer chooses. The correctness verdict never depends on it.
+
+**Decision (Pedro, 2026-10-05): next enhancement, not part of the first prototype.** The first prototype is built and measured without a decision model. The enhancement that follows it is:
+
+1. a decision-model judge as a fourth verdict source beside the agent's own claim, the evaluator agent and the deterministic gate, reported on false-pass rate, variance across repeats, cost and latency;
+2. a first test of recalibration: use the deterministic outcomes from the prototype's own runs as labels, and measure how much they improve the classifier's calibration.
+
+It needs a TypeSafe API key or a local open build. The first prototype keeps the door open by recording, for every run, the inputs a judge would need and the deterministic outcome.
+
 ## 4. Deliverables
 
 | File | Purpose | Brief topic |
@@ -380,6 +408,8 @@ The task set will be small and written by us, so results are an indication, not 
 5. **Eval runner.** Tasks × trials × arms into a results table, with the cross-vendor evaluator's verdict recorded beside the runs it scores and the spend cap enforced.
 6. **Stretch.** The same gate attached to a vendor harness through a hook or MCP; context compaction and a repo map.
 
+**Next enhancement, after the first prototype is measured:** a decision-model judge and a recalibration test (§3.10).
+
 ### 7.3 Deliberately excluded
 
 IDE plugin, any UI beyond the CLI, cloud or background agents, multi-agent orchestration, embeddings index, fine-tuning or our own model, MCP marketplace, autocomplete. These are either table stakes owned by incumbents or belong after the hypotheses hold.
@@ -438,3 +468,4 @@ The issue register lives in `docs/ROADMAP.md` §5. It is the only copy.
 - Two papers on verification economics and graduated oversight read in full; findings in §3.7.
 - Pedro's web research notes checked in raw source pages; ablation paper read in full; review and verification segment researched; findings in §3.8.
 - Pedro's own analysis of the harness paper checked against the paper; findings in §3.9; decision D3 refined.
+- Pedro's addendum on decision models checked at primary sources; findings in §3.10.

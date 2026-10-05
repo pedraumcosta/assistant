@@ -45,6 +45,7 @@ Two kinds of entry:
 - Third research round. Pedro supplied his web research notes of 2026-10-01 and approved four actions: read the cited ablation paper, research the review and verification segment, resolve six conflicts with our records, and record the notes with a claim-by-claim check. Five sub-agents did this from raw source pages. Six records added; plan §3.8 written; roadmap inputs updated. No commit, at Pedro's instruction.
 - Pedro supplied his own analysis of the harness paper, dated 2026-10-02. Checked claim by claim against the paper's HTML text and PDF. He approved four actions: record it, base the agent under test on the paper's published scaffold, add Omnigent-as-channel and outcome-fed recalibration as inputs, and check two unverified items in the PDF. Both items were confirmed.
 - Plan §1 rewritten to state the current position and how it moved. All of the day's research rounds committed together at Pedro's confirmation.
+- Pedro raised decision models (TypeSafe's Jev) as a possible new element and supplied his addendum of 2026-10-02. Two sub-agents checked it at primary sources. Finding: useful for cost at harness call sites we do not build; a component, never the verdict, in the evidence layer; the valuable link is recalibrating a cheap classifier from the labels our layer produces. Records added; plan §3.10 written; roadmap inputs updated. Pedro decided to treat it as the next enhancement after the first prototype (ADR-012).
 
 **Deviations and corrections**
 - **First-pass reading was truncated without warning.** The summarising fetch cut three long articles part-way and reported one as near-complete. Found when Pedro challenged the coverage. Fix: download the full text, check it reaches the final section, read end to end.
@@ -62,6 +63,7 @@ Two kinds of entry:
 - **The market check changed the picture more than the literature did.** A competitor valued at 1.5 billion USD is positioning as "the control layer" for agent-written changes.
 - **One quotation in Pedro's paper analysis is not in the paper** (that Omnigent "does not evaluate output correctness"). The paper is silent on the point.
 - **Decision D3 was refined, not reversed.** We still run our own minimal loop, but take it from the paper's published listing.
+- **The decision-model addendum needed ten corrections**, among them the context limit (about 32,000 usable tokens, not 64,000), the mechanism (unpublished, not as described), and two integration claims that had changed state. Its central caution, that such judges fail where LLM judges fail, was confirmed with a figure, for text rubrics only.
 - **A push failed** for lack of git credentials and was retried through the GitHub CLI's login (ASSIST-011).
 
 ---
@@ -239,3 +241,24 @@ Two kinds of entry:
 **Alternative rejected.** Keeping our own terms, which would hide that the framing is already public.
 
 **Note.** "Verification tax" as a phrase predates that paper; it appears in a DORA article of 2026-03-10. The paper supplies the formula.
+
+### ADR-012 — Decision models are the next enhancement, not part of the first prototype
+
+| | |
+|---|---|
+| Status | Decided 2026-10-05 |
+| Plan reference | `PLAN.md` §3.10, §7.2 |
+
+**Decision.** The first prototype is built and measured without a decision model. The enhancement that follows adds a decision-model judge as a fourth verdict source and tests whether the prototype's own deterministic outcomes improve that judge's calibration. In any later design a decision model may assign risk tiers, judge criteria that have no executable check, or triage; it never gives the verdict on whether a change is correct, and it sits behind an interface with a self-hostable classifier as the default.
+
+**Rationale.**
+- Measured evidence that such models repeat LLM judges' errors: "96.0% of LLM verdicts repeat its answer, against 50.3% under independence", on text rubrics (E-63). A verdict that depends on one would not be independent.
+- Calibration needs only "a few hundred labeled examples" (E-65), and our layer produces those labels. That is worth testing, after the core result exists.
+- The commercial product is hosted only, in the United States (E-62), which conflicts with running entirely in the customer's environment.
+- The first prototype has a one-day budget and one question to answer: whether a deterministic verdict beats the agent's own claim and a model reviewer's.
+
+**Alternatives rejected.**
+- Including a decision-model judge in the first prototype: more scope, and it needs access we do not have (ASSIST-015).
+- Building the product around decision-model economics: the argument was made for a governance layer this project dropped, and the call sites where it saves most sit inside the harness, which we do not build.
+
+**Beyond this exercise.** The evidence is three weeks old and contains no code judgments. Whether a decision model's errors on code changes overlap with a model reviewer's is something our own data would have to show.
