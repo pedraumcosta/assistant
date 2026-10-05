@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| Status | Working plan. The thesis is decided (§2.1). Research is complete through 2026-10-05. Nothing has been designed or built. |
+| Status | Working plan. The thesis is decided (§2.1). Research is complete through 2026-10-05. The system design is drafted (`docs/DESIGN.md`). Nothing is built. |
 | Date | Started 2026-10-03; last updated 2026-10-05 |
 | Brief | `docs/init-prompt.md` |
 | Source-of-truth order | `docs/PLAN.md` → `docs/ROADMAP.md` → `docs/JOURNAL.md`. If they disagree, the earlier one wins and the later one is corrected. |
@@ -20,8 +20,8 @@ The leadership question is "why build another AI coding product when the largest
 
 **The candidate product** is the evidence layer of that practice. It works with the tools a team already uses:
 
-- a first process that guides the user to create the checks (a test suite or an evaluation), in the manner of test-driven or eval-driven development;
-- a change contract written before the agent runs (scope, acceptance checks, budget), protected from the agent by mechanism;
+- a first process that takes the team from a use-case description with its main functional requirements to executable checks (a test suite or an evaluation), with the team's own assistant asking clarifying questions and a person approving;
+- a change contract written before the agent runs (scope, acceptance checks, budget), kept on a protected branch so that the author of a change cannot alter it;
 - a verdict of executable evidence after the agent stops, run where the agent cannot interfere. For conventional code: the customer's own checks, a scope check on the change, and a check that the agent's tests mean something. For an LLM application: an evaluation over fixed cases, some hidden from the agent, reported as pass, fail or inconclusive;
 - an evidence record of the outcome, which no vendor audit log we examined provides;
 - a measured false-pass rate for that verdict, per repository and per model and harness pairing, used to set how much human review each class of change gets.
@@ -139,10 +139,15 @@ Taken in the thesis discussion. Each has its rationale in `docs/JOURNAL.md` (ADR
 | T12 | Is the verdict always deterministic | **No. It is always executable.** For conventional code the verdict comes from tests and is a yes or no. For an LLM application it is an evaluation: fixed cases, some hidden from the agent, run repeatedly and scored against a threshold, reported as pass, fail or inconclusive. Code-based scoring first; a model scores only where code cannot, and then its agreement with human labels is measured and stated. **The prototype starts with the conventional case. The evaluation path is designed in `DESIGN.md`; implementing it is a bonus if time allows.** | Raised by Pedro: software built on an LLM cannot be verified by one deterministic run. What the product promises does not depend on determinism: checks fixed beforehand and protected, run outside the agent, recorded, and their own error rate measured. The conventional case gives the cleanest comparison against a model reviewer within one day. |
 | T13 | Does the product add time and cost to delivery | **Yes, and the proposal says so.** It adds cost before the work (writing the checks), during it (extra attempts), after it (running the checks; for evaluations, many model calls) and over time (upkeep and re-measurement), and it adds waiting before merge. It is meant to remove review time, rework and incidents. Whether that nets out is not established; the pilot has to show it. The product limits its cost by applying checks by risk, reusing the team's existing pipeline, capping its own budget, and measuring wrongly failed changes as well as wrongly passed ones. | Raised by Pedro. A product that adds checks and hides their cost will not survive a CFO's first question, and the research itself warns that checking everything is waste (E-36) and that waiting has a price (E-57). |
 | T14 | How the product is framed | **Tooling for evidence-driven development: a tool for the team's delivery process, not a plug-in for an assistant.** The team defines "done" as executable checks before work starts; every change, whoever or whatever wrote it, is accepted on that evidence. It continues test-driven development, covers eval-driven development, and supports spec-driven development and "software factory" working without carrying either name. It suits teams that already take their process seriously. **The product's scope does not change, and the exclusions in T6 stand.** | Pedro's reframe, sharpened in discussion. "Plug-in" was inaccurate and made the product an accessory to another vendor's. A standard for what counts as done does not shrink as models improve, and it is bought by engineering leaders. "SDLC tool" was rejected as too broad and as GitHub's and GitLab's ground. Spec-driven development and "factory" were rejected as banners: the first is offered by large vendors and has drawn a backlash; the second is a company name here and implies the setting where the product pays least. |
+| T15 | Where the contract lives | **On a protected branch of the team's repository.** The hidden checks sit there too. | The author of a change must not be able to write to them. A protected branch uses the permissions and history the repository host already provides and needs no separate store. |
+| T16 | What the first process is | **A use-case description with the main functional requirements.** The team's own assistant helps by asking clarifying questions; checks are drafted from the requirements, each requirement linked to at least one check; a person approves. | It starts from what the engineer already knows how to write. The clarifying questions address the tendency of agents to guess when a task is underspecified (E-80). The assistant helps to ask and draft; it does not approve. |
+| T17 | How thorough the evaluation cases are | **Coverage and data samples are comprehensive by default:** every functional requirement has cases, across ordinary inputs, edge cases and inputs meant to break it; coverage is reported with the result. Budget limits repeats, not breadth. | A narrow case set gives a confident verdict on the wrong question. This costs more, and the cost is stated (T13). |
+| T18 | Hooks inside the assistant | **Offered, for human intervention** (pausing for approval, asking a question) **and early feedback.** The pipeline's verdict remains the one that counts. | A hook is the natural place for a person to step in while the agent works. It cannot be the verdict, because it runs where the author can reach it. |
+| T19 | How much of this the prototype builds | **Very little: it is kept simple.** No first process (contracts written by hand), no protected branch (a directory outside the agent's working copy stands in), no hooks, and the evaluation path only as a bonus. | One day and one question: whether an executable verdict beats the agent's own claim and a model reviewer's. |
 
 Still open: the review date in T7, and T8.
 
-Journal references: ADR-014 to ADR-019.
+Journal references: ADR-014 to ADR-020.
 
 ## 3. What the research says
 
@@ -572,3 +577,4 @@ The issue register lives in `docs/ROADMAP.md` §5. It is the only copy.
 - Evidence ledger rows E-01 to E-29 re-checked against raw sources and corrected.
 - Proposal sections 1 and 2 drafted (`docs/PROPOSAL.md`); item on the verdict widened to cover evaluations for LLM applications (T12).
 - Product reframed as tooling for evidence-driven development (T14).
+- System design drafted and reviewed (`docs/DESIGN.md`; decisions T15 to T19), covering the product, the evaluation path for LLM applications, the brief's thirteen design topics, the prototype, and risks, assumptions and redlines.

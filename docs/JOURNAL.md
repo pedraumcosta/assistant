@@ -53,6 +53,8 @@ Two kinds of entry:
 - Pedro reviewed the proposal draft, judged it sound, and questioned one point: whether the verdict is always deterministic, given that software built on an LLM has to be checked by an evaluation. The item was reworded and the scope decided (ADR-017).
 - Pedro asked for the costs and the effect on the delivery process to be elaborated: more tests and checks add latency, time and cost. A section was added to the proposal and a sixth hypothesis to the prototype (ADR-018).
 - Pedro proposed reframing the product for its market: not a plug-in for an assistant but a tool for how a mature software team runs delivery, under a banner with a future (eval-driven development, spec-driven development, or a factory). After discussion he adopted "evidence-driven development" (ADR-019). A check of existing uses of that label was started.
+- System design drafted (`docs/DESIGN.md`) at Pedro's request, following PLAN §7 and §8 and his own design method and checklists. A sub-agent read the notes he pointed to and returned their ideas as plain statements; the design restates them in its own words and cites no private material. His unpublished measurements were left out.
+- Pedro reviewed the system design and decided its five open points (ADR-020), asking that the prototype be kept very simple.
 
 **Deviations and corrections**
 - **First-pass reading was truncated without warning.** The summarising fetch cut three long articles part-way and reported one as near-complete. Found when Pedro challenged the coverage. Fix: download the full text, check it reaches the final section, read end to end.
@@ -76,6 +78,7 @@ Two kinds of entry:
 - **Fourteen claims in Pedro's market and limits notes needed correcting** at their public sources, among them a benchmark figure that came from a podcast (about 33%, against 14.8% in the paper) and a vulnerability figure attributed to the wrong vendor. Four phrases turned out to be his own framing, in no source.
 - **One committed file broke the new citation rule.** The digest of Pedro's notes named his private files and carried untraced figures. It was replaced with a list of his principles.
 - **Nine early ledger rows were not exact.** They had been gathered through a summarising fetch. Corrections that changed meaning: a security quotation applied to two models, not to all newer models; a billing change was an announcement with an exception for annual subscribers; an incident date was not in its source; one repository reported as archived is read-only. The plan carried three of these and was corrected.
+- **One figure in Pedro's notes is arithmetically wrong and was not used:** a 90% single-attempt success rate gives about 43% over eight attempts, not 57%.
 - **A push failed** for lack of git credentials and was retried through the GitHub CLI's login (ASSIST-011).
 
 ---
@@ -461,3 +464,24 @@ Each line is the decision, then why.
 - The strongest objection: the practice is acceptance-test-driven development joined to eval-driven development. The proposal therefore claims only what is added: one gate for changes from people and from agents, a kept record, and a measured error rate.
 - Closest in substance under another name: StrongDM's published "Software Factory" method, in which specifications and externally held scenarios drive agents. It is a method, not a product.
 - Not done: a search of trademark registers.
+
+### ADR-020 — Design decisions: contract home, first process, evaluation coverage, hooks, prototype simplicity
+
+| | |
+|---|---|
+| Status | Decided 2026-10-05 |
+| Plan reference | `PLAN.md` §2.1, T15 to T19; `DESIGN.md` §9 |
+
+Each line is the decision, then why.
+
+**The contract lives on a protected branch** of the team's repository, with the hidden checks. *Why:* the author of a change must not be able to write to them, and a protected branch uses the permissions and history the host already provides. *Rejected:* a separate store, which adds a system to run and secure.
+
+**The first process is a use-case description with the main functional requirements.** The team's own assistant helps with clarifying questions; checks are drafted from the requirements, each requirement linked to at least one check; a person approves. *Why:* it starts from something an engineer already knows how to write, and it turns the tendency of agents to guess (E-80) into questions before the work begins. *Limit:* the assistant asks and drafts; it does not approve and cannot write to the protected branch. *Rejected:* asking the engineer to write tests from nothing.
+
+**Evaluation coverage and data samples are comprehensive by default.** Every functional requirement has cases, across ordinary inputs, edge cases and inputs meant to break it, and coverage is reported. Budget limits repeats, not breadth. *Why:* a narrow set gives a confident verdict on the wrong question. *Cost accepted:* evaluations are the expensive path, and this makes them more so (ADR-018). *Rejected:* letting sample breadth follow the budget.
+
+**Hooks inside the assistant are offered**, for human intervention and early feedback. *Why:* a hook is where a person can step in while the agent is working. *Limit:* the pipeline's verdict is the one that counts, because a hook runs where the author can reach it.
+
+**The prototype is kept very simple.** It builds none of the first process, the protected branch or the hooks, and the evaluation path only as a bonus. A directory outside the agent's working copy stands in for the protected branch. *Why:* one day, and one question to answer.
+
+**Diagrams** stay in Mermaid for now.

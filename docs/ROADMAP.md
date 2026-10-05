@@ -11,7 +11,7 @@
 - The plan exists and ten working decisions are recorded in it (`PLAN.md` §2).
 - Research is done and recorded in `docs/research/`: the first pass, the full re-reads, and three sets of Pedro's own material checked against their sources (his Notion notes, his web research notes, and his analysis of the harness paper), with four papers read in full along the way.
 - The thesis is decided (§2 below): the evidence layer, pursued as a three-stage probe that ends in Build or Wait.
-- The first two sections of the proposal are drafted. Nothing has been designed or built yet.
+- The first two sections of the proposal and the system design are written and reviewed. Nothing is built.
 
 ## 2. The thesis
 
@@ -58,12 +58,13 @@ Status values: Done, In review, Not started, Blocked.
 | Pedro's pointers on market structure and agent limits traced to public sources and checked | `docs/research/market-and-limits-evidence.md` and two check files, `PLAN.md` §3.12; `practitioner-notes.md` replaced by a list of principles | The commit after `b2f1985` | 2026-10-05 |
 | Thesis discussion: posture, thesis, buyer, differentiation, exclusions, kill criteria and prototype scope decided | `PLAN.md` §2.1, `JOURNAL.md` ADR-014 to ADR-016 | The commit after `5b7fef5` | 2026-10-05 |
 | Evidence verification: ledger rows E-01 to E-29 re-checked against raw sources | `docs/research/EVIDENCE.md` | The commit after `1e3d2c5` | 2026-10-05 |
+| Problem and product: proposal sections 1 and 2, reviewed by Pedro and reframed as evidence-driven development | `docs/PROPOSAL.md` | `fa96c11`, `cc90fad` | 2026-10-05 |
+| System design, reviewed by Pedro with five decisions (T15 to T19) | `docs/DESIGN.md` | The commit after `cc90fad` | 2026-10-05 |
 
 ### 3.2 In review
 
-| Step | Output | Exit check | Waiting on |
-|---|---|---|---|
-| Problem and product | `docs/PROPOSAL.md` sections 1 and 2, drafted 2026-10-05 | Includes the case against entering; exclusions are explicit | Pedro's review |
+Nothing is in review.
+
 
 ### 3.3 Not started
 
@@ -71,8 +72,7 @@ These are the remaining phases from `PLAN.md` §6. With the thesis decided, they
 
 | Phase | Output | Exit check (from the plan) | Depends on |
 |---|---|---|---|
-| System design | `docs/DESIGN.md` | Each design topic has a position, a rejected alternative and a way to measure it; risks, assumptions and redlines stated | Nothing; can start |
-| Prototype | `prototype/` | Each slice runs end to end on the fixture repo | System design |
+| Prototype | `prototype/` | Each slice runs end to end on the fixture repo | Nothing; can start on Pedro's word |
 | Bonus: evaluation path for an LLM application | One small task verified by an evaluation, end to end | Three-way result reported; hidden cases never shown to the agent; any model scorer's agreement with labels stated | Prototype; time remaining |
 | Measurement | `docs/RESULTS.md`, `prototype/runs/` | Results table generated from run files, limitations stated, spend within the 50 USD cap | Prototype |
 | Next enhancements: counterexample search; decision-model judge and recalibration test | A search for hidden behavioural differences that produces executable failing tests; a fourth verdict source in the evaluation; and a measurement of how far the prototype's own outcomes improve a classifier's calibration | Reported on false-pass rate, variance, cost and latency beside the other verdict sources; limits stated | First prototype measured; a TypeSafe API key or a local open build |

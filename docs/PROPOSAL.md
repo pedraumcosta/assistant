@@ -85,11 +85,11 @@ The product is the part of that practice a team cannot do by hand at the pace ag
 
 It has five parts.
 
-1. **A guided first step: create the checks.** Before anything is delegated, the product guides the user to write down what "done" means as a test suite or an evaluation, in the manner of test-driven development. This is kept simple on purpose. Agents guess when a task is underspecified (E-80), and without checks there is nothing to verify against.
-2. **A change contract**, fixed before the agent runs: what is in scope, which checks must pass, and what the task may cost. It is protected from the agent by mechanism, not by instruction.
+1. **A guided first step: from a use case to checks.** Before anything is delegated, the engineer writes a short use-case description with the main functional requirements. The team's own assistant asks clarifying questions about what is missing or ambiguous; agents tend to guess when a task is underspecified (E-80), and this turns that into questions first. Checks are then drafted from the requirements, as a test suite or an evaluation, and a person approves them.
+2. **A change contract**, fixed before the agent runs: what is in scope, which checks must pass, and what the task may cost. It is kept on a protected branch of the team's repository, where the author of a change cannot alter it.
 3. **A verdict of executable evidence**, produced after the agent stops, in a place the agent cannot touch.
    - *For conventional code:* the customer's test suite, a check that the change stayed in scope, and a check that the agent's own tests mean something. For the last, an agent's new tests are run against the original code, where "they must fail" (E-76).
-   - *For an LLM application:* an evaluation. Fixed cases, some of them hidden from the agent, are run repeatedly and scored against a threshold. The result is pass, fail or inconclusive, because one run of a system that answers differently each time proves little. Code-based scoring is used wherever it can be; where a model must score, its agreement with human labels is measured and stated.
+   - *For an LLM application:* an evaluation. Fixed cases, covering every functional requirement and some of them hidden from the agent, are run repeatedly and scored against a threshold. The result is pass, fail or inconclusive, because one run of a system that answers differently each time proves little. Code-based scoring is used wherever it can be; where a model must score, its agreement with human labels is measured and stated.
 4. **An outcome record** for every change: what was asked, what changed, which checks ran and their results, the risk tier, and the cost.
 5. **A measured error rate.** How often the verdict passes a change that should have failed, measured on the customer's repository, and used to decide how much human review each class of change receives.
 
