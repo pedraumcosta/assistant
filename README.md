@@ -37,7 +37,8 @@ It is the working record and the deliverable at once. A reader should be able to
 | `docs/DESIGN-REVIEW.md` | A critical self-review of the design before building: integrity-boundary gaps, contradictions, and the fixes each one gets |
 | `docs/templates/` | The fill-in templates that make the final phase mechanical: results, proposal sections 3–4, the CFO message with its challenge-and-answer appendix, and both presentation forms |
 | `docs/presentation.html` | The presentation page (single-page, 10-minute spoken walkthrough, leave-behind sections); published as the session artifact once results land |
-| `docs/slides.md` | The Slidev deck: the 10-minute recommendation ending on the executive recommendation to the CFO, a ~13-minute technical walkthrough, and discussion backup |
+| `docs/slides.md` | The Slidev deck: the 10-minute recommendation ending on the executive recommendation to the CFO, a ~14-minute technical walkthrough, and discussion backup |
+| `docs/decks/` | The two exported stakeholder PDFs (recommendation; technical walkthrough), generated from `docs/slides.md` |
 | `prototype/` | The one-day prototype: the agent under test, the gate (350 lines, 84 tests), the runners, and `runs/` with the raw records. Built measurement-first and stopped on the time budget with the central comparison unrun (ADR-022) |
 | `docs/RESULTS.md` | What the prototype measured — generated from the run files, never typed in |
 | `docs/BUILD_LOG.md` | (Final phase) how Claude Code was used to produce this repository |
