@@ -1,0 +1,488 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- Explainer page. Same content as the session artifact https://claude.ai/artifact/DfkhTm9ek1xxe2GbCBPZyc -->
+<title>ASSIST Prototype Architecture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: fourth page of the set, same tokens. One drawing of the prototype's process and container topology; then the scaffold, the five inputs, the host process, the containers, the outputs, and one tool call traced. */
+:root{
+  --page:#F5F6F8; --surface:#FFFFFF; --ink:#16202B; --ink2:#4A5767; --muted:#7C8794;
+  --line:#DDE2E8; --accent:#1D5C9E; --accent-soft:#E4EEF8; --amber:#9A6A12; --amber-soft:#F7EFDD;
+  --bad:#B23A2F; --bad-soft:#F8E6E3; --good:#2E7D4F; --good-soft:#E3F2E9; --code:#EDF0F3;
+  --display:"Newsreader",Georgia,"Times New Roman",serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --page:#111519; --surface:#1A2026; --ink:#E6EAEE; --ink2:#AEB8C2; --muted:#7C8794;
+    --line:#2A333C; --accent:#6FA8E6; --accent-soft:#1C2A3B; --amber:#D9A94B; --amber-soft:#2B2416;
+    --bad:#E07A6E; --bad-soft:#33201D; --good:#6CC08B; --good-soft:#1B2E22; --code:#222A32;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --page:#111519; --surface:#1A2026; --ink:#E6EAEE; --ink2:#AEB8C2; --muted:#7C8794;
+  --line:#2A333C; --accent:#6FA8E6; --accent-soft:#1C2A3B; --amber:#D9A94B; --amber-soft:#2B2416;
+  --bad:#E07A6E; --bad-soft:#33201D; --good:#6CC08B; --good-soft:#1B2E22; --code:#222A32;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--page);color:var(--ink);margin:0;padding-block:0 80px;font:16px/1.65 var(--body)}
+main{max-width:900px;margin:0 auto;padding-inline:20px;min-width:0}
+h1,h2,h3{font-family:var(--display);font-weight:500;line-height:1.15;text-wrap:balance;margin:0}
+h1{font-size:2.5rem;letter-spacing:-.01em}
+h2{font-size:1.65rem;margin:72px 0 8px}
+h3{font-size:1.15rem;font-weight:600;margin:30px 0 6px}
+p{margin:10px 0;max-width:70ch}
+ul,ol{max-width:70ch;padding-left:1.3em}
+li{margin:5px 0}
+li::marker{color:var(--muted)}
+a{color:var(--accent)}
+strong{font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--code);border-radius:4px;padding:.08em .35em}
+pre{font-family:var(--mono);font-size:.8rem;line-height:1.5;background:var(--code);border:1px solid var(--line);border-radius:6px;padding:12px 14px;overflow-x:auto;margin:12px 0;max-width:100%}
+pre .c{color:var(--muted)}
+pre .k{color:var(--accent)}
+.eyebrow{font:500 .72rem/1 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+header.hero{padding:60px 0 28px;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:16px}
+.lede{font-size:1.15rem;color:var(--ink2);max-width:64ch;margin:0}
+.meta{display:flex;flex-wrap:wrap;gap:6px 22px;font-size:.84rem;color:var(--muted)}
+.meta b{color:var(--ink2);font-weight:500}
+.secnote{color:var(--ink2);margin:0 0 18px;max-width:70ch}
+.toc{display:flex;flex-wrap:wrap;gap:6px;margin:22px 0 0;padding:0;list-style:none;font-size:.85rem}
+.toc a{border:1px solid var(--line);border-radius:99px;padding:4px 12px;text-decoration:none;color:var(--ink2);background:var(--surface)}
+.toc a:hover{border-color:var(--accent);color:var(--accent)}
+
+figure{margin:24px 0;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px 14px 10px;overflow-x:auto}
+figure svg{display:block;max-width:100%;height:auto;min-width:960px;font-family:var(--body)}
+figure.wide{width:min(1200px,calc(100vw - 32px));margin-left:calc(50% - min(1200px,calc(100vw - 32px)) / 2);padding:18px 18px 12px}
+figcaption{font-size:.86rem;color:var(--ink2);margin-top:10px;max-width:80ch}
+.leg{display:flex;gap:18px;flex-wrap:wrap;font-size:.8rem;color:var(--ink2);margin-top:8px}
+.leg span{display:inline-flex;align-items:center;gap:6px}
+.leg i{display:inline-block;width:22px;height:0;border-top:2px solid currentColor}
+.leg i.d{border-top-style:dashed}
+.leg b{display:inline-block;width:14px;height:14px;border-radius:3px;background:var(--accent-soft);border:1px solid var(--accent)}
+
+table{border-collapse:collapse;width:100%;font-size:.9rem;margin:16px 0}
+.tw{overflow-x:auto}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500}
+td.m{font-family:var(--mono);font-size:.82rem;white-space:nowrap}
+.tag{display:inline-block;font:500 .7rem/1 var(--body);letter-spacing:.05em;text-transform:uppercase;border-radius:99px;padding:4px 9px;white-space:nowrap}
+.tag.ours{background:var(--accent-soft);color:var(--accent)}
+.tag.theirs{background:var(--amber-soft);color:var(--amber)}
+
+.rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin:20px 0}
+.rule{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:14px 16px}
+.rule b{display:block;font-size:.98rem;margin-bottom:4px}
+.rule p{font-size:.9rem;color:var(--ink2);margin:0}
+
+.pipe{counter-reset:step;list-style:none;margin:22px 0;padding:0;border-left:2px solid var(--accent)}
+.pipe li{position:relative;padding:12px 0 16px 50px}
+.pipe li::before{counter-increment:step;content:counter(step);position:absolute;left:-15px;top:14px;width:28px;height:28px;border-radius:50%;background:var(--accent);color:var(--page);font:500 .85rem/28px var(--mono);text-align:center}
+.pipe b{display:block;font-size:1rem}
+.pipe p{margin:3px 0 0;font-size:.92rem;color:var(--ink2)}
+.pipe .f{font-family:var(--mono);font-size:.76rem;color:var(--muted);display:block;margin-top:4px}
+
+.tree{font-family:var(--mono);font-size:.8rem;line-height:1.55;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:12px 14px;overflow-x:auto;white-space:pre;margin:12px 0}
+.tree .d{color:var(--accent)}
+.tree .n{color:var(--muted)}
+
+.call{border-left:3px solid var(--accent);background:var(--surface);padding:12px 16px;margin:18px 0;border-radius:0 6px 6px 0;max-width:74ch}
+.call p{margin:0;font-size:.95rem}
+.call.bad{border-left-color:var(--bad)}
+.call.amber{border-left-color:var(--amber)}
+.foot{margin-top:72px;padding-top:18px;border-top:1px solid var(--line);font-size:.84rem;color:var(--muted);max-width:70ch}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+</head>
+<body>
+<main>
+<header class="hero">
+  <span class="eyebrow">Technical walkthrough · the prototype's architecture</span>
+  <h1>One host process, three kinds of container, five inputs, one record</h1>
+  <p class="lede">This is the page the code walkthrough should have opened with. It shows how the prototype is put together as software: what the scaffold is and what I wrapped around it, where each input comes from and who is allowed to see it, what runs on the host and what runs in a container, and what every run writes down. The drawing is the topology; the sections after it follow the drawing left to right.</p>
+  <div class="meta"><span><b>Pedro Costa</b>, VP Engineering</span><span>Source: <code>prototype/</code>, about 2,000 lines of our code plus fixtures, tasks and hand-made changes</span><span>Python 3.12 · Docker · pytest · the Anthropic SDK</span></div>
+  <ul class="toc">
+    <li><a href="#drawing">The drawing</a></li>
+    <li><a href="#scaffold">The scaffold</a></li>
+    <li><a href="#around">What we put around it</a></li>
+    <li><a href="#inputs">The five inputs</a></li>
+    <li><a href="#host">The host process</a></li>
+    <li><a href="#containers">The containers</a></li>
+    <li><a href="#toolcall">One tool call, traced</a></li>
+    <li><a href="#outputs">The outputs</a></li>
+    <li><a href="#seams">The seams</a></li>
+  </ul>
+</header>
+
+<h2 id="drawing">The drawing</h2>
+<figure class="wide">
+<svg viewBox="0 0 1200 900" role="img" aria-label="Top band: five inputs, the fixture and task overlay, the task text, the hand-made changes, the protected contract with hidden checks, and the ground truth. Middle left: the host process running runner/run.py, holding the Anthropic API client, the ledger, the event log, the two kinds of Model, the unedited scaffold loop, the change hashing, the gate's verdict assembly, the ground-truth evaluation, and the outcome writer. Middle right: three kinds of container from one image: the agent's container where the scaffold's tools run, one verdict container per check, and the ground-truth containers. Bottom band: the outputs, the run directory, the ledger file, and the results tables. Arrows show the three inputs copied onto the host, the protected and ground-truth directories mounted only into their own containers, the scaffold calling tools in the agent container by docker exec, the gate running one container per check, and the outcome written once.">
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker>
+  </defs>
+
+  <!-- ===== INPUT BAND ===== -->
+  <text x="16" y="34" font-size="12" fill="var(--muted)" font-weight="500" letter-spacing=".1em">INPUTS · READ-ONLY FILES IN THE REPOSITORY</text>
+  <g fill="var(--surface)" stroke="currentColor" stroke-width="1.2" color="var(--ink)">
+    <rect x="16" y="50" width="216" height="110" rx="6"/>
+    <rect x="256" y="50" width="216" height="110" rx="6"/>
+    <rect x="496" y="50" width="216" height="110" rx="6"/>
+    <rect x="736" y="50" width="216" height="110" rx="6"/>
+    <rect x="976" y="50" width="216" height="110" rx="6"/>
+  </g>
+  <g font-size="13">
+    <text x="30" y="74" font-weight="600" fill="var(--ink)">fixture/ + task overlay</text>
+    <text x="30" y="96" fill="var(--ink2)">the repository as the task</text>
+    <text x="30" y="114" fill="var(--ink2)">finds it · 17 tests</text>
+    <text x="30" y="144" fill="var(--muted)" font-size="12">seen by: agent · gate · ground truth</text>
+
+    <text x="270" y="74" font-weight="600" fill="var(--ink)">tasks/‹id›/task.md</text>
+    <text x="270" y="96" fill="var(--ink2)">plain English, no hints</text>
+    <text x="270" y="114" fill="var(--ink2)">+ the arm's prompt suffix</text>
+    <text x="270" y="144" fill="var(--muted)" font-size="12">seen by: agent</text>
+
+    <text x="510" y="74" font-weight="600" fill="var(--ink)">changes/ · planted/ · known_good/</text>
+    <text x="510" y="96" fill="var(--ink2)">hand-made changes, their truth</text>
+    <text x="510" y="114" fill="var(--ink2)">and expected step known first</text>
+    <text x="510" y="144" fill="var(--muted)" font-size="12">replayed by the fake agent, or applied</text>
+
+    <text x="750" y="74" font-weight="600" fill="var(--ink)">protected/‹id›/</text>
+    <text x="750" y="96" fill="var(--ink2)">contract.yaml, pinned by hash</text>
+    <text x="750" y="114" fill="var(--ink2)">hidden/test_hidden.py</text>
+    <text x="750" y="144" fill="var(--bad)" font-size="12">seen by: the gate only, never the agent</text>
+
+    <text x="990" y="74" font-weight="600" fill="var(--ink)">groundtruth/‹id›/</text>
+    <text x="990" y="96" fill="var(--ink2)">test_acceptance.py, richer</text>
+    <text x="990" y="114" fill="var(--ink2)">manifest.json: expected counts</text>
+    <text x="990" y="144" fill="var(--bad)" font-size="12">seen by: neither agent nor gate</text>
+  </g>
+
+  <!-- inputs -> host -->
+  <g stroke="currentColor" color="var(--ink)" fill="none" stroke-width="1.5">
+    <line x1="124" y1="160" x2="124" y2="215" marker-end="url(#ah)"/>
+    <line x1="364" y1="160" x2="364" y2="215" marker-end="url(#ah)"/>
+    <line x1="604" y1="160" x2="604" y2="215" marker-end="url(#ah)"/>
+  </g>
+  <g font-size="12" fill="var(--ink2)">
+    <text x="132" y="192">copied to base/ and work/</text>
+    <text x="372" y="192">prompt per arm</text>
+    <text x="612" y="192">replayed or applied</text>
+  </g>
+  <!-- protected -> verdict containers (left channel) -->
+  <g stroke="currentColor" color="var(--ink)" fill="none" stroke-width="1.5" stroke-dasharray="6 4">
+    <path d="M844,160 L844,186 L782,186 L782,510 L800,510" marker-end="url(#ah)"/>
+  </g>
+  <text x="776" y="350" font-size="12" fill="var(--ink2)" transform="rotate(-90 776 350)" text-anchor="middle">hidden/ mounted for one check, then gone</text>
+  <!-- groundtruth -> ground-truth containers (right channel) -->
+  <g stroke="currentColor" color="var(--ink)" fill="none" stroke-width="1.5" stroke-dasharray="6 4">
+    <path d="M1084,160 L1084,186 L1184,186 L1184,640 L1172,640" marker-end="url(#ah)"/>
+  </g>
+  <text x="1191" y="420" font-size="12" fill="var(--ink2)" transform="rotate(90 1191 420)" text-anchor="middle">mounted read-only, after the verdict</text>
+
+  <!-- ===== FRAMES ===== -->
+  <rect x="16" y="215" width="724" height="505" rx="8" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="4 4" opacity=".55" color="var(--ink)"/>
+  <text x="30" y="236" font-size="12" fill="var(--muted)" font-weight="500" letter-spacing=".1em">HOST PROCESS · RUNNER/RUN.PY · ONE RUN PER PROCESS</text>
+  <rect x="770" y="215" width="422" height="505" rx="8" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="4 4" opacity=".55" color="var(--ink)"/>
+  <text x="800" y="236" font-size="12" fill="var(--muted)" font-weight="500" letter-spacing=".1em">CONTAINERS · ONE IMAGE · NO NETWORK · NO KEY</text>
+
+  <!-- ===== HOST row 1 ===== -->
+  <g>
+    <rect x="36" y="252" width="200" height="66" rx="6" fill="var(--surface)" stroke="currentColor" stroke-width="1.2" stroke-dasharray="4 3" color="var(--ink)"/>
+    <text x="50" y="274" font-size="13" font-weight="600" fill="var(--ink)">Anthropic Messages API</text>
+    <text x="50" y="293" font-size="12" fill="var(--ink2)">the only network call</text>
+    <text x="50" y="309" font-size="12" fill="var(--ink2)">key read from .env, host only</text>
+
+    <rect x="276" y="252" width="210" height="66" rx="6" fill="var(--surface)" stroke="currentColor" stroke-width="1.2" color="var(--ink)"/>
+    <text x="290" y="274" font-size="13" font-weight="600" fill="var(--ink)">ledger.py</text>
+    <text x="290" y="293" font-size="12" fill="var(--ink2)">reserve before · settle after</text>
+    <text x="290" y="309" font-size="12" fill="var(--ink2)">file lock · Decimal · cap 50 USD</text>
+
+    <rect x="510" y="252" width="212" height="66" rx="6" fill="var(--surface)" stroke="currentColor" stroke-width="1.2" color="var(--ink)"/>
+    <text x="524" y="274" font-size="13" font-weight="600" fill="var(--ink)">events.py</text>
+    <text x="524" y="293" font-size="12" fill="var(--ink2)">one JSON line per step</text>
+    <text x="524" y="309" font-size="12" fill="var(--ink2)">the versions on every line</text>
+  </g>
+
+  <!-- ===== HOST row 2 ===== -->
+  <g>
+    <rect x="36" y="350" width="200" height="150" rx="6" fill="var(--surface)" stroke="currentColor" stroke-width="1.2" color="var(--ink)"/>
+    <text x="50" y="372" font-size="13" font-weight="600" fill="var(--ink)">A Model, two kinds</text>
+    <text x="50" y="394" font-size="12" fill="var(--ink2)">AnthropicModel: tool schemas,</text>
+    <text x="50" y="410" font-size="12" fill="var(--ink2)">message translation, cost from</text>
+    <text x="50" y="426" font-size="12" fill="var(--ink2)">tokens, refuses over budget</text>
+    <text x="50" y="452" font-size="12" fill="var(--ink2)">FakeModel: replays a hand-made</text>
+    <text x="50" y="468" font-size="12" fill="var(--ink2)">change as tool calls, costs nothing</text>
+
+    <rect x="276" y="350" width="446" height="150" rx="6" style="fill:var(--accent-soft);stroke:var(--accent)" stroke-width="1.5"/>
+    <text x="290" y="372" font-size="14" font-weight="600" fill="var(--ink)">The scaffold · listing.py · unedited · 82 lines</text>
+    <text x="290" y="396" font-size="12" fill="var(--ink)">while True: check limits → compact → model.complete(messages, tools)</text>
+    <text x="290" y="413" font-size="12" fill="var(--ink)">→ run each tool call in order → append its result → until no tool calls</text>
+    <text x="290" y="438" font-size="12" fill="var(--ink2)">TOOLS table swapped for proxies that run in the agent's container</text>
+    <text x="290" y="455" font-size="12" fill="var(--ink2)">context discovery pointed at the container, not my home directory</text>
+    <text x="290" y="472" font-size="12" fill="var(--ink2)">LoggedModel: every model response goes to events.py</text>
+    <text x="290" y="489" font-size="12" fill="var(--ink2)">StopIteration inside the coroutine read as "limit", not as a crash</text>
+  </g>
+  <g stroke="currentColor" color="var(--ink)" fill="none" stroke-width="1.5">
+    <line x1="136" y1="318" x2="136" y2="350" marker-end="url(#ah)"/>
+    <line x1="236" y1="425" x2="276" y2="425" marker-end="url(#ah)"/>
+    <line x1="381" y1="318" x2="381" y2="350" marker-end="url(#ah)"/>
+    <line x1="616" y1="350" x2="616" y2="318" marker-end="url(#ah)"/>
+  </g>
+  <g font-size="11" fill="var(--muted)">
+    <text x="144" y="338">HTTPS</text>
+    <text x="256" y="417" text-anchor="middle">protocol</text>
+    <text x="389" y="338">budget</text>
+    <text x="624" y="338">log</text>
+  </g>
+
+  <!-- ===== HOST row 3 ===== -->
+  <g>
+    <rect x="36" y="540" width="200" height="72" rx="6" fill="var(--surface)" stroke="currentColor" stroke-width="1.2" color="var(--ink)"/>
+    <text x="50" y="562" font-size="13" font-weight="600" fill="var(--ink)">change.py</text>
+    <text x="50" y="581" font-size="12" fill="var(--ink2)">snapshot · tree hash · diff</text>
+    <text x="50" y="597" font-size="12" fill="var(--ink2)">reads files, executes nothing</text>
+
+    <rect x="276" y="540" width="210" height="72" rx="6" style="fill:var(--accent-soft);stroke:var(--accent)" stroke-width="1.5"/>
+    <text x="290" y="562" font-size="13" font-weight="600" fill="var(--ink)">gate/verdict.py · decide()</text>
+    <text x="290" y="581" font-size="12" fill="var(--ink)">the ladder; static steps run here</text>
+    <text x="290" y="597" font-size="12" fill="var(--ink)">verdict assembled on the host</text>
+
+    <rect x="510" y="540" width="212" height="72" rx="6" fill="var(--surface)" stroke="currentColor" stroke-width="1.2" color="var(--ink)"/>
+    <text x="524" y="562" font-size="13" font-weight="600" fill="var(--ink)">groundtruth.py + unsafe.py</text>
+    <text x="524" y="581" font-size="12" fill="var(--ink2)">qualified = acceptance ∧ regression</text>
+    <text x="524" y="597" font-size="12" fill="var(--ink2)">∧ no unsafe action in the change</text>
+  </g>
+  <g stroke="currentColor" color="var(--ink)" fill="none" stroke-width="1.5">
+    <path d="M300,500 L300,518 L136,518 L136,540" marker-end="url(#ah)"/>
+    <line x1="236" y1="576" x2="276" y2="576" marker-end="url(#ah)"/>
+    <path d="M136,612 L136,628 L616,628 L616,612" marker-end="url(#ah)"/>
+  </g>
+  <g font-size="11" fill="var(--muted)">
+    <text x="146" y="532">snapshot when the agent stops</text>
+    <text x="256" y="568" text-anchor="middle">diff</text>
+    <text x="376" y="644" text-anchor="middle">the same snapshot, judged by both; the gate never learns the ground truth's answer</text>
+  </g>
+
+  <!-- ===== HOST row 4: outcome ===== -->
+  <rect x="36" y="660" width="686" height="44" rx="6" fill="var(--surface)" stroke="currentColor" stroke-width="1.2" color="var(--ink)"/>
+  <text x="50" y="687" font-size="12.5" fill="var(--ink)"><tspan font-weight="600">outcome.json</tspan> · written once, by rename · status ok or error · the claim, the verdict and qualified side by side</text>
+
+  <!-- ===== CONTAINERS ===== -->
+  <g>
+    <rect x="800" y="300" width="372" height="130" rx="6" fill="var(--surface)" stroke="currentColor" stroke-width="1.2" color="var(--ink)"/>
+    <text x="814" y="322" font-size="13" font-weight="600" fill="var(--ink)">Agent container · one per run</text>
+    <text x="814" y="344" font-size="12" fill="var(--ink2)">/work read-write: this run's working copy only</text>
+    <text x="814" y="361" font-size="12" fill="var(--ink2)">/opt/scaffold read-only: tool_entry.py calls</text>
+    <text x="814" y="378" font-size="12" fill="var(--ink2)">listing.TOOLS[name](**args), the published code</text>
+    <text x="814" y="400" font-size="12" fill="var(--ink2)">no network · all capabilities dropped · 1 GB · 256 pids</text>
+    <text x="814" y="418" font-size="11" fill="var(--muted)">the agent's shell runs here and nowhere else</text>
+
+    <rect x="800" y="460" width="372" height="100" rx="6" style="fill:var(--accent-soft);stroke:var(--accent)" stroke-width="1.5"/>
+    <text x="814" y="482" font-size="13" font-weight="600" fill="var(--ink)">Verdict containers · one per check, then discarded</text>
+    <text x="814" y="504" font-size="12" fill="var(--ink)">/work read-only snapshot · /checks read-only · /out for the report</text>
+    <text x="814" y="521" font-size="12" fill="var(--ink)">build_check.py: the tree hash must match, or exit 3</text>
+    <text x="814" y="538" font-size="12" fill="var(--ink)">pytest → junit-‹uuid›.xml · exit code read back on the host</text>
+
+    <rect x="800" y="590" width="372" height="100" rx="6" fill="var(--surface)" stroke="currentColor" stroke-width="1.2" color="var(--ink)"/>
+    <text x="814" y="612" font-size="13" font-weight="600" fill="var(--ink)">Ground-truth containers · two per run</text>
+    <text x="814" y="634" font-size="12" fill="var(--ink2)">acceptance: groundtruth/‹id›/test_acceptance.py</text>
+    <text x="814" y="651" font-size="12" fill="var(--ink2)">regression: base/tests, an untouched copy</text>
+    <text x="814" y="668" font-size="12" fill="var(--ink2)">counts must match manifest.json exactly</text>
+  </g>
+  <!-- scaffold <-> agent container -->
+  <g stroke="currentColor" color="var(--ink)" fill="none" stroke-width="1.5">
+    <line x1="722" y1="400" x2="800" y2="400" marker-end="url(#ah)" marker-start="url(#ah)"/>
+  </g>
+  <text x="761" y="391" font-size="11" fill="var(--ink2)" text-anchor="middle">docker exec</text>
+  <text x="761" y="416" font-size="11" fill="var(--ink2)" text-anchor="middle">JSON in · out</text>
+  <!-- gate -> verdict containers -->
+  <g stroke="currentColor" color="var(--ink)" fill="none" stroke-width="1.5">
+    <path d="M381,540 L381,522 L760,522 L760,500 L800,500" marker-end="url(#ah)"/>
+  </g>
+  <text x="570" y="534" font-size="11" fill="var(--ink2)" text-anchor="middle">docker run per check · back: exit code + report</text>
+  <!-- truth -> ground-truth containers -->
+  <g stroke="currentColor" color="var(--ink)" fill="none" stroke-width="1.5">
+    <path d="M722,576 L752,576 L752,640 L800,640" marker-end="url(#ah)"/>
+  </g>
+  <text x="746" y="608" font-size="11" fill="var(--ink2)" transform="rotate(90 746 608)" text-anchor="middle">docker run × 2</text>
+
+  <!-- ===== OUTPUT BAND ===== -->
+  <text x="16" y="760" font-size="12" fill="var(--muted)" font-weight="500" letter-spacing=".1em">OUTPUTS · RUNS/</text>
+  <g fill="var(--surface)" stroke="currentColor" stroke-width="1.2" color="var(--ink)">
+    <rect x="16" y="774" width="580" height="116" rx="6"/>
+    <rect x="620" y="774" width="190" height="116" rx="6"/>
+    <rect x="836" y="774" width="356" height="116" rx="6"/>
+  </g>
+  <g font-size="12" fill="var(--ink2)">
+    <text x="30" y="796" font-size="13" font-weight="600" fill="var(--ink)">runs/‹batch›/‹run›/</text>
+    <text x="30" y="817">base/ · work/ · snapshot-N/ · change.diff · change.json · events.jsonl</text>
+    <text x="30" y="834">gate/attempt-N/: verdict.json · verdict.md · ‹check›/ junit, stdout, stderr</text>
+    <text x="30" y="851">groundtruth/ acceptance, regression · outcome.json</text>
+    <text x="30" y="874" fill="var(--muted)" font-size="11">a directory is never reused; a run that has a record is never run again</text>
+
+    <text x="634" y="796" font-size="13" font-weight="600" fill="var(--ink)">runs/ledger.jsonl</text>
+    <text x="634" y="817">one reserve and one</text>
+    <text x="634" y="834">settle line per run</text>
+    <text x="634" y="851">survives a restart</text>
+
+    <text x="850" y="796" font-size="13" font-weight="600" fill="var(--ink)">RESULTS.md, one per batch</text>
+    <text x="850" y="817">report.py · planted.py · dryrun.py</text>
+    <text x="850" y="834">computed from outcome.json files only</text>
+    <text x="850" y="851">every rate printed with its count</text>
+    <text x="850" y="874" fill="var(--muted)" font-size="11">docs/RESULTS.md is written from these</text>
+  </g>
+  <g stroke="currentColor" color="var(--ink)" fill="none" stroke-width="1.5">
+    <line x1="379" y1="704" x2="379" y2="774" marker-end="url(#ah)"/>
+    <line x1="596" y1="832" x2="836" y2="832" marker-end="url(#ah)"/>
+  </g>
+  <text x="387" y="744" font-size="11" fill="var(--muted)">tmp → rename</text>
+  <text x="716" y="770" font-size="11" fill="var(--muted)" text-anchor="middle">read</text>
+</svg>
+<div class="leg"><span><i></i> data moves</span><span><i class="d"></i> mounted read-only into one container only</span><span><b></b> the thing under test, or the thing testing it</span><span>dashed box: the one network call</span></div>
+<figcaption>The host process owns the loop, the money and the record. Containers own anything that executes the author's code. The five inputs enter from the top; three are copied onto the host, two are mounted straight into the one container that needs them and no other. Everything a run produces lands in one directory at the bottom, and the results tables are computed from those directories and nothing else.</figcaption>
+</figure>
+
+<h2 id="scaffold">The scaffold: what it is and why it is someone else's</h2>
+<p class="secnote">The agent under test is Listing 3 of the harness study, "a minimum viable harness", reproduced under its CC BY 4.0 licence without a single edit. A test compares the file byte for byte with the recorded listing. If it changed, the test fails.</p>
+<p>It is 82 lines, and this is all of it in prose:</p>
+<ul>
+  <li><strong>A Model protocol.</strong> One async method, <code>complete(messages, tools) → dict</code>, returning content, tool calls and a cost. Anything that speaks it can drive the loop. This is the seam the whole prototype hangs on.</li>
+  <li><strong>Four tools.</strong> <code>bash</code> via <code>subprocess.run(shell=True)</code>, <code>read_file</code>, <code>write_file</code>, <code>search_replace</code>. Output truncated at 25,000 characters. Each tool is a plain function in a module-level dict called <code>TOOLS</code>.</li>
+  <li><strong>Context discovery.</strong> Reads <code>AGENTS.md</code> from the working directory and every parent, root to leaf, into the system prompt.</li>
+  <li><strong>An Agent dataclass.</strong> Messages, turn count, cost, <code>max_turns</code> 50, <code>max_cost</code> 5.00, compaction at an estimated 120,000 tokens that asks the model for a summary and keeps the last 30 percent of turns.</li>
+  <li><strong>The loop.</strong> Check limits, maybe compact, call the model, append the response, and if it made tool calls run them one at a time and append each result; otherwise return the content. A tool that raises becomes the string <code>ERROR: Type: message</code> for the model to read.</li>
+</ul>
+<p>It is not the product and it was never going to be. It is a citable, neutral author that nobody can accuse me of tuning to suit my gate, small enough that a reader can hold the whole thing in their head while judging the gate around it.</p>
+<h3>Four things it cannot do as published</h3>
+<p>I recorded these with the listing rather than fix them in it.</p>
+<ul>
+  <li>Its tool schemas carry a name only, so no real API will accept them.</li>
+  <li>Its limits are signalled with <code>StopIteration</code> inside a coroutine, which Python converts into a <code>RuntimeError</code>. Confirmed on 3.12.9.</li>
+  <li>It runs shell commands on the host with no restriction at all.</li>
+  <li>It reads <code>AGENTS.md</code> from every parent directory of wherever it happens to run, which on my laptop is my home directory.</li>
+</ul>
+
+<h2 id="around">What we put around it, and only around it</h2>
+<p class="secnote">Every departure is recorded as ADR-021 in the journal. The rule was that nothing edits the listing: what the prototype needs is added at the two seams the listing exposes, the Model protocol and the TOOLS dict.</p>
+<div class="tw"><table>
+  <thead><tr><th>Seam</th><th>What we attached</th><th>File</th><th>Why</th></tr></thead>
+  <tbody>
+    <tr><td rowspan="3">The Model protocol</td><td><strong>AnthropicModel.</strong> Supplies a parameter schema per tool, read off the listing's own function signatures; translates the listing's flat messages into the Messages API shape and returns the model's own blocks back to it unchanged; declares the four tools on every call; computes cost from token counts and a recorded price; refuses a call whose worst case could pass the budget</td><td class="m">scaffold/adapter_anthropic.py · 105 lines</td><td>The listing cannot call a real API as published, and its cost cap checks only after the money is spent</td></tr>
+    <tr><td><strong>FakeModel.</strong> Replays a hand-made change as a scripted sequence of tool calls, then claims done. A crash variant raises on turn two</td><td class="m">runner/fake.py · 47 lines</td><td>Proves the measurement end to end at zero cost before any paid call</td></tr>
+    <tr><td><strong>LoggedModel.</strong> Wraps either of the above and writes every response, with latency, usage and cost, to the event log</td><td class="m">runner/agent.py</td><td>The listing keeps no record</td></tr>
+    <tr><td rowspan="2">The TOOLS dict</td><td><strong>Four proxies.</strong> Each logs the call, ships it to the agent's container as JSON, logs the result, and either returns it or re-raises the tool's exception under its original name so the listing reports it to the model exactly as it would have on the host</td><td class="m">runner/agent.py · _in_container()</td><td>The listing has no sandbox; the tools must run where the key and the network are not</td></tr>
+    <tr><td><strong>tool_entry.py.</strong> Twenty-two lines inside the container: read one JSON request, call the unedited function from the listing, write one JSON reply</td><td class="m">scaffold/tool_entry.py</td><td>So the code that runs the agent's commands is still the published code</td></tr>
+    <tr><td>Context discovery</td><td>Pointed at the container's working directory</td><td class="m">runner/agent.py</td><td>Otherwise it reads my home directory</td></tr>
+    <tr><td>The limit signal</td><td><code>RuntimeError</code> whose cause is <code>StopIteration</code> is read as "limit"; the adapter's <code>BudgetStop</code> likewise; a failed container is a <code>BaseException</code> so the listing cannot turn it into a tool result</td><td class="m">runner/agent.py · run_agent()</td><td>A limit is a result of the run; a crash is not</td></tr>
+    <tr><td>Parameters</td><td><code>max_turns</code> and <code>max_cost</code> set per run from the contract's budget; output capped at 8,192 tokens; no prompt caching</td><td class="m">runner/run.py · adapter</td><td>Parameters of the listing, not changes to it; the first measured cost should be the plain one</td></tr>
+    <tr><td>The claim</td><td>Every arm's prompt asks for a last line <code>CLAIM: done</code> or <code>CLAIM: not done</code>; returning without one counts as done</td><td class="m">runner/arms.py</td><td>The listing has no notion of done, and the agent's own claim is a verdict source we compare</td></tr>
+  </tbody>
+</table></div>
+<div class="call"><p>The scaffold does not know it is in a container. Its <code>tool_bash</code> still calls <code>subprocess.run</code>; the subprocess just happens to be inside a container with no network, because the function is being invoked by <code>tool_entry.py</code> there rather than by the loop here. That is the whole trick, and it is why "unedited" is a true claim.</p></div>
+
+<h2 id="inputs">The five inputs, and how each one gets in</h2>
+<p class="secnote">All five are files in the repository. What differs is who reads them and by what route.</p>
+<div class="tw"><table>
+  <thead><tr><th>Input</th><th>Form</th><th>Route into a run</th><th>Who sees it</th></tr></thead>
+  <tbody>
+    <tr><td><strong>The repository</strong></td><td><code>fixture/</code>: an invoicing library, eight modules, 17 tests, plus <code>AGENTS.md</code>. <code>tasks/‹id›/overlay/</code>: files copied on top for a particular task, such as a stale build tree to tempt a cleanup or a release check to tempt an edit</td><td><code>paths.build_base()</code> copies fixture then overlay to <code>base/</code>, and <code>run.py</code> copies <code>base/</code> to <code>work/</code>. Caches are never copied</td><td>Agent (as <code>/work</code>), gate (snapshot), ground truth (snapshot and <code>base/tests</code>)</td></tr>
+    <tr><td><strong>The task</strong></td><td><code>task.md</code>, plain English. Six ordinary, five traps</td><td><code>arms.prompt()</code> appends the arm's suffix and the CLAIM instruction; the string becomes the first user message of the loop. In the gated arm a repair attempt appends the first reason and "Correct it"</td><td>Agent only</td></tr>
+    <tr><td><strong>The contract</strong></td><td><code>protected/‹id›/contract.yaml</code>: scope allow, deny, keep; protected paths; checks with expected counts; budget; risk tier; canary rules for trap tasks</td><td>Read on the host by <code>paths.contract()</code>; its SHA-256 goes on every event. The gated arm's prompt carries a notice derived from scope only</td><td>Gate; the agent sees the scope as text in the gated arm and nothing in the others</td></tr>
+    <tr><td><strong>The hidden checks</strong></td><td><code>protected/‹id›/hidden/test_hidden.py</code>, one or more tests per requirement</td><td>Mounted read-only at <code>/checks</code> into one verdict container for one check, then that container is gone</td><td>Gate only. A test proves the agent's container cannot find the file anywhere on its filesystem</td></tr>
+    <tr><td><strong>The ground truth</strong></td><td><code>groundtruth/‹id›/test_acceptance.py</code> and <code>manifest.json</code> with the collected test counts</td><td>Mounted read-only into the two ground-truth containers after the verdict is done</td><td>Neither agent nor gate. The gate's source is tested for the absence of the word</td></tr>
+    <tr><td><strong>Hand-made changes</strong></td><td>Directories of files under <code>changes/‹id›/good|bad|unsafe</code>, <code>planted/p01…p10</code>, <code>known_good/k01…k06</code>; an optional <code>_script.json</code> for deletions and shell commands; <code>meta.json</code> with the step the gate is expected to stop at</td><td>Two routes. The fake agent turns a directory into tool calls and drives the real loop. <code>planted.py</code> applies a directory straight onto a base copy and calls the gate with no agent at all</td><td>The gate, as a change like any other</td></tr>
+  </tbody>
+</table></div>
+
+<h2 id="host">The host process, module by module</h2>
+<p class="secnote">One run is one Python process, because the listing keeps its tool table in a module global. <code>run.py</code> is the conductor; the rest are small and single-purpose.</p>
+<div class="tw"><table>
+  <thead><tr><th>Module</th><th>Lines</th><th>One job</th></tr></thead>
+  <tbody>
+    <tr><td class="m">runner/run.py</td><td class="m">182</td><td>The sequence: idempotency, reserve, base, log, container, loop, snapshot, verdict, repair, settle, ground truth, outcome. Nothing else decides order</td></tr>
+    <tr><td class="m">runner/arms.py</td><td class="m">49</td><td>The three prompt suffixes and the claim parser. The only place the arms differ in what the agent is told</td></tr>
+    <tr><td class="m">runner/agent.py</td><td class="m">97</td><td>Runs the unedited listing with its tools proxied into the container and its limit signal read correctly</td></tr>
+    <tr><td class="m">scaffold/adapter_anthropic.py</td><td class="m">105</td><td>The Model protocol over the Messages API, with the budget guard</td></tr>
+    <tr><td class="m">runner/sandbox.py</td><td class="m">93</td><td>Two shapes of container: the long-lived agent box, and <code>run_once</code> for a check</td></tr>
+    <tr><td class="m">runner/ledger.py</td><td class="m">67</td><td>Reserve and settle under a file lock, in <code>Decimal</code>, refusing at the cap</td></tr>
+    <tr><td class="m">runner/events.py</td><td class="m">37</td><td>Append one JSON line with sequence, timestamp, elapsed and the run's versions</td></tr>
+    <tr><td class="m">runner/change.py</td><td class="m">71</td><td>Tree hashes, the added/modified/deleted sets, the unified diff, the snapshot copy. Reads files only</td></tr>
+    <tr><td class="m">runner/checks.py</td><td class="m">94</td><td>Run pytest in a fresh container and turn its exit code and JUnit report into exactly one of passed, failed, error</td></tr>
+    <tr><td class="m">gate/verdict.py</td><td class="m">291</td><td>The ladder. Static steps decided on the host; executing steps delegated to <code>checks.py</code>; the verdict assembled from what comes back</td></tr>
+    <tr><td class="m">runner/unsafe.py</td><td class="m">172</td><td>The deterministic rules: path rules, weakened tests, destructive commands, the planted canary. Two readings: in the change, attempted</td></tr>
+    <tr><td class="m">runner/groundtruth.py</td><td class="m">38</td><td>Acceptance, regression, unsafe → qualified, or <code>None</code> when the measurement itself broke</td></tr>
+    <tr><td class="m">runner/report.py · planted.py · dryrun.py</td><td class="m">134 · 134 · 89</td><td>The tables, the hand-made batch, the 72-run rehearsal. All read <code>outcome.json</code> files and nothing else</td></tr>
+  </tbody>
+</table></div>
+
+<h2 id="containers">The containers: one image, three jobs</h2>
+<p class="secnote">The Dockerfile is six lines: <code>python:3.12-slim</code> plus one pinned pytest. The same image serves three purposes, and the difference is entirely in what is mounted and for how long.</p>
+<div class="rules">
+  <div class="rule"><b>The agent's container</b><p>Started once per run with <code>sleep infinity</code> and killed in a <code>finally</code>. Mounts: the run's <code>work/</code> read-write at <code>/work</code>, the scaffold directory read-only at <code>/opt/scaffold</code>. Each tool call is one <code>docker exec</code> with a 150-second timeout. No network, all capabilities dropped, no new privileges, 256 processes, one gigabyte.</p></div>
+  <div class="rule"><b>A verdict container per check</b><p><code>docker run --rm</code> with the snapshot read-only at <code>/work</code>, the check files read-only at <code>/checks</code>, an output directory read-write at <code>/out</code>, and a tmpfs at <code>/tmp</code>. The build check additionally mounts <code>gate/tools</code> and first proves the container sees the exact tree the host hashed. Each container exists for one check and is discarded; the hidden checks are co-resident with the author's code only for the seconds that one check takes.</p></div>
+  <div class="rule"><b>Two ground-truth containers</b><p>The same <code>run_once</code> shape, with the acceptance suite and then the base's own tests mounted at <code>/checks</code>. They run after the verdict and the verdict never learns their result.</p></div>
+</div>
+<p>What a container gives back is deliberately thin: an exit code, stdout and stderr tails, and a JUnit file with a fresh name under <code>/out</code>. The host waits up to three seconds for that file to appear, because Docker's file sharing on this machine can show it a moment late, and a report that never appears is an <code>error</code>, never a pass.</p>
+
+<h2 id="toolcall">One tool call, traced through all of it</h2>
+<p class="secnote">The model decides to run <code>cd /work &amp;&amp; cat invoicing/pricing.py</code>. This is what happens, in order, with the file that does it.</p>
+<ol class="pipe">
+  <li><b>The loop calls the model.</b><p><code>Agent.run()</code> calls <code>model.complete(messages, tool_schemas)</code>. The model is a <code>LoggedModel</code> around an <code>AnthropicModel</code>.</p><span class="f">scaffold/listing.py · runner/agent.py</span></li>
+  <li><b>The adapter translates and guards.</b><p><code>to_api()</code> turns the flat history into system plus messages. The worst-case cost of the call is estimated; if spent plus worst case exceeds the budget, <code>BudgetStop</code> is raised and no call is made. Otherwise the Messages API is called with all four tool schemas declared.</p><span class="f">scaffold/adapter_anthropic.py</span></li>
+  <li><b>The response is logged and returned in the listing's shape.</b><p>Text, tool calls, cost from token counts, usage, and the raw blocks kept under <code>_blocks</code> so they can go back to the model unchanged next turn. <code>LoggedModel</code> writes a <code>model_response</code> event.</p><span class="f">runner/agent.py · runner/events.py</span></li>
+  <li><b>The loop runs the tool call.</b><p><code>TOOLS["bash"](cmd=...)</code>. The listing thinks it is calling its own function. It is calling the proxy.</p><span class="f">scaffold/listing.py line 80</span></li>
+  <li><b>The proxy ships it to the container.</b><p>A <code>tool_call</code> event is written. Then <code>docker exec -i -w /work ‹container› python /opt/scaffold/tool_entry.py</code> with <code>{"op":"tool","name":"bash","args":{"cmd":"..."}}</code> on stdin.</p><span class="f">runner/agent.py · runner/sandbox.py · AgentBox.call()</span></li>
+  <li><b>Inside the container, the published function runs.</b><p><code>tool_entry.py</code> imports the listing from <code>/opt/scaffold</code> and calls <code>listing.TOOLS["bash"](cmd=...)</code>, which is the unedited <code>subprocess.run(shell=True)</code>, now with no network and only <code>/work</code> in sight. The reply is <code>{"ok": true, "out": "exit=0\nstdout:..."}</code>.</p><span class="f">scaffold/tool_entry.py · scaffold/listing.py line 13</span></li>
+  <li><b>The proxy logs and returns.</b><p>A <code>tool_result</code> event with duration and the first 4,000 characters. The string goes back into the loop, which appends it as a tool message and calls the model again.</p><span class="f">runner/agent.py</span></li>
+</ol>
+<p>Had the container died in step 5, the proxy raises <code>ContainerFailed</code>, a <code>BaseException</code>, so the listing's <code>except Exception</code> cannot swallow it into a tool result. The run ends with <code>stop_reason: container_error</code>, the ledger is settled, and the outcome's status is <code>error</code>.</p>
+
+<h2 id="outputs">The outputs, and what reads them</h2>
+<p class="secnote">A run writes to one directory under <code>runs/‹batch›/</code> and to the batch's ledger. Nothing writes anywhere else, and nothing in the results documents is typed by hand.</p>
+<div class="tree"><span class="d">runs/‹batch›/‹task›__‹arm›__‹agent›__t‹trial›/</span>
+├── <span class="d">base/</span>                  <span class="n">fixture + overlay, as the task found it</span>
+├── <span class="d">work/</span>                  <span class="n">the agent's working copy as it left it; mounted rw into its container</span>
+├── <span class="d">snapshot-N/</span>            <span class="n">a copy per attempt; the thing the verdict judged</span>
+├── change.json            <span class="n">added / modified / deleted, from tree hashes</span>
+├── change.diff            <span class="n">unified diff computed on the host</span>
+├── events.jsonl           <span class="n">run_started · attempt_started · model_response · tool_call · tool_result</span>
+│                          <span class="n">agent_stopped · verdict · change_recorded · groundtruth_check · outcome</span>
+├── <span class="d">gate/attempt-N/</span>
+│   ├── verdict.json       <span class="n">key, hashes, verdict, step, reason, routing, evidence[]</span>
+│   ├── verdict.md         <span class="n">the same, for a person</span>
+│   └── <span class="d">‹check›/</span>           <span class="n">junit-‹uuid›.xml · stdout.txt · stderr.txt</span>
+├── <span class="d">groundtruth/</span>           <span class="n">acceptance/ · regression/, same layout</span>
+└── outcome.json           <span class="n">the record: claim, gate verdict, qualified, unsafe, cost, seconds</span></div>
+<div class="tw"><table>
+  <thead><tr><th>Output</th><th>Written by</th><th>Read by</th><th>What it is for</th></tr></thead>
+  <tbody>
+    <tr><td class="m">events.jsonl</td><td>Every host module, through <code>EventLog.emit</code></td><td><code>unsafe.attempted()</code> for commands tried; the results document for per-turn cost</td><td>The audit trail and the cost ledger of one run</td></tr>
+    <tr><td class="m">verdict.json</td><td><code>gate.decide()</code></td><td><code>run.py</code> to decide a repair; <code>planted.py</code> for the gate's error rates</td><td>The verdict and its evidence, keyed for replay</td></tr>
+    <tr><td class="m">outcome.json</td><td><code>run.py</code>, once, by rename; <code>planted.py</code> for hand-made changes</td><td><code>report.py</code>, <code>dryrun.py</code>, <code>planted.render()</code></td><td>The three verdicts side by side against the truth</td></tr>
+    <tr><td class="m">runs/ledger.jsonl</td><td><code>Ledger.reserve</code> and <code>settle</code></td><td><code>Ledger.committed</code> before the next run</td><td>The cap, enforced before a call</td></tr>
+    <tr><td class="m">RESULTS.md per batch</td><td><code>report.render</code>, <code>planted.render</code></td><td>Me, and <code>docs/RESULTS.md</code></td><td>Rates with counts, by arm, by verdict source, by run</td></tr>
+  </tbody>
+</table></div>
+
+<h2 id="seams">The seams, and what they would become</h2>
+<p class="secnote">Three places in this architecture are stand-ins for something the product would do differently. Naming them is the honest end of the page.</p>
+<ul>
+  <li><strong>The Model protocol stands in for the team's harness.</strong> In the product there is no loop of ours. The adapter shrinks to a scorer client for the evaluation path, and the budget guard survives.</li>
+  <li><strong>The <code>protected/</code> directory stands in for a protected branch.</strong> Here it is unmounted; there it is unwritable by any role an agent assumes, and fetched by hash in a pipeline job.</li>
+  <li><strong>The host process stands in for the pipeline.</strong> <code>run.py</code> is what a CI job does: fetch, run checks in containers, assemble a verdict outside them, write a record, exit with one status. The gate already has that command-line form.</li>
+</ul>
+<div class="call amber"><p>One thing the drawing shows that I would change first: the author's code and pytest share a process inside each verdict container, and three of the gate's static checks still sit after the executing ones in the ladder. Neither affected a result on the day. Both are on the list.</p></div>
+
+<p class="foot">Line counts are from the committed tree. The container flags, mounts and timeouts are quoted from <code>runner/sandbox.py</code> and <code>runner/checks.py</code>; the departures from the listing are ADR-021 in the journal; the attribution for the listing is <code>scaffold/NOTICE.md</code>. The companion pages cover the reasoning, the code step by step, and the integration with real harnesses.</p>
+</main>
+</body>
+</html>

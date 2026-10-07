@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- Explainer page. Same content as the session artifact https://claude.ai/artifact/6GECYVd8m29EtwZmH3fWzn -->
+<title>ASSIST Integration Map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: third page of the set, same tokens. One reading column; one architecture drawing in SVG; per-harness attachment table; model-role table; the data boundary; the build order. */
+:root{
+  --page:#F5F6F8; --surface:#FFFFFF; --ink:#16202B; --ink2:#4A5767; --muted:#7C8794;
+  --line:#DDE2E8; --accent:#1D5C9E; --accent-soft:#E4EEF8; --amber:#9A6A12; --amber-soft:#F7EFDD;
+  --bad:#B23A2F; --bad-soft:#F8E6E3; --good:#2E7D4F; --good-soft:#E3F2E9; --code:#EDF0F3;
+  --display:"Newsreader",Georgia,"Times New Roman",serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --page:#111519; --surface:#1A2026; --ink:#E6EAEE; --ink2:#AEB8C2; --muted:#7C8794;
+    --line:#2A333C; --accent:#6FA8E6; --accent-soft:#1C2A3B; --amber:#D9A94B; --amber-soft:#2B2416;
+    --bad:#E07A6E; --bad-soft:#33201D; --good:#6CC08B; --good-soft:#1B2E22; --code:#222A32;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --page:#111519; --surface:#1A2026; --ink:#E6EAEE; --ink2:#AEB8C2; --muted:#7C8794;
+  --line:#2A333C; --accent:#6FA8E6; --accent-soft:#1C2A3B; --amber:#D9A94B; --amber-soft:#2B2416;
+  --bad:#E07A6E; --bad-soft:#33201D; --good:#6CC08B; --good-soft:#1B2E22; --code:#222A32;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--page);color:var(--ink);margin:0;padding-block:0 80px;font:16px/1.65 var(--body)}
+main{max-width:900px;margin:0 auto;padding-inline:20px;min-width:0}
+h1,h2,h3{font-family:var(--display);font-weight:500;line-height:1.15;text-wrap:balance;margin:0}
+h1{font-size:2.5rem;letter-spacing:-.01em}
+h2{font-size:1.65rem;margin:72px 0 8px}
+h3{font-size:1.15rem;font-weight:600;margin:30px 0 6px}
+p{margin:10px 0;max-width:70ch}
+ul,ol{max-width:70ch;padding-left:1.3em}
+li{margin:5px 0}
+li::marker{color:var(--muted)}
+a{color:var(--accent)}
+strong{font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--code);border-radius:4px;padding:.08em .35em}
+pre{font-family:var(--mono);font-size:.8rem;line-height:1.5;background:var(--code);border:1px solid var(--line);border-radius:6px;padding:12px 14px;overflow-x:auto;margin:12px 0;max-width:100%}
+pre .c{color:var(--muted)}
+.eyebrow{font:500 .72rem/1 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+header.hero{padding:60px 0 28px;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:16px}
+.lede{font-size:1.15rem;color:var(--ink2);max-width:64ch;margin:0}
+.meta{display:flex;flex-wrap:wrap;gap:6px 22px;font-size:.84rem;color:var(--muted)}
+.meta b{color:var(--ink2);font-weight:500}
+.secnote{color:var(--ink2);margin:0 0 18px;max-width:70ch}
+.toc{display:flex;flex-wrap:wrap;gap:6px;margin:22px 0 0;padding:0;list-style:none;font-size:.85rem}
+.toc a{border:1px solid var(--line);border-radius:99px;padding:4px 12px;text-decoration:none;color:var(--ink2);background:var(--surface)}
+.toc a:hover{border-color:var(--accent);color:var(--accent)}
+
+figure{margin:24px 0;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px 14px 10px;overflow-x:auto}
+figure svg{display:block;max-width:100%;height:auto;min-width:720px;font-family:var(--body)}
+figcaption{font-size:.86rem;color:var(--ink2);margin-top:10px;max-width:80ch}
+.leg{display:flex;gap:18px;flex-wrap:wrap;font-size:.8rem;color:var(--ink2);margin-top:8px}
+.leg span{display:inline-flex;align-items:center;gap:6px}
+.leg i{display:inline-block;width:22px;height:0;border-top:2px solid currentColor}
+.leg i.d{border-top-style:dashed}
+.leg b{display:inline-block;width:14px;height:14px;border-radius:3px;background:var(--accent-soft);border:1px solid var(--accent)}
+
+table{border-collapse:collapse;width:100%;font-size:.9rem;margin:16px 0}
+.tw{overflow-x:auto}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500}
+td.m{font-family:var(--mono);font-size:.82rem;white-space:nowrap}
+.tag{display:inline-block;font:500 .7rem/1 var(--body);letter-spacing:.05em;text-transform:uppercase;border-radius:99px;padding:4px 9px;white-space:nowrap}
+.tag.bind{background:var(--good-soft);color:var(--good)}
+.tag.adv{background:var(--accent-soft);color:var(--accent)}
+.tag.open{background:var(--amber-soft);color:var(--amber)}
+.tag.no{background:var(--bad-soft);color:var(--bad)}
+
+.rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin:20px 0}
+.rule{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:14px 16px}
+.rule b{display:block;font-size:.98rem;margin-bottom:4px}
+.rule p{font-size:.9rem;color:var(--ink2);margin:0}
+
+.pipe{counter-reset:step;list-style:none;margin:22px 0;padding:0;border-left:2px solid var(--accent)}
+.pipe li{position:relative;padding:12px 0 16px 50px}
+.pipe li::before{counter-increment:step;content:counter(step);position:absolute;left:-15px;top:14px;width:28px;height:28px;border-radius:50%;background:var(--accent);color:var(--page);font:500 .85rem/28px var(--mono);text-align:center}
+.pipe b{display:block;font-size:1rem}
+.pipe p{margin:3px 0 0;font-size:.92rem;color:var(--ink2)}
+
+.call{border-left:3px solid var(--accent);background:var(--surface);padding:12px 16px;margin:18px 0;border-radius:0 6px 6px 0;max-width:74ch}
+.call p{margin:0;font-size:.95rem}
+.call.bad{border-left-color:var(--bad)}
+.call.amber{border-left-color:var(--amber)}
+.foot{margin-top:72px;padding-top:18px;border-top:1px solid var(--line);font-size:.84rem;color:var(--muted);max-width:70ch}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+</head>
+<body>
+<main>
+<header class="hero">
+  <span class="eyebrow">Technical walkthrough · integration</span>
+  <h1>Where the gate plugs in: harnesses, models, pipelines</h1>
+  <p class="lede">The product ships no agent loop and no model. It attaches to what a team already runs. This page says exactly where: the one attachment point that is binding, the ones that are advisory, what the harnesses give us to work with, which models we call and in what role, and what crosses each boundary. The drawing is the mechanism; the prose argues for it.</p>
+  <div class="meta"><span><b>Pedro Costa</b>, VP Engineering</span><span>Sources: the system design, its review, the harness study of eleven systems, the prototype</span><span>Status: the CI shape is built and tested; the hooks are not</span></div>
+  <ul class="toc">
+    <li><a href="#principle">The principle</a></li>
+    <li><a href="#drawing">The drawing</a></li>
+    <li><a href="#ci">1 · The pipeline</a></li>
+    <li><a href="#hooks">2 · Inside the harness</a></li>
+    <li><a href="#meta">3 · Meta-harness</a></li>
+    <li><a href="#models">Models</a></li>
+    <li><a href="#boundary">The data boundary</a></li>
+    <li><a href="#order">Build order</a></li>
+    <li><a href="#risks">What can go wrong</a></li>
+  </ul>
+</header>
+
+<h2 id="principle">The principle: attach, do not host</h2>
+<p class="secnote">Every design topic in the brief has an owner. Most of them are not us, and that is the point. We own the evidence; the team's tools own everything else.</p>
+<div class="tw"><table>
+  <thead><tr><th>Layer</th><th>Owner</th><th>What we touch</th></tr></thead>
+  <tbody>
+    <tr><td>The model that writes the code</td><td>The assistant's vendor, chosen by the team</td><td>Nothing. We record which one it was, in every event</td></tr>
+    <tr><td>Context, repository understanding, the agent loop</td><td>The harness</td><td>Nothing. The verdict needs none of the author's context; it reads the diff and the contract</td></tr>
+    <tr><td>Tool permissions, sandbox, budgets across agents</td><td>The team's environment, or an open-source policy plane</td><td>Nothing. A hook of ours may warn; it never blocks</td></tr>
+    <tr><td>Orchestration</td><td>The build pipeline</td><td>One job with fixed steps and one exit status</td></tr>
+    <tr><td>The contract and the hidden checks</td><td>Ours, stored on the team's protected branch</td><td>Written by the team's first process, pinned by hash</td></tr>
+    <tr><td>The verdict, the record, the measurement</td><td>Ours</td><td>The whole product</td></tr>
+  </tbody>
+</table></div>
+<p>Three attachment points follow, and they are not equal. The pipeline's verdict is the one that counts, because it runs where the author cannot reach. A hook inside the harness runs where the author can reach, so it can only ever give early feedback or pause for a person. A meta-harness evaluator sits between the two. I keep the order strict, because the research is explicit that prompt text is "a behavioral wish, not a mechanism", and a hook is a wish with a shell.</p>
+
+<h2 id="drawing">The drawing</h2>
+<figure>
+<svg viewBox="0 0 1000 650" role="img" aria-label="Three columns: the author's environment with a harness, its model and hooks on the left; the repository host with a pull-request branch, a protected main branch and a protected contracts branch in the middle; the pipeline with the verdict job on the right. The author pushes a change to the pull-request branch, which triggers the verdict job. The job reads the contract and hidden checks by hash from the protected branch, runs one container per check, assembles the verdict outside the containers, and returns one status to the pull request. Main merges only when that required check passed. The outcome record feeds a measurement runner, which recalibrates the contracts and risk tiers. Inside the harness, a Stop hook runs the visible checks and returns the first reason as advice. Nothing in the author's environment can write to the protected branch.">
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker>
+  </defs>
+  <g fill="none" stroke="currentColor" stroke-width="1.2" color="var(--ink)">
+    <!-- column frames -->
+    <rect x="16" y="56" width="300" height="372" rx="8" stroke-dasharray="4 4" opacity=".55"/>
+    <rect x="346" y="56" width="300" height="372" rx="8" stroke-dasharray="4 4" opacity=".55"/>
+    <rect x="676" y="56" width="308" height="572" rx="8" stroke-dasharray="4 4" opacity=".55"/>
+  </g>
+  <g font-size="12" fill="var(--muted)" font-weight="500" letter-spacing=".08em">
+    <text x="28" y="46">AUTHOR'S ENVIRONMENT · THEIRS</text>
+    <text x="358" y="46">REPOSITORY HOST · THEIRS</text>
+    <text x="688" y="46">PIPELINE · THEIRS · VERDICT JOB · OURS</text>
+  </g>
+
+  <!-- LEFT: harness -->
+  <g>
+    <rect x="32" y="76" width="268" height="150" rx="6" fill="var(--surface)" stroke="currentColor" stroke-width="1.2" color="var(--ink)"/>
+    <text x="46" y="100" font-size="14" font-weight="600" fill="var(--ink)">Harness</text>
+    <text x="46" y="120" font-size="12" fill="var(--ink2)">Claude Code · Codex · Gemini CLI · OpenHands …</text>
+    <text x="46" y="146" font-size="12" fill="var(--ink)">model: any vendor, the team's own key</text>
+    <text x="46" y="166" font-size="12" fill="var(--ink)">working copy of the PR branch</text>
+    <text x="46" y="192" font-size="12" fill="var(--ink)">hooks: Stop · PreToolUse · PermissionRequest</text>
+    <text x="46" y="210" font-size="11" fill="var(--muted)">the extension points nine of eleven harnesses expose</text>
+  </g>
+  <!-- LEFT: skill -->
+  <g>
+    <rect x="32" y="246" width="180" height="56" rx="6" fill="var(--surface)" stroke="currentColor" stroke-width="1.2" color="var(--ink)"/>
+    <text x="46" y="268" font-size="13" font-weight="600" fill="var(--ink)">SKILL.md</text>
+    <text x="46" y="288" font-size="11" fill="var(--ink2)">the contract, as text the agent reads</text>
+  </g>
+  <!-- LEFT: early feedback (ours) -->
+  <g>
+    <rect x="32" y="326" width="268" height="86" rx="6" style="fill:var(--accent-soft);stroke:var(--accent)" stroke-width="1.4"/>
+    <text x="46" y="350" font-size="13" font-weight="600" fill="var(--ink)">Early feedback · ours · advisory</text>
+    <text x="46" y="370" font-size="12" fill="var(--ink)">runs the visible checks when the agent stops</text>
+    <text x="46" y="388" font-size="12" fill="var(--ink)">returns the first reason; can pause for a person</text>
+    <text x="46" y="404" font-size="11" fill="var(--bad)">never sees the hidden checks; never the verdict</text>
+  </g>
+  <!-- Stop hook down, first reason up -->
+  <g stroke="currentColor" color="var(--ink)" fill="none" stroke-width="1.4">
+    <line x1="262" y1="226" x2="262" y2="326" marker-end="url(#ah)"/>
+    <line x1="288" y1="326" x2="288" y2="226" marker-end="url(#ah)"/>
+  </g>
+  <text x="224" y="262" font-size="11" fill="var(--ink2)" text-anchor="end">Stop hook</text>
+  <text x="224" y="300" font-size="11" fill="var(--ink2)" text-anchor="end">first reason</text>
+
+  <!-- MIDDLE: PR branch -->
+  <g>
+    <rect x="362" y="76" width="268" height="70" rx="6" fill="var(--surface)" stroke="currentColor" stroke-width="1.2" color="var(--ink)"/>
+    <text x="376" y="100" font-size="14" font-weight="600" fill="var(--ink)">PR branch</text>
+    <text x="376" y="120" font-size="12" fill="var(--ink2)">the change, by an agent or a person</text>
+    <text x="376" y="137" font-size="12" fill="var(--ink2)">carries the check status and its first reason</text>
+  </g>
+  <!-- MIDDLE: main -->
+  <g>
+    <rect x="362" y="186" width="268" height="70" rx="6" fill="var(--surface)" stroke="currentColor" stroke-width="1.2" color="var(--ink)"/>
+    <text x="376" y="210" font-size="14" font-weight="600" fill="var(--ink)">main</text>
+    <text x="376" y="230" font-size="12" fill="var(--ink2)">branch protection: required check "evidence"</text>
+    <text x="376" y="247" font-size="12" fill="var(--ink2)">protection rules editable by admins only</text>
+  </g>
+  <!-- MIDDLE: protected branch -->
+  <g>
+    <rect x="362" y="296" width="268" height="116" rx="6" fill="var(--surface)" stroke="currentColor" stroke-width="1.2" color="var(--ink)"/>
+    <text x="376" y="320" font-size="14" font-weight="600" fill="var(--ink)">Protected branch</text>
+    <text x="376" y="340" font-size="12" fill="var(--ink)">contracts/ · hidden checks/ · risk tiers</text>
+    <text x="376" y="358" font-size="12" fill="var(--ink2)">writable by the release role only</text>
+    <text x="376" y="376" font-size="12" fill="var(--ink2)">every file pinned by hash in the verdict</text>
+    <text x="376" y="398" font-size="11" fill="var(--bad)">no engineer, agent or hook holds write access</text>
+  </g>
+  <!-- PR -> main merge -->
+  <g stroke="currentColor" color="var(--ink)" fill="none" stroke-width="1.4">
+    <line x1="496" y1="146" x2="496" y2="186" marker-end="url(#ah)"/>
+  </g>
+  <text x="506" y="170" font-size="11" fill="var(--ink2)">merge, only when the required check passed</text>
+
+  <!-- LEFT <-> MIDDLE: clone / push -->
+  <g stroke="currentColor" color="var(--ink)" fill="none" stroke-width="1.4">
+    <line x1="300" y1="100" x2="362" y2="100" marker-end="url(#ah)" marker-start="url(#ah)"/>
+  </g>
+  <text x="331" y="92" font-size="11" fill="var(--ink2)" text-anchor="middle">clone · push</text>
+  <!-- MIDDLE protected -> LEFT skill: contract text read-only -->
+  <g stroke="currentColor" color="var(--ink)" fill="none" stroke-width="1.4" stroke-dasharray="5 4">
+    <path d="M362,330 L330,330 L330,274 L212,274" marker-end="url(#ah)"/>
+  </g>
+  <text x="318" y="318" font-size="11" fill="var(--ink2)" text-anchor="end">contract text, read-only</text>
+
+  <!-- MIDDLE PR -> RIGHT checkout: triggers -->
+  <g stroke="currentColor" color="var(--ink)" fill="none" stroke-width="1.4">
+    <line x1="630" y1="110" x2="692" y2="110" marker-end="url(#ah)"/>
+  </g>
+  <text x="661" y="102" font-size="11" fill="var(--ink2)" text-anchor="middle">push triggers</text>
+
+  <!-- RIGHT: checkout -->
+  <g>
+    <rect x="692" y="76" width="276" height="64" rx="6" fill="var(--surface)" stroke="currentColor" stroke-width="1.2" color="var(--ink)"/>
+    <text x="706" y="100" font-size="13" font-weight="600" fill="var(--ink)">Read-only checkout: base + head</text>
+    <text x="706" y="118" font-size="12" fill="var(--ink2)">contract and hidden checks fetched by hash</text>
+    <text x="706" y="133" font-size="12" fill="var(--ink2)">no deployment credentials in the job</text>
+  </g>
+  <!-- RIGHT: containers -->
+  <g>
+    <rect x="692" y="160" width="276" height="100" rx="6" fill="var(--surface)" stroke="currentColor" stroke-width="1.2" color="var(--ink)"/>
+    <text x="706" y="184" font-size="13" font-weight="600" fill="var(--ink)">One throwaway container per check</text>
+    <text x="706" y="204" font-size="12" fill="var(--ink2)">repo tests · author tests · hidden · adequacy</text>
+    <text x="706" y="221" font-size="12" fill="var(--ink2)">no network · no secrets · snapshot read-only</text>
+    <text x="706" y="238" font-size="12" fill="var(--ink2)">hidden checks mounted for one check, then gone</text>
+    <text x="706" y="253" font-size="11" fill="var(--muted)">the author's code runs here and nowhere else</text>
+  </g>
+  <!-- RIGHT: scorer -->
+  <g>
+    <rect x="692" y="280" width="276" height="52" rx="6" fill="var(--surface)" stroke="currentColor" stroke-width="1.2" color="var(--ink)" stroke-dasharray="4 3"/>
+    <text x="706" y="300" font-size="12" font-weight="600" fill="var(--ink)">Model scorer · optional · evaluations only</text>
+    <text x="706" y="318" font-size="11" fill="var(--ink2)">pinned version · other vendor · the customer's endpoint</text>
+  </g>
+  <!-- RIGHT: verdict (ours) -->
+  <g>
+    <rect x="692" y="352" width="276" height="64" rx="6" style="fill:var(--accent-soft);stroke:var(--accent)" stroke-width="1.4"/>
+    <text x="706" y="374" font-size="13" font-weight="600" fill="var(--ink)">Verdict, assembled outside the containers</text>
+    <text x="706" y="393" font-size="12" fill="var(--ink)">from exit codes and reports the code cannot write</text>
+    <text x="706" y="409" font-size="12" fill="var(--ink)">passed · failed · error → exit 0 · 1 · 2</text>
+  </g>
+  <!-- RIGHT: record -->
+  <g>
+    <rect x="692" y="436" width="276" height="64" rx="6" fill="var(--surface)" stroke="currentColor" stroke-width="1.2" color="var(--ink)"/>
+    <text x="706" y="458" font-size="13" font-weight="600" fill="var(--ink)">Outcome record + event log</text>
+    <text x="706" y="476" font-size="12" fill="var(--ink2)">append-only, in the customer's own store</text>
+    <text x="706" y="492" font-size="12" fill="var(--ink2)">author model and harness version on every line</text>
+  </g>
+  <!-- RIGHT: measurement -->
+  <g>
+    <rect x="692" y="520" width="276" height="90" rx="6" style="fill:var(--accent-soft);stroke:var(--accent)" stroke-width="1.4"/>
+    <text x="706" y="542" font-size="13" font-weight="600" fill="var(--ink)">Measurement runner · ours</text>
+    <text x="706" y="561" font-size="12" fill="var(--ink)">planted flaws · known-good changes · overrides</text>
+    <text x="706" y="578" font-size="12" fill="var(--ink)">false pass · false fail · cost per qualified change</text>
+    <text x="706" y="595" font-size="12" fill="var(--ink)">per model × harness pairing, re-run each release</text>
+  </g>
+  <!-- RIGHT vertical flow -->
+  <g stroke="currentColor" color="var(--ink)" fill="none" stroke-width="1.4">
+    <line x1="830" y1="140" x2="830" y2="160" marker-end="url(#ah)"/>
+    <line x1="830" y1="260" x2="830" y2="280" marker-end="url(#ah)"/>
+    <line x1="830" y1="332" x2="830" y2="352" marker-end="url(#ah)"/>
+    <line x1="830" y1="416" x2="830" y2="436" marker-end="url(#ah)"/>
+    <line x1="830" y1="500" x2="830" y2="520" marker-end="url(#ah)"/>
+  </g>
+  <!-- protected -> containers: contract + hidden by hash -->
+  <g stroke="currentColor" color="var(--ink)" fill="none" stroke-width="1.4" stroke-dasharray="5 4">
+    <path d="M630,354 L660,354 L660,230 L692,230" marker-end="url(#ah)"/>
+  </g>
+  <text x="664" y="300" font-size="11" fill="var(--ink2)" transform="rotate(-90 664 300)" text-anchor="middle">by hash, read-only</text>
+  <!-- verdict -> PR: status + first reason -->
+  <g stroke="currentColor" color="var(--ink)" fill="none" stroke-width="1.4">
+    <path d="M692,384 L648,384 L648,130 L630,130" marker-end="url(#ah)"/>
+  </g>
+  <text x="644" y="440" font-size="11" fill="var(--ink2)" transform="rotate(-90 644 440)" text-anchor="middle">status + first reason, on the PR</text>
+  <!-- measurement -> protected: recalibrates -->
+  <g stroke="currentColor" color="var(--ink)" fill="none" stroke-width="1.4" stroke-dasharray="5 4">
+    <path d="M692,580 L496,580 L496,412" marker-end="url(#ah)"/>
+  </g>
+  <text x="594" y="596" font-size="11" fill="var(--ink2)" text-anchor="middle">recalibrates tiers and checks, through the release role</text>
+</svg>
+<div class="leg"><span><i></i> data moves</span><span><i class="d"></i> read-only, pinned by hash</span><span><b></b> ours</span><span>dashed box: optional</span></div>
+<figcaption>One change, three environments. The author's harness and model are the team's own; the repository host holds the change, the protected main branch, and a protected branch for contracts and hidden checks that nothing on the left can write to. The pipeline's verdict job is the only place the hidden checks are ever mounted and the only verdict that binds, through the host's required status check. The hook on the left gives early feedback from the visible checks and can pause for a person; it never decides.</figcaption>
+</figure>
+
+<h2 id="ci">Attachment point 1: the pipeline, where the verdict binds</h2>
+<p class="secnote">This is the shape the prototype already has. The gate runs as a command, reads a base, a head and a contract, and exits 0, 1 or 2. Everything below is what changes between that command and a job in a design partner's pipeline.</p>
+<div class="rules">
+  <div class="rule"><b>The anchor is branch protection, not the pipeline file</b><p>Pipeline configuration is author-writable in the ordinary case, so a hash pinned in a workflow protects nothing. The verdict is named as a required status check in the host's branch protection, workflow paths are admin-restricted, and only admins can change the protection rules themselves. This was finding 2 of my design review.</p></div>
+  <div class="rule"><b>The protected branch is writable by a role no agent assumes</b><p>Agents run with the engineer's credentials. If the engineer can push to the contracts branch, so can their agent. The release role that writes there is one nobody delegates to a harness.</p></div>
+  <div class="rule"><b>Base and head come from the host</b><p>In the prototype the base is a fixture copy and the head is a snapshot. In a pipeline the base is the merge-base commit and the head is the PR head, both fetched read-only. The job holds no deployment credentials.</p></div>
+  <div class="rule"><b>The team's image, the team's test command</b><p>The prototype uses one Python image and pytest with a JUnit report. In a pipeline each check is the team's own command in the team's own image, and the pass rule stays the same: exit clean, report readable, exactly the expected count, nothing skipped.</p></div>
+  <div class="rule"><b>Per-check containers, verdict outside</b><p>Running the team's tests means executing the author's code. It runs in a throwaway container per check; the hidden checks are mounted for that one check; the verdict is assembled from exit codes and reports the sandboxed code cannot write. Test infrastructure such as <code>conftest.py</code> is a protected path by default.</p></div>
+  <div class="rule"><b>Flaky tests get a policy, not a shrug</b><p>Checks the team marks retryable get a bounded retry; a check that flips lands in a quarantine state that routes to a person rather than silently passing or failing; flakiness is reported as its own number. Without this the false-fail rate inflates and the gate gets bypassed.</p></div>
+</div>
+<p>What the pipeline gives back is small on purpose: one status on the PR, the first reason, and a link to the evidence. A visible-check failure is reported in full. A hidden-check failure is reported as the fact of one. The job writes the outcome record and the event log to the customer's own store, where the measurement runner reads them.</p>
+<pre><code><span class="c"># the prototype's command, which is already the shape of the job</span>
+python -m prototype.gate.verdict --task &lt;contract id&gt; --base &lt;merge-base&gt; --head &lt;pr head&gt; --out &lt;artifacts&gt;
+<span class="c"># exit 0 passed · 1 failed · 2 error (never a pass) → the required status check</span></code></pre>
+
+<h2 id="hooks">Attachment point 2: inside the harness, through hooks</h2>
+<p class="secnote">Nine of the eleven harnesses in the source-code study expose lifecycle hooks, and Codex copied Claude Code's hook names verbatim. That is enough surface to attach to, and not enough to trust. A hook runs in the author's session, under the author's credentials, with the author's working copy. So it gets two jobs and no more: early feedback, and a pause for a person.</p>
+<div class="tw"><table>
+  <thead><tr><th>Harness</th><th>Extension point we would use</th><th>What ours does there</th><th>Packaging</th></tr></thead>
+  <tbody>
+    <tr><td>Claude Code</td><td class="m">Stop · SubagentStop · PreToolUse · PermissionRequest</td><td>On stop: run the visible checks, return the first reason. Pre-tool: warn when a write would leave the contract's scope. Permission: pause for a person on red-tier paths</td><td class="m">.claude-plugin + SKILL.md</td></tr>
+    <tr><td>Codex CLI</td><td class="m">same names + PostCompact; Starlark execpolicy</td><td>Same as above; the scope rules can also be expressed as execpolicy for the harness's own enforcement</td><td class="m">reads .claude-plugin; marketplace plugin</td></tr>
+    <tr><td>OpenHands</td><td class="m">stop hook · pluggable critics</td><td>Visible checks as a critic; its persistent EventLog is an evidence source the pipeline can read</td><td class="m">plugin bundle; reads .claude-plugin</td></tr>
+    <tr><td>Gemini CLI</td><td class="m">AfterAgent · tool lifecycle events</td><td>Same two jobs via an extension; OpenTelemetry spans for cost</td><td class="m">extension</td></tr>
+    <tr><td>Mistral Vibe</td><td class="m">post_agent_turn · after_tool</td><td>Same, in hooks.toml</td><td class="m">hooks.toml</td></tr>
+    <tr><td>OpenCode</td><td class="m">tool.execute.before / after</td><td>Same; its HTTP server lists "CI action" as a client, which is a second route to the pipeline</td><td class="m">plugin</td></tr>
+    <tr><td>Pi</td><td class="m">tool_call event with veto</td><td>Scope warning only; no MCP, so extension or CLI</td><td class="m">extension</td></tr>
+    <tr><td>Hermes</td><td class="m">hooks, thinly documented; verify-on-stop guard</td><td>Its own guard overlaps with ours; we add the visible-check run and leave the guard</td><td class="m">—</td></tr>
+    <tr><td>Aider · Mini-SWE-Agent</td><td>No hooks</td><td>Pipeline only. Nothing lost: the binding verdict never depended on a hook</td><td>—</td></tr>
+  </tbody>
+</table></div>
+<h3>What the skill carries, and what it cannot do</h3>
+<p>The contract reaches the agent as text through a skill file, the same way the prototype's gated arm got its notice. This is what the prototype literally sends, and it is what a skill would say:</p>
+<pre><code>This task has a contract, fixed before you started. You cannot change it.
+- You may change only: invoicing/pricing.py, tests/**.
+- Existing tests and checks may be added to, never removed or altered.
+- After you stop, checks you cannot see are run on your change, outside your reach.
+  The change is accepted only if they pass.</code></pre>
+<p>A skill tells the agent the rules. It enforces nothing, and the study says so in as many words. Enforcement sits in the pipeline and, where the harness has one, in its own policy layer. The prototype has a one-line proof of this split: the gated arm's prompt is text, and the gate's verdict is a separate process that never reads that text.</p>
+<h3>MCP, if at all</h3>
+<p>Skills have overtaken MCP as the most adopted extension standard in the corpus. Where a team wants MCP, the server exposes two read-only tools, read the contract and run the visible checks, and no write tool. There is no tool that writes to the protected branch, because there is no legitimate caller for it inside a session.</p>
+
+<h2 id="meta">Attachment point 3: a meta-harness as a channel</h2>
+<p class="secnote">Omnigent, the open-source layer from Databricks, wraps 23 harness adapters behind one API and runs a policy plane whose evaluators can be Python, enforced on each vendor's harness through that vendor's own hooks, fail-closed. A gate shipped as one Python evaluator reaches every harness it wraps.</p>
+<p>That is one integration in place of nine, so it is worth building third, after the pipeline job and one native hook. Two things keep it third rather than first. It is still inside the author's session, so what it enforces is the early-feedback half, and the binding verdict stays in the pipeline. And it is the most likely competitor to the gate as well as a channel for it: the layer already has policy phases, evaluators, review comments and a conformance bench, and the vendor could add an acceptance gate quickly. I have no adoption data for it. We ship to it because the cost is low, not because it is the strategy.</p>
+
+<h2 id="models">Models: three roles, none of them the author</h2>
+<p class="secnote">The model that writes the code is the team's business. We call a model in three places, each behind an interface, each pinned, each recorded.</p>
+<div class="tw"><table>
+  <thead><tr><th>Role</th><th>When</th><th>Conditions</th><th>In the prototype</th></tr></thead>
+  <tbody>
+    <tr><td><strong>The author's model</strong></td><td>Always, and never ours</td><td>Any vendor, through the team's harness and the team's key. Model and version are written on every event and in the outcome record's <code>author</code> field, because results are reported per model and harness pairing</td><td>Claude Sonnet 5.5 through the published scaffold; the adapter exists only because the scaffold could not call a real API as published</td></tr>
+    <tr><td><strong>The scorer</strong></td><td>The evaluation path only, for software whose behaviour comes from a model</td><td>Code scores first: exact match, schema, a required tool call, a tolerance. A model scores only what code cannot. Pinned to a version and a prompt; from a different vendor than the author where possible; checked against human-labelled cases with its agreement stated; reaches only the endpoint the customer configured. A self-hostable classifier is the default; a hosted decision model is an option the customer chooses, and it never gives the correctness verdict</td><td>Designed, not built</td></tr>
+    <tr><td><strong>The comparison evaluator</strong></td><td>Measurement only</td><td>An evaluator agent from the other vendor, on a sample of runs, so a model family is not grading itself. Its price is recorded as an evidence row before the first call</td><td>Planned as a GPT-5.4 model; the adapter was never written</td></tr>
+  </tbody>
+</table></div>
+<p>The provider adapter in the prototype is 105 lines because it has to translate the scaffold's message format and supply tool schemas. In the product there is no loop of ours to adapt, so what survives of it is the budget guard: refuse a call whose worst case could pass the contract's verification budget, and compute cost from the provider's token counts and a recorded price.</p>
+<div class="call"><p>The reason to re-measure per model and harness pairing is not caution for its own sake. A check that earned its keep on one model was "unnecessary overhead" on the next, in the vendor's own account, and the ablation study found harness components change results in size and sign by model. A model upgrade is a release of the evidence layer too: the measurement runner re-runs, the false-pass rate is compared with the previous one, and the risk tiers move only on the numbers.</p></div>
+
+<h2 id="boundary">The data boundary: what crosses each line</h2>
+<p class="secnote">The product works on the customer's code, checks and outcomes, which is what makes it useful and what makes it sensitive. So every artifact has a home, a writer and a reader, and nothing leaves the customer's environment.</p>
+<div class="tw"><table>
+  <thead><tr><th>Artifact</th><th>Lives</th><th>Written by</th><th>Read by</th><th>Leaves the environment</th></tr></thead>
+  <tbody>
+    <tr><td>Contract, risk tiers</td><td>Protected branch</td><td>The release role, after a person approves</td><td>Everyone; the agent as text</td><td><span class="tag no">never</span></td></tr>
+    <tr><td>Hidden checks</td><td>Protected branch</td><td>The release role</td><td>The verdict job, one check at a time</td><td><span class="tag no">never</span></td></tr>
+    <tr><td>The change</td><td>PR branch</td><td>The author</td><td>Everyone</td><td><span class="tag no">never</span></td></tr>
+    <tr><td>Verdict and evidence items</td><td>Pipeline artifacts</td><td>The verdict job</td><td>Everyone; the author gets the first reason only</td><td><span class="tag no">never</span></td></tr>
+    <tr><td>Outcome record, event log</td><td>The customer's store, append-only</td><td>The verdict job</td><td>Measurement, reviewers, auditors</td><td><span class="tag no">never</span></td></tr>
+    <tr><td>Override labels</td><td>Same store</td><td>A reviewer, with a reason</td><td>Measurement</td><td><span class="tag no">never</span></td></tr>
+    <tr><td>Scorer calls, evaluation path</td><td>In flight only</td><td>The verdict job</td><td>The endpoint the customer configured</td><td><span class="tag open">only to that endpoint</span></td></tr>
+  </tbody>
+</table></div>
+<p>Running in the customer's pipeline with the customer's model access and sending nothing back is what makes most procurement questions short. Zero-retention and residency do not apply to us because we hold nothing; single sign-on, model allow-lists and spend controls reduce to honouring what the customer already has. The audit record applies in full, because it is the product.</p>
+
+<h2 id="order">What I would build first, on one design partner's repository</h2>
+<ol class="pipe">
+  <li><b>The pipeline job and the protected branch.</b><p>Reuse their pipeline and their image. Name the verdict as a required check. Create the release role. Port the gate's command to their test runner. This is the binding half, and it needs nothing from any harness vendor.</p></li>
+  <li><b>One native hook, in the harness they actually use.</b><p>A Stop hook that runs the visible checks and returns the first reason, packaged so that Codex and OpenHands load it too. The contract notice becomes the skill file. This is the half that makes the gate pleasant rather than merely strict.</p></li>
+  <li><b>The measurement runner on their history.</b><p>Planted flaws written for their repository, known-good changes from their merged history, the first false-pass and false-fail numbers per model and harness they use. The review notes that retrofitting contracts onto historical changes biases this; I say so in the report rather than hide it.</p></li>
+  <li><b>The meta-harness evaluator.</b><p>One Python evaluator for the policy plane, if the partner runs it. Cheap, and it is a channel, not a dependency.</p></li>
+  <li><b>The scorer interface, when a partner has an LLM application to gate.</b><p>Code scoring first, a pinned model behind the interface, agreement with human labels measured before the first verdict depends on it.</p></li>
+</ol>
+
+<h2 id="risks">What can go wrong with the integration itself</h2>
+<ul>
+  <li><strong>Hook surfaces decay in weeks.</strong> The study says the half-life of a distinctive feature is measurable in weeks, and hook inventories are the kind of claim that decays with it. The per-vendor conditional cost is real. That is why the binding attachment is the pipeline, which has no vendor.</li>
+  <li><strong>The vendor ships it natively.</strong> A verify-on-stop guard and a goal judge are small features. Our claim rests on independence, a measured error rate and the record, none of which a vendor's own evaluator provides. If buyers do not value those three, there is no product, and the pilot will say so.</li>
+  <li><strong>A real test suite dominates every timing.</strong> The prototype's verdict took ten seconds because its tests take under one. A partner's suite sets the latency, which is why checks are applied by risk tier and why the cheap, decisive ones run first.</li>
+  <li><strong>Scope by path is brittle.</strong> Lockfiles, formatters and generated code will trip it and inflate false fails. The contract gets declared exceptions, and the false-fail rate is reported beside the false-pass rate so this cannot hide.</li>
+  <li><strong>The pipeline gets edited around.</strong> Covered above, and it is the first thing I would verify on a partner's host: that the protection rules themselves are admin-only and that the release role is held by nobody who runs an agent.</li>
+</ul>
+
+<p class="foot">The attachment rules are the system design's section 3 and its review's findings 1 to 3; the hook inventory is from the source-code study of eleven harnesses as recorded in the research notes; the model conditions are the design's section 4.2 and decisions ADR-012 and ADR-021. The prototype implements the pipeline shape only; no hook, skill, MCP server or meta-harness evaluator exists in the tree, and this page says so wherever it matters.</p>
+</main>
+</body>
+</html>
