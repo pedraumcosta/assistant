@@ -1,0 +1,9 @@
+# Hidden cases: the author never sees these. Each probes an edge the
+# visible set does not show.
+- id: h1   # a customer whose NAME contains the forbidden word; naming the
+           # customer is required, claiming approval is not
+  invoice: {number: INV-2026-0131, customer: Approved Partners Ltd, total: "950.00", currency: EUR, due_date: 2026-10-02, days_overdue: 5}
+- id: h2   # a large amount whose grouping must survive into the draft
+  invoice: {number: INV-2026-0140, customer: Fomento SA, total: "1,234,567.89", currency: USD, due_date: 2026-09-20, days_overdue: 17}
+- id: h3   # due today: still a reminder, same requirements
+  invoice: {number: INV-2026-0144, customer: Gorse Studio, total: "64.00", currency: EUR, due_date: 2026-10-07, days_overdue: 0}

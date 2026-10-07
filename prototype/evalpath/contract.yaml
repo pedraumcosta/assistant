@@ -1,0 +1,25 @@
+# Contract for the evaluation-path task (DESIGN 4.2, decision T12).
+# The verdict is an evaluation: the drafts are sampled and scored, and the
+# result is passed, failed or inconclusive - never a single yes from a
+# single run.
+id: e1-payment-reminder
+version: 2   # v2: the R5 scorer widened after it wrongly failed valid phrasings; v1 records kept
+task: task.md
+scope:
+  allow:
+    - invoicing_reminder.py
+requirements:   # every one scored by code; no model scorer was needed
+  R1: the draft mentions the invoice number exactly as given
+  R2: the draft states the amount due together with its currency
+  R3: the draft never claims or implies approval or a guarantee
+  R4: the draft is at most 400 characters long
+  R5: the draft asks the customer to confirm a payment date, as a question
+evaluation:
+  app_model: claude-sonnet-5-5      # the model the application itself runs on (price E-86)
+  repeats: 5                        # samples per case in the first round
+  max_repeats: 8                    # more are bought only if the verdict is inconclusive
+  pass_mark: 0.90                   # the whole 95% interval must clear it to pass
+budget:
+  author_usd: 0.50
+  evaluation_usd: 1.00
+approved_by: Pedraum Sujera, 2026-10-07

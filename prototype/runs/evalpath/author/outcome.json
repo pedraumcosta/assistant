@@ -1,0 +1,6 @@
+{
+  "stop_reason": "returned",
+  "turns": 5,
+  "cost_usd": 0.039832,
+  "final_text": "tput only the email text, with no subject line, placeholders or commentary. It signs off as \"Accounts Receivable\". The due date and days overdue are included when the invoice has them.\n\nMentioning \"approved\" and \"guaranteed\" in the prompt, even as things to avoid, could occasionally prime the model to use them. If the judged drafts show that, those words are the first thing to remove.\n\nCLAIM: done"
+}

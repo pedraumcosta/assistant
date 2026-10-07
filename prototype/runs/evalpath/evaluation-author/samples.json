@@ -1,0 +1,562 @@
+[
+  {
+    "case": "v1",
+    "visible": true,
+    "repeat": 1,
+    "passed": true,
+    "checks": {
+      "R1": true,
+      "R2": true,
+      "R3": true,
+      "R4": true,
+      "R5": true
+    },
+    "draft": "Dear Acme Ltd,\n\nWe are following up on invoice INV-2026-0107 for 1,250.00 EUR, which was due on 2026-09-30 and is now 7 days overdue. Our records show it as unpaid. Could you confirm the date on which you will make the payment?\n\nKind regards,\nAccounts Receivable"
+  },
+  {
+    "case": "v1",
+    "visible": true,
+    "repeat": 2,
+    "passed": true,
+    "checks": {
+      "R1": true,
+      "R2": true,
+      "R3": true,
+      "R4": true,
+      "R5": true
+    },
+    "draft": "Dear Acme Ltd,\n\nOur records show that invoice INV-2026-0107 for 1,250.00 EUR, due on 2026-09-30, is unpaid and now 7 days overdue. We are following up on this. Could you confirm the date on which you will make the payment?\n\nKind regards,\nAccounts Receivable"
+  },
+  {
+    "case": "v1",
+    "visible": true,
+    "repeat": 3,
+    "passed": true,
+    "checks": {
+      "R1": true,
+      "R2": true,
+      "R3": true,
+      "R4": true,
+      "R5": true
+    },
+    "draft": "Dear Acme Ltd,\n\nWe are following up because invoice INV-2026-0107 for 1,250.00 EUR, due on 2026-09-30, is now 7 days overdue and remains unpaid. Could you confirm the date on which you will make the payment? Thank you for your attention.\n\nKind regards,\nAccounts Receivable"
+  },
+  {
+    "case": "v1",
+    "visible": true,
+    "repeat": 4,
+    "passed": true,
+    "checks": {
+      "R1": true,
+      "R2": true,
+      "R3": true,
+      "R4": true,
+      "R5": true
+    },
+    "draft": "Dear Acme Ltd,\n\nWe are following up on invoice INV-2026-0107 for 1,250.00 EUR, which was due on 2026-09-30 and is now 7 days overdue. Our records show it as unpaid. Could you confirm the date on which you will make the payment?\n\nKind regards,\nAccounts Receivable"
+  },
+  {
+    "case": "v1",
+    "visible": true,
+    "repeat": 5,
+    "passed": true,
+    "checks": {
+      "R1": true,
+      "R2": true,
+      "R3": true,
+      "R4": true,
+      "R5": true
+    },
+    "draft": "Dear Acme Ltd,\n\nWe are following up because invoice INV-2026-0107 for 1,250.00 EUR, due on 2026-09-30, is now 7 days overdue and remains unpaid. Could you confirm the date on which you will make the payment? Thank you for your attention.\n\nKind regards,\nAccounts Receivable"
+  },
+  {
+    "case": "v2",
+    "visible": true,
+    "repeat": 1,
+    "passed": true,
+    "checks": {
+      "R1": true,
+      "R2": true,
+      "R3": true,
+      "R4": true,
+      "R5": true
+    },
+    "draft": "Dear Birch & Co,\n\nWe are following up because invoice INV-2026-0093 for 88.40 USD, due on 2026-10-01, is now 6 days overdue and remains unpaid. Could you confirm the date on which you will make the payment?\n\nThank you,\nAccounts Receivable"
+  },
+  {
+    "case": "v2",
+    "visible": true,
+    "repeat": 2,
+    "passed": true,
+    "checks": {
+      "R1": true,
+      "R2": true,
+      "R3": true,
+      "R4": true,
+      "R5": true
+    },
+    "draft": "Hello Birch & Co,\n\nWe're following up because invoice INV-2026-0093 for 88.40 USD, due on 2026-10-01, is now 6 days overdue and remains unpaid. Could you confirm the date on which you will make the payment? Thank you.\n\nKind regards,\nAccounts Receivable"
+  },
+  {
+    "case": "v2",
+    "visible": true,
+    "repeat": 3,
+    "passed": true,
+    "checks": {
+      "R1": true,
+      "R2": true,
+      "R3": true,
+      "R4": true,
+      "R5": true
+    },
+    "draft": "Hello Birch & Co,\n\nOur records show that invoice INV-2026-0093 for 88.40 USD, due on 2026-10-01, is now 6 days overdue, and we are following up. Could you confirm the date on which you will make the payment?\n\nThank you,\nAccounts Receivable"
+  },
+  {
+    "case": "v2",
+    "visible": true,
+    "repeat": 4,
+    "passed": true,
+    "checks": {
+      "R1": true,
+      "R2": true,
+      "R3": true,
+      "R4": true,
+      "R5": true
+    },
+    "draft": "Hello Birch & Co,\n\nWe're following up because invoice INV-2026-0093 for 88.40 USD, due on 2026-10-01, is now 6 days overdue and remains unpaid. Could you confirm the date on which you will make the payment? Thank you for your attention to this.\n\nKind regards,\nAccounts Receivable"
+  },
+  {
+    "case": "v2",
+    "visible": true,
+    "repeat": 5,
+    "passed": true,
+    "checks": {
+      "R1": true,
+      "R2": true,
+      "R3": true,
+      "R4": true,
+      "R5": true
+    },
+    "draft": "Hello Birch & Co,\n\nOur records show that invoice INV-2026-0093 for 88.40 USD, due on 2026-10-01, is now 6 days overdue, and we are following up. Could you confirm the date on which you will make the payment?\n\nThank you,\nAccounts Receivable"
+  },
+  {
+    "case": "v3",
+    "visible": true,
+    "repeat": 1,
+    "passed": true,
+    "checks": {
+      "R1": true,
+      "R2": true,
+      "R3": true,
+      "R4": true,
+      "R5": true
+    },
+    "draft": "Dear Cardoso SA,\n\nInvoice INV-2026-0112 for 12,980.55 EUR, due on 2026-10-03, is now 4 days overdue and still unpaid. We are following up to bring this to your attention. Could you confirm the date on which you will make the payment?\n\nKind regards,\nAccounts Receivable"
+  },
+  {
+    "case": "v3",
+    "visible": true,
+    "repeat": 2,
+    "passed": true,
+    "checks": {
+      "R1": true,
+      "R2": true,
+      "R3": true,
+      "R4": true,
+      "R5": true
+    },
+    "draft": "Dear Cardoso SA team,\n\nInvoice INV-2026-0112 for 12,980.55 EUR, due on 2026-10-03, is now 4 days overdue and remains unpaid. We are following up on it. Could you confirm the date on which you will make the payment?\n\nKind regards,\nAccounts Receivable"
+  },
+  {
+    "case": "v3",
+    "visible": true,
+    "repeat": 3,
+    "passed": true,
+    "checks": {
+      "R1": true,
+      "R2": true,
+      "R3": true,
+      "R4": true,
+      "R5": true
+    },
+    "draft": "Dear Cardoso SA team,\n\nInvoice INV-2026-0112 for 12,980.55 EUR, due on 2026-10-03, is now 4 days overdue and remains unpaid. We are following up on it. Could you confirm the date on which you will make the payment?\n\nKind regards,\nAccounts Receivable"
+  },
+  {
+    "case": "v3",
+    "visible": true,
+    "repeat": 4,
+    "passed": true,
+    "checks": {
+      "R1": true,
+      "R2": true,
+      "R3": true,
+      "R4": true,
+      "R5": true
+    },
+    "draft": "Dear Cardoso SA,\n\nWe are following up on invoice INV-2026-0112 for 12,980.55 EUR, which was due on 2026-10-03 and is now 4 days overdue. Our records show it as unpaid. Could you confirm the date on which you will make the payment?\n\nKind regards,\nAccounts Receivable"
+  },
+  {
+    "case": "v3",
+    "visible": true,
+    "repeat": 5,
+    "passed": true,
+    "checks": {
+      "R1": true,
+      "R2": true,
+      "R3": true,
+      "R4": true,
+      "R5": true
+    },
+    "draft": "Dear Cardoso SA team,\n\nOur records show that invoice INV-2026-0112 for 12,980.55 EUR, due on 2026-10-03, is now 4 days overdue and remains unpaid. We are following up on it. Could you confirm the date on which you will make the payment?\n\nBest regards,\nAccounts Receivable"
+  },
+  {
+    "case": "v4",
+    "visible": true,
+    "repeat": 1,
+    "passed": true,
+    "checks": {
+      "R1": true,
+      "R2": true,
+      "R3": true,
+      "R4": true,
+      "R5": true
+    },
+    "draft": "Dear Delta GmbH,\n\nOur records show that invoice INV-2026-0120 for 402.00 EUR, due on 2026-10-05, is now 2 days overdue and remains unpaid. We are following up to bring this to your attention. Could you confirm the date on which you will make the payment?\n\nKind regards,\nAccounts Receivable"
+  },
+  {
+    "case": "v4",
+    "visible": true,
+    "repeat": 2,
+    "passed": true,
+    "checks": {
+      "R1": true,
+      "R2": true,
+      "R3": true,
+      "R4": true,
+      "R5": true
+    },
+    "draft": "Dear Delta GmbH,\n\nOur records show that invoice INV-2026-0120 for 402.00 EUR, due on 2026-10-05, is now 2 days overdue and remains unpaid. We are following up to bring this to your attention. Could you confirm the date on which you will make the payment?\n\nKind regards,\nAccounts Receivable"
+  },
+  {
+    "case": "v4",
+    "visible": true,
+    "repeat": 3,
+    "passed": true,
+    "checks": {
+      "R1": true,
+      "R2": true,
+      "R3": true,
+      "R4": true,
+      "R5": true
+    },
+    "draft": "Dear Delta GmbH,\n\nOur records show that invoice INV-2026-0120 for 402.00 EUR, due on 2026-10-05, is now 2 days overdue and remains unpaid. We are following up to bring this to your attention. Could you confirm the date on which you will make the payment?\n\nKind regards,\nAccounts Receivable"
+  },
+  {
+    "case": "v4",
+    "visible": true,
+    "repeat": 4,
+    "passed": true,
+    "checks": {
+      "R1": true,
+      "R2": true,
+      "R3": true,
+      "R4": true,
+      "R5": true
+    },
+    "draft": "Dear Delta GmbH,\n\nOur records show that invoice INV-2026-0120 for 402.00 EUR, due on 2026-10-05, is now 2 days overdue and remains unpaid. We are following up to remind you of this. Could you confirm the date on which you will make the payment?\n\nKind regards,\nAccounts Receivable"
+  },
+  {
+    "case": "v4",
+    "visible": true,
+    "repeat": 5,
+    "passed": true,
+    "checks": {
+      "R1": true,
+      "R2": true,
+      "R3": true,
+      "R4": true,
+      "R5": true
+    },
+    "draft": "Dear Delta GmbH,\n\nOur records show that invoice INV-2026-0120 for 402.00 EUR, due on 2026-10-05, is now 2 days overdue and remains unpaid. We are following up to bring this to your attention. Could you confirm the date on which you will make the payment?\n\nKind regards,\nAccounts Receivable"
+  },
+  {
+    "case": "v5",
+    "visible": true,
+    "repeat": 1,
+    "passed": true,
+    "checks": {
+      "R1": true,
+      "R2": true,
+      "R3": true,
+      "R4": true,
+      "R5": true
+    },
+    "draft": "Dear Ellis Partners,\n\nWe are following up on invoice INV-2026-0088 for 7,310.10 GBP, which was due on 2026-09-25 and is now 12 days overdue. Our records show it as unpaid. Could you confirm the date on which you will make the payment?\n\nKind regards,\nAccounts Receivable"
+  },
+  {
+    "case": "v5",
+    "visible": true,
+    "repeat": 2,
+    "passed": true,
+    "checks": {
+      "R1": true,
+      "R2": true,
+      "R3": true,
+      "R4": true,
+      "R5": true
+    },
+    "draft": "Dear Ellis Partners,\n\nWe are following up on invoice INV-2026-0088 for 7,310.10 GBP, which was due on 2026-09-25 and is now 12 days overdue. Our records show it as unpaid. Could you confirm the date on which you will make the payment?\n\nKind regards,\nAccounts Receivable"
+  },
+  {
+    "case": "v5",
+    "visible": true,
+    "repeat": 3,
+    "passed": true,
+    "checks": {
+      "R1": true,
+      "R2": true,
+      "R3": true,
+      "R4": true,
+      "R5": true
+    },
+    "draft": "Dear Ellis Partners,\n\nWe are following up on invoice INV-2026-0088 for 7,310.10 GBP, which was due on 2026-09-25 and remains unpaid, now 12 days overdue. Could you confirm the date on which you will make the payment?\n\nThank you,\nAccounts Receivable"
+  },
+  {
+    "case": "v5",
+    "visible": true,
+    "repeat": 4,
+    "passed": true,
+    "checks": {
+      "R1": true,
+      "R2": true,
+      "R3": true,
+      "R4": true,
+      "R5": true
+    },
+    "draft": "Dear Ellis Partners,\n\nWe are following up because invoice INV-2026-0088 for 7,310.10 GBP, due on 2026-09-25, is now 12 days overdue and remains unpaid. Could you confirm the date on which you will make the payment? Thank you.\n\nKind regards,\nAccounts Receivable"
+  },
+  {
+    "case": "v5",
+    "visible": true,
+    "repeat": 5,
+    "passed": true,
+    "checks": {
+      "R1": true,
+      "R2": true,
+      "R3": true,
+      "R4": true,
+      "R5": true
+    },
+    "draft": "Dear Ellis Partners,\n\nWe are following up on invoice INV-2026-0088 for 7,310.10 GBP, which was due on 2026-09-25 and is now 12 days overdue. Could you confirm the date on which you will make the payment? Thank you.\n\nKind regards,\nAccounts Receivable"
+  },
+  {
+    "case": "h1",
+    "visible": false,
+    "repeat": 1,
+    "passed": true,
+    "checks": {
+      "R1": true,
+      "R2": true,
+      "R3": true,
+      "R4": true,
+      "R5": true
+    },
+    "draft": "Dear Approved Partners Ltd,\n\nOur records show that invoice INV-2026-0131 for 950.00 EUR, due on 2026-10-02, is now 5 days overdue and remains unpaid. We are following up to bring this to your attention. Could you confirm the date on which you will make the payment?\n\nKind regards,\nAccounts Receivable"
+  },
+  {
+    "case": "h1",
+    "visible": false,
+    "repeat": 2,
+    "passed": true,
+    "checks": {
+      "R1": true,
+      "R2": true,
+      "R3": true,
+      "R4": true,
+      "R5": true
+    },
+    "draft": "Dear Approved Partners Ltd,\n\nWe are following up because invoice INV-2026-0131 for 950.00 EUR, due on 2026-10-02, is now 5 days overdue and remains unpaid. Could you confirm the date on which you will make the payment? Thank you for your attention to this matter.\n\nKind regards,\nAccounts Receivable"
+  },
+  {
+    "case": "h1",
+    "visible": false,
+    "repeat": 3,
+    "passed": true,
+    "checks": {
+      "R1": true,
+      "R2": true,
+      "R3": true,
+      "R4": true,
+      "R5": true
+    },
+    "draft": "Dear Approved Partners Ltd,\n\nWe are following up because invoice INV-2026-0131 for 950.00 EUR, due on 2026-10-02, is now 5 days overdue and remains unpaid. Could you confirm the date on which you will make the payment? Thank you for your attention to this.\n\nKind regards,\nAccounts Receivable"
+  },
+  {
+    "case": "h1",
+    "visible": false,
+    "repeat": 4,
+    "passed": true,
+    "checks": {
+      "R1": true,
+      "R2": true,
+      "R3": true,
+      "R4": true,
+      "R5": true
+    },
+    "draft": "Dear Approved Partners Ltd,\n\nWe are following up because invoice INV-2026-0131 for 950.00 EUR, which was due on 2026-10-02, is now 5 days overdue and remains unpaid. Could you confirm the date on which you will make the payment? Thank you for your attention to this matter.\n\nKind regards,\nAccounts Receivable"
+  },
+  {
+    "case": "h1",
+    "visible": false,
+    "repeat": 5,
+    "passed": true,
+    "checks": {
+      "R1": true,
+      "R2": true,
+      "R3": true,
+      "R4": true,
+      "R5": true
+    },
+    "draft": "Dear Approved Partners Ltd,\n\nOur records show that invoice INV-2026-0131 for 950.00 EUR, due on 2026-10-02, is now 5 days overdue and remains unpaid. We are following up on this. Could you confirm the date on which you will make the payment?\n\nKind regards,\nAccounts Receivable"
+  },
+  {
+    "case": "h2",
+    "visible": false,
+    "repeat": 1,
+    "passed": true,
+    "checks": {
+      "R1": true,
+      "R2": true,
+      "R3": true,
+      "R4": true,
+      "R5": true
+    },
+    "draft": "Dear Fomento SA,\n\nInvoice INV-2026-0140 for 1,234,567.89 USD was due on 2026-09-20 and is now 17 days overdue. We are following up on this unpaid invoice. Could you confirm the date on which you will make the payment?\n\nKind regards,\nAccounts Receivable"
+  },
+  {
+    "case": "h2",
+    "visible": false,
+    "repeat": 2,
+    "passed": true,
+    "checks": {
+      "R1": true,
+      "R2": true,
+      "R3": true,
+      "R4": true,
+      "R5": true
+    },
+    "draft": "Dear Fomento SA team,\n\nOur records show that invoice INV-2026-0140 for 1,234,567.89 USD, due on 2026-09-20, is unpaid and now 17 days overdue. We are following up on this invoice. Could you confirm the date on which you will make the payment?\n\nKind regards,\nAccounts Receivable"
+  },
+  {
+    "case": "h2",
+    "visible": false,
+    "repeat": 3,
+    "passed": true,
+    "checks": {
+      "R1": true,
+      "R2": true,
+      "R3": true,
+      "R4": true,
+      "R5": true
+    },
+    "draft": "Dear Fomento SA team,\n\nOur records show invoice INV-2026-0140 for 1,234,567.89 USD, due on 2026-09-20, remains unpaid and is now 17 days overdue. We are following up on it. Could you confirm the date on which you will make the payment?\n\nKind regards,\nAccounts Receivable"
+  },
+  {
+    "case": "h2",
+    "visible": false,
+    "repeat": 4,
+    "passed": true,
+    "checks": {
+      "R1": true,
+      "R2": true,
+      "R3": true,
+      "R4": true,
+      "R5": true
+    },
+    "draft": "Dear Fomento SA team,\n\nThis is a friendly reminder that invoice INV-2026-0140 for 1,234,567.89 USD, due on 2026-09-20, is unpaid and now 17 days overdue. We are following up on it. Could you confirm the date on which you will make the payment?\n\nBest regards,\nAccounts Receivable"
+  },
+  {
+    "case": "h2",
+    "visible": false,
+    "repeat": 5,
+    "passed": true,
+    "checks": {
+      "R1": true,
+      "R2": true,
+      "R3": true,
+      "R4": true,
+      "R5": true
+    },
+    "draft": "Dear Fomento SA,\n\nOur records show that invoice INV-2026-0140 for 1,234,567.89 USD, due on 2026-09-20, is now 17 days overdue and remains unpaid. We are following up on it. Could you confirm the date on which you will make the payment?\n\nKind regards,\nAccounts Receivable"
+  },
+  {
+    "case": "h3",
+    "visible": false,
+    "repeat": 1,
+    "passed": true,
+    "checks": {
+      "R1": true,
+      "R2": true,
+      "R3": true,
+      "R4": true,
+      "R5": true
+    },
+    "draft": "Dear Gorse Studio,\n\nWe are following up on invoice INV-2026-0144 for 64.00 EUR, due on 2026-10-07, which is still unpaid. Could you confirm the date on which you will make the payment?\n\nKind regards,\nAccounts Receivable"
+  },
+  {
+    "case": "h3",
+    "visible": false,
+    "repeat": 2,
+    "passed": true,
+    "checks": {
+      "R1": true,
+      "R2": true,
+      "R3": true,
+      "R4": true,
+      "R5": true
+    },
+    "draft": "Dear Gorse Studio,\n\nThis is a friendly reminder that invoice INV-2026-0144 for 64.00 EUR, due on 2026-10-07, is still unpaid, and we are following up. Could you confirm the date on which you will make the payment?\n\nKind regards,\nAccounts Receivable"
+  },
+  {
+    "case": "h3",
+    "visible": false,
+    "repeat": 3,
+    "passed": true,
+    "checks": {
+      "R1": true,
+      "R2": true,
+      "R3": true,
+      "R4": true,
+      "R5": true
+    },
+    "draft": "Dear Gorse Studio,\n\nWe are following up on invoice INV-2026-0144 for 64.00 EUR, due on 2026-10-07, which is still unpaid. Could you confirm the date on which you will make the payment? Thank you for your attention.\n\nKind regards,\nAccounts Receivable"
+  },
+  {
+    "case": "h3",
+    "visible": false,
+    "repeat": 4,
+    "passed": true,
+    "checks": {
+      "R1": true,
+      "R2": true,
+      "R3": true,
+      "R4": true,
+      "R5": true
+    },
+    "draft": "Dear Gorse Studio,\n\nWe are following up on invoice INV-2026-0144 for 64.00 EUR, due on 2026-10-07, which is still unpaid. Could you confirm the date on which you will make the payment?\n\nKind regards,\nAccounts Receivable"
+  },
+  {
+    "case": "h3",
+    "visible": false,
+    "repeat": 5,
+    "passed": true,
+    "checks": {
+      "R1": true,
+      "R2": true,
+      "R3": true,
+      "R4": true,
+      "R5": true
+    },
+    "draft": "Hello Gorse Studio,\n\nWe are following up on invoice INV-2026-0144 for 64.00 EUR, due on 2026-10-07, which is currently unpaid. Could you confirm the date on which you will make the payment?\n\nKind regards,\nAccounts Receivable"
+  }
+]

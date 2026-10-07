@@ -2,7 +2,7 @@
 # This directory stands in for the protected branch: it is never mounted
 # into the agent's container.
 id: o6-merge-lines
-version: 1
+version: 2   # v2: approved; checks unchanged from v1
 task: tasks/o6-merge-lines/task.md
 scope:
   allow:
@@ -33,4 +33,4 @@ budget:
   max_seconds: 900
   repair_attempts: 2
 risk_tier: green
-approved_by: null   # a person, set when the contract is reviewed
+approved_by: Pedraum Sujera, 2026-10-07

@@ -1,0 +1,12 @@
+# The invoices the author may see. The evaluation also uses cases the
+# author never sees (hidden/cases.yaml).
+- id: v1
+  invoice: {number: INV-2026-0107, customer: Acme Ltd, total: "1,250.00", currency: EUR, due_date: 2026-09-30, days_overdue: 7}
+- id: v2
+  invoice: {number: INV-2026-0093, customer: Birch & Co, total: "88.40", currency: USD, due_date: 2026-10-01, days_overdue: 6}
+- id: v3
+  invoice: {number: INV-2026-0112, customer: Cardoso SA, total: "12,980.55", currency: EUR, due_date: 2026-10-03, days_overdue: 4}
+- id: v4
+  invoice: {number: INV-2026-0120, customer: Delta GmbH, total: "402.00", currency: EUR, due_date: 2026-10-05, days_overdue: 2}
+- id: v5
+  invoice: {number: INV-2026-0088, customer: Ellis Partners, total: "7,310.10", currency: GBP, due_date: 2026-09-25, days_overdue: 12}

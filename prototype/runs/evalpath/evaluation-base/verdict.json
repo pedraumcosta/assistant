@@ -1,0 +1,36 @@
+{
+  "summary": {
+    "target": "base",
+    "verdict": "failed",
+    "samples": 40,
+    "passed": 0,
+    "pass_rate": 0.0,
+    "interval_95": [
+      0.0,
+      0.088
+    ],
+    "pass_mark": 0.9,
+    "extended_sampling": false,
+    "failures_by_requirement": {
+      "R1": 40,
+      "R2": 40,
+      "R3": 40,
+      "R4": 40,
+      "R5": 34
+    },
+    "by_case": {
+      "v1": "0 of 5",
+      "v2": "0 of 5",
+      "v3": "0 of 5",
+      "v4": "0 of 5",
+      "v5": "0 of 5",
+      "h1": "0 of 5",
+      "h2": "0 of 5",
+      "h3": "0 of 5"
+    },
+    "hidden_cases_failed_samples": 15,
+    "app_model": "claude-sonnet-5-5",
+    "cost_usd": 0.41439,
+    "seconds": 414.8
+  }
+}

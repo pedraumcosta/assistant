@@ -419,11 +419,16 @@ nothing. For these, the check is an **evaluation**:
   clears the bar; "failed" only when all of it misses; otherwise **"inconclusive"** —
   more samples while budget remains, then a person decides.
 
-This path is fully designed; building it was a stretch goal the prototype did not reach.
+**Built and shown end to end** on a reminder-drafting feature: the original prompt failed
+0 of 40 samples; an agent's rewrite passed 40 of 40, with every hidden case held —
+including a customer literally named "Approved Partners Ltd", which must be named without
+claiming approval. Getting there also met both of the evaluation's own error sources: a
+scorer that wrongly failed valid phrasings, and a pipeline call that silently truncated
+drafts — each caught by reading the records, fixed, and kept.
 
 <!-- 1:30. This answers "an AI feature can't be verified deterministically" — the
-     promise never depended on determinism. Designed in DESIGN.md §4.2; decision
-     ADR-017. -->
+     promise never depended on determinism. RESULTS.md §5.8; the superseded rounds are
+     kept beside the final pair, which is the discipline on display. -->
 
 ---
 

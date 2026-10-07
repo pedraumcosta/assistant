@@ -334,7 +334,11 @@ mistakes.</p>
 </tbody></table></div>
 <div class="callout"><b>The one-line answer:</b> the verdict is always <b>executable</b> — real
 checks actually run — but not always deterministic, and the guarantees that matter never
-depended on determinism.</div>
+depended on determinism. <b>This path is built and demonstrated:</b> on a reminder-drafting
+feature, the original prompt failed 0 of 40 sampled drafts and an agent's rewrite passed 40 of
+40, every hidden case held — and along the way the evaluation's two error sources (a wrong
+scorer, a faulty pipeline call) both appeared, were caught from the records, and were fixed
+with the superseded rounds kept.</div>
 
 <h2 id="measured">What the one-day prototype measured</h2>
 <p class="secnote">The plan was to run the same tasks through a neutral test agent three ways —

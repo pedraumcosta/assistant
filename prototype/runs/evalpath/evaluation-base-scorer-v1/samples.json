@@ -1,0 +1,562 @@
+[
+  {
+    "case": "v1",
+    "visible": true,
+    "repeat": 1,
+    "passed": false,
+    "checks": {
+      "R1": false,
+      "R2": false,
+      "R3": true,
+      "R4": true,
+      "R5": false
+    },
+    "draft": "**Subject: A friendly note from all of us (and a little reminder!)**\n\nDear Acme Ltd team,\n\nI hope this email finds you well and that the week has been treating you kindly! We wanted to pop into your inbox with a quick hello and a gentle nudge about an outstanding invoice. There's no cause for concern, so please read on in the friendliest spirit possible.\n\nFirst,"
+  },
+  {
+    "case": "v1",
+    "visible": true,
+    "repeat": 2,
+    "passed": false,
+    "checks": {
+      "R1": false,
+      "R2": false,
+      "R3": true,
+      "R4": true,
+      "R5": false
+    },
+    "draft": "**Subject:** A Friendly Little Nudge (and a Big Thank You!)\n\nDear Acme Ltd Team,\n\nI hope this email finds you well and that the week has been treating you kindly! I've been meaning to drop you a line for a while, partly for a quick bit of housekeeping, but mostly to say how much we enjoy working with you.\n\nWhenever your name comes up here, it's usually followed"
+  },
+  {
+    "case": "v1",
+    "visible": true,
+    "repeat": 3,
+    "passed": false,
+    "checks": {
+      "R1": false,
+      "R2": false,
+      "R3": true,
+      "R4": false,
+      "R5": false
+    },
+    "draft": "**Subject:** A Friendly Little Nudge (and a Big Thank You!)\n\nDear Acme Ltd Team,\n\nI hope this email finds you well and that the week has been treating you kindly! I've been meaning to drop you a line for a while, partly to say thank you, and partly to mention a small bit of housekeeping.\n\nFirst things first: it's a genuine pleasure working with you. Your team has been a joy to collaborate with, and we're grateful for your continued trust in us. Customers like you are the reason we love what we do, so please know how"
+  },
+  {
+    "case": "v1",
+    "visible": true,
+    "repeat": 4,
+    "passed": false,
+    "checks": {
+      "R1": false,
+      "R2": false,
+      "R3": true,
+      "R4": false,
+      "R5": false
+    },
+    "draft": "**Subject:** A Friendly Little Nudge (and a Big Thank You!)\n\nHi there, Acme Ltd team,\n\nI hope this finds you well and that the week has been treating you kindly! I've been meaning to drop you a note for a little while. First of all, thank you. Working with you has been a genuine pleasure, and we're so glad to have you as part of our customer family. Your trust and your continued business really do mean the world to us.\n\nI'm writing about an invoice on your account that is still open. This isn't a stern remin"
+  },
+  {
+    "case": "v1",
+    "visible": true,
+    "repeat": 5,
+    "passed": false,
+    "checks": {
+      "R1": false,
+      "R2": false,
+      "R3": true,
+      "R4": true,
+      "R5": false
+    },
+    "draft": ""
+  },
+  {
+    "case": "v2",
+    "visible": true,
+    "repeat": 1,
+    "passed": false,
+    "checks": {
+      "R1": false,
+      "R2": false,
+      "R3": true,
+      "R4": true,
+      "R5": false
+    },
+    "draft": "**Subject: A Friendly Hello (and a Gentle Nudge) from Our Team to Yours**\n\nDear Birch & Co Team,\n\nI hope this note finds you all well! I've been meaning to drop you a line for a little while, and I wanted to start by saying how much we've enjoyed working with you. Whether it's the thoughtful way you approach every project or the warmth of every conversation, you're the kind of customer who"
+  },
+  {
+    "case": "v2",
+    "visible": true,
+    "repeat": 2,
+    "passed": false,
+    "checks": {
+      "R1": false,
+      "R2": false,
+      "R3": true,
+      "R4": true,
+      "R5": false
+    },
+    "draft": "**Subject:** A Friendly Little Nudge from Your Friends at [Your Company]\n\nDear Birch & Co Team,\n\nI hope this finds you well and that the week has been treating you kindly! It always feels like there's a bit of a whirlwind this time of year, so I wanted to"
+  },
+  {
+    "case": "v2",
+    "visible": true,
+    "repeat": 3,
+    "passed": false,
+    "checks": {
+      "R1": false,
+      "R2": false,
+      "R3": true,
+      "R4": true,
+      "R5": false
+    },
+    "draft": "**Subject: A Friendly Little Nudge (and a Big Thank You!)**\n\nDear Birch & Co team,\n\nI hope this email finds you well and that the week has been treating you kindly! I've been meaning to write for a little while, partly to say hello and partly to mention a small bit of housekeeping. I promise it's the painless k"
+  },
+  {
+    "case": "v2",
+    "visible": true,
+    "repeat": 4,
+    "passed": false,
+    "checks": {
+      "R1": false,
+      "R2": false,
+      "R3": true,
+      "R4": true,
+      "R5": false
+    },
+    "draft": "**Subject: A Friendly Nudge (and a Big Thank You!) from All of Us**\n\nHi there, Birch & Co team,\n\nI hope this finds you well and that the week has been kind to you! I've been meaning to drop you a line for a while. Things have been buzzing on our end, and I wanted to take a moment to say hello properly, not just fire off a quick note.\n\nFirst of all, thank you"
+  },
+  {
+    "case": "v2",
+    "visible": true,
+    "repeat": 5,
+    "passed": false,
+    "checks": {
+      "R1": false,
+      "R2": false,
+      "R3": true,
+      "R4": false,
+      "R5": false
+    },
+    "draft": "**Subject: A friendly little nudge from all of us (and a big thank you!)**\n\nDear Birch & Co team,\n\nI hope this email finds you well and that the week has been treating you kindly! I've been meaning to drop you a line for a while, partly to say hello, and partly to share a gentle reminder about an outstanding invoice on your account. Please don't let that last part make you tense up. It's a very relaxed, friendly nudge, and I promise there's no cause for worry."
+  },
+  {
+    "case": "v3",
+    "visible": true,
+    "repeat": 1,
+    "passed": false,
+    "checks": {
+      "R1": false,
+      "R2": false,
+      "R3": true,
+      "R4": false,
+      "R5": false
+    },
+    "draft": "**Subject:** A Friendly Little Nudge (and a Warm Hello!) from Us to You\n\nDear Cardoso SA Team,\n\nI hope this email finds you well and that the week has been treating you kindly! We've been thinking of you here and wanted to drop you a note. Yes, there's a small bit of business to mention, but mostly we wanted to say hello and tell you how much we value working with you.\n\n**First, the gentle reminder**\n\nYou have an outstanding invoice with us that hasn't been settled yet. We know how qu"
+  },
+  {
+    "case": "v3",
+    "visible": true,
+    "repeat": 2,
+    "passed": false,
+    "checks": {
+      "R1": false,
+      "R2": false,
+      "R3": true,
+      "R4": false,
+      "R5": false
+    },
+    "draft": "**Subject:** A Friendly Note from Your Friends at [Your Company Name]\n\nDear Cardoso SA Team,\n\nI hope this message finds you well and that the week has been treating you kindly! It feels like a good moment to reach out, not only for business, but also to say how much we value working with you. Your partnership has been a real highlight for us, and we never take it for granted.\n\nI'm writing with a gentle reminder about an outstanding invoice on your account. Please don't"
+  },
+  {
+    "case": "v3",
+    "visible": true,
+    "repeat": 3,
+    "passed": false,
+    "checks": {
+      "R1": false,
+      "R2": false,
+      "R3": true,
+      "R4": true,
+      "R5": false
+    },
+    "draft": "**Subject: A Friendly Little Nudge from Your Friends at [Your Company]**\n\nDear Cardoso SA Team,\n\nI hope this email finds you well and that the week has been treating you kindly! It's been a real pleasure working with you, and I wanted to drop you a quick note. I know \""
+  },
+  {
+    "case": "v3",
+    "visible": true,
+    "repeat": 4,
+    "passed": false,
+    "checks": {
+      "R1": false,
+      "R2": false,
+      "R3": true,
+      "R4": false,
+      "R5": false
+    },
+    "draft": "**Subject:** A Friendly Note from Us (and a Little Reminder!)\n\nDear Cardoso SA Team,\n\nI hope this email finds you well and that the week has been treating you kindly! It feels like a good moment to reach out, not only for business, but simply to say how much we value working with you. Your partnership has been a real highlight for us, and we never take it for granted.\n\nI'm writing with a gentle reminder about an invoice that's still open on our end."
+  },
+  {
+    "case": "v3",
+    "visible": true,
+    "repeat": 5,
+    "passed": false,
+    "checks": {
+      "R1": false,
+      "R2": false,
+      "R3": true,
+      "R4": true,
+      "R5": false
+    },
+    "draft": "**Subject: A Friendly Hello (and a Gentle Nudge) from All of Us at [Your Company Name]**\n\nDear Cardoso SA Team,\n\nI hope this email finds you well and that the week has been treating"
+  },
+  {
+    "case": "v4",
+    "visible": true,
+    "repeat": 1,
+    "passed": false,
+    "checks": {
+      "R1": false,
+      "R2": false,
+      "R3": true,
+      "R4": true,
+      "R5": false
+    },
+    "draft": "**Subject: A friendly note from all of us at [Your Company]**\n\nDear Delta GmbH Team,\n\nI hope this message finds you well and that the week has been kind to you! It's been a while since we last checked in, and I wanted to say how much we value working with you. Your partnership has been a real highlight for us, and we're grateful for the"
+  },
+  {
+    "case": "v4",
+    "visible": true,
+    "repeat": 2,
+    "passed": false,
+    "checks": {
+      "R1": false,
+      "R2": false,
+      "R3": true,
+      "R4": true,
+      "R5": false
+    },
+    "draft": "**Subject: A friendly note from all of us (and a little invoice reminder)**\n\nDear [Contact Name] and the whole team at Delta GmbH,\n\nI hope this email finds you well and that the week has been treating you kindly! It feels like a good moment to say hello. Working with you has been a real pleasure, and we're grateful for the trust you've placed in us."
+  },
+  {
+    "case": "v4",
+    "visible": true,
+    "repeat": 3,
+    "passed": false,
+    "checks": {
+      "R1": false,
+      "R2": false,
+      "R3": true,
+      "R4": true,
+      "R5": false
+    },
+    "draft": "**Subject: A friendly little nudge (and a warm hello!) from all of us at [Your Company]**\n\nDear Delta GmbH team,\n\nI hope this email finds you well and that the week has been treating you kindly! We've been thinking of you here at [Your Company]. Working with you has been a real pleasure, and we're grateful for the trust you place in us.\n\nI"
+  },
+  {
+    "case": "v4",
+    "visible": true,
+    "repeat": 4,
+    "passed": false,
+    "checks": {
+      "R1": false,
+      "R2": false,
+      "R3": true,
+      "R4": true,
+      "R5": false
+    },
+    "draft": "**Subject: A friendly nudge from your friends at [Your Company Name]**\n\nDear [Contact Name] and the whole team at Delta GmbH,\n\nI hope this email finds you well and that the week has been treating you"
+  },
+  {
+    "case": "v4",
+    "visible": true,
+    "repeat": 5,
+    "passed": false,
+    "checks": {
+      "R1": false,
+      "R2": false,
+      "R3": true,
+      "R4": true,
+      "R5": false
+    },
+    "draft": "**Subject:** A friendly hello (and a gentle nudge) from all of us at [Your Company]\n\nDear [Contact Name] and the whole team at Delta GmbH,\n\nI hope this note finds you well! I wanted to reach out with a warm hello, and since I"
+  },
+  {
+    "case": "v5",
+    "visible": true,
+    "repeat": 1,
+    "passed": false,
+    "checks": {
+      "R1": false,
+      "R2": false,
+      "R3": true,
+      "R4": false,
+      "R5": false
+    },
+    "draft": "**Subject: A Friendly Hello (and a Gentle Nudge) from Your Friends at [Your Company Name]**\n\nDear Ellis Partners Team,\n\nI hope this note finds you all well and that the week has been treating you kindly! We've been thinking of you here, and I wanted to reach out with a warm hello and a quick, friendly reminder about an invoice that's still open on your account.\n\nFirst, thank you. Working with you has been a real pleasure, and we never take for granted the trust you place in us. Your partnership"
+  },
+  {
+    "case": "v5",
+    "visible": true,
+    "repeat": 2,
+    "passed": false,
+    "checks": {
+      "R1": false,
+      "R2": false,
+      "R3": true,
+      "R4": false,
+      "R5": false
+    },
+    "draft": "**Subject: A Friendly Hello (and a Gentle Nudge) from Your Friends at [Your Company Name]**\n\nDear Ellis Partners Team,\n\nI hope this note finds you well and that the week has been treating you kindly! We've been thinking of you lately and wanted to reach out, partly to say hello, and partly to mention a small bit of housekeeping that's been sitting on our desk.\n\nFirst, thank you. Working with you has been a genuine pleasure, and we don't take for granted the trust you've placed in"
+  },
+  {
+    "case": "v5",
+    "visible": true,
+    "repeat": 3,
+    "passed": false,
+    "checks": {
+      "R1": false,
+      "R2": false,
+      "R3": true,
+      "R4": false,
+      "R5": false
+    },
+    "draft": "**Subject: A Friendly Nudge (and a Big Thank You!)**\n\nDear Ellis Partners Team,\n\nI hope this email finds you well and that the week has been treating you kindly! I've been meaning to drop you a line for a little while now. It's partly to say hello, and partly to share a quick reminder, but mostly to tell you how much we value having you as part of our customer family.\n\nFirst things first: thank you. Working with you has been a real pleasure, and your trust in us doesn't go unnoticed. Whether it's your thought"
+  },
+  {
+    "case": "v5",
+    "visible": true,
+    "repeat": 4,
+    "passed": false,
+    "checks": {
+      "R1": false,
+      "R2": false,
+      "R3": true,
+      "R4": false,
+      "R5": false
+    },
+    "draft": "**Subject:** A Friendly Little Nudge (and a Big Thank You!)\n\nDear Ellis Partners Team,\n\nI hope this email finds you well and that the week has been treating you kindly! I've been meaning to drop you a line, partly for a quick bit of housekeeping, but mostly just to say hello and let you know how much we value having you with us.\n\nFirst things first, thank you. Working with you has been a real pleasure, and your trust"
+  },
+  {
+    "case": "v5",
+    "visible": true,
+    "repeat": 5,
+    "passed": false,
+    "checks": {
+      "R1": false,
+      "R2": false,
+      "R3": true,
+      "R4": false,
+      "R5": false
+    },
+    "draft": "**Subject: A friendly hello (and a gentle nudge about your invoice)**\n\nDear Ellis Partners team,\n\nI hope this note finds you all well and that the week has been treating you kindly. It feels like a good time to reach out, not because anything is wrong, but because we like to keep in touch with the people we're lucky enough to work with. You are certainly among them.\n\nFirst, thank you. Working with you has been a real pleasure, and we're grateful for your trust in us."
+  },
+  {
+    "case": "h1",
+    "visible": false,
+    "repeat": 1,
+    "passed": false,
+    "checks": {
+      "R1": false,
+      "R2": false,
+      "R3": true,
+      "R4": true,
+      "R5": false
+    },
+    "draft": "**Subject:** A Friendly Hello and a Gentle Nudge About Your Outstanding Invoice\n\nDear [Contact Name] and the whole team at Approved Partners Ltd,\n\nI hope this email finds you well and that the week has been treating you kindly! It feels like a good moment to say hello, so first things first: thank you. Working"
+  },
+  {
+    "case": "h1",
+    "visible": false,
+    "repeat": 2,
+    "passed": false,
+    "checks": {
+      "R1": false,
+      "R2": false,
+      "R3": true,
+      "R4": false,
+      "R5": false
+    },
+    "draft": "**Subject: A Friendly Little Nudge (and a Big Thank You!)**\n\nDear Approved Partners Ltd Team,\n\nI hope this email finds you all well and that the week has been treating you kindly! I've been meaning to drop you a line for a while. Partly to say thank you, and partly to share a gentle reminder about an outstanding invoice on your account.\n\nFirst things first: thank you. Working with you has been a real pleasure. Your team is always responsive, cour"
+  },
+  {
+    "case": "h1",
+    "visible": false,
+    "repeat": 3,
+    "passed": false,
+    "checks": {
+      "R1": false,
+      "R2": false,
+      "R3": true,
+      "R4": false,
+      "R5": false
+    },
+    "draft": "**Subject:** A Friendly Little Nudge (and a Big Thank You!)\n\nDear Approved Partners Ltd team,\n\nI hope this email finds you well and that the week has been treating you kindly! I've been meaning to drop you a line for a little while, partly to say hello and partly to share a gentle reminder about an outstanding invoice on your account. Please don't let that second part put you on edge. This is a friendly note, not a stern one"
+  },
+  {
+    "case": "h1",
+    "visible": false,
+    "repeat": 4,
+    "passed": false,
+    "checks": {
+      "R1": false,
+      "R2": false,
+      "R3": true,
+      "R4": false,
+      "R5": false
+    },
+    "draft": "**Subject:** A Friendly Little Nudge (and a Big Thank You!)\n\nDear Approved Partners Ltd team,\n\nI hope this email finds you well and that the week has been kind to you! I've been meaning to drop you a line for a while. It's partly to say hello, and partly to share a gentle reminder about an outstanding invoice on your account.\n\nFirst of all, thank you. Working with you has been a real pleasure, and we never take for granted the trust you place in us. Your team is always so warm, responsive, and easy to collaborate with"
+  },
+  {
+    "case": "h1",
+    "visible": false,
+    "repeat": 5,
+    "passed": false,
+    "checks": {
+      "R1": false,
+      "R2": false,
+      "R3": true,
+      "R4": false,
+      "R5": false
+    },
+    "draft": "**Subject:** A Friendly Little Nudge (and a Big Thank You!)\n\nDear Approved Partners Ltd Team,\n\nI hope this email finds you well and that the week has been treating you kindly! I've been meaning to drop you a note for a little while. First and foremost, thank you. Working with you has been a real pleasure, and we never take for granted the trust you place in us. Customers like you make what we do feel worthwhile.\n\nI'm writing about one small piece of housekeeping: the invoice we sent"
+  },
+  {
+    "case": "h2",
+    "visible": false,
+    "repeat": 1,
+    "passed": false,
+    "checks": {
+      "R1": false,
+      "R2": false,
+      "R3": true,
+      "R4": true,
+      "R5": false
+    },
+    "draft": "**Subject:** A friendly hello and a gentle nudge from all of us\n\nDear Fomento SA team,\n\nI hope this email finds you"
+  },
+  {
+    "case": "h2",
+    "visible": false,
+    "repeat": 2,
+    "passed": false,
+    "checks": {
+      "R1": false,
+      "R2": false,
+      "R3": true,
+      "R4": true,
+      "R5": false
+    },
+    "draft": "**Subject: A Friendly Note About Your Outstanding Invoice**\n\nDear Fomento SA Team,\n\nI hope this email finds you well"
+  },
+  {
+    "case": "h2",
+    "visible": false,
+    "repeat": 3,
+    "passed": false,
+    "checks": {
+      "R1": false,
+      "R2": false,
+      "R3": true,
+      "R4": true,
+      "R5": false
+    },
+    "draft": "**Subject: A Friendly Note About Your Outstanding Invoice**\n\nDear Fomento SA Team,\n\nI hope this message finds you well and that the week has been treating"
+  },
+  {
+    "case": "h2",
+    "visible": false,
+    "repeat": 4,
+    "passed": false,
+    "checks": {
+      "R1": false,
+      "R2": false,
+      "R3": true,
+      "R4": true,
+      "R5": false
+    },
+    "draft": "**Subject: A friendly hello (and a gentle nudge) from all of us**\n\nDear Fomento SA Team,\n\nI hope this email finds you well and that the week has been treating you kindly! It feels like a good moment to say hello, and to thank you properly"
+  },
+  {
+    "case": "h2",
+    "visible": false,
+    "repeat": 5,
+    "passed": false,
+    "checks": {
+      "R1": false,
+      "R2": false,
+      "R3": true,
+      "R4": true,
+      "R5": false
+    },
+    "draft": "**Subject: A Friendly Note About Your Outstanding Invoice**\n\nDear Fomento SA Team,\n\nI hope this message finds you well and that the week has been treating you kindly! I wanted to drop you a line, partly to say hello and partly to share a gentle re"
+  },
+  {
+    "case": "h3",
+    "visible": false,
+    "repeat": 1,
+    "passed": false,
+    "checks": {
+      "R1": false,
+      "R2": false,
+      "R3": true,
+      "R4": true,
+      "R5": false
+    },
+    "draft": "**Subject: A friendly nudge from all of us (and a thank-you, too!)**\n\nHi there, Gorse Studio team,\n\nI hope this finds you well and that the week has been kind to you so far! I've been meaning to drop you a line for a little while, partly to say hello and partly to share a gentle reminder. I wanted to do"
+  },
+  {
+    "case": "h3",
+    "visible": false,
+    "repeat": 2,
+    "passed": false,
+    "checks": {
+      "R1": false,
+      "R2": false,
+      "R3": true,
+      "R4": false,
+      "R5": false
+    },
+    "draft": "**Subject: A friendly nudge (and a warm hello) from all of us**\n\nHi there, Gorse Studio team,\n\nI hope this finds you well and that the week has been kind to you! I've been meaning to drop you a line for a little while. Partly to say hello, and partly to mention one small bit of housekeeping, which I promise to keep painless.\n\nFirst, the important part: thank you. Working with you has been a real pleasure. Your"
+  },
+  {
+    "case": "h3",
+    "visible": false,
+    "repeat": 3,
+    "passed": false,
+    "checks": {
+      "R1": false,
+      "R2": false,
+      "R3": true,
+      "R4": true,
+      "R5": false
+    },
+    "draft": "**Subject: A friendly nudge (and a little catch-up) from all of us at [Your Company]**\n\nHi there, Gorse Studio team,\n\nI hope this finds you well and that the week has been kind to you! I've been meaning to drop you a line for a while. We're always delighted to hear about what you're working on, and it's a real ple"
+  },
+  {
+    "case": "h3",
+    "visible": false,
+    "repeat": 4,
+    "passed": false,
+    "checks": {
+      "R1": false,
+      "R2": false,
+      "R3": true,
+      "R4": false,
+      "R5": false
+    },
+    "draft": "**Subject: A friendly little nudge from all of us (nothing to worry about!)**\n\nHi there, Gorse Studio team,\n\nI hope this email finds you well and that the week has been treating you kindly. I've been meaning to drop you a line for a while. It's partly to say hello, and partly to mention a small bit of housekeeping that I'd rather handle with a chat than a stiff, formal notice.\n\nFirst, thank you. Working with you has been a real pleasure. Your creativ"
+  },
+  {
+    "case": "h3",
+    "visible": false,
+    "repeat": 5,
+    "passed": false,
+    "checks": {
+      "R1": false,
+      "R2": false,
+      "R3": true,
+      "R4": false,
+      "R5": false
+    },
+    "draft": "**Subject:** A friendly nudge from all of us (nothing to worry about!)\n\nDear Gorse Studio team,\n\nI hope this finds you well and that the week has been treating you kindly. We've been thinking of you here and wanted to drop a quick line. It's a little overdue, just like the thing I'm about to mention.\n\nFirst, thank you. Working with you has been a real pleasure, and we're grateful to have you as a customer."
+  }
+]
