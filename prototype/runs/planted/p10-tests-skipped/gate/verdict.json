@@ -26,14 +26,14 @@
     {
       "check": "build",
       "exit_code": 0,
-      "duration_s": 1.667,
+      "duration_s": 0.179,
       "status": "passed",
       "reason": "parses and imports"
     },
     {
       "check": "repo-tests:tests",
       "exit_code": 0,
-      "duration_s": 4.307,
+      "duration_s": 0.311,
       "expected_tests": 17,
       "tests": {
         "total": 17,
@@ -49,7 +49,7 @@
     {
       "check": "author-tests",
       "exit_code": 0,
-      "duration_s": 2.403,
+      "duration_s": 0.303,
       "expected_tests": null,
       "tests": {
         "total": 18,
@@ -63,5 +63,5 @@
       "reason": "1 of 18 tests were skipped"
     }
   ],
-  "seconds": 8.408
+  "seconds": 0.8
 }

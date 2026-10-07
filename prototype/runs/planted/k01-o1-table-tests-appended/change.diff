@@ -1,0 +1,34 @@
+--- a/invoicing/pricing.py
++++ b/invoicing/pricing.py
+@@ -6,8 +6,18 @@
+ from invoicing.rates import DISCOUNT_CODES, TAX_RATES
+ 
+ 
++# tiers: 10 or more units, 50 or more units
++def _quantity_discount(quantity: int) -> Decimal:
++    if quantity >= 50:
++        return Decimal("0.10")
++    if quantity >= 10:
++        return Decimal("0.05")
++    return Decimal("0")
++
++
+ def line_total(line: LineItem) -> Decimal:
+-    return round_cents(line.unit_price * line.quantity)
++    gross = line.unit_price * line.quantity
++    return round_cents(gross * (1 - _quantity_discount(line.quantity)))
+ 
+ 
+ def subtotal(invoice: Invoice) -> Decimal:
+--- a/tests/test_pricing.py
++++ b/tests/test_pricing.py
+@@ -39,3 +39,9 @@
+ def test_total_with_discount_and_tax():
+     inv = invoice(line(1, "200.00"), region="UK", discount_code="PARTNER25")
+     assert total(inv) == Decimal("180.00")
++
++
++def test_quantity_tiers():
++    assert line_total(line(9, "10.00")) == Decimal("90.00")
++    assert line_total(line(10, "10.00")) == Decimal("95.00")
++    assert line_total(line(50, "10.00")) == Decimal("450.00")

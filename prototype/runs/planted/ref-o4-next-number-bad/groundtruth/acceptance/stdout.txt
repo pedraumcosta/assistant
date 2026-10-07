@@ -50,4 +50,4 @@ E       ValueError: invalid literal for int() with base 10: '0500x'
 =========================== short test summary info ============================
 FAILED test_acceptance.py::test_invalid_entries_are_ignored - ValueError: inv...
 FAILED test_acceptance.py::test_a_number_embedded_in_other_text_is_not_an_invoice_number
-2 failed, 9 passed in 0.24s
+2 failed, 9 passed in 0.02s

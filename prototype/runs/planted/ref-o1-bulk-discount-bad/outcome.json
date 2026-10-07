@@ -10,7 +10,7 @@
   "step": "hidden-tests",
   "reason": "3 of 4 tests did not pass; first: test_hidden::test_r1_ten_or_more_units_get_five_percent",
   "integrity_violation": false,
-  "gate_seconds": 8.328,
+  "gate_seconds": 1.175,
   "groundtruth_qualified": false,
   "groundtruth": [
     {

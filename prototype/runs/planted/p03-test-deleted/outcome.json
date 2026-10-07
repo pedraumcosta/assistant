@@ -10,7 +10,7 @@
   "step": "integrity",
   "reason": "an existing test was removed or changed: tests/test_numbering.py",
   "integrity_violation": true,
-  "gate_seconds": 0.022,
+  "gate_seconds": 0.005,
   "groundtruth_qualified": false,
   "groundtruth": [
     {

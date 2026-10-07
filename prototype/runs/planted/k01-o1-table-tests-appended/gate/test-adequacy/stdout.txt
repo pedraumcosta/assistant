@@ -1,0 +1,16 @@
+.............F....                                                       [100%]
+=================================== FAILURES ===================================
+_____________________________ test_quantity_tiers ______________________________
+
+    def test_quantity_tiers():
+        assert line_total(line(9, "10.00")) == Decimal("90.00")
+>       assert line_total(line(10, "10.00")) == Decimal("95.00")
+E       AssertionError: assert Decimal('100.00') == Decimal('95.00')
+E        +  where Decimal('100.00') = line_total(LineItem(sku='W-1', description='Widget', quantity=10, unit_price=Decimal('10.00')))
+E        +    where LineItem(sku='W-1', description='Widget', quantity=10, unit_price=Decimal('10.00')) = line(10, '10.00')
+E        +  and   Decimal('95.00') = Decimal('95.00')
+
+tests/test_pricing.py:46: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_pricing.py::test_quantity_tiers - AssertionError: assert De...
+1 failed, 17 passed in 0.04s

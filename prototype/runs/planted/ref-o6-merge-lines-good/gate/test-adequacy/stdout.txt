@@ -12,4 +12,4 @@ tests/test_merge_lines.py:1: in <module>
 E   ImportError: cannot import name 'merge_lines' from 'invoicing.pricing' (/work/invoicing/pricing.py)
 =========================== short test summary info ============================
 ERROR tests/test_merge_lines.py
-17 passed, 1 error in 1.42s
+17 passed, 1 error in 0.04s

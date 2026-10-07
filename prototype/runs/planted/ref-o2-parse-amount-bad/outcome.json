@@ -10,7 +10,7 @@
   "step": "hidden-tests",
   "reason": "3 of 5 tests did not pass; first: test_hidden::test_r2_malformed_grouping_is_rejected[12,34]",
   "integrity_violation": false,
-  "gate_seconds": 8.064,
+  "gate_seconds": 1.1,
   "groundtruth_qualified": false,
   "groundtruth": [
     {

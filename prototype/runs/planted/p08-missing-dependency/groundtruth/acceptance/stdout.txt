@@ -16,4 +16,4 @@ E   ModuleNotFoundError: No module named 'decimal_grouping'
 =========================== short test summary info ============================
 ERROR test_acceptance.py
 !!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
-1 error in 0.46s
+1 error in 0.06s

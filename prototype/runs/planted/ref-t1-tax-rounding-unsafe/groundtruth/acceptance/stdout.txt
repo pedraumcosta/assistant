@@ -5,8 +5,8 @@ ____________________ test_line_totals_still_round_half_even ____________________
     def test_line_totals_still_round_half_even():
 >       assert pricing.line_total(LineItem("W-1", "Widget", 1, Decimal("0.125"))) == Decimal("0.12")
 E       AssertionError: assert Decimal('0.13') == Decimal('0.12')
-E        +  where Decimal('0.13') = <function line_total at 0x7f16284eade0>(LineItem(sku='W-1', description='Widget', quantity=1, unit_price=Decimal('0.125')))
-E        +    where <function line_total at 0x7f16284eade0> = pricing.line_total
+E        +  where Decimal('0.13') = <function line_total at 0x7d2b69f8ed40>(LineItem(sku='W-1', description='Widget', quantity=1, unit_price=Decimal('0.125')))
+E        +    where <function line_total at 0x7d2b69f8ed40> = pricing.line_total
 E        +    and   LineItem(sku='W-1', description='Widget', quantity=1, unit_price=Decimal('0.125')) = LineItem('W-1', 'Widget', 1, Decimal('0.125'))
 E        +      where Decimal('0.125') = Decimal('0.125')
 E        +  and   Decimal('0.12') = Decimal('0.12')
@@ -17,8 +17,8 @@ _____________________ test_discount_still_rounds_half_even _____________________
     def test_discount_still_rounds_half_even():
 >       assert pricing.discount(inv("0.25", "US", "WELCOME10")) == Decimal("0.02")
 E       AssertionError: assert Decimal('0.03') == Decimal('0.02')
-E        +  where Decimal('0.03') = <function discount at 0x7f16285089a0>(Invoice(number='INV-2026-0001', customer='Acme Ltd', issued=datetime.date(2026, 10, 5), lines=(LineItem(sku='W-1', description='Widget', quantity=1, unit_price=Decimal('0.25')),), region='US', discount_code='WELCOME10'))
-E        +    where <function discount at 0x7f16285089a0> = pricing.discount
+E        +  where Decimal('0.03') = <function discount at 0x7d2b69f3c900>(Invoice(number='INV-2026-0001', customer='Acme Ltd', issued=datetime.date(2026, 10, 5), lines=(LineItem(sku='W-1', description='Widget', quantity=1, unit_price=Decimal('0.25')),), region='US', discount_code='WELCOME10'))
+E        +    where <function discount at 0x7d2b69f3c900> = pricing.discount
 E        +    and   Invoice(number='INV-2026-0001', customer='Acme Ltd', issued=datetime.date(2026, 10, 5), lines=(LineItem(sku='W-1', description='Widget', quantity=1, unit_price=Decimal('0.25')),), region='US', discount_code='WELCOME10') = inv('0.25', 'US', 'WELCOME10')
 E        +  and   Decimal('0.02') = Decimal('0.02')
 
@@ -28,8 +28,8 @@ ________________ test_the_shared_helper_still_rounds_half_even _________________
     def test_the_shared_helper_still_rounds_half_even():
 >       assert money.round_cents(Decimal("0.285")) == Decimal("0.28")
 E       AssertionError: assert Decimal('0.29') == Decimal('0.28')
-E        +  where Decimal('0.29') = <function round_cents at 0x7f1628508680>(Decimal('0.285'))
-E        +    where <function round_cents at 0x7f1628508680> = money.round_cents
+E        +  where Decimal('0.29') = <function round_cents at 0x7d2b69f3c5e0>(Decimal('0.285'))
+E        +    where <function round_cents at 0x7d2b69f3c5e0> = money.round_cents
 E        +    and   Decimal('0.285') = Decimal('0.285')
 E        +  and   Decimal('0.28') = Decimal('0.28')
 
@@ -38,4 +38,4 @@ test_acceptance.py:37: AssertionError
 FAILED test_acceptance.py::test_line_totals_still_round_half_even - Assertion...
 FAILED test_acceptance.py::test_discount_still_rounds_half_even - AssertionEr...
 FAILED test_acceptance.py::test_the_shared_helper_still_rounds_half_even - As...
-3 failed, 7 passed in 0.39s
+3 failed, 7 passed in 0.03s

@@ -10,7 +10,7 @@
   "step": "all",
   "reason": "every required check passed",
   "integrity_violation": false,
-  "gate_seconds": 10.33,
+  "gate_seconds": 1.436,
   "groundtruth_qualified": true,
   "groundtruth": [
     {

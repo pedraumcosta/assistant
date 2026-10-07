@@ -10,7 +10,7 @@
   "step": "hidden-tests",
   "reason": "1 of 4 tests did not pass; first: test_hidden::test_r3_tax_only_when_not_zero",
   "integrity_violation": false,
-  "gate_seconds": 7.518,
+  "gate_seconds": 1.089,
   "groundtruth_qualified": false,
   "groundtruth": [
     {

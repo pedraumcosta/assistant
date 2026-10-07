@@ -138,7 +138,7 @@ footer p{max-width:none}
   </div>
   <div class="stats">
     <div class="stat"><div class="n">19 of 21</div><div class="l">bad changes caught</div></div>
-    <div class="stat"><div class="n">9 of 9</div><div class="l">good changes passed</div></div>
+    <div class="stat"><div class="n">16 of 17</div><div class="l">good changes passed</div></div>
     <div class="stat"><div class="n">10.3 s</div><div class="l">an average verdict</div></div>
     <div class="stat"><div class="n">350</div><div class="l">lines of code: the whole gate</div></div>
     <div class="stat"><div class="n">84</div><div class="l">automated tests, all passing</div></div>
@@ -353,7 +353,7 @@ judging.</p>
     <div class="mcell"><div class="mlab">Why it decides everything</div><p>If a model reviewer is already just as reliable, there is nothing here worth building. This is the number that can kill the product, and it was designed to be able to.</p></div>
     <div class="mcell full"><div class="mlab">Status</div><p><b>Not yet measured — the comparison runs were not reached before the day ended.</b> What we do have: in the two real model runs completed, the model did the task correctly and claimed success truthfully. That is a useful reminder that on small tasks there may be no gap for a gate to close — a risk we had logged in advance, and one more reason the comparison must actually be run rather than assumed.</p></div>
   </div>
-  <div class="mval">agent's claim: <span class="ref">no measured error yet</span> · rival-vendor reviewer: <span class="ref">not run</span> · <b>the gate: 2 wrong changes passed, of 21 · 0 good changes blocked, of 9</b></div>
+  <div class="mval">agent's claim: <span class="ref">no measured error yet</span> · rival-vendor reviewer: <span class="ref">not run</span> · <b>the gate: 2 wrong changes passed, of 21 · 1 good change blocked, of 17</b></div>
 </div>
 
 <div class="metric"><header><span class="mid">2</span><span class="mname">Can the gate itself be fooled?</span><span class="chip gate">tested with planted flaws</span></header>
@@ -362,7 +362,7 @@ judging.</p>
     <div class="mcell"><div class="mlab">How it was tested</div><p>We wrote ten "planted flaws" — each a correct change with exactly one thing made wrong — recorded in advance what the gate should do with each, and only then fed them to it. Known-good changes went through the same way, to catch the opposite error: good work wrongly blocked.</p></div>
     <div class="mcell full"><div class="mlab">Result</div><p><b>Nine of the ten planted flaws were rejected, each at the exact step we predicted.</b> The "patched test reporter" trick from the published study was stopped in under a tenth of a second, before a single test ran. The tenth — a change that quietly stopped charging tax in most regions, behaviour that no check covered — passed. It was planted precisely to find that limit, and it did more than that: <b>our own reference answer key turned out to have the same blind spot.</b> The lesson, in one sentence: the gate is only as good as the checks the team writes — which is why helping teams write them well is the product's first feature, not an afterthought.</p></div>
   </div>
-  <div class="mval"><b>9 of 10 planted flaws rejected</b> · 10 of 11 other deliberately wrong changes rejected · <b>0 of 9</b> correct changes wrongly blocked · the 6 changes written specifically to provoke wrong blocking were not reached before the stop</div>
+  <div class="mval"><b>9 of 10 planted flaws rejected</b> · 10 of 11 other deliberately wrong changes rejected · <b>1 of 17</b> correct changes wrongly blocked — and that one failure was predicted in the results report before it was judged: a correct change whose test names a variable <span class="mono">token</span> trips the secrets screen, a rule with an obvious refinement</div>
 </div>
 
 <div class="metric"><header><span class="mid">3</span><span class="mname">Safety, consistency, and cost per qualified change</span><span class="chip cost">needs the full comparison</span></header>
@@ -380,7 +380,7 @@ judging.</p>
     <div class="mcell"><div class="mlab">Why both error rates, always together</div><p>A gate that wrongly blocks good changes costs rework and, worse, trust. We committed to reporting the wrongly-blocked rate beside the wrongly-passed rate in everything we publish — this page included.</p></div>
     <div class="mcell full"><div class="mlab">Result</div><p>A full verdict took <b>10.3 seconds on average</b> (between 7 and 15), and most of that is starting the isolated environments rather than running the tests. A tampering rejection is effectively instant. The gate makes no model calls of its own, so it adds <b>no AI spend at all</b>. On a real repository the team's own test suite would dominate the time — as it already does today, without us.</p></div>
   </div>
-  <div class="mval">average full verdict: <b>10.3 s</b> · tampering rejection: <b>&lt; 0.1 s</b> · AI spend added by the gate: <b>none</b> · good changes wrongly blocked: <b>0 of 9 judged</b></div>
+  <div class="mval">average full verdict: <b>10.3 s</b> on the first machine, <b>1.1 s</b> on a second — most of it was container start-up, not checks · tampering rejection: <b>&lt; 0.1 s</b> · AI spend added by the gate: <b>none</b> · good changes wrongly blocked: <b>1 of 17</b> — the one predicted in advance</div>
 </div>
 
 <h2 id="scoreboard">The scoreboard — stopping rules fixed before any result existed</h2>
@@ -396,10 +396,11 @@ the picture is narrower and more useful. The instrument works and is tested. The
 got through was planted precisely to expose the known limit — behaviour that no check covers —
 and even our own answer key shared that blind spot, which teaches us where the real risk
 lives. And the comparison that actually decides the question was never run. Finishing it is
-cheap: completing the interrupted judging run costs nothing; the full 165-run comparison comes
-to roughly six dollars of model spend at the prices we observed; the rival-vendor reviewer
-adds a little more. We would strengthen the answer key first — an improvement already logged
-in the project's issue list.</p>
+cheap — its free half is already done: the interrupted judging run was completed at no cost,
+and it is what measured the false-fail rate above. What remains is the full 165-run comparison,
+roughly six dollars of model spend at the prices we observed, plus the rival-vendor reviewer.
+We would strengthen the answer key first — an improvement already logged in the project's
+issue list.</p>
 
 <h2 id="cost">What this product would cost, said before anyone has to ask</h2>
 <div class="duo">
@@ -428,7 +429,7 @@ in the project's issue list.</p>
   <tbody>
   <tr><th>Stage</th><th>Cost</th><th>Continue only if</th><th>Where it stands</th></tr>
   <tr><td>1 · One-day prototype</td><td class="num">one day · $0.07 spent</td><td>The scoreboard above</td><td><span class="verd nm">built and tested; stopped with the deciding comparison unrun</span></td></tr>
-  <tr><td>1b · Finish the measurement</td><td>A few hours of work. The interrupted run: free. The full comparison: roughly 6 dollars of model spend at observed prices. The rival-vendor reviewer: a little more. The answer key strengthened first</td><td>The same scoreboard, this time fully measurable</td><td><span class="verd pending">requested today</span></td></tr>
+  <tr><td>1b · Finish the measurement</td><td>The free half is done: the interrupted judging run was completed at no cost and is what measured the error rates above. Remaining: the full comparison, roughly 6 dollars of model spend at observed prices; the rival-vendor reviewer, a little more; the answer key strengthened first</td><td>The same scoreboard, this time fully measurable</td><td><span class="verd pending">requested today</span></td></tr>
   <tr><td>2 · Six-week pilot</td><td>Two engineers and a half-time product lead — a staffing assumption; finance owns the rates</td><td>A design partner tells us the report changed a decision they were about to make</td><td><span class="verd nm">gated on 1b</span></td></tr>
   <tr><td>3 · Build the product</td><td>Scoped only if the pilot earns it. Pricing it today would be an invented number, and we do not use invented numbers</td><td>Set before it starts</td><td><span class="verd nm">not reached</span></td></tr>
 </tbody></table></div>
@@ -458,7 +459,8 @@ will have been cheap to learn.</p>
   <div class="step"><b>The numbers we report are the ones a finance team can audit</b>
     <p>Cost per change that truly qualified for production, with the cost of checking included —
     always shown beside the verdict's own error rates, whose first measured values are two wrong
-    changes passed out of twenty-one, and zero good changes blocked out of nine. Never lines of
+    changes passed out of twenty-one, and one good change blocked out of seventeen — a failure
+    the results report predicted of itself before it was judged. Never lines of
     AI-written code, acceptance rates, or seat counts: those flatter activity, not outcomes.</p></div>
   <div class="step"><b>What we still do not know, said first</b>
     <p>Whether the gate beats the agent's claim and a rival reviewer — unmeasured. Market size
@@ -470,7 +472,8 @@ will have been cheap to learn.</p>
 <div class="callout"><b>Decision requested:</b> fund the completion of stage 1 — hours of work
 and about ten dollars — and read the finished scoreboard together; or set the review date now.
 <b>For the board, in one sentence:</b> one day and seven cents produced a tested gate that
-caught nineteen of twenty-one bad changes and blocked no good one; what it could not produce is
+caught nineteen of twenty-one bad changes and wrongly blocked one good one in seventeen — a
+failure it predicted of itself in advance; what it could not produce is
 the comparison that decides whether to build — so the recommendation today is to wait, and to
 spend the ten dollars that turns "wait" into an answer.</div>
 

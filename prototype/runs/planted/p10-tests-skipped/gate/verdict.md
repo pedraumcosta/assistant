@@ -18,6 +18,6 @@
 |---|---|---|---|
 | integrity | passed | nothing found | 0.0 |
 | budget | passed | nothing found | 0.0 |
-| build | passed | parses and imports | 1.7 |
-| repo-tests:tests | passed | 17 of 17 tests passed | 4.3 |
-| author-tests | failed | 1 of 18 tests were skipped | 2.4 |
+| build | passed | parses and imports | 0.2 |
+| repo-tests:tests | passed | 17 of 17 tests passed | 0.3 |
+| author-tests | failed | 1 of 18 tests were skipped | 0.3 |

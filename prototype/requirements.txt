@@ -1,0 +1,5 @@
+# Host-side dependencies of the prototype (the containers install their own,
+# pinned in prototype/docker/Dockerfile).
+anthropic
+pytest==9.1.1
+pyyaml

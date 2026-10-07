@@ -10,7 +10,7 @@
   "step": "author-tests",
   "reason": "1 of 18 tests were skipped",
   "integrity_violation": false,
-  "gate_seconds": 8.408,
+  "gate_seconds": 0.8,
   "groundtruth_qualified": false,
   "groundtruth": [
     {

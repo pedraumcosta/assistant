@@ -10,7 +10,7 @@
   "step": "hidden-tests",
   "reason": "1 of 4 tests did not pass; first: test_hidden::test_r4_different_price_stays_separate",
   "integrity_violation": false,
-  "gate_seconds": 8.249,
+  "gate_seconds": 1.076,
   "groundtruth_qualified": false,
   "groundtruth": [
     {

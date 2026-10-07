@@ -10,7 +10,7 @@
   "step": "integrity",
   "reason": "the pipeline's configuration was changed: conftest.py",
   "integrity_violation": true,
-  "gate_seconds": 0.032,
+  "gate_seconds": 0.005,
   "groundtruth_qualified": false,
   "groundtruth": [
     {

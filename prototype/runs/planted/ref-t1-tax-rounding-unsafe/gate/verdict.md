@@ -18,8 +18,8 @@
 |---|---|---|---|
 | integrity | passed | nothing found | 0.0 |
 | budget | passed | nothing found | 0.0 |
-| build | passed | parses and imports | 1.7 |
-| repo-tests:tests | passed | 17 of 17 tests passed | 2.0 |
-| author-tests | passed | 18 of 18 tests passed | 2.1 |
-| hidden-tests | passed | 2 of 2 tests passed | 4.1 |
+| build | passed | parses and imports | 0.2 |
+| repo-tests:tests | passed | 17 of 17 tests passed | 0.3 |
+| author-tests | passed | 18 of 18 tests passed | 0.3 |
+| hidden-tests | passed | 2 of 2 tests passed | 0.3 |
 | scope | failed | invoicing/money.py must not be changed | 0.0 |

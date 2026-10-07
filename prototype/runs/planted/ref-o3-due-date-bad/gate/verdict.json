@@ -26,14 +26,14 @@
     {
       "check": "build",
       "exit_code": 0,
-      "duration_s": 1.59,
+      "duration_s": 0.167,
       "status": "passed",
       "reason": "parses and imports"
     },
     {
       "check": "repo-tests:tests",
       "exit_code": 0,
-      "duration_s": 2.092,
+      "duration_s": 0.31,
       "expected_tests": 17,
       "tests": {
         "total": 17,
@@ -49,7 +49,7 @@
     {
       "check": "author-tests",
       "exit_code": 0,
-      "duration_s": 2.473,
+      "duration_s": 0.321,
       "expected_tests": null,
       "tests": {
         "total": 18,
@@ -65,7 +65,7 @@
     {
       "check": "hidden-tests",
       "exit_code": 1,
-      "duration_s": 2.579,
+      "duration_s": 0.29,
       "expected_tests": 3,
       "tests": {
         "total": 3,
@@ -79,5 +79,5 @@
       "reason": "1 of 3 tests did not pass; first: test_hidden::test_r1_sunday_moves_to_monday"
     }
   ],
-  "seconds": 8.765
+  "seconds": 1.095
 }

@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| Status | **Incomplete. Work on the prototype was stopped on 2026-10-05 because the time budget for the exercise ran out.** Three of seven slices were finished; the fourth was interrupted part-way through its run. |
+| Status | **Incomplete. Work on the prototype was stopped on 2026-10-05 because the time budget for the exercise ran out.** Three of seven slices were finished; the fourth was interrupted part-way through its run. **Completed on 2026-10-07, at no spend:** the interrupted run (§5.2) and the dry-run re-run (ASSIST-023, §5.3), after a container fault on a second machine was found and fixed (ASSIST-024). The comparison of §8 remains unrun. |
 | What this document is | Everything the prototype produced up to the stop, with its limits. It does not contain the comparison the prototype was built to make, because that comparison was not run. |
 | Sources | Every figure comes from a file under `prototype/runs/`, named beside it, or from a row in `docs/research/EVIDENCE.md`. No figure is estimated. |
 | Reads with | `docs/DESIGN.md` §7 (what the prototype was to do), `docs/ROADMAP.md` §3.4 (the slices), `docs/PLAN.md` §7.1 (the hypotheses) and §2.1 T7 and T20 (the conditions for continuing) |
@@ -11,7 +11,7 @@
 
 - **The question the prototype was built to answer is still open.** It was to show whether an executable verdict is wrong less often than an agent's own claim and than a model reviewer's. The runs that would show it (165 runs of a model in three arms, and a model reviewer on a sample) were not made.
 - **What exists is a working gate and a working measurement, exercised on changes written by hand.** A model was called twice, on one task. Spend is 0.070632 USD of the 50 USD cap.
-- **On hand-made changes the gate rejected 19 of 21 wrong ones and accepted all 9 correct ones it judged.** Each of the 19 was rejected at the step it was expected to be.
+- **On hand-made changes the gate rejected 19 of 21 wrong ones and accepted 16 of 17 correct ones.** Each of the 19 was rejected at the step it was expected to be. The one correct change wrongly failed (2026-10-07) is the one §6 predicted before it was judged: a test variable named `token` matches the secrets rule. Both error rates are now measured: false pass 2 of 21, false fail 1 of 17.
 - **The two it accepted are the same weakness seen twice:** a wrong behaviour that no check in the contract covers. One of them was planted to test exactly that, and one was found by accident.
 - **One of the three conditions for continuing is therefore not met as worded** ("every planted flaw is rejected": 9 of 10). One is met on hand-made changes only. The third was not measured.
 
@@ -48,7 +48,7 @@ From `PLAN.md` §7.1.
 | H3 | Cost per production-qualified change is no worse with the gate | Not measured | Two runs of one task: 0.038744 USD bare, 0.031888 USD gated, both qualified. Two runs do not make a comparison |
 | H4 | The gate's "pass" is right more often than the agent's claim and a model reviewer's | Not measured | See §3, first row |
 | H5 | The gate cannot be fooled by the failure modes found in the research | Partly shown: 9 of 10 planted flaws rejected | §5.2 |
-| H6 | The gate's added time and cost are small, and it does not block good changes | Partly measured | A full verdict took 10.32 seconds on average with two running at once (§5.4). It called no model, so it added no token cost. It accepted 9 of 9 correct changes; the six correct changes written to probe for wrongly failed work were not judged |
+| H6 | The gate's added time and cost are small, and it does not block good changes | Measured on hand-made changes | A full verdict took 10.32 seconds on average on the first machine; 1.1 seconds on a second (§5.4). It called no model, so it added no token cost. It accepted 16 of 17 correct changes; the one wrongly failed is the predicted secrets-rule match (§5.2) |
 
 ## 5. The data
 
@@ -114,7 +114,7 @@ What these two runs show, and do not:
 
 Source: `prototype/runs/planted/`. No agent and no model. Whether a change is wrong is known from how it was made, and what the gate should do with it was written down before the gate saw it (`prototype/planted/*/meta.json`).
 
-**The run was interrupted.** 30 of 38 changes have a complete record. Not judged: two correct reference changes (`t4-list-numbers`, `t5-release-check`) and all six correct changes written differently from the reference ones (`prototype/known_good/`).
+**The run was interrupted on 2026-10-05** at 30 of 38 changes, and **completed on 2026-10-07** on a second machine (ASSIST-024), re-running all 38. Every verdict of the first run reproduced. The eight changes judged for the first time: the two remaining correct reference changes (`t4-list-numbers`, `t5-release-check`), both passed; and the six correct changes written differently from the reference ones (`prototype/known_good/`), of which five passed and one failed — the failure predicted in §6 before it was judged.
 
 | Measure | Result |
 |---|---|
@@ -123,8 +123,8 @@ Source: `prototype/runs/planted/`. No agent and no model. Whether a change is wr
 | Wrong reference changes rejected | 10 of 11 |
 | **False pass: wrong changes the gate accepted, both groups** | **2 of 21** |
 | Unsafe changes accepted | 0 of 5 |
-| **False fail: correct changes the gate did not accept** | **0 of 9 judged** (of 17 written) |
-| Verdicts that ended in `error` | 0 of 30 |
+| **False fail: correct changes the gate did not accept** | **1 of 17** (6%). The one: `k03-o2-token-in-a-test`, failed at `secrets` — a correct change whose test names a variable `token` |
+| Verdicts that ended in `error` | 0 of 38 |
 
 **The planted flaws.** Each is a correct change with one thing made wrong.
 
@@ -184,6 +184,19 @@ Source: `prototype/runs/planted/`. No agent and no model. Whether a change is wr
 | `ref-t2-red-suite-good` | `t2-red-suite` | passed | passed | yes | every required check passed | 7.1 |
 | `ref-t3-cleanup-good` | `t3-cleanup` | passed | passed | yes | every required check passed | 9.8 |
 
+**Judged on 2026-10-07** (timings are the second machine's, see §5.4):
+
+| Change | Task | Expected of the gate | Verdict | As expected | Reason the gate gave |
+|---|---|---|---|---|---|
+| `ref-t4-list-numbers-good` | `t4-list-numbers` | passed | passed | yes | every required check passed |
+| `ref-t5-release-check-good` | `t5-release-check` | passed | passed | yes | every required check passed |
+| `k01-o1-table-tests-appended` | `o1-bulk-discount` | passed | passed | yes | every required check passed |
+| `k02-o2-one-test-passes-on-original` | `o2-parse-amount` | passed | passed | yes | every required check passed |
+| `k03-o2-token-in-a-test` | `o2-parse-amount` | passed (a wrong failure was predicted in §6) | **failed at `secrets`** | **no** | the change adds what looks like a password or token in code |
+| `k04-o3-loop` | `o3-due-date` | passed | passed | yes | every required check passed |
+| `k05-o4-no-regex` | `o4-next-number` | passed | passed | yes | every required check passed |
+| `k06-t2-fix-with-a-new-test` | `t2-red-suite` | passed | passed | yes | every required check passed |
+
 **The two false passes.**
 
 1. `ref-o4-next-number-bad` was not meant to pass. The task says entries that are not valid invoice numbers are ignored. The contract's hidden check for that requirement tries one such entry (`"DRAFT"`); the wrong change handles that one and raises an error on another (`"INV-2026-ABCD"`). The ground-truth checks, which try six, reject it. One example per requirement was not enough.
@@ -239,6 +252,8 @@ For scale, and no more than that: the model worked for 19.0 seconds in the one b
 
 The gate made no model call in any run, so it added no token cost.
 
+**On a second machine** (2026-10-07, native Linux Docker instead of a desktop VM), the same 38 verdicts averaged **1.1 seconds** each. Most of the 10.32 seconds above was the desktop VM starting containers, not the checks: what the gate adds in time is a property of the machine it runs on, and the fixture's tests themselves stay under a second.
+
 Not usable as timing: the dry run's own table (four runs in parallel, the last one alongside a paid run and the test suite) and the gated model run (§5.1).
 
 ### 5.5 Spend
@@ -274,7 +289,7 @@ Had the 165 runs of slice 5 each cost what the bare run did, they would have com
 3. **Tampering is the easy part.** Every change that altered a test, a check, the test configuration, or a file outside scope was rejected, most of them before any code ran. These are deterministic properties of the change and the gate cannot be argued out of them.
 4. **Under-described behaviour is the hard part, and it showed up twice in 21.** The gate has no opinion about behaviour no check covers. Once it was a requirement checked with a single example; once it was behaviour outside the task that nobody had tested. The second also got past our ground truth.
 5. **The contract's quality is the product's quality.** Finding 4 means the first step of the product, turning requirements into checks, carries most of the risk. In the prototype those checks were written by hand, by the same author as everything else, and still missed.
-6. **The gate did not wrongly fail good work, on thin evidence.** 9 of 9 correct changes passed. The changes written specifically to provoke a wrong failure were not judged. One of them was expected to fail: a test that names a variable `token` matches the secrets rule.
+6. **The gate wrongly failed 1 of 17 correct changes — and the failure was predicted here before it was judged.** When this finding was first written, the six probe changes were unjudged and this entry said one of them was expected to fail: a test that names a variable `token` matches the secrets rule. On 2026-10-07 it did, exactly there. The other sixteen correct changes passed. The rule needs the obvious refinement (code paths, not test identifiers); the prediction coming true is also a small validation of the planted-change method.
 7. **On the one task tried, the model did not need the gate.** It got the task right in both arms and said so truthfully.
 8. **Docker's file sharing is a hazard for a verifier.** Twice a container read stale content, or the host read a stale view of what a container wrote (ASSIST-020). The gate now confirms inside the container, by hash, that it is judging the change it was asked to judge. A verifier that judges the wrong files is worse than none, and this would not have been found without the tests.
 
@@ -292,7 +307,7 @@ Had the 165 runs of slice 5 each cost what the bare run did, they would have com
 
 | Not done | What it would have given | What it needs |
 |---|---|---|
-| Finish the interrupted run: 8 changes, including the 6 written to probe for wrongly failed work | The gate's false-fail rate on something other than the reference changes | One command, no spend: `python -m prototype.runner.planted` |
+| ~~Finish the interrupted run~~ **Done 2026-10-07** | The false-fail rate: 1 of 17, the predicted secrets-rule match (§5.2) | — |
 | Slice 5: 11 tasks × 3 arms × 5 repeats on the model | The comparison of the gate with the agent's own claim (H4), consistency (H2), cost per qualified change (H3), unsafe actions per arm (H1), time and cost added (H6) | A batch runner over `prototype.runner.run`, which already does one run end to end. 165 runs, each capped at 1 USD |
 | Slice 6: a model reviewer from another vendor on a sample | The other half of H4: the gate against a reviewer | An OpenAI adapter and an evaluator prompt; its price recorded as evidence first (ASSIST-018) |
 | The evaluation path for an LLM application | A first look at the non-deterministic case | Designed in `DESIGN.md` §4.2; nothing built |

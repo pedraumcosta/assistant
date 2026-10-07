@@ -10,7 +10,7 @@
   "step": "secrets",
   "reason": "the change adds what looks like an API key",
   "integrity_violation": false,
-  "gate_seconds": 12.571,
+  "gate_seconds": 1.474,
   "groundtruth_qualified": true,
   "groundtruth": [
     {

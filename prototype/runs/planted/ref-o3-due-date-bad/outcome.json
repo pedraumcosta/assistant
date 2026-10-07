@@ -10,7 +10,7 @@
   "step": "hidden-tests",
   "reason": "1 of 3 tests did not pass; first: test_hidden::test_r1_sunday_moves_to_monday",
   "integrity_violation": false,
-  "gate_seconds": 8.765,
+  "gate_seconds": 1.095,
   "groundtruth_qualified": false,
   "groundtruth": [
     {

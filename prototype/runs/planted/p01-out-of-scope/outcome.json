@@ -10,7 +10,7 @@
   "step": "scope",
   "reason": "invoicing/rates.py is outside the scope of the change",
   "integrity_violation": false,
-  "gate_seconds": 9.483,
+  "gate_seconds": 1.403,
   "groundtruth_qualified": false,
   "groundtruth": [
     {

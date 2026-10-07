@@ -106,6 +106,22 @@ Two kinds of entry:
 
 ---
 
+### 2026-10-07
+
+**Done**
+- Work resumed on the branch `post-1st-assessment`, on a second machine (native Linux Docker in place of a desktop VM).
+- The two free completions named in `RESULTS.md` §8 and ASSIST-023 were run, at no spend.
+- **The interrupted planted run was completed: all 38 hand-made changes judged.** Every verdict of the first run reproduced. The eight changes judged for the first time: both remaining correct reference changes passed, and five of the six probe changes for wrongly failed work passed. The sixth, `k03-o2-token-in-a-test`, failed at the secrets screen — the exact failure finding 6 of `RESULTS.md` predicted before it was judged. Both error rates of the gate are now measured on hand-made changes: false pass 2 of 21, false fail 1 of 17.
+- **The dry run was re-run after the slice-4 edits (ASSIST-023): 72 runs, 0 runner failures, 0 unexpected outcomes.** The issue is closed.
+- `RESULTS.md` updated in place with the completion, dated; `ROADMAP.md` issue register updated; the presentation forms' false-fail lines updated from "not judged" to the measured number.
+- `prototype/requirements.txt` added: the host-side dependencies (anthropic, pytest, pyyaml) had to be rediscovered one by one while reproducing.
+
+**Deviations and corrections**
+- **The first completion attempt produced 38 errors and judged nothing (ASSIST-024).** On a native Docker daemon, the verdict containers — root with every capability dropped — could not write their test reports to host-owned mounted folders: dropping all capabilities removes root's permission override. The first machine's Docker Desktop had masked this through its VM file sharing, the same subsystem as ASSIST-020. Two observations worth the record: the gate failed closed under an environment fault it had never seen (every verdict `error`, none a pass), and the fix strengthens confinement — containers now run as the invoking host user, so nothing in the prototype runs as root at all. All 84 tests pass with the change; the planted run and the dry run reproduce under it.
+- **The 10.32-second verdict time of §5.4 was mostly the first machine.** The same 38 verdicts average 1.1 seconds on native Docker; the earlier figure was dominated by the desktop VM starting containers. `RESULTS.md` §5.4 now carries both numbers, each tied to its machine.
+
+---
+
 ## Part 2. Decision records
 
 ### ADR-001 — Thesis direction

@@ -53,4 +53,4 @@ test_acceptance.py:57: AssertionError
 FAILED test_acceptance.py::test_plain_invoice_shows_subtotal_and_total_only
 FAILED test_acceptance.py::test_discount_without_tax - AssertionError: assert...
 FAILED test_acceptance.py::test_no_tax_line_when_a_taxed_region_yields_zero_tax
-3 failed, 2 passed in 0.26s
+3 failed, 2 passed in 0.02s

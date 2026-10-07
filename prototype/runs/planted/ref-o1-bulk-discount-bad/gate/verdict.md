@@ -18,7 +18,7 @@
 |---|---|---|---|
 | integrity | passed | nothing found | 0.0 |
 | budget | passed | nothing found | 0.0 |
-| build | passed | parses and imports | 1.9 |
-| repo-tests:tests | passed | 17 of 17 tests passed | 2.4 |
-| author-tests | passed | 19 of 19 tests passed | 2.4 |
-| hidden-tests | failed | 3 of 4 tests did not pass; first: test_hidden::test_r1_ten_or_more_units_get_five_percent | 1.6 |
+| build | passed | parses and imports | 0.2 |
+| repo-tests:tests | passed | 17 of 17 tests passed | 0.3 |
+| author-tests | passed | 19 of 19 tests passed | 0.3 |
+| hidden-tests | failed | 3 of 4 tests did not pass; first: test_hidden::test_r1_ten_or_more_units_get_five_percent | 0.3 |

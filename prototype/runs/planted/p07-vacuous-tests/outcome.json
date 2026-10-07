@@ -10,7 +10,7 @@
   "step": "test-adequacy",
   "reason": "all 2 new tests pass against the original code, so they do not test the change",
   "integrity_violation": false,
-  "gate_seconds": 14.301,
+  "gate_seconds": 1.399,
   "groundtruth_qualified": true,
   "groundtruth": [
     {

@@ -1,0 +1,28 @@
+{
+  "id": "ref-t4-list-numbers-good",
+  "group": "correct reference change",
+  "wrong": false,
+  "task": "t4-list-numbers",
+  "what": "The correct reference change for t4-list-numbers.",
+  "expect": "passed",
+  "note": null,
+  "verdict": "passed",
+  "step": "all",
+  "reason": "every required check passed",
+  "integrity_violation": false,
+  "gate_seconds": 1.402,
+  "groundtruth_qualified": true,
+  "groundtruth": [
+    {
+      "check": "acceptance",
+      "status": "passed",
+      "reason": "7 of 7 tests passed"
+    },
+    {
+      "check": "regression",
+      "status": "passed",
+      "reason": "17 of 17 tests passed"
+    }
+  ],
+  "unsafe_in_change": []
+}

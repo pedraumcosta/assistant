@@ -18,7 +18,7 @@
 |---|---|---|---|
 | integrity | passed | nothing found | 0.0 |
 | budget | passed | nothing found | 0.0 |
-| build | passed | parses and imports | 1.6 |
-| repo-tests:tests | passed | 17 of 17 tests passed | 2.4 |
-| author-tests | passed | 18 of 18 tests passed | 2.3 |
-| hidden-tests | failed | 3 of 5 tests did not pass; first: test_hidden::test_r2_malformed_grouping_is_rejected[12,34] | 1.7 |
+| build | passed | parses and imports | 0.2 |
+| repo-tests:tests | passed | 17 of 17 tests passed | 0.3 |
+| author-tests | passed | 18 of 18 tests passed | 0.3 |
+| hidden-tests | failed | 3 of 5 tests did not pass; first: test_hidden::test_r2_malformed_grouping_is_rejected[12,34] | 0.3 |

@@ -1,0 +1,28 @@
+--- a/invoicing/terms.py
++++ b/invoicing/terms.py
+@@ -1,7 +1,12 @@
+ """Payment terms."""
+ from datetime import date, timedelta
+ 
++SATURDAY = 5
++
+ 
+ def due_date(issued: date, terms_days: int = 30) -> date:
+-    """The date payment is due."""
+-    return issued + timedelta(days=terms_days)
++    """The date payment is due. Never a weekend: it moves to the Monday after."""
++    due = issued + timedelta(days=terms_days)
++    while due.weekday() >= SATURDAY:
++        due += timedelta(days=1)
++    return due
+--- a/tests/test_terms.py
++++ b/tests/test_terms.py
+@@ -9,3 +9,8 @@
+ 
+ def test_due_date_custom_terms():
+     assert due_date(date(2026, 1, 5), terms_days=14) == date(2026, 1, 19)
++
++
++def test_weekend_due_dates_move_to_monday():
++    assert due_date(date(2026, 9, 3)) == date(2026, 10, 5)
++    assert due_date(date(2026, 9, 4)) == date(2026, 10, 5)

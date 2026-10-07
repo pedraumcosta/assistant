@@ -64,8 +64,8 @@ _____________________ test_subtotal_uses_discounted_lines ______________________
         ))
 >       assert pricing.subtotal(inv) == Decimal("100.00")
 E       AssertionError: assert Decimal('105.00') == Decimal('100.00')
-E        +  where Decimal('105.00') = <function subtotal at 0x7fbf8b3dcfe0>(Invoice(number='INV-2026-0001', customer='Acme Ltd', issued=datetime.date(2026, 10, 5), lines=(LineItem(sku='W-1', des...), LineItem(sku='W-2', description='Gadget', quantity=1, unit_price=Decimal('5.00'))), region='US', discount_code=None))
-E        +    where <function subtotal at 0x7fbf8b3dcfe0> = pricing.subtotal
+E        +  where Decimal('105.00') = <function subtotal at 0x74feb66a4f40>(Invoice(number='INV-2026-0001', customer='Acme Ltd', issued=datetime.date(2026, 10, 5), lines=(LineItem(sku='W-1', des...), LineItem(sku='W-2', description='Gadget', quantity=1, unit_price=Decimal('5.00'))), region='US', discount_code=None))
+E        +    where <function subtotal at 0x74feb66a4f40> = pricing.subtotal
 E        +  and   Decimal('100.00') = Decimal('100.00')
 
 test_acceptance.py:41: AssertionError
@@ -75,4 +75,4 @@ FAILED test_acceptance.py::test_tiers_and_their_boundaries[50-450.00] - Asser...
 FAILED test_acceptance.py::test_discount_is_applied_to_the_line_total_then_rounded
 FAILED test_acceptance.py::test_rounding_stays_half_even - AssertionError: as...
 FAILED test_acceptance.py::test_subtotal_uses_discounted_lines - AssertionErr...
-5 failed, 6 passed in 0.23s
+5 failed, 6 passed in 0.03s

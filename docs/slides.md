@@ -165,7 +165,7 @@ What actually ran before the day ended — total model spend: **7 cents** of a 5
 |---|---|
 | The measurement machinery, proven first on a cost-free fake agent | 72 rehearsal runs; every one behaved as predicted, including simulated failures reading as "error" — never as a pass |
 | The gate, judging deliberately **wrong** changes we wrote by hand | **It rejected 19 of 21**, each at the exact step we predicted — including the "patched test reporter" trick from the study on the problem slide, stopped before a single test ran |
-| The gate, judging **correct** changes | **It accepted all 9** it had time to judge |
+| The gate, judging **correct** changes | **It accepted 16 of 17** — the one it wrongly failed is the one we predicted in writing before judging it |
 | A real model (Claude Sonnet) on one task | Correct both times, and said so truthfully |
 | **Not reached** | The full 165-run comparison, and the rival-vendor reviewer |
 
@@ -184,7 +184,7 @@ teaches people to bypass the gate. We measure both, always together.
 |---|---|
 | The agent's own claim | **Not yet measured.** In our two real runs the model was right — and honest about it |
 | A rival vendor's reviewer model | **Not yet run** — the day ended first |
-| **Our gate** | **False passes: 2 of 21** wrong changes · **false fails: 0 of 9** correct ones |
+| **Our gate** | **False passes: 2 of 21** wrong changes · **false fails: 1 of 17** correct ones — the one, predicted in advance: a test variable named `token` tripped the secrets screen |
 
 **Both false passes were the same weakness, seen twice:** behaviour no check covered. One
 was planted to find exactly that limit; one we found by accident — and our *own* answer
@@ -243,7 +243,7 @@ with few tests, for whom writing the checks is most of the cost.
 | Stage | Cost | Continue only if | Where it stands |
 |---|---|---|---|
 | 1 — One-day prototype | One day; **7 cents** of model spend against a 50-dollar cap | The scoreboard you just saw | Built; stopped when the day ended, with the deciding comparison unrun |
-| **1b — Finish the measurement** | A few hours of work. Finishing the interrupted run is free; the full 165-run comparison costs roughly **6 dollars** of model spend at observed prices; the rival-vendor reviewer a little more. Strengthen the answer key first | The same scoreboard — this time fully measurable | **This is today's ask** |
+| **1b — Finish the measurement** | The free half is **done**: the interrupted judging run was completed and is what measured the error rates above. Remaining: the full 165-run comparison, roughly **6 dollars** at observed prices; the rival-vendor reviewer a little more; the answer key strengthened first | The same scoreboard — this time fully measurable | **This is today's ask** |
 | 2 — Six-week pilot | 2 engineers and a half-time product lead (staffing is an assumption; finance owns the rates) | A design partner tells us the report changed a decision they were about to make | Gated on 1b |
 | 3 — Build the product | Scoped only if the pilot earns it — pricing it now would be an invented number | Set before it starts | Not reached |
 
@@ -270,8 +270,9 @@ zoom: 0.88
    dollars; then six weeks of 2.5 people; then, and only then, a build decision. Today
    the rules point to "wait, with a review date."
 4. **We report what a finance team can audit:** cost per change that truly qualified for
-   production, checking included, always beside the verdict's own error rates. Never
-   lines of code, acceptance rates, or seats.
+   production, checking included, always beside the verdict's own error rates — first
+   measured values: 2 of 21 wrong changes passed, 1 of 17 good ones blocked, that one
+   predicted in advance. Never lines of code, acceptance rates, or seats.
 5. **Unknowns first:** whether the gate beats the agent's claim and a rival reviewer;
    market size; willingness to pay. What the day taught us: the risk lives in the
    coverage of the checks, not in the 350-line mechanism — the moat, if any, is the

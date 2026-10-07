@@ -26,14 +26,14 @@
     {
       "check": "build",
       "exit_code": 0,
-      "duration_s": 1.8,
+      "duration_s": 0.161,
       "status": "passed",
       "reason": "parses and imports"
     },
     {
       "check": "repo-tests:tests",
       "exit_code": 0,
-      "duration_s": 3.105,
+      "duration_s": 0.311,
       "expected_tests": 17,
       "tests": {
         "total": 17,
@@ -49,7 +49,7 @@
     {
       "check": "author-tests",
       "exit_code": 0,
-      "duration_s": 3.853,
+      "duration_s": 0.313,
       "expected_tests": null,
       "tests": {
         "total": 19,
@@ -65,7 +65,7 @@
     {
       "check": "hidden-tests",
       "exit_code": 0,
-      "duration_s": 3.023,
+      "duration_s": 0.294,
       "expected_tests": 3,
       "tests": {
         "total": 3,
@@ -87,11 +87,11 @@
     {
       "check": "test-adequacy",
       "new_tests": 2,
-      "duration_s": 2.485,
+      "duration_s": 0.313,
       "new_tests_failing_on_original": 0,
       "status": "failed",
       "reason": "all 2 new tests pass against the original code, so they do not test the change"
     }
   ],
-  "seconds": 14.301
+  "seconds": 1.399
 }

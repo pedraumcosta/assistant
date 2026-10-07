@@ -18,11 +18,11 @@
 |---|---|---|---|
 | integrity | passed | nothing found | 0.0 |
 | budget | passed | nothing found | 0.0 |
-| build | passed | parses and imports | 2.0 |
-| repo-tests:tests | passed | 17 of 17 tests passed | 2.2 |
-| author-tests | passed | 20 of 20 tests passed | 3.0 |
-| hidden-tests | passed | 4 of 4 tests passed | 3.1 |
+| build | passed | parses and imports | 0.2 |
+| repo-tests:tests | passed | 17 of 17 tests passed | 0.3 |
+| author-tests | passed | 20 of 20 tests passed | 0.3 |
+| hidden-tests | passed | 4 of 4 tests passed | 0.3 |
 | scope | passed | nothing found | 0.0 |
-| test-adequacy | passed | 2 of 3 new tests fail against the original code | 4.2 |
+| test-adequacy | passed | 2 of 3 new tests fail against the original code | 0.3 |
 | dependency | passed | nothing found | 0.0 |
 | secrets | passed | nothing found | 0.0 |
