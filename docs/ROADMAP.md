@@ -223,7 +223,7 @@ This is the only copy of the register (decided 2026-10-05). `PLAN.md` §10 point
 
 | ID | Issue | Status |
 |---|---|---|
-| ASSIST-001 | Read-only collaborators are not possible on a private repo owned by a personal account (GitHub Docs, `EVIDENCE.md` E-27) | Accepted: decision D6 keeps the repo on the personal account; anyone invited will have write access |
+| ASSIST-001 | Read-only collaborators are not possible on a private repo owned by a personal account (GitHub Docs, `EVIDENCE.md` E-27) | Superseded 2026-10-07: the repository is public by Pedro's decision. Read access is universal; write stays owner-only — `main` is protected (pull requests into it require the owner's approval; force-pushes and deletion disabled; the owner, as admin, can still commit directly), and outside contributions come from forks |
 | ASSIST-002 | Git identity mismatch between git config and the session account | Closed: commits use `pcosta@gmail.com` (D7) |
 | ASSIST-003 | Parts of Pedro's notes were not synced to the machine and could not be read, including the strategy and product-management material | Open, not blocking |
 | ASSIST-004 | Research figures tagged [S] were unverified, and early quotations had been gathered through a summarising fetch | Closed 2026-10-05: rows E-01 to E-29 re-checked against raw sources; no [S] row remains. `market-landscape.md` is still partly superseded by `check-market-claims.md` |

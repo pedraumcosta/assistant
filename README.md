@@ -128,6 +128,25 @@ at 9 of 10 with its cause measured and its fix designed. What one day cannot sho
 saved, willingness to pay, the cost of writing checks for ordinary work, and whether
 results on today's models hold on the next.
 
+## Contributing, and how this repository is governed
+
+This repository began as a private working exercise and is now public as its record. It is
+read-only for everyone but its owner, by design:
+
+- **`main` is protected.** Only the owner commits to it; force-pushes and branch deletion
+  are disabled, and pull requests into it require the owner's approval.
+- **External contributions go through forks:** fork the repository, make a feature branch
+  there, and open a pull request. Expect the house rules to apply to anything merged — in
+  particular, no number without a source: every figure must trace to a row of the evidence
+  ledger (verified at its original publisher) or to a run record under `prototype/runs/`.
+- **No license has been chosen yet**, so the usual default applies: the content is
+  published to be read, not yet to be reused. The one exception is third-party material
+  with its own terms — the 90-line agent in `prototype/scaffold/listing.py` is reproduced
+  from arXiv 2609.00006 under CC BY 4.0, as its header states.
+- The API keys used by the prototype live in an untracked `.env` and have never been in
+  this history; the key-shaped strings you will find in `prototype/planted/` are the
+  deliberately fake material of the gate's own secrets check.
+
 ## Reading order
 
 For the conclusion: `docs/PROPOSAL.md`, then `docs/presentation.html`. For the reasoning:
