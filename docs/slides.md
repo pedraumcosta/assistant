@@ -178,9 +178,9 @@ Said aloud: the model really does weaken tests to make its work fit; telling it 
 
 | Verdict source | False passes (bad accepted) | False fails (good blocked) |
 |---|---|---|
-| The agent's own claim | 19 of 164 (12%) — including **every one** of the 19 weakened-test changes | 1 of 146 |
+| The agent's own claim | **19 of 19 (100%)** — every bad change accepted, all with weakened tests; 12% of everything it accepted was bad | 1 of 146 |
 | A rival vendor's reviewer model (gpt-5.1, 33-run sample) | **3 of 3** bad changes passed — each a weakened test it *praised* in its reason | 2 of 30 — on objections the records disprove |
-| **Our gate** | **0 of 146** | **0 of 146** |
+| **Our gate** | **0 of 19** — its 146 accepted contained nothing bad | **0 of 146** |
 
 And the reviewer disagrees with itself: five evaluations of one identical, correct change
 came back **fail, pass, pass, pass, pass**. A verdict that changes its mind on the same
@@ -198,7 +198,7 @@ both with their causes named.
 
 | # | Condition for continuing | Result |
 |---|---|---|
-| 1 | The gate errs less than the agent's claim **and** than a rival reviewer | **Met, decisively** — wrong 0 times in 165 runs, against 12% for the claim and a reviewer that passed every bad change in its sample |
+| 1 | The gate errs less than the agent's claim **and** than a rival reviewer | **Met, decisively** — of the bad changes, the gate passed 0 of 19; the claim passed all 19, the reviewer all 3 in its sample |
 | 2 | Every planted flaw is rejected | **Not met as written: 9 of 10** — the one that passed was planted to find exactly that limit; the strengthened answer key now catches it, and its designed fix (a search for counterexamples) is not yet built |
 | 3 | No change containing an unsafe action is accepted | **Met, on a live model: 0 of 19** — the claim and the reviewer accepted every one they judged |
 
@@ -261,14 +261,14 @@ zoom: 0.88
    error-measured verdict on their own agents' output. No vendor publishes an error rate
    for its reviewer; none records whether results were accepted.
 3. **Stage 1 cost $5.78 all-in and gave a decisive answer on our task set:** the gate was
-   wrong zero times in 165 live runs; the agent's own claim was wrong 12% of the time and
-   vouched for every change with a weakened test; a rival vendor's reviewer passed every
-   bad change in its sample and contradicted itself on identical input. Next is six weeks
+   wrong zero times in 165 live runs; the agent's own claim vouched for every one of the
+   19 bad changes it produced — 12% of everything it accepted; a rival vendor's reviewer
+   passed every bad change in its sample and contradicted itself on identical input. Next is six weeks
    of 2.5 people; then, and only then, a build decision.
 4. **We report what a finance team can audit:** cost per change that truly qualified for
    production, checking included — lowest in the gated arm — always beside the verdict's
-   own error rates: 0 of 146 and 0 of 146 live; 2 of 21 and 1 of 17 on hand-made
-   adversarial changes, causes named. Never lines of code, acceptance rates, or seats.
+   own error rates: 0 of 19 bad changes passed and 0 of 146 good ones blocked, live;
+   2 of 21 and 1 of 17 on hand-made adversarial changes, causes named. Never lines of code, acceptance rates, or seats.
 5. **Unknowns first:** whether these rates hold beyond eleven small tasks of our own
    authorship, on other models, on a real repository — exactly what the pilot measures;
    market size; willingness to pay. And the one condition missed as written (9 of 10

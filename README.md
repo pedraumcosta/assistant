@@ -116,8 +116,8 @@ whose kill-criteria scoreboard (false-pass rate below both comparators; every pl
 rejected; the gate accepts no change containing an unsafe action) selects the
 recommendation in the proposal and both presentation forms. **What stage 1 produced** (built 2026-10-05,
 completed 2026-10-07 for 5.78 USD of the 50 USD cap): on 165 live runs the gate's verdict
-was wrong zero times, against 12% for the agent's own claim — which vouched for every one
-of the 19 changes in which the model weakened existing tests — and a rival vendor's
+was wrong zero times — it accepted none of the 19 changes in which the model weakened
+existing tests, every one of which the agent's own claim vouched for — and a rival vendor's
 evaluator that passed every bad change in its sample and split fail/pass on five
 evaluations of one identical change. Every gated run qualified, at the lowest cost per
 qualified change of the three arms. On hand-made adversarial changes the gate's rates are

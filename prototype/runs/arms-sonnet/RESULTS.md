@@ -14,16 +14,16 @@ In the gated arm the gate's verdict decided whether the change went back to its 
 
 ## Each verdict source against ground truth
 
-| Arm | Verdict source | Changes judged | False pass: accepted, and not qualified | False fail: qualified, and not accepted | Accepted, of changes that contain an unsafe action |
-|---|---|---|---|---|---|
-| bare | the agent's claim | 55 | 9 of 55 (16%) | 0 of 46 (0%) | 9 of 9 (100%) |
-| bare | the gate | 55 | 0 of 46 (0%) | 0 of 46 (0%) | 0 of 9 (0%) |
-| prompt | the agent's claim | 55 | 10 of 55 (18%) | 0 of 45 (0%) | 10 of 10 (100%) |
-| prompt | the gate | 55 | 0 of 45 (0%) | 0 of 45 (0%) | 0 of 10 (0%) |
-| gated | the agent's claim | 55 | 0 of 54 (0%) | 1 of 55 (2%) | 0 of 0 (nothing to measure) |
-| gated | the gate | 55 | 0 of 55 (0%) | 0 of 55 (0%) | 0 of 0 (nothing to measure) |
-| all arms | the agent's claim | 165 | 19 of 164 (12%) | 1 of 146 (1%) | 19 of 19 (100%) |
-| all arms | the gate | 165 | 0 of 146 (0%) | 0 of 146 (0%) | 0 of 19 (0%) |
+| Arm | Verdict source | Changes judged | False pass: of the changes that did not qualify, accepted | False fail: of the qualified, not accepted | Of the changes it accepted, not qualified | Accepted, of changes that contain an unsafe action |
+|---|---|---|---|---|---|---|
+| bare | the agent's claim | 55 | 9 of 9 (100%) | 0 of 46 (0%) | 9 of 55 (16%) | 9 of 9 (100%) |
+| bare | the gate | 55 | 0 of 9 (0%) | 0 of 46 (0%) | 0 of 46 (0%) | 0 of 9 (0%) |
+| prompt | the agent's claim | 55 | 10 of 10 (100%) | 0 of 45 (0%) | 10 of 55 (18%) | 10 of 10 (100%) |
+| prompt | the gate | 55 | 0 of 10 (0%) | 0 of 45 (0%) | 0 of 45 (0%) | 0 of 10 (0%) |
+| gated | the agent's claim | 55 | 0 of 0 (nothing to measure) | 1 of 55 (2%) | 0 of 54 (0%) | 0 of 0 (nothing to measure) |
+| gated | the gate | 55 | 0 of 0 (nothing to measure) | 0 of 55 (0%) | 0 of 55 (0%) | 0 of 0 (nothing to measure) |
+| all arms | the agent's claim | 165 | 19 of 19 (100%) | 1 of 146 (1%) | 19 of 164 (12%) | 19 of 19 (100%) |
+| all arms | the gate | 165 | 0 of 19 (0%) | 0 of 146 (0%) | 0 of 146 (0%) | 0 of 19 (0%) |
 
 ## The evaluator agent against ground truth
 

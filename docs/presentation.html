@@ -138,8 +138,8 @@ footer p{max-width:none}
     <span><b>Model spend</b> $5.78 all-in, of a 50-dollar cap</span>
   </div>
   <div class="stats">
-    <div class="stat"><div class="n">0 of 146</div><div class="l">gate errors in 165 live runs</div></div>
-    <div class="stat"><div class="n">12%</div><div class="l">the agent's claim, wrong</div></div>
+    <div class="stat"><div class="n">0</div><div class="l">gate errors in 165 live runs</div></div>
+    <div class="stat"><div class="n">19 of 19</div><div class="l">bad changes the claim vouched for</div></div>
     <div class="stat"><div class="n">3 of 3</div><div class="l">bad changes the rival reviewer passed</div></div>
     <div class="stat"><div class="n">55 of 55</div><div class="l">gated runs qualified</div></div>
     <div class="stat"><div class="n">$0.0346</div><div class="l">per qualified change — the cheapest arm</div></div>
@@ -357,9 +357,9 @@ below are for this task set, not for the world.</p>
   <div class="mgrid">
     <div class="mcell"><div class="mlab">The question</div><p>Is the gate's verdict wrong less often than the agent's own claim of success, and less often than a reviewer model from a rival vendor?</p></div>
     <div class="mcell"><div class="mlab">Why it decides everything</div><p>If a model reviewer is already just as reliable, there is nothing here worth building. This is the number that can kill the product, and it was designed to be able to.</p></div>
-    <div class="mcell full"><div class="mlab">Result (2026-10-07)</div><p><b>Measured, and decisive on this task set.</b> Across 165 live runs the gate accepted 146 changes and rejected 19 — and was wrong zero times in both directions. The agent's own claim vouched for 19 changes that did not qualify (12%), among them every change with a weakened test. The rival vendor's reviewer (gpt-5.1, pinned, 33-run sample) passed all three of the sample's bad changes — praising their tests — and wrongly failed 2 of 30 good ones, on objections the records disprove. Five evaluations of one identical, correct change came back fail, pass, pass, pass, pass.</p></div>
+    <div class="mcell full"><div class="mlab">Result (2026-10-07)</div><p><b>Measured, and decisive on this task set.</b> Across 165 live runs the gate accepted 146 changes and rejected 19 — and was wrong zero times in both directions. The agent's own claim vouched for all 19 of the changes that did not qualify — every one with a weakened test — and 12% of everything it accepted was bad. The rival vendor's reviewer (gpt-5.1, pinned, 33-run sample) passed all three of the sample's bad changes — praising their tests — and wrongly failed 2 of 30 good ones, on objections the records disprove. Five evaluations of one identical, correct change came back fail, pass, pass, pass, pass.</p></div>
   </div>
-  <div class="mval">agent's claim: <span class="ref">19 of 164 wrong (12%)</span> · rival reviewer: <span class="ref">3 of 3 bad passed · 2 of 30 good failed</span> · <b>the gate: 0 of 146 and 0 of 146</b> · hand-made adversarial changes: gate 2 of 21 and 1 of 17, causes named</div>
+  <div class="mval">of the 19 bad changes — agent's claim: <span class="ref">19 of 19 passed</span> · rival reviewer: <span class="ref">3 of 3 of its sample's</span> · <b>the gate: 0 of 19</b> · false fails on the 146 good: gate 0, claim 1, reviewer 2 of its 30 · hand-made adversarial changes: gate 2 of 21 and 1 of 17, causes named</div>
 </div>
 
 <div class="metric"><header><span class="mid">2</span><span class="mname">Can the gate itself be fooled?</span><span class="chip gate">tested with planted flaws</span></header>
@@ -393,7 +393,7 @@ below are for this task set, not for the world.</p>
 <div class="tablewrap"><table>
   <tbody>
   <tr><th>#</th><th>Condition for continuing, agreed in advance</th><th>Measured</th><th>Result</th></tr>
-  <tr><td>1</td><td>The gate's error rate is lower than the agent's own claim <b>and</b> lower than a rival-vendor reviewer's</td><td class="num">0 of 146 vs 19 of 164 vs 3 of 3 bad passed</td><td><span class="verd ok">met, decisively</span></td></tr>
+  <tr><td>1</td><td>The gate's error rate is lower than the agent's own claim <b>and</b> lower than a rival-vendor reviewer's</td><td class="num">of the bad: 0 of 19 vs 19 of 19 vs 3 of 3</td><td><span class="verd ok">met, decisively</span></td></tr>
   <tr><td>2</td><td>Every deliberately planted flaw is rejected</td><td class="num">9 of 10</td><td><span class="verd fail">not met as written</span></td></tr>
   <tr><td>3</td><td>The gate accepts no change containing a dangerous action</td><td class="num">0 of 19 on a live model · 0 of 5 hand-made</td><td><span class="verd ok">met, on a live model</span></td></tr>
 </tbody></table></div>
@@ -454,8 +454,8 @@ will have been cheap to learn.</p>
     and by their own published admission, their models grade their own work too kindly.</p></div>
   <div class="step"><b>The ask is priced so that belief is unnecessary</b>
     <p>Stage 1 cost $5.78 all-in and gave a decisive answer on our task set: the gate was wrong
-    zero times in 165 live runs, the agent's own claim was wrong 12% of the time and vouched for
-    every change with a weakened test, and a rival vendor's reviewer passed every bad change in
+    zero times in 165 live runs, the agent's own claim vouched for every one of the 19 bad
+    changes it produced — 12% of everything it accepted — and a rival vendor's reviewer passed every bad change in
     its sample while contradicting itself on identical input. Next is six weeks of
     two-and-a-half people. Then, and only then, a build decision. Every stage can end it.</p></div>
   <div class="step"><b>The numbers we report are the ones a finance team can audit</b>
@@ -474,9 +474,9 @@ will have been cheap to learn.</p>
 <div class="callout"><b>Decision requested:</b> the scoreboard is full — fund the six-week
 pilot, or set the review date now. <b>For the board, in one sentence:</b> for five dollars and
 seventy-eight cents we measured what no vendor publishes — on our tasks, the agent's own claim
-of success was wrong twelve percent of the time and a rival model reviewer passed every bad
-change it saw, while a 350-line executable gate was wrong zero times in 165 runs and made
-delivery cheaper, not dearer; whether that holds on a real team's repository is precisely what
+of success vouched for every bad change it produced and a rival model reviewer passed every bad
+change it saw, while a 350-line executable gate passed none of them, blocked no good work in 165
+runs, and made delivery cheaper, not dearer; whether that holds on a real team's repository is precisely what
 six weeks and two-and-a-half people now buy.</div>
 
 <h2 id="rules">How this material was prepared</h2>

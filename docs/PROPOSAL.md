@@ -276,9 +276,9 @@ The three verdict sources, against the same ground truth:
 
 | Verdict source | False pass | False fail |
 |---|---|---|
-| The agent's own claim | 19 of 164 (12%) — including every change with a weakened test | 1 of 146 |
+| The agent's own claim | 19 of 19 (100%) — every bad change accepted; 12% of all it accepted was bad | 1 of 146 |
 | An evaluator agent from a second vendor (gpt-5.1, pinned; 33-run sample) | 3 of 3 bad changes passed, each praised | 2 of 30 |
-| The gate | 0 of 146 | 0 of 146 |
+| The gate | 0 of 19 | 0 of 146 |
 
 Five evaluations of one identical correct change by the second-vendor evaluator split fail, pass, pass, pass, pass — the instability the vendor's own writing predicts (E-34, E-35), reproduced in our records. On hand-made adversarial changes the gate's honest limits are also measured: 2 of 21 wrong changes passed, both behaviour no check covered; 1 of 17 good changes wrongly blocked, by a naive secrets rule, predicted in writing before it was judged. The evaluation path (§5.8 of the results) showed the non-deterministic case end to end: the original reminder-drafting prompt failed 0 of 40 sampled drafts; an agent's rewrite passed 40 of 40 with every hidden case held.
 
@@ -298,7 +298,7 @@ We should buy their products — that is part of this recommendation. Their spen
 
 ### 4.1 The decision requested
 
-**Fund the six-week measurement pilot.** Stage 1 is complete and its scoreboard is full: the gate's false-pass rate was lower than the agent's claim and than a second-vendor evaluator's, decisively (0 of 146, against 12% and 3 of 3); the gate accepted none of the 19 live changes containing an unsafe action, where both comparators accepted every one they judged.
+**Fund the six-week measurement pilot.** Stage 1 is complete and its scoreboard is full: the gate's false-pass rate was lower than the agent's claim and than a second-vendor evaluator's, decisively: of the changes that did not qualify, the gate accepted 0 of 19, the claim all 19, the evaluator all 3 of its sample's. The gate also accepted none of the 19 live changes containing an unsafe action, where both comparators accepted every one they judged.
 
 One stopping condition is not met as written: "every planted flaw is rejected" stands at 9 of 10. The one accepted flaw was planted to find exactly that limit — behaviour no check covers — its cause was then measured a second time by accident, the strengthened answer key now catches it, and its designed fix, the counterexample search, is scheduled as the first enhancement (`PLAN.md` §3.11). Our judgment is that the condition's intent — the gate cannot be fooled by the failure modes found in the research — is met for every mode that has a mechanism, and open exactly where the design said it would be. The stricter reading, wait with a review date, remains available to this meeting; what the rules do not permit is proceeding without recording that choice.
 
@@ -324,4 +324,4 @@ The idea and its metrics are published (E-40); CodeRabbit stands beside the gap 
 
 ### 4.6 The bottom line
 
-The question was whether to enter a market the giants already own. The answer is that we should not — and that for 6.87 USD of model spend we measured, on our own tasks, what none of them publishes: an agent's claim of done was wrong 12% of the time and vouched for every unsafe change it made; a rival model reviewer passed every bad change it saw and contradicted itself on identical input; and a 350-line executable gate was wrong zero times while making delivery cheaper per accepted change. Six weeks and two-and-a-half people now buy the same measurement on a real team's repository, with the exit already written down.
+The question was whether to enter a market the giants already own. The answer is that we should not — and that for 6.87 USD of model spend we measured, on our own tasks, what none of them publishes: an agent's claim of done vouched for every bad change it produced — 12% of everything it accepted; a rival model reviewer passed every bad change it saw and contradicted itself on identical input; and a 350-line executable gate passed none of them, blocked no good work, and made delivery cheaper per accepted change. Six weeks and two-and-a-half people now buy the same measurement on a real team's repository, with the exit already written down.

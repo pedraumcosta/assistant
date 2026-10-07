@@ -8,30 +8,30 @@ In the gated arm the gate's verdict decided whether the change went back to its 
 
 | Arm | Runs | Errors (excluded) | Qualified | Qualified on first trial, by task | Qualified on every trial, by task | Runs with an unsafe action attempted | Runs with an unsafe action in the change | Mean attempts | Cost, USD | Cost per qualified change, USD | Mean seconds per run |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| bare | 24 | 2 | 11 of 22 (50%) | 11 of 22 (50%) | 11 of 22 (50%) | 5 | 5 | 1.00 | 0.00 | 0.0000 | 2.8 |
-| prompt | 24 | 2 | 11 of 22 (50%) | 11 of 22 (50%) | 11 of 22 (50%) | 5 | 5 | 1.00 | 0.00 | 0.0000 | 2.8 |
-| gated | 24 | 2 | 11 of 22 (50%) | 11 of 22 (50%) | 11 of 22 (50%) | 5 | 5 | 1.91 | 0.00 | 0.0000 | 3.8 |
+| bare | 24 | 2 | 11 of 22 (50%) | 11 of 22 (50%) | 11 of 22 (50%) | 5 | 5 | 1.00 | 0.00 | 0.0000 | 3.0 |
+| prompt | 24 | 2 | 11 of 22 (50%) | 11 of 22 (50%) | 11 of 22 (50%) | 5 | 5 | 1.00 | 0.00 | 0.0000 | 3.0 |
+| gated | 24 | 2 | 11 of 22 (50%) | 11 of 22 (50%) | 11 of 22 (50%) | 5 | 5 | 1.91 | 0.00 | 0.0000 | 3.9 |
 
 ## Each verdict source against ground truth
 
-| Arm | Verdict source | Changes judged | False pass: accepted, and not qualified | False fail: qualified, and not accepted | Accepted, of changes that contain an unsafe action |
-|---|---|---|---|---|---|
-| bare | the agent's claim | 22 | 11 of 22 (50%) | 0 of 11 (0%) | 5 of 5 (100%) |
-| bare | the gate | 22 | 1 of 12 (8%) | 0 of 11 (0%) | 0 of 5 (0%) |
-| prompt | the agent's claim | 22 | 11 of 22 (50%) | 0 of 11 (0%) | 5 of 5 (100%) |
-| prompt | the gate | 22 | 1 of 12 (8%) | 0 of 11 (0%) | 0 of 5 (0%) |
-| gated | the agent's claim | 22 | 11 of 22 (50%) | 0 of 11 (0%) | 5 of 5 (100%) |
-| gated | the gate | 22 | 1 of 12 (8%) | 0 of 11 (0%) | 0 of 5 (0%) |
-| all arms | the agent's claim | 66 | 33 of 66 (50%) | 0 of 33 (0%) | 15 of 15 (100%) |
-| all arms | the gate | 66 | 3 of 36 (8%) | 0 of 33 (0%) | 0 of 15 (0%) |
+| Arm | Verdict source | Changes judged | False pass: of the changes that did not qualify, accepted | False fail: of the qualified, not accepted | Of the changes it accepted, not qualified | Accepted, of changes that contain an unsafe action |
+|---|---|---|---|---|---|---|
+| bare | the agent's claim | 22 | 11 of 11 (100%) | 0 of 11 (0%) | 11 of 22 (50%) | 5 of 5 (100%) |
+| bare | the gate | 22 | 1 of 11 (9%) | 0 of 11 (0%) | 1 of 12 (8%) | 0 of 5 (0%) |
+| prompt | the agent's claim | 22 | 11 of 11 (100%) | 0 of 11 (0%) | 11 of 22 (50%) | 5 of 5 (100%) |
+| prompt | the gate | 22 | 1 of 11 (9%) | 0 of 11 (0%) | 1 of 12 (8%) | 0 of 5 (0%) |
+| gated | the agent's claim | 22 | 11 of 11 (100%) | 0 of 11 (0%) | 11 of 22 (50%) | 5 of 5 (100%) |
+| gated | the gate | 22 | 1 of 11 (9%) | 0 of 11 (0%) | 1 of 12 (8%) | 0 of 5 (0%) |
+| all arms | the agent's claim | 66 | 33 of 33 (100%) | 0 of 33 (0%) | 33 of 66 (50%) | 15 of 15 (100%) |
+| all arms | the gate | 66 | 3 of 33 (9%) | 0 of 33 (0%) | 3 of 36 (8%) | 0 of 15 (0%) |
 
 ## What the gate adds
 
 | Arm | Runs | Mean seconds spent on verdicts | Mean seconds the author worked | Runs sent back at least once |
 |---|---|---|---|---|
-| bare | 22 | 1.3 | 0.8 | 0 of 22 (0%) |
-| prompt | 22 | 1.3 | 0.8 | 0 of 22 (0%) |
-| gated | 22 | 2.2 | 0.9 | 10 of 22 (45%) |
+| bare | 22 | 1.4 | 0.8 | 0 of 22 (0%) |
+| prompt | 22 | 1.4 | 0.8 | 0 of 22 (0%) |
+| gated | 22 | 2.3 | 0.9 | 10 of 22 (45%) |
 
 ## By run
 
