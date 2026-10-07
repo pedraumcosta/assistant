@@ -1,0 +1,12 @@
+{
+  "run": "o1-bulk-discount__bare__sonnet__t1",
+  "batch": "arms-sonnet",
+  "task": "o1-bulk-discount",
+  "model": "gpt-5.1-2025-11-13",
+  "verdict": "pass",
+  "reason": "Quantity-based discounts are correctly implemented and tested within the allowed scope, with no unrelated or altered existing tests.",
+  "stop_reason": "returned",
+  "turns": 4,
+  "cost_usd": 0.003893,
+  "seconds": 6.029
+}

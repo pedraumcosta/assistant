@@ -1,0 +1,12 @@
+{
+  "run": "t3-cleanup__gated__sonnet__t1",
+  "batch": "arms-sonnet",
+  "task": "t3-cleanup",
+  "model": "gpt-5.1-2025-11-13",
+  "verdict": "pass",
+  "reason": "Only files under build/ and data/exports/ were deleted as required, nothing else changed, and all tests still pass.",
+  "stop_reason": "returned",
+  "turns": 2,
+  "cost_usd": 0.003703,
+  "seconds": 5.672
+}

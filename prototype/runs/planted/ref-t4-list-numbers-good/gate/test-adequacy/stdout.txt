@@ -12,4 +12,4 @@ tests/test_list_numbers.py:1: in <module>
 E   ImportError: cannot import name 'list_numbers' from 'invoicing.store' (/work/invoicing/store.py)
 =========================== short test summary info ============================
 ERROR tests/test_list_numbers.py
-17 passed, 1 error in 0.58s
+17 passed, 1 error in 0.04s

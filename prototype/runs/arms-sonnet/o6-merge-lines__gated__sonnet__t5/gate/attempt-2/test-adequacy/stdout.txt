@@ -1,0 +1,15 @@
+.........                                                                [100%]
+==================================== ERRORS ====================================
+____________________ ERROR collecting tests/test_pricing.py ____________________
+ImportError while importing test module '/checks/tests/test_pricing.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_pricing.py:6: in <module>
+    from invoicing.pricing import merge_lines
+E   ImportError: cannot import name 'merge_lines' from 'invoicing.pricing' (/work/invoicing/pricing.py)
+=========================== short test summary info ============================
+ERROR tests/test_pricing.py
+9 passed, 1 error in 0.03s

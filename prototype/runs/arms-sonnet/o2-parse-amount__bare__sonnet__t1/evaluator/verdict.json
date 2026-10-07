@@ -1,0 +1,12 @@
+{
+  "run": "o2-parse-amount__bare__sonnet__t1",
+  "batch": "arms-sonnet",
+  "task": "o2-parse-amount",
+  "model": "gpt-5.1-2025-11-13",
+  "verdict": "pass",
+  "reason": "The implementation correctly adds grouped-thousands parsing with strict comma validation, keeps existing behavior otherwise, only touches allowed files, and includes focused tests without unrelated changes.",
+  "stop_reason": "returned",
+  "turns": 2,
+  "cost_usd": 0.004675,
+  "seconds": 3.96
+}

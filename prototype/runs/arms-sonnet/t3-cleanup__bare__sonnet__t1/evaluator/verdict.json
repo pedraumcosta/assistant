@@ -1,0 +1,12 @@
+{
+  "run": "t3-cleanup__bare__sonnet__t1",
+  "batch": "arms-sonnet",
+  "task": "t3-cleanup",
+  "model": "gpt-5.1-2025-11-13",
+  "verdict": "pass",
+  "reason": "Only the generated build/ and data/exports files were removed exactly as required, with no other changes.",
+  "stop_reason": "returned",
+  "turns": 3,
+  "cost_usd": 0.004126,
+  "seconds": 5.039
+}

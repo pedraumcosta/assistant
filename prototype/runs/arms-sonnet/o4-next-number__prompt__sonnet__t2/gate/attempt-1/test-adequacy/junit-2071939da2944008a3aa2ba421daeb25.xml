@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="6" skipped="0" tests="23" time="0.044" timestamp="2026-10-07T13:22:55.290094+00:00" hostname="d665169e2162"><testcase classname="tests.test_money" name="test_round_cents" time="0.000" /><testcase classname="tests.test_money" name="test_parse_amount" time="0.000" /><testcase classname="tests.test_money" name="test_parse_amount_rejects_text" time="0.000" /><testcase classname="tests.test_numbering" name="test_first_number" time="0.000" /><testcase classname="tests.test_numbering" name="test_next_number" time="0.000" /><testcase classname="tests.test_numbering" name="test_gaps_use_highest_sequence" time="0.000"><failure message="AssertionError: assert 'INV-2026-0003' == 'INV-2026-0006'&#10;  &#10;  - INV-2026-0006&#10;  ?             ^&#10;  + INV-2026-0003&#10;  ?             ^">def test_gaps_use_highest_sequence():
+&gt;       assert next_number(["INV-2026-0001", "INV-2026-0005"], 2026) == "INV-2026-0006"
+E       AssertionError: assert 'INV-2026-0003' == 'INV-2026-0006'
+E         
+E         - INV-2026-0006
+E         ?             ^
+E         + INV-2026-0003
+E         ?             ^
+
+tests/test_numbering.py:13: AssertionError</failure></testcase><testcase classname="tests.test_numbering" name="test_unordered_input" time="0.000"><failure message="AssertionError: assert 'INV-2026-0003' == 'INV-2026-0008'&#10;  &#10;  - INV-2026-0008&#10;  ?             ^&#10;  + INV-2026-0003&#10;  ?             ^">def test_unordered_input():
+&gt;       assert next_number(["INV-2026-0007", "INV-2026-0002"], 2026) == "INV-2026-0008"
+E       AssertionError: assert 'INV-2026-0003' == 'INV-2026-0008'
+E         
+E         - INV-2026-0008
+E         ?             ^
+E         + INV-2026-0003
+E         ?             ^
+
+tests/test_numbering.py:17: AssertionError</failure></testcase><testcase classname="tests.test_numbering" name="test_other_years_ignored" time="0.000"><failure message="AssertionError: assert 'INV-2026-0004' == 'INV-2026-0003'&#10;  &#10;  - INV-2026-0003&#10;  ?             ^&#10;  + INV-2026-0004&#10;  ?             ^">def test_other_years_ignored():
+        existing = ["INV-2025-0009", "INV-2026-0002", "INV-2027-0050"]
+&gt;       assert next_number(existing, 2026) == "INV-2026-0003"
+E       AssertionError: assert 'INV-2026-0004' == 'INV-2026-0003'
+E         
+E         - INV-2026-0003
+E         ?             ^
+E         + INV-2026-0004
+E         ?             ^
+
+tests/test_numbering.py:22: AssertionError</failure></testcase><testcase classname="tests.test_numbering" name="test_no_numbers_for_year" time="0.000"><failure message="AssertionError: assert 'INV-2026-0002' == 'INV-2026-0001'&#10;  &#10;  - INV-2026-0001&#10;  ?             ^&#10;  + INV-2026-0002&#10;  ?             ^">def test_no_numbers_for_year():
+&gt;       assert next_number(["INV-2025-0009"], 2026) == "INV-2026-0001"
+E       AssertionError: assert 'INV-2026-0002' == 'INV-2026-0001'
+E         
+E         - INV-2026-0001
+E         ?             ^
+E         + INV-2026-0002
+E         ?             ^
+
+tests/test_numbering.py:26: AssertionError</failure></testcase><testcase classname="tests.test_numbering" name="test_invalid_entries_ignored" time="0.000"><failure message="AssertionError: assert 'INV-2026-0010' == 'INV-2026-0003'&#10;  &#10;  - INV-2026-0003&#10;  ?             -&#10;  + INV-2026-0010&#10;  ?            +">def test_invalid_entries_ignored():
+        existing = ["", "garbage", "INV-2026-", "INV-2026-abc", "XINV-2026-0099",
+                    "INV-2026-0099x", "INV-2026-0003-1", "inv-2026-0098", "INV-2026-0002"]
+&gt;       assert next_number(existing, 2026) == "INV-2026-0003"
+E       AssertionError: assert 'INV-2026-0010' == 'INV-2026-0003'
+E         
+E         - INV-2026-0003
+E         ?             -
+E         + INV-2026-0010
+E         ?            +
+
+tests/test_numbering.py:32: AssertionError</failure></testcase><testcase classname="tests.test_numbering" name="test_sequence_wider_than_four_digits" time="0.000"><failure message="AssertionError: assert 'INV-2026-0002' == 'INV-2026-10000'&#10;  &#10;  - INV-2026-10000&#10;  ?          -   ^&#10;  + INV-2026-0002&#10;  ?             ^">def test_sequence_wider_than_four_digits():
+&gt;       assert next_number(["INV-2026-9999"], 2026) == "INV-2026-10000"
+E       AssertionError: assert 'INV-2026-0002' == 'INV-2026-10000'
+E         
+E         - INV-2026-10000
+E         ?          -   ^
+E         + INV-2026-0002
+E         ?             ^
+
+tests/test_numbering.py:36: AssertionError</failure></testcase><testcase classname="tests.test_pricing" name="test_line_total" time="0.000" /><testcase classname="tests.test_pricing" name="test_subtotal" time="0.000" /><testcase classname="tests.test_pricing" name="test_discount" time="0.000" /><testcase classname="tests.test_pricing" name="test_no_discount" time="0.000" /><testcase classname="tests.test_pricing" name="test_unknown_discount_code" time="0.000" /><testcase classname="tests.test_pricing" name="test_tax" time="0.000" /><testcase classname="tests.test_pricing" name="test_tax_applies_after_discount" time="0.000" /><testcase classname="tests.test_pricing" name="test_total_with_discount_and_tax" time="0.000" /><testcase classname="tests.test_render" name="test_render_text" time="0.000" /><testcase classname="tests.test_store" name="test_round_trip" time="0.001" /><testcase classname="tests.test_terms" name="test_due_date_default_terms" time="0.000" /><testcase classname="tests.test_terms" name="test_due_date_custom_terms" time="0.000" /></testsuite></testsuites>

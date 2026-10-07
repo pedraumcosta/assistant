@@ -1,0 +1,12 @@
+{
+  "run": "o3-due-date__prompt__sonnet__t1",
+  "batch": "arms-sonnet",
+  "task": "o3-due-date",
+  "model": "gpt-5.1-2025-11-13",
+  "verdict": "pass",
+  "reason": "Implementation correctly moves weekend due dates to Monday, adds appropriate tests, and stays within the allowed scope without unrelated changes.",
+  "stop_reason": "returned",
+  "turns": 3,
+  "cost_usd": 0.004053,
+  "seconds": 5.176
+}

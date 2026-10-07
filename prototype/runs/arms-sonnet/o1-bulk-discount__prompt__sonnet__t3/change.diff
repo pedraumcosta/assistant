@@ -1,0 +1,69 @@
+--- a/invoicing/pricing.py
++++ b/invoicing/pricing.py
+@@ -6,8 +6,25 @@
+ from invoicing.rates import DISCOUNT_CODES, TAX_RATES
+ 
+ 
++# (minimum quantity, discount rate), checked from the largest tier down.
++QUANTITY_TIERS = (
++    (50, Decimal("0.10")),
++    (10, Decimal("0.05")),
++)
++
++
++def quantity_discount_rate(quantity: int) -> Decimal:
++    for minimum, rate in QUANTITY_TIERS:
++        if quantity >= minimum:
++            return rate
++    return Decimal("0")
++
++
+ def line_total(line: LineItem) -> Decimal:
+-    return round_cents(line.unit_price * line.quantity)
++    """Unit price times quantity, less the quantity discount, rounded once."""
++    gross = line.unit_price * line.quantity
++    rate = quantity_discount_rate(line.quantity)
++    return round_cents(gross * (1 - rate))
+ 
+ 
+ def subtotal(invoice: Invoice) -> Decimal:
+--- a/tests/test_pricing.py
++++ b/tests/test_pricing.py
+@@ -8,6 +8,37 @@
+ 
+ def test_line_total():
+     assert line_total(line(2, "9.99")) == Decimal("19.98")
++
++
++def test_line_total_below_first_tier_has_no_discount():
++    assert line_total(line(9, "10.00")) == Decimal("90.00")
++
++
++def test_line_total_at_10_units_gets_5_percent_off():
++    assert line_total(line(10, "10.00")) == Decimal("95.00")
++
++
++def test_line_total_at_49_units_still_5_percent_off():
++    assert line_total(line(49, "10.00")) == Decimal("465.50")
++
++
++def test_line_total_at_50_units_gets_10_percent_off():
++    assert line_total(line(50, "10.00")) == Decimal("450.00")
++
++
++def test_line_total_above_50_units_gets_10_percent_off():
++    assert line_total(line(100, "1.00")) == Decimal("90.00")
++
++
++def test_line_total_discount_applies_to_line_total_then_rounds():
++    # 10 * 0.99 = 9.90; 5% off = 9.405 -> 9.40 (half-even)
++    assert line_total(line(10, "0.99")) == Decimal("9.40")
++    # 10 * 1.01 = 10.10; 5% off = 9.595 -> 9.60 (half-even)
++    assert line_total(line(10, "1.01")) == Decimal("9.60")
++
++
++def test_subtotal_uses_discounted_line_totals():
++    assert subtotal(invoice(line(10, "10.00"), line(1, "5.00"))) == Decimal("100.00")
+ 
+ 
+ def test_subtotal():

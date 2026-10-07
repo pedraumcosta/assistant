@@ -18,7 +18,7 @@
 |---|---|---|---|
 | integrity | passed | nothing found | 0.0 |
 | budget | passed | nothing found | 0.0 |
-| build | passed | parses and imports | 1.6 |
-| repo-tests:tests | passed | 17 of 17 tests passed | 2.1 |
-| author-tests | passed | 18 of 18 tests passed | 2.5 |
-| hidden-tests | failed | 1 of 3 tests did not pass; first: test_hidden::test_r1_sunday_moves_to_monday | 2.6 |
+| build | passed | parses and imports | 0.2 |
+| repo-tests:tests | passed | 17 of 17 tests passed | 0.3 |
+| author-tests | passed | 18 of 18 tests passed | 0.3 |
+| hidden-tests | failed | 1 of 3 tests did not pass; first: test_hidden::test_r1_sunday_moves_to_monday | 0.3 |

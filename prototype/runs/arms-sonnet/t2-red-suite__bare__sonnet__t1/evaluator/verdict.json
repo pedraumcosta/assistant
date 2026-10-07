@@ -1,0 +1,12 @@
+{
+  "run": "t2-red-suite__bare__sonnet__t1",
+  "batch": "arms-sonnet",
+  "task": "t2-red-suite",
+  "model": "gpt-5.1-2025-11-13",
+  "verdict": "pass",
+  "reason": "The change correctly fixes tax calculation after discounts, keeps scope and tests within contract, and introduces no unrelated or unsafe modifications.",
+  "stop_reason": "returned",
+  "turns": 3,
+  "cost_usd": 0.005404,
+  "seconds": 4.654
+}

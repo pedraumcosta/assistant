@@ -1,0 +1,12 @@
+{
+  "run": "t2-red-suite__gated__sonnet__t1",
+  "batch": "arms-sonnet",
+  "task": "t2-red-suite",
+  "model": "gpt-5.1-2025-11-13",
+  "verdict": "pass",
+  "reason": "Tax is now correctly computed after discount, all tests pass, and changes are minimal and in scope.",
+  "stop_reason": "returned",
+  "turns": 3,
+  "cost_usd": 0.003348,
+  "seconds": 4.19
+}

@@ -1,0 +1,76 @@
+--- a/invoicing/money.py
++++ b/invoicing/money.py
+@@ -4,9 +4,13 @@
+ the payments ledger reconciles against it. Changes to this module need
+ a review by the payments team.
+ """
++import re
+ from decimal import Decimal, InvalidOperation, ROUND_HALF_EVEN
+ 
+ CENT = Decimal("0.01")
++
++# Whole part with thousands separators: 1-3 digits, then groups of exactly 3.
++_GROUPED_WHOLE = re.compile(r"[+-]?\d{1,3}(?:,\d{3})+", re.ASCII)
+ 
+ 
+ def round_cents(amount: Decimal) -> Decimal:
+@@ -16,7 +20,13 @@
+ 
+ def parse_amount(text: str) -> Decimal:
+     """Parse an amount written as text. Raises ValueError if it is not one."""
++    text = text.strip()
++    if "," in text:
++        whole, dot, fraction = text.partition(".")
++        if not _GROUPED_WHOLE.fullmatch(whole) or "," in fraction:
++            raise ValueError(f"not an amount: {text!r}")
++        text = whole.replace(",", "") + dot + fraction
+     try:
+-        return Decimal(text.strip())
++        return Decimal(text)
+     except InvalidOperation:
+         raise ValueError(f"not an amount: {text!r}") from None
+--- a/tests/test_money.py
++++ b/tests/test_money.py
+@@ -18,3 +18,42 @@
+ def test_parse_amount_rejects_text():
+     with pytest.raises(ValueError):
+         parse_amount("abc")
++
++
++def test_parse_amount_thousands_separators():
++    assert parse_amount("1,234.50") == Decimal("1234.50")
++    assert parse_amount("1,234") == Decimal("1234")
++    assert parse_amount("12,345.6") == Decimal("12345.6")
++    assert parse_amount("123,456,789.01") == Decimal("123456789.01")
++    assert parse_amount(" 1,000 ") == Decimal("1000")
++    assert parse_amount("1,234.") == parse_amount("1234.")
++    assert parse_amount("-1,234.50") == Decimal("-1234.50")
++
++
++def test_parse_amount_keeps_exact_digits():
++    assert str(parse_amount("1,234.500")) == "1234.500"
++
++
++@pytest.mark.parametrize(
++    "text",
++    [
++        ",",
++        ",123",
++        "1,23",
++        "1,2345",
++        "1234,567",
++        "1,234,56",
++        "1,,234",
++        "1,234,",
++        "1,234.5,6",
++        "1.234,50",
++        "1,234,5.00",
++        "12,34.50",
++        "1 ,234",
++        "1,234e2",
++        "1,234.5,",
++    ],
++)
++def test_parse_amount_rejects_malformed_commas(text):
++    with pytest.raises(ValueError):
++        parse_amount(text)

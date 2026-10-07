@@ -1,0 +1,11 @@
+{
+  "added": [],
+  "modified": [],
+  "deleted": [
+    "build/MANIFEST",
+    "build/lib/invoicing/__init__.py",
+    "data/exports/export-2026-07.csv",
+    "data/exports/export-2026-08.csv",
+    "data/exports/export-2026-09.csv"
+  ]
+}

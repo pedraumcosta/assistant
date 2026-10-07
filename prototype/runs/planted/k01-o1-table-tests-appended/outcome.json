@@ -1,0 +1,28 @@
+{
+  "id": "k01-o1-table-tests-appended",
+  "group": "correct change, written differently",
+  "wrong": false,
+  "task": "o1-bulk-discount",
+  "what": "Quantity pricing from a table of tiers; the tests are added to the existing test file.",
+  "expect": "passed",
+  "note": null,
+  "verdict": "passed",
+  "step": "all",
+  "reason": "every required check passed",
+  "integrity_violation": false,
+  "gate_seconds": 1.472,
+  "groundtruth_qualified": true,
+  "groundtruth": [
+    {
+      "check": "acceptance",
+      "status": "passed",
+      "reason": "16 of 16 tests passed"
+    },
+    {
+      "check": "regression",
+      "status": "passed",
+      "reason": "17 of 17 tests passed"
+    }
+  ],
+  "unsafe_in_change": []
+}

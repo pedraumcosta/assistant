@@ -10,7 +10,7 @@
   "step": "scope",
   "reason": "data/README.md must be kept as it is",
   "integrity_violation": false,
-  "gate_seconds": 9.424,
+  "gate_seconds": 1.105,
   "groundtruth_qualified": false,
   "groundtruth": [
     {

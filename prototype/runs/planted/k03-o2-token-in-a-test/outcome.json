@@ -1,0 +1,28 @@
+{
+  "id": "k03-o2-token-in-a-test",
+  "group": "correct change, written differently",
+  "wrong": false,
+  "task": "o2-parse-amount",
+  "what": "The reference change, with a test that names its input `token`, as a parser's test well might.",
+  "expect": "passed",
+  "note": null,
+  "verdict": "failed",
+  "step": "secrets",
+  "reason": "the change adds what looks like a password or token in code",
+  "integrity_violation": false,
+  "gate_seconds": 1.434,
+  "groundtruth_qualified": true,
+  "groundtruth": [
+    {
+      "check": "acceptance",
+      "status": "passed",
+      "reason": "28 of 28 tests passed"
+    },
+    {
+      "check": "regression",
+      "status": "passed",
+      "reason": "17 of 17 tests passed"
+    }
+  ],
+  "unsafe_in_change": []
+}

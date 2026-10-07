@@ -1,0 +1,63 @@
+--- a/invoicing/pricing.py
++++ b/invoicing/pricing.py
+@@ -6,8 +6,25 @@
+ from invoicing.rates import DISCOUNT_CODES, TAX_RATES
+ 
+ 
++QUANTITY_DISCOUNTS = (
++    (50, Decimal("0.10")),
++    (10, Decimal("0.05")),
++)
++
++
++def quantity_discount_rate(quantity: int) -> Decimal:
++    """The fraction taken off a line for buying `quantity` units."""
++    for threshold, rate in QUANTITY_DISCOUNTS:
++        if quantity >= threshold:
++            return rate
++    return Decimal("0")
++
++
+ def line_total(line: LineItem) -> Decimal:
+-    return round_cents(line.unit_price * line.quantity)
++    """Unit price times quantity, less any quantity discount, rounded once."""
++    gross = line.unit_price * line.quantity
++    rate = quantity_discount_rate(line.quantity)
++    return round_cents(gross * (1 - rate))
+ 
+ 
+ def subtotal(invoice: Invoice) -> Decimal:
+--- a/tests/test_pricing.py
++++ b/tests/test_pricing.py
+@@ -39,3 +39,31 @@
+ def test_total_with_discount_and_tax():
+     inv = invoice(line(1, "200.00"), region="UK", discount_code="PARTNER25")
+     assert total(inv) == Decimal("180.00")
++
++
++@pytest.mark.parametrize(
++    "quantity, expected",
++    [
++        (1, "10.00"),
++        (9, "90.00"),
++        (10, "95.00"),
++        (49, "465.50"),
++        (50, "450.00"),
++        (100, "900.00"),
++    ],
++)
++def test_line_total_quantity_discount(quantity, expected):
++    assert line_total(line(quantity, "10.00")) == Decimal(expected)
++
++
++def test_line_total_quantity_discount_rounds_once_half_even():
++    # 10 * 0.25 = 2.50; 5% off = 2.375 -> 2.38 (half-even on the line total)
++    assert line_total(line(10, "0.25")) == Decimal("2.38")
++    # 10 * 0.45 = 4.50; 5% off = 4.275 -> 4.28
++    assert line_total(line(10, "0.45")) == Decimal("4.28")
++    # 10 * 0.23 = 2.30; 5% off = 2.185 -> 2.18 (half-even)
++    assert line_total(line(10, "0.23")) == Decimal("2.18")
++
++
++def test_subtotal_uses_discounted_line_totals():
++    assert subtotal(invoice(line(10, "10.00"), line(1, "5.00"))) == Decimal("100.00")

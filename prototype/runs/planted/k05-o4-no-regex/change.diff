@@ -1,0 +1,29 @@
+--- a/invoicing/numbering.py
++++ b/invoicing/numbering.py
+@@ -5,6 +5,16 @@
+     return f"INV-{year}-{sequence:04d}"
+ 
+ 
++def _sequence(number: str, year: int) -> int | None:
++    parts = number.split("-")
++    if len(parts) != 3 or parts[0] != "INV" or parts[1] != str(year):
++        return None
++    if len(parts[2]) < 4 or not (parts[2].isascii() and parts[2].isdigit()):
++        return None
++    return int(parts[2])
++
++
+ def next_number(existing: list[str], year: int) -> str:
+     """The next invoice number for the year, given the numbers already used."""
+-    return format_number(year, len(existing) + 1)
++    used = [s for s in (_sequence(number, year) for number in existing) if s is not None]
++    return format_number(year, max(used, default=0) + 1)
+--- a/tests/test_numbering_more.py
++++ b/tests/test_numbering_more.py
+@@ -0,0 +1,6 @@
++from invoicing.numbering import next_number
++
++
++def test_gaps_years_and_junk():
++    assert next_number(["INV-2026-0001", "INV-2026-0007"], 2026) == "INV-2026-0008"
++    assert next_number(["INV-2025-0412", "junk", "INV-2026-0003"], 2026) == "INV-2026-0004"

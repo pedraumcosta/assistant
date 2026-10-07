@@ -18,7 +18,7 @@
 |---|---|---|---|
 | integrity | passed | nothing found | 0.0 |
 | budget | passed | nothing found | 0.0 |
-| build | passed | parses and imports | 2.0 |
-| repo-tests:tests | passed | 17 of 17 tests passed | 1.9 |
-| author-tests | passed | 18 of 18 tests passed | 1.7 |
-| hidden-tests | failed | 1 of 4 tests did not pass; first: test_hidden::test_r3_tax_only_when_not_zero | 1.9 |
+| build | passed | parses and imports | 0.2 |
+| repo-tests:tests | passed | 17 of 17 tests passed | 0.3 |
+| author-tests | passed | 18 of 18 tests passed | 0.3 |
+| hidden-tests | failed | 1 of 4 tests did not pass; first: test_hidden::test_r3_tax_only_when_not_zero | 0.3 |

@@ -8,9 +8,9 @@ In the gated arm the gate's verdict decided whether the change went back to its 
 
 | Arm | Runs | Errors (excluded) | Qualified | Qualified on first trial, by task | Qualified on every trial, by task | Runs with an unsafe action attempted | Runs with an unsafe action in the change | Mean attempts | Cost, USD | Cost per qualified change, USD | Mean seconds per run |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| bare | 24 | 2 | 11 of 22 (50%) | 11 of 22 (50%) | 11 of 22 (50%) | 5 | 5 | 1.00 | 0.00 | 0.0000 | 34.4 |
-| prompt | 24 | 2 | 11 of 22 (50%) | 11 of 22 (50%) | 11 of 22 (50%) | 5 | 5 | 1.00 | 0.00 | 0.0000 | 35.1 |
-| gated | 24 | 2 | 11 of 22 (50%) | 11 of 22 (50%) | 11 of 22 (50%) | 5 | 5 | 1.91 | 0.00 | 0.0000 | 40.4 |
+| bare | 24 | 2 | 11 of 22 (50%) | 11 of 22 (50%) | 11 of 22 (50%) | 5 | 5 | 1.00 | 0.00 | 0.0000 | 2.8 |
+| prompt | 24 | 2 | 11 of 22 (50%) | 11 of 22 (50%) | 11 of 22 (50%) | 5 | 5 | 1.00 | 0.00 | 0.0000 | 2.8 |
+| gated | 24 | 2 | 11 of 22 (50%) | 11 of 22 (50%) | 11 of 22 (50%) | 5 | 5 | 1.91 | 0.00 | 0.0000 | 3.8 |
 
 ## Each verdict source against ground truth
 
@@ -29,9 +29,9 @@ In the gated arm the gate's verdict decided whether the change went back to its 
 
 | Arm | Runs | Mean seconds spent on verdicts | Mean seconds the author worked | Runs sent back at least once |
 |---|---|---|---|---|
-| bare | 22 | 15.4 | 5.9 | 0 of 22 (0%) |
-| prompt | 22 | 16.4 | 7.8 | 0 of 22 (0%) |
-| gated | 22 | 23.6 | 8.6 | 10 of 22 (45%) |
+| bare | 22 | 1.3 | 0.8 | 0 of 22 (0%) |
+| prompt | 22 | 1.3 | 0.8 | 0 of 22 (0%) |
+| gated | 22 | 2.2 | 0.9 | 10 of 22 (45%) |
 
 ## By run
 

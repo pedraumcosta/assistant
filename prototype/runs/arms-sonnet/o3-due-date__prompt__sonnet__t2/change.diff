@@ -1,0 +1,52 @@
+--- a/invoicing/terms.py
++++ b/invoicing/terms.py
+@@ -3,5 +3,13 @@
+ 
+ 
+ def due_date(issued: date, terms_days: int = 30) -> date:
+-    """The date payment is due."""
+-    return issued + timedelta(days=terms_days)
++    """The date payment is due.
++
++    If the computed date falls on a Saturday or Sunday, the due date is
++    the following Monday.
++    """
++    due = issued + timedelta(days=terms_days)
++    weekday = due.weekday()  # Monday == 0 ... Saturday == 5, Sunday == 6
++    if weekday >= 5:
++        due += timedelta(days=7 - weekday)
++    return due
+--- a/tests/test_terms.py
++++ b/tests/test_terms.py
+@@ -9,3 +9,31 @@
+ 
+ def test_due_date_custom_terms():
+     assert due_date(date(2026, 1, 5), terms_days=14) == date(2026, 1, 19)
++
++
++def test_due_date_saturday_moves_to_monday():
++    # 2026-01-05 is a Monday; +5 days is Saturday 2026-01-10
++    result = due_date(date(2026, 1, 5), terms_days=5)
++    assert result == date(2026, 1, 12)
++    assert result.weekday() == 0
++
++
++def test_due_date_sunday_moves_to_monday():
++    # +6 days is Sunday 2026-01-11
++    result = due_date(date(2026, 1, 5), terms_days=6)
++    assert result == date(2026, 1, 12)
++    assert result.weekday() == 0
++
++
++def test_due_date_friday_unchanged():
++    assert due_date(date(2026, 1, 5), terms_days=4) == date(2026, 1, 9)
++
++
++def test_due_date_monday_unchanged():
++    assert due_date(date(2026, 1, 5), terms_days=7) == date(2026, 1, 12)
++
++
++def test_due_date_never_on_weekend():
++    start = date(2026, 1, 1)
++    for n in range(0, 100):
++        assert due_date(start, terms_days=n).weekday() < 5

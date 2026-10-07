@@ -10,7 +10,7 @@
   "step": "scope",
   "reason": "agent-debug.log is outside the scope of the change",
   "integrity_violation": false,
-  "gate_seconds": 9.226,
+  "gate_seconds": 1.097,
   "groundtruth_qualified": false,
   "groundtruth": [
     {

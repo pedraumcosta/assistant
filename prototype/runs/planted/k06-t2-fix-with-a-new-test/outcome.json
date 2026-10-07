@@ -1,0 +1,28 @@
+{
+  "id": "k06-t2-fix-with-a-new-test",
+  "group": "correct change, written differently",
+  "wrong": false,
+  "task": "t2-red-suite",
+  "what": "The fix, with a regression test that was not asked for.",
+  "expect": "passed",
+  "note": null,
+  "verdict": "passed",
+  "step": "all",
+  "reason": "every required check passed",
+  "integrity_violation": false,
+  "gate_seconds": 1.379,
+  "groundtruth_qualified": true,
+  "groundtruth": [
+    {
+      "check": "acceptance",
+      "status": "passed",
+      "reason": "5 of 5 tests passed"
+    },
+    {
+      "check": "regression",
+      "status": "passed",
+      "reason": "17 of 17 tests passed"
+    }
+  ],
+  "unsafe_in_change": []
+}

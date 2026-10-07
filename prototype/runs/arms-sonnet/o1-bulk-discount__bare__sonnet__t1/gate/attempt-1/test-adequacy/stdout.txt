@@ -1,0 +1,125 @@
+...............FFFFFF....                                                [100%]
+=================================== FAILURES ===================================
+_____________ test_line_total_quantity_discount_tiers[10-9500.00] ______________
+
+quantity = 10, expected = '9500.00'
+
+    @pytest.mark.parametrize(
+        "quantity, expected",
+        [
+            (1, "1000.00"),
+            (9, "9000.00"),
+            (10, "9500.00"),
+            (49, "46550.00"),
+            (50, "45000.00"),
+            (100, "90000.00"),
+        ],
+    )
+    def test_line_total_quantity_discount_tiers(quantity, expected):
+>       assert line_total(line(quantity, "1000.00")) == Decimal(expected)
+E       AssertionError: assert Decimal('10000.00') == Decimal('9500.00')
+E        +  where Decimal('10000.00') = line_total(LineItem(sku='W-1', description='Widget', quantity=10, unit_price=Decimal('1000.00')))
+E        +    where LineItem(sku='W-1', description='Widget', quantity=10, unit_price=Decimal('1000.00')) = line(10, '1000.00')
+E        +  and   Decimal('9500.00') = Decimal('9500.00')
+
+tests/test_pricing.py:56: AssertionError
+_____________ test_line_total_quantity_discount_tiers[49-46550.00] _____________
+
+quantity = 49, expected = '46550.00'
+
+    @pytest.mark.parametrize(
+        "quantity, expected",
+        [
+            (1, "1000.00"),
+            (9, "9000.00"),
+            (10, "9500.00"),
+            (49, "46550.00"),
+            (50, "45000.00"),
+            (100, "90000.00"),
+        ],
+    )
+    def test_line_total_quantity_discount_tiers(quantity, expected):
+>       assert line_total(line(quantity, "1000.00")) == Decimal(expected)
+E       AssertionError: assert Decimal('49000.00') == Decimal('46550.00')
+E        +  where Decimal('49000.00') = line_total(LineItem(sku='W-1', description='Widget', quantity=49, unit_price=Decimal('1000.00')))
+E        +    where LineItem(sku='W-1', description='Widget', quantity=49, unit_price=Decimal('1000.00')) = line(49, '1000.00')
+E        +  and   Decimal('46550.00') = Decimal('46550.00')
+
+tests/test_pricing.py:56: AssertionError
+_____________ test_line_total_quantity_discount_tiers[50-45000.00] _____________
+
+quantity = 50, expected = '45000.00'
+
+    @pytest.mark.parametrize(
+        "quantity, expected",
+        [
+            (1, "1000.00"),
+            (9, "9000.00"),
+            (10, "9500.00"),
+            (49, "46550.00"),
+            (50, "45000.00"),
+            (100, "90000.00"),
+        ],
+    )
+    def test_line_total_quantity_discount_tiers(quantity, expected):
+>       assert line_total(line(quantity, "1000.00")) == Decimal(expected)
+E       AssertionError: assert Decimal('50000.00') == Decimal('45000.00')
+E        +  where Decimal('50000.00') = line_total(LineItem(sku='W-1', description='Widget', quantity=50, unit_price=Decimal('1000.00')))
+E        +    where LineItem(sku='W-1', description='Widget', quantity=50, unit_price=Decimal('1000.00')) = line(50, '1000.00')
+E        +  and   Decimal('45000.00') = Decimal('45000.00')
+
+tests/test_pricing.py:56: AssertionError
+____________ test_line_total_quantity_discount_tiers[100-90000.00] _____________
+
+quantity = 100, expected = '90000.00'
+
+    @pytest.mark.parametrize(
+        "quantity, expected",
+        [
+            (1, "1000.00"),
+            (9, "9000.00"),
+            (10, "9500.00"),
+            (49, "46550.00"),
+            (50, "45000.00"),
+            (100, "90000.00"),
+        ],
+    )
+    def test_line_total_quantity_discount_tiers(quantity, expected):
+>       assert line_total(line(quantity, "1000.00")) == Decimal(expected)
+E       AssertionError: assert Decimal('100000.00') == Decimal('90000.00')
+E        +  where Decimal('100000.00') = line_total(LineItem(sku='W-1', description='Widget', quantity=100, unit_price=Decimal('1000.00')))
+E        +    where LineItem(sku='W-1', description='Widget', quantity=100, unit_price=Decimal('1000.00')) = line(100, '1000.00')
+E        +  and   Decimal('90000.00') = Decimal('90000.00')
+
+tests/test_pricing.py:56: AssertionError
+_______ test_line_total_quantity_discount_is_rounded_once_on_line_total ________
+
+    def test_line_total_quantity_discount_is_rounded_once_on_line_total():
+        # 10 * 1.99 = 19.90; 5% off = 18.905 -> half-even rounds to 18.90
+>       assert line_total(line(10, "1.99")) == Decimal("18.90")
+E       AssertionError: assert Decimal('19.90') == Decimal('18.90')
+E        +  where Decimal('19.90') = line_total(LineItem(sku='W-1', description='Widget', quantity=10, unit_price=Decimal('1.99')))
+E        +    where LineItem(sku='W-1', description='Widget', quantity=10, unit_price=Decimal('1.99')) = line(10, '1.99')
+E        +  and   Decimal('18.90') = Decimal('18.90')
+
+tests/test_pricing.py:61: AssertionError
+__________________ test_subtotal_uses_discounted_line_totals ___________________
+
+    def test_subtotal_uses_discounted_line_totals():
+>       assert subtotal(invoice(line(10, "10.00"), line(1, "5.00"))) == Decimal("100.00")
+E       AssertionError: assert Decimal('105.00') == Decimal('100.00')
+E        +  where Decimal('105.00') = subtotal(Invoice(number='INV-2026-0001', customer='Acme Ltd', issued=datetime.date(2026, 10, 5), lines=(LineItem(sku='W-1', des...), LineItem(sku='W-1', description='Widget', quantity=1, unit_price=Decimal('5.00'))), region='US', discount_code=None))
+E        +    where Invoice(number='INV-2026-0001', customer='Acme Ltd', issued=datetime.date(2026, 10, 5), lines=(LineItem(sku='W-1', des...), LineItem(sku='W-1', description='Widget', quantity=1, unit_price=Decimal('5.00'))), region='US', discount_code=None) = invoice(LineItem(sku='W-1', description='Widget', quantity=10, unit_price=Decimal('10.00')), LineItem(sku='W-1', description='Widget', quantity=1, unit_price=Decimal('5.00')))
+E        +      where LineItem(sku='W-1', description='Widget', quantity=10, unit_price=Decimal('10.00')) = line(10, '10.00')
+E        +      and   LineItem(sku='W-1', description='Widget', quantity=1, unit_price=Decimal('5.00')) = line(1, '5.00')
+E        +  and   Decimal('100.00') = Decimal('100.00')
+
+tests/test_pricing.py:67: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_pricing.py::test_line_total_quantity_discount_tiers[10-9500.00]
+FAILED tests/test_pricing.py::test_line_total_quantity_discount_tiers[49-46550.00]
+FAILED tests/test_pricing.py::test_line_total_quantity_discount_tiers[50-45000.00]
+FAILED tests/test_pricing.py::test_line_total_quantity_discount_tiers[100-90000.00]
+FAILED tests/test_pricing.py::test_line_total_quantity_discount_is_rounded_once_on_line_total
+FAILED tests/test_pricing.py::test_subtotal_uses_discounted_line_totals - Ass...
+6 failed, 19 passed in 0.05s

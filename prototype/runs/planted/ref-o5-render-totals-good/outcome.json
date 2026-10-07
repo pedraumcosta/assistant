@@ -10,13 +10,13 @@
   "step": "all",
   "reason": "every required check passed",
   "integrity_violation": false,
-  "gate_seconds": 10.471,
+  "gate_seconds": 1.446,
   "groundtruth_qualified": true,
   "groundtruth": [
     {
       "check": "acceptance",
       "status": "passed",
-      "reason": "5 of 5 tests passed"
+      "reason": "7 of 7 tests passed"
     },
     {
       "check": "regression",

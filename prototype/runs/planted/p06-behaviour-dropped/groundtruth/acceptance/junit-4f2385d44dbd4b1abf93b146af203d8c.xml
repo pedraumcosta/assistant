@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="16" time="0.030" timestamp="2026-10-07T13:08:09.957350+00:00" hostname="19bbbfdc51db"><testcase classname="test_acceptance" name="test_tiers_and_their_boundaries[1-10.00]" time="0.000" /><testcase classname="test_acceptance" name="test_tiers_and_their_boundaries[9-90.00]" time="0.000" /><testcase classname="test_acceptance" name="test_tiers_and_their_boundaries[10-95.00]" time="0.000" /><testcase classname="test_acceptance" name="test_tiers_and_their_boundaries[11-104.50]" time="0.000" /><testcase classname="test_acceptance" name="test_tiers_and_their_boundaries[49-465.50]" time="0.000" /><testcase classname="test_acceptance" name="test_tiers_and_their_boundaries[50-450.00]" time="0.000" /><testcase classname="test_acceptance" name="test_tiers_and_their_boundaries[51-459.00]" time="0.000" /><testcase classname="test_acceptance" name="test_tiers_and_their_boundaries[200-1800.00]" time="0.000" /><testcase classname="test_acceptance" name="test_discount_is_applied_to_the_line_total_then_rounded" time="0.000" /><testcase classname="test_acceptance" name="test_rounding_stays_half_even" time="0.000" /><testcase classname="test_acceptance" name="test_subtotal_uses_discounted_lines" time="0.000" /><testcase classname="test_acceptance" name="test_tax_and_total_follow_the_discount_in_every_region[US-WELCOME10-0.00-85.50]" time="0.000" /><testcase classname="test_acceptance" name="test_tax_and_total_follow_the_discount_in_every_region[UK-WELCOME10-17.10-102.60]" time="0.000" /><testcase classname="test_acceptance" name="test_tax_and_total_follow_the_discount_in_every_region[DE-WELCOME10-16.24-101.74]" time="0.000"><failure message="AssertionError: assert Decimal('18.05') == Decimal('16.24')&#10; +  where Decimal('18.05') = &lt;function tax at 0x70a7a170d260&gt;(Invoice(number='INV-2026-0001', customer='Acme Ltd', issued=datetime.date(2026, 10, 5), lines=(LineItem(sku='W-1', description='Widget', quantity=10, unit_price=Decimal('10.00')),), region='DE', discount_code='WELCOME10'))&#10; +    where &lt;function tax at 0x70a7a170d260&gt; = pricing.tax&#10; +  and   Decimal('16.24') = Decimal('16.24')">region = 'DE', code = 'WELCOME10', expected_tax = '16.24'
+expected_total = '101.74'
+
+    @pytest.mark.parametrize("region,code,expected_tax,expected_total", [
+        ("US", "WELCOME10", "0.00", "85.50"),
+        ("UK", "WELCOME10", "17.10", "102.60"),
+        ("DE", "WELCOME10", "16.24", "101.74"),   # 16.245, half-even
+        ("PT", "WELCOME10", "19.66", "105.16"),   # 19.665, half-even
+        ("DE", None, "18.05", "113.05"),
+    ])
+    def test_tax_and_total_follow_the_discount_in_every_region(region, code, expected_tax, expected_total):
+        from datetime import date
+        from invoicing.models import Invoice
+        inv = Invoice("INV-2026-0001", "Acme Ltd", date(2026, 10, 5),
+                      (LineItem("W-1", "Widget", 10, Decimal("10.00")),), region, code)
+&gt;       assert pricing.tax(inv) == Decimal(expected_tax)
+E       AssertionError: assert Decimal('18.05') == Decimal('16.24')
+E        +  where Decimal('18.05') = &lt;function tax at 0x70a7a170d260&gt;(Invoice(number='INV-2026-0001', customer='Acme Ltd', issued=datetime.date(2026, 10, 5), lines=(LineItem(sku='W-1', description='Widget', quantity=10, unit_price=Decimal('10.00')),), region='DE', discount_code='WELCOME10'))
+E        +    where &lt;function tax at 0x70a7a170d260&gt; = pricing.tax
+E        +  and   Decimal('16.24') = Decimal('16.24')
+
+test_acceptance.py:61: AssertionError</failure></testcase><testcase classname="test_acceptance" name="test_tax_and_total_follow_the_discount_in_every_region[PT-WELCOME10-19.66-105.16]" time="0.000"><failure message="AssertionError: assert Decimal('21.85') == Decimal('19.66')&#10; +  where Decimal('21.85') = &lt;function tax at 0x70a7a170d260&gt;(Invoice(number='INV-2026-0001', customer='Acme Ltd', issued=datetime.date(2026, 10, 5), lines=(LineItem(sku='W-1', description='Widget', quantity=10, unit_price=Decimal('10.00')),), region='PT', discount_code='WELCOME10'))&#10; +    where &lt;function tax at 0x70a7a170d260&gt; = pricing.tax&#10; +  and   Decimal('19.66') = Decimal('19.66')">region = 'PT', code = 'WELCOME10', expected_tax = '19.66'
+expected_total = '105.16'
+
+    @pytest.mark.parametrize("region,code,expected_tax,expected_total", [
+        ("US", "WELCOME10", "0.00", "85.50"),
+        ("UK", "WELCOME10", "17.10", "102.60"),
+        ("DE", "WELCOME10", "16.24", "101.74"),   # 16.245, half-even
+        ("PT", "WELCOME10", "19.66", "105.16"),   # 19.665, half-even
+        ("DE", None, "18.05", "113.05"),
+    ])
+    def test_tax_and_total_follow_the_discount_in_every_region(region, code, expected_tax, expected_total):
+        from datetime import date
+        from invoicing.models import Invoice
+        inv = Invoice("INV-2026-0001", "Acme Ltd", date(2026, 10, 5),
+                      (LineItem("W-1", "Widget", 10, Decimal("10.00")),), region, code)
+&gt;       assert pricing.tax(inv) == Decimal(expected_tax)
+E       AssertionError: assert Decimal('21.85') == Decimal('19.66')
+E        +  where Decimal('21.85') = &lt;function tax at 0x70a7a170d260&gt;(Invoice(number='INV-2026-0001', customer='Acme Ltd', issued=datetime.date(2026, 10, 5), lines=(LineItem(sku='W-1', description='Widget', quantity=10, unit_price=Decimal('10.00')),), region='PT', discount_code='WELCOME10'))
+E        +    where &lt;function tax at 0x70a7a170d260&gt; = pricing.tax
+E        +  and   Decimal('19.66') = Decimal('19.66')
+
+test_acceptance.py:61: AssertionError</failure></testcase><testcase classname="test_acceptance" name="test_tax_and_total_follow_the_discount_in_every_region[DE-None-18.05-113.05]" time="0.000" /></testsuite></testsuites>

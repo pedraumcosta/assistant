@@ -1,0 +1,20 @@
+..............F...                                                       [100%]
+=================================== FAILURES ===================================
+_______________ test_long_description_is_truncated_with_ellipsis _______________
+
+    def test_long_description_is_truncated_with_ellipsis():
+        from datetime import date
+        from decimal import Decimal
+        from invoicing.models import Invoice, LineItem
+        from invoicing.render import render_text
+    
+        line = LineItem("W-1", "Extended warranty, three years, on-site", 2, Decimal("9.99"))
+        text = render_text(Invoice("INV-1", "Acme", date(2026, 10, 5), (line,)))
+>       assert all(len(r) <= 37 for r in text.splitlines())
+E       assert False
+E        +  where False = all(<generator object test_long_description_is_truncated_with_ellipsis.<locals>.<genexpr> at 0x76fb0b450ba0>)
+
+tests/test_render.py:25: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_render.py::test_long_description_is_truncated_with_ellipsis
+1 failed, 17 passed in 0.03s

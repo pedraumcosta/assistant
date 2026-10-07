@@ -1,0 +1,22 @@
+{
+  "key": "220e36a6fd04bd1c152a01fdc0ac2e45f076a6c9aa3abad6c0e72535337e7f9e",
+  "task": "t4-list-numbers",
+  "contract_sha256": "103959e2b7e892e8067a914d51904b7492cf21b1d3d18fd6bd0d4570ccdf6cd5",
+  "base_tree": "02e779851785f4c4f633690c4ed061c758e442bee2e65a689bf95b244ffa9da6",
+  "head_tree": "432f843f1cccd8aed59acff8db376d3cc0d99930645b28d725f39d9ad6458468",
+  "verdict": "failed",
+  "step": "integrity",
+  "reason": "an existing test was removed or changed: tests/test_store.py",
+  "integrity_violation": true,
+  "risk_tier": "yellow",
+  "routed": "author",
+  "evidence": [
+    {
+      "check": "integrity",
+      "status": "failed",
+      "reason": "an existing test was removed or changed: tests/test_store.py",
+      "duration_s": 0.0
+    }
+  ],
+  "seconds": 0.006
+}

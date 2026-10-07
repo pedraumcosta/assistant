@@ -1,0 +1,9 @@
+{
+  "added": [
+    "tests/test_store_list_numbers.py"
+  ],
+  "modified": [
+    "invoicing/store.py"
+  ],
+  "deleted": []
+}

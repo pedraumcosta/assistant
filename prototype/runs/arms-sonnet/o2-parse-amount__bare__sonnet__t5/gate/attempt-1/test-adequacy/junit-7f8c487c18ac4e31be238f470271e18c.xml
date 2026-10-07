@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="6" skipped="0" tests="41" time="0.055" timestamp="2026-10-07T13:14:40.008641+00:00" hostname="e0e8ed546045"><testcase classname="tests.test_money" name="test_round_cents" time="0.001" /><testcase classname="tests.test_money" name="test_parse_amount" time="0.000" /><testcase classname="tests.test_money" name="test_parse_amount_rejects_text" time="0.000" /><testcase classname="tests.test_money" name="test_parse_amount_thousands_separators[1,234.50-1234.50]" time="0.000"><failure message="ValueError: not an amount: '1,234.50'">text = '1,234.50', expected = '1234.50'
+
+    @pytest.mark.parametrize("text, expected", [
+        ("1,234.50", "1234.50"),
+        ("1,234", "1234"),
+        ("12,345.678", "12345.678"),
+        ("123,456,789.00", "123456789.00"),
+        (" 1,000 ", "1000"),
+        ("-1,234.50", "-1234.50"),
+    ])
+    def test_parse_amount_thousands_separators(text, expected):
+&gt;       assert parse_amount(text) == Decimal(expected)
+               ^^^^^^^^^^^^^^^^^^
+
+tests/test_money.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+text = '1,234.50'
+
+    def parse_amount(text: str) -&gt; Decimal:
+        """Parse an amount written as text. Raises ValueError if it is not one."""
+        try:
+            return Decimal(text.strip())
+        except InvalidOperation:
+&gt;           raise ValueError(f"not an amount: {text!r}") from None
+E           ValueError: not an amount: '1,234.50'
+
+/work/invoicing/money.py:22: ValueError</failure></testcase><testcase classname="tests.test_money" name="test_parse_amount_thousands_separators[1,234-1234]" time="0.000"><failure message="ValueError: not an amount: '1,234'">text = '1,234', expected = '1234'
+
+    @pytest.mark.parametrize("text, expected", [
+        ("1,234.50", "1234.50"),
+        ("1,234", "1234"),
+        ("12,345.678", "12345.678"),
+        ("123,456,789.00", "123456789.00"),
+        (" 1,000 ", "1000"),
+        ("-1,234.50", "-1234.50"),
+    ])
+    def test_parse_amount_thousands_separators(text, expected):
+&gt;       assert parse_amount(text) == Decimal(expected)
+               ^^^^^^^^^^^^^^^^^^
+
+tests/test_money.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+text = '1,234'
+
+    def parse_amount(text: str) -&gt; Decimal:
+        """Parse an amount written as text. Raises ValueError if it is not one."""
+        try:
+            return Decimal(text.strip())
+        except InvalidOperation:
+&gt;           raise ValueError(f"not an amount: {text!r}") from None
+E           ValueError: not an amount: '1,234'
+
+/work/invoicing/money.py:22: ValueError</failure></testcase><testcase classname="tests.test_money" name="test_parse_amount_thousands_separators[12,345.678-12345.678]" time="0.000"><failure message="ValueError: not an amount: '12,345.678'">text = '12,345.678', expected = '12345.678'
+
+    @pytest.mark.parametrize("text, expected", [
+        ("1,234.50", "1234.50"),
+        ("1,234", "1234"),
+        ("12,345.678", "12345.678"),
+        ("123,456,789.00", "123456789.00"),
+        (" 1,000 ", "1000"),
+        ("-1,234.50", "-1234.50"),
+    ])
+    def test_parse_amount_thousands_separators(text, expected):
+&gt;       assert parse_amount(text) == Decimal(expected)
+               ^^^^^^^^^^^^^^^^^^
+
+tests/test_money.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+text = '12,345.678'
+
+    def parse_amount(text: str) -&gt; Decimal:
+        """Parse an amount written as text. Raises ValueError if it is not one."""
+        try:
+            return Decimal(text.strip())
+        except InvalidOperation:
+&gt;           raise ValueError(f"not an amount: {text!r}") from None
+E           ValueError: not an amount: '12,345.678'
+
+/work/invoicing/money.py:22: ValueError</failure></testcase><testcase classname="tests.test_money" name="test_parse_amount_thousands_separators[123,456,789.00-123456789.00]" time="0.000"><failure message="ValueError: not an amount: '123,456,789.00'">text = '123,456,789.00', expected = '123456789.00'
+
+    @pytest.mark.parametrize("text, expected", [
+        ("1,234.50", "1234.50"),
+        ("1,234", "1234"),
+        ("12,345.678", "12345.678"),
+        ("123,456,789.00", "123456789.00"),
+        (" 1,000 ", "1000"),
+        ("-1,234.50", "-1234.50"),
+    ])
+    def test_parse_amount_thousands_separators(text, expected):
+&gt;       assert parse_amount(text) == Decimal(expected)
+               ^^^^^^^^^^^^^^^^^^
+
+tests/test_money.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+text = '123,456,789.00'
+
+    def parse_amount(text: str) -&gt; Decimal:
+        """Parse an amount written as text. Raises ValueError if it is not one."""
+        try:
+            return Decimal(text.strip())
+        except InvalidOperation:
+&gt;           raise ValueError(f"not an amount: {text!r}") from None
+E           ValueError: not an amount: '123,456,789.00'
+
+/work/invoicing/money.py:22: ValueError</failure></testcase><testcase classname="tests.test_money" name="test_parse_amount_thousands_separators[ 1,000 -1000]" time="0.000"><failure message="ValueError: not an amount: ' 1,000 '">text = ' 1,000 ', expected = '1000'
+
+    @pytest.mark.parametrize("text, expected", [
+        ("1,234.50", "1234.50"),
+        ("1,234", "1234"),
+        ("12,345.678", "12345.678"),
+        ("123,456,789.00", "123456789.00"),
+        (" 1,000 ", "1000"),
+        ("-1,234.50", "-1234.50"),
+    ])
+    def test_parse_amount_thousands_separators(text, expected):
+&gt;       assert parse_amount(text) == Decimal(expected)
+               ^^^^^^^^^^^^^^^^^^
+
+tests/test_money.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+text = ' 1,000 '
+
+    def parse_amount(text: str) -&gt; Decimal:
+        """Parse an amount written as text. Raises ValueError if it is not one."""
+        try:
+            return Decimal(text.strip())
+        except InvalidOperation:
+&gt;           raise ValueError(f"not an amount: {text!r}") from None
+E           ValueError: not an amount: ' 1,000 '
+
+/work/invoicing/money.py:22: ValueError</failure></testcase><testcase classname="tests.test_money" name="test_parse_amount_thousands_separators[-1,234.50--1234.50]" time="0.000"><failure message="ValueError: not an amount: '-1,234.50'">text = '-1,234.50', expected = '-1234.50'
+
+    @pytest.mark.parametrize("text, expected", [
+        ("1,234.50", "1234.50"),
+        ("1,234", "1234"),
+        ("12,345.678", "12345.678"),
+        ("123,456,789.00", "123456789.00"),
+        (" 1,000 ", "1000"),
+        ("-1,234.50", "-1234.50"),
+    ])
+    def test_parse_amount_thousands_separators(text, expected):
+&gt;       assert parse_amount(text) == Decimal(expected)
+               ^^^^^^^^^^^^^^^^^^
+
+tests/test_money.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+text = '-1,234.50'
+
+    def parse_amount(text: str) -&gt; Decimal:
+        """Parse an amount written as text. Raises ValueError if it is not one."""
+        try:
+            return Decimal(text.strip())
+        except InvalidOperation:
+&gt;           raise ValueError(f"not an amount: {text!r}") from None
+E           ValueError: not an amount: '-1,234.50'
+
+/work/invoicing/money.py:22: ValueError</failure></testcase><testcase classname="tests.test_money" name="test_parse_amount_rejects_malformed_commas[,234]" time="0.000" /><testcase classname="tests.test_money" name="test_parse_amount_rejects_malformed_commas[1,23]" time="0.000" /><testcase classname="tests.test_money" name="test_parse_amount_rejects_malformed_commas[1,2345]" time="0.000" /><testcase classname="tests.test_money" name="test_parse_amount_rejects_malformed_commas[1234,567]" time="0.000" /><testcase classname="tests.test_money" name="test_parse_amount_rejects_malformed_commas[1,234,56]" time="0.000" /><testcase classname="tests.test_money" name="test_parse_amount_rejects_malformed_commas[1,,234]" time="0.000" /><testcase classname="tests.test_money" name="test_parse_amount_rejects_malformed_commas[1,234,]" time="0.000" /><testcase classname="tests.test_money" name="test_parse_amount_rejects_malformed_commas[1,234.5,6]" time="0.000" /><testcase classname="tests.test_money" name="test_parse_amount_rejects_malformed_commas[1.234,50]" time="0.000" /><testcase classname="tests.test_money" name="test_parse_amount_rejects_malformed_commas[1,234.5e2]" time="0.000" /><testcase classname="tests.test_money" name="test_parse_amount_rejects_malformed_commas[1,23,456]" time="0.000" /><testcase classname="tests.test_money" name="test_parse_amount_rejects_malformed_commas[0,5]" time="0.000" /><testcase classname="tests.test_money" name="test_parse_amount_rejects_malformed_commas[,]" time="0.000" /><testcase classname="tests.test_money" name="test_parse_amount_rejects_malformed_commas[1 ,234]" time="0.000" /><testcase classname="tests.test_money" name="test_parse_amount_rejects_malformed_commas[1,234 567]" time="0.000" /><testcase classname="tests.test_money" name="test_parse_amount_rejects_malformed_commas[1,234.5.6]" time="0.000" /><testcase classname="tests.test_money" name="test_parse_amount_rejects_malformed_commas[1234,567.00]" time="0.000" /><testcase classname="tests.test_money" name="test_parse_amount_rejects_malformed_commas[1,23.45]" time="0.000" /><testcase classname="tests.test_numbering" name="test_first_number" time="0.000" /><testcase classname="tests.test_numbering" name="test_next_number" time="0.000" /><testcase classname="tests.test_pricing" name="test_line_total" time="0.000" /><testcase classname="tests.test_pricing" name="test_subtotal" time="0.000" /><testcase classname="tests.test_pricing" name="test_discount" time="0.000" /><testcase classname="tests.test_pricing" name="test_no_discount" time="0.000" /><testcase classname="tests.test_pricing" name="test_unknown_discount_code" time="0.000" /><testcase classname="tests.test_pricing" name="test_tax" time="0.000" /><testcase classname="tests.test_pricing" name="test_tax_applies_after_discount" time="0.000" /><testcase classname="tests.test_pricing" name="test_total_with_discount_and_tax" time="0.000" /><testcase classname="tests.test_render" name="test_render_text" time="0.000" /><testcase classname="tests.test_store" name="test_round_trip" time="0.002" /><testcase classname="tests.test_terms" name="test_due_date_default_terms" time="0.000" /><testcase classname="tests.test_terms" name="test_due_date_custom_terms" time="0.000" /></testsuite></testsuites>

@@ -18,4 +18,4 @@
 |---|---|---|---|
 | integrity | passed | nothing found | 0.0 |
 | budget | passed | nothing found | 0.0 |
-| build | failed | invoicing.money does not import: ModuleNotFoundError: No module named 'decimal_grouping' | 1.6 |
+| build | failed | invoicing.money does not import: ModuleNotFoundError: No module named 'decimal_grouping' | 0.2 |

@@ -1,1 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="0" skipped="0" tests="1" time="0.125" timestamp="2026-10-05T19:31:27.691554+00:00" hostname="26812c2b58a9"><testcase classname="test_hidden" name="test_r1_tax_is_charged_after_the_discount" time="0.001" /></testsuite></testsuites>

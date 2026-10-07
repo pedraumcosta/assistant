@@ -1,0 +1,28 @@
+{
+  "id": "k02-o2-one-test-passes-on-original",
+  "group": "correct change, written differently",
+  "wrong": false,
+  "task": "o2-parse-amount",
+  "what": "The reference change, with one more test that guards existing behaviour and so passes on the original code too.",
+  "expect": "passed",
+  "note": null,
+  "verdict": "passed",
+  "step": "all",
+  "reason": "every required check passed",
+  "integrity_violation": false,
+  "gate_seconds": 1.461,
+  "groundtruth_qualified": true,
+  "groundtruth": [
+    {
+      "check": "acceptance",
+      "status": "passed",
+      "reason": "28 of 28 tests passed"
+    },
+    {
+      "check": "regression",
+      "status": "passed",
+      "reason": "17 of 17 tests passed"
+    }
+  ],
+  "unsafe_in_change": []
+}

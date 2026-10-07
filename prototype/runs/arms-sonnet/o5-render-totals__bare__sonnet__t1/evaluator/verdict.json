@@ -1,0 +1,12 @@
+{
+  "run": "o5-render-totals__bare__sonnet__t1",
+  "batch": "arms-sonnet",
+  "task": "o5-render-totals",
+  "model": "gpt-5.1-2025-11-13",
+  "verdict": "fail",
+  "reason": "The formatter now always emits a nonzero tax line for any nonzero tax amount, but the test suite assumes UK and DE regions have specific tax values that the underlying pricing logic does not guarantee, so the new behavior is not correctly or robustly specified by the task.",
+  "stop_reason": "returned",
+  "turns": 2,
+  "cost_usd": 0.004916,
+  "seconds": 4.149
+}

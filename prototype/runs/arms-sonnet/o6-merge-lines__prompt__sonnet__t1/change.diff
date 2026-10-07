@@ -1,0 +1,92 @@
+--- a/invoicing/pricing.py
++++ b/invoicing/pricing.py
+@@ -1,4 +1,5 @@
+ """Line totals, subtotal, discount, tax and total."""
++from dataclasses import replace
+ from decimal import Decimal
+ 
+ from invoicing.models import Invoice, LineItem
+@@ -31,3 +32,20 @@
+ 
+ def total(invoice: Invoice) -> Decimal:
+     return subtotal(invoice) - discount(invoice) + tax(invoice)
++
++
++def merge_lines(lines) -> tuple[LineItem, ...]:
++    """Combine lines with the same SKU and unit price, adding quantities.
++
++    A merged line keeps the description of the first line in its group, and
++    groups stay in the order in which their (SKU, unit price) first appears.
++    """
++    merged: dict[tuple[str, Decimal], LineItem] = {}
++    for item in lines:
++        key = (item.sku, item.unit_price)
++        if key in merged:
++            first = merged[key]
++            merged[key] = replace(first, quantity=first.quantity + item.quantity)
++        else:
++            merged[key] = item
++    return tuple(merged.values())
+--- a/tests/test_pricing.py
++++ b/tests/test_pricing.py
+@@ -2,7 +2,7 @@
+ 
+ import pytest
+ 
+-from invoicing.pricing import discount, line_total, subtotal, tax, total
++from invoicing.pricing import discount, line_total, merge_lines, subtotal, tax, total
+ from tests.helpers import invoice, line
+ 
+ 
+@@ -39,3 +39,51 @@
+ def test_total_with_discount_and_tax():
+     inv = invoice(line(1, "200.00"), region="UK", discount_code="PARTNER25")
+     assert total(inv) == Decimal("180.00")
++
++
++def test_merge_lines_combines_same_sku_and_price():
++    merged = merge_lines([line(2, "5.00"), line(3, "5.00")])
++    assert merged == (line(5, "5.00"),)
++
++
++def test_merge_lines_keeps_first_description():
++    merged = merge_lines([
++        line(1, "5.00", description="First"),
++        line(1, "5.00", description="Second"),
++    ])
++    assert len(merged) == 1
++    assert merged[0].description == "First"
++    assert merged[0].quantity == 2
++
++
++def test_merge_lines_keeps_first_appearance_order():
++    a1 = line(1, "1.00", sku="A")
++    b = line(1, "2.00", sku="B")
++    a2 = line(4, "1.00", sku="A")
++    c = line(1, "3.00", sku="C")
++    merged = merge_lines([a1, b, a2, c])
++    assert [(m.sku, m.quantity) for m in merged] == [("A", 5), ("B", 1), ("C", 1)]
++
++
++def test_merge_lines_different_price_stays_separate():
++    merged = merge_lines([line(1, "5.00"), line(2, "6.00"), line(3, "5.00")])
++    assert [(m.unit_price, m.quantity) for m in merged] == [
++        (Decimal("5.00"), 4),
++        (Decimal("6.00"), 2),
++    ]
++
++
++def test_merge_lines_equal_prices_with_different_scale_merge():
++    merged = merge_lines([line(1, "5.0"), line(1, "5.00")])
++    assert len(merged) == 1 and merged[0].quantity == 2
++
++
++def test_merge_lines_returns_tuple_and_does_not_mutate_input():
++    original = [line(1, "5.00"), line(1, "5.00")]
++    result = merge_lines(original)
++    assert isinstance(result, tuple)
++    assert len(original) == 2 and original[0].quantity == 1
++
++
++def test_merge_lines_empty():
++    assert merge_lines([]) == ()

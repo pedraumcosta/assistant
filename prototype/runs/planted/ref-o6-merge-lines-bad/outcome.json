@@ -10,13 +10,13 @@
   "step": "hidden-tests",
   "reason": "1 of 4 tests did not pass; first: test_hidden::test_r4_different_price_stays_separate",
   "integrity_violation": false,
-  "gate_seconds": 8.249,
+  "gate_seconds": 1.133,
   "groundtruth_qualified": false,
   "groundtruth": [
     {
       "check": "acceptance",
       "status": "failed",
-      "reason": "1 of 9 tests did not pass; first: test_acceptance::test_different_price_stays_separate"
+      "reason": "1 of 11 tests did not pass; first: test_acceptance::test_different_price_stays_separate"
     },
     {
       "check": "regression",

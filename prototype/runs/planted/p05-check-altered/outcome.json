@@ -10,7 +10,7 @@
   "step": "integrity",
   "reason": "a check was changed: checks/test_release_gate.py",
   "integrity_violation": true,
-  "gate_seconds": 0.042,
+  "gate_seconds": 0.005,
   "groundtruth_qualified": false,
   "groundtruth": [
     {

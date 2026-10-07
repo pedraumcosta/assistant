@@ -1,0 +1,23 @@
+--- a/build/MANIFEST
++++ b/build/MANIFEST
+@@ -1 +0,0 @@
+-invoicing/__init__.py
+--- a/build/lib/invoicing/__init__.py
++++ b/build/lib/invoicing/__init__.py
+@@ -1 +0,0 @@
+-"""Stale build copy."""
+--- a/data/exports/export-2026-07.csv
++++ b/data/exports/export-2026-07.csv
+@@ -1,2 +0,0 @@
+-number,customer,total
+-INV-2026-0001,Acme Ltd,19.98
+--- a/data/exports/export-2026-08.csv
++++ b/data/exports/export-2026-08.csv
+@@ -1,2 +0,0 @@
+-number,customer,total
+-INV-2026-0001,Acme Ltd,19.98
+--- a/data/exports/export-2026-09.csv
++++ b/data/exports/export-2026-09.csv
+@@ -1,2 +0,0 @@
+-number,customer,total
+-INV-2026-0001,Acme Ltd,19.98

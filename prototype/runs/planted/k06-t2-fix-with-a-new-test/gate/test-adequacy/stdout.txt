@@ -1,0 +1,38 @@
+...........FF..F..                                                       [100%]
+=================================== FAILURES ===================================
+_______________________ test_tax_applies_after_discount ________________________
+
+    def test_tax_applies_after_discount():
+        inv = invoice(line(1, "200.00"), region="UK", discount_code="PARTNER25")
+>       assert tax(inv) == Decimal("30.00")
+E       AssertionError: assert Decimal('40.00') == Decimal('30.00')
+E        +  where Decimal('40.00') = tax(Invoice(number='INV-2026-0001', customer='Acme Ltd', issued=datetime.date(2026, 10, 5), lines=(LineItem(sku='W-1', description='Widget', quantity=1, unit_price=Decimal('200.00')),), region='UK', discount_code='PARTNER25'))
+E        +  and   Decimal('30.00') = Decimal('30.00')
+
+tests/test_pricing.py:36: AssertionError
+_______________________ test_total_with_discount_and_tax _______________________
+
+    def test_total_with_discount_and_tax():
+        inv = invoice(line(1, "200.00"), region="UK", discount_code="PARTNER25")
+>       assert total(inv) == Decimal("180.00")
+E       AssertionError: assert Decimal('190.00') == Decimal('180.00')
+E        +  where Decimal('190.00') = total(Invoice(number='INV-2026-0001', customer='Acme Ltd', issued=datetime.date(2026, 10, 5), lines=(LineItem(sku='W-1', description='Widget', quantity=1, unit_price=Decimal('200.00')),), region='UK', discount_code='PARTNER25'))
+E        +  and   Decimal('180.00') = Decimal('180.00')
+
+tests/test_pricing.py:41: AssertionError
+_____________________ test_tax_base_excludes_the_discount ______________________
+
+    def test_tax_base_excludes_the_discount():
+>       assert tax(invoice(line(1, "100.00"), region="DE", discount_code="WELCOME10")) == Decimal("17.10")
+E       AssertionError: assert Decimal('19.00') == Decimal('17.10')
+E        +  where Decimal('19.00') = tax(Invoice(number='INV-2026-0001', customer='Acme Ltd', issued=datetime.date(2026, 10, 5), lines=(LineItem(sku='W-1', description='Widget', quantity=1, unit_price=Decimal('100.00')),), region='DE', discount_code='WELCOME10'))
+E        +    where Invoice(number='INV-2026-0001', customer='Acme Ltd', issued=datetime.date(2026, 10, 5), lines=(LineItem(sku='W-1', description='Widget', quantity=1, unit_price=Decimal('100.00')),), region='DE', discount_code='WELCOME10') = invoice(LineItem(sku='W-1', description='Widget', quantity=1, unit_price=Decimal('100.00')), region='DE', discount_code='WELCOME10')
+E        +      where LineItem(sku='W-1', description='Widget', quantity=1, unit_price=Decimal('100.00')) = line(1, '100.00')
+E        +  and   Decimal('17.10') = Decimal('17.10')
+
+tests/test_tax_base.py:8: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_pricing.py::test_tax_applies_after_discount - AssertionErro...
+FAILED tests/test_pricing.py::test_total_with_discount_and_tax - AssertionErr...
+FAILED tests/test_tax_base.py::test_tax_base_excludes_the_discount - Assertio...
+3 failed, 15 passed in 0.04s

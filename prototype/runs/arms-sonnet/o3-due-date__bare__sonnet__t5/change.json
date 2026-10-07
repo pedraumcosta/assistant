@@ -1,0 +1,8 @@
+{
+  "added": [],
+  "modified": [
+    "invoicing/terms.py",
+    "tests/test_terms.py"
+  ],
+  "deleted": []
+}

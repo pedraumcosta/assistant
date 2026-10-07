@@ -10,13 +10,13 @@
   "step": "all",
   "reason": "every required check passed",
   "integrity_violation": false,
-  "gate_seconds": 14.546,
-  "groundtruth_qualified": true,
+  "gate_seconds": 1.445,
+  "groundtruth_qualified": false,
   "groundtruth": [
     {
       "check": "acceptance",
-      "status": "passed",
-      "reason": "11 of 11 tests passed"
+      "status": "failed",
+      "reason": "2 of 16 tests did not pass; first: test_acceptance::test_tax_and_total_follow_the_discount_in_every_region[DE-WELCOME10-16.24-101.74]"
     },
     {
       "check": "regression",

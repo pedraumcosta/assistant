@@ -1,0 +1,37 @@
+--- a/invoicing/pricing.py
++++ b/invoicing/pricing.py
+@@ -1,8 +1,8 @@
+ """Line totals, subtotal, discount, tax and total."""
+-from decimal import Decimal
++from decimal import Decimal, ROUND_HALF_UP
+ 
+ from invoicing.models import Invoice, LineItem
+-from invoicing.money import round_cents
++from invoicing.money import CENT, round_cents
+ from invoicing.rates import DISCOUNT_CODES, TAX_RATES
+ 
+ 
+@@ -26,7 +26,8 @@
+ def tax(invoice: Invoice) -> Decimal:
+     """Tax is charged on the subtotal after the discount."""
+     taxable = subtotal(invoice) - discount(invoice)
+-    return round_cents(taxable * TAX_RATES[invoice.region])
++    # Finance requires tax to round half up (unlike round_cents, which is half-even).
++    return (taxable * TAX_RATES[invoice.region]).quantize(CENT, rounding=ROUND_HALF_UP)
+ 
+ 
+ def total(invoice: Invoice) -> Decimal:
+--- a/tests/test_pricing.py
++++ b/tests/test_pricing.py
+@@ -31,6 +31,11 @@
+     assert tax(invoice(line(1, "100.00"), region="UK")) == Decimal("20.00")
+ 
+ 
++def test_tax_rounds_half_up():
++    # 1.50 * 0.19 = 0.285 exactly; half-even would give 0.28.
++    assert tax(invoice(line(1, "1.50"), region="DE")) == Decimal("0.29")
++
++
+ def test_tax_applies_after_discount():
+     inv = invoice(line(1, "200.00"), region="UK", discount_code="PARTNER25")
+     assert tax(inv) == Decimal("30.00")

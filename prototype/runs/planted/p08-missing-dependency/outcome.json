@@ -10,7 +10,7 @@
   "step": "build",
   "reason": "invoicing.money does not import: ModuleNotFoundError: No module named 'decimal_grouping'",
   "integrity_violation": false,
-  "gate_seconds": 1.615,
+  "gate_seconds": 0.178,
   "groundtruth_qualified": false,
   "groundtruth": [
     {

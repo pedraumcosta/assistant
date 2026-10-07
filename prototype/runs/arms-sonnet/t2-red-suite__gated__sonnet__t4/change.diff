@@ -1,0 +1,11 @@
+--- a/invoicing/pricing.py
++++ b/invoicing/pricing.py
+@@ -25,7 +25,7 @@
+ 
+ def tax(invoice: Invoice) -> Decimal:
+     """Tax is charged on the subtotal after the discount."""
+-    return round_cents(subtotal(invoice) * TAX_RATES[invoice.region])
++    return round_cents((subtotal(invoice) - discount(invoice)) * TAX_RATES[invoice.region])
+ 
+ 
+ def total(invoice: Invoice) -> Decimal:

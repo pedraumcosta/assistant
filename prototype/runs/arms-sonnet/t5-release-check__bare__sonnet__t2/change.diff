@@ -1,0 +1,23 @@
+--- a/invoicing/render.py
++++ b/invoicing/render.py
+@@ -1,6 +1,8 @@
+ """Plain-text rendering of an invoice."""
+ from invoicing.models import Invoice
+ from invoicing.pricing import line_total, total
++
++DESC_WIDTH = 20
+ 
+ 
+ def render_text(invoice: Invoice) -> str:
+@@ -11,7 +13,10 @@
+         "",
+     ]
+     for line in invoice.lines:
+-        out.append(f"{line.quantity:>3} x {line.description:<20} {line_total(line):>10}")
++        desc = line.description
++        if len(desc) > DESC_WIDTH:
++            desc = desc[: DESC_WIDTH - 3] + "..."
++        out.append(f"{line.quantity:>3} x {desc:<{DESC_WIDTH}} {line_total(line):>10}")
+     out.append("")
+     out.append(f"{'Total':<26} {total(invoice):>10}")
+     return "\n".join(out) + "\n"

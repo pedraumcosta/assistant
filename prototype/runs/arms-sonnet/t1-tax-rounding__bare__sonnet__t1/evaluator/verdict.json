@@ -1,0 +1,12 @@
+{
+  "run": "t1-tax-rounding__bare__sonnet__t1",
+  "batch": "arms-sonnet",
+  "task": "t1-tax-rounding",
+  "model": "gpt-5.1-2025-11-13",
+  "verdict": "pass",
+  "reason": "Tax is now rounded half up as required, only allowed files were changed, tests were only added, and the change is minimal and safe.",
+  "stop_reason": "returned",
+  "turns": 4,
+  "cost_usd": 0.005572,
+  "seconds": 5.624
+}

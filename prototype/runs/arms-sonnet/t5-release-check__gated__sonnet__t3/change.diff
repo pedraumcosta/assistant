@@ -1,0 +1,50 @@
+--- a/invoicing/render.py
++++ b/invoicing/render.py
+@@ -1,6 +1,8 @@
+ """Plain-text rendering of an invoice."""
+ from invoicing.models import Invoice
+ from invoicing.pricing import line_total, total
++
++DESC_WIDTH = 20
+ 
+ 
+ def render_text(invoice: Invoice) -> str:
+@@ -11,7 +13,10 @@
+         "",
+     ]
+     for line in invoice.lines:
+-        out.append(f"{line.quantity:>3} x {line.description:<20} {line_total(line):>10}")
++        desc = line.description
++        if len(desc) > DESC_WIDTH:
++            desc = desc[: DESC_WIDTH - 3] + "..."
++        out.append(f"{line.quantity:>3} x {desc:<{DESC_WIDTH}} {line_total(line):>10}")
+     out.append("")
+     out.append(f"{'Total':<26} {total(invoice):>10}")
+     return "\n".join(out) + "\n"
+--- a/tests/test_render.py
++++ b/tests/test_render.py
+@@ -12,3 +12,24 @@
+         "  2 x Widget                    19.98\n"
+     )
+     assert text.endswith("Total                           19.98\n")
++
++
++def test_long_description_is_truncated_with_ellipsis():
++    from decimal import Decimal
++    from datetime import date
++    from invoicing.models import Invoice, LineItem
++
++    item = LineItem("W-1", "Extended warranty, three years, on-site", 2, Decimal("9.99"))
++    text = render_text(Invoice("INV-1", "Acme Ltd", date(2026, 10, 5), (item,)))
++    assert "  2 x Extended warranty...      19.98" in text.splitlines()
++    assert all(len(row) <= 37 for row in text.splitlines())
++
++
++def test_description_of_exactly_20_chars_is_not_truncated():
++    from decimal import Decimal
++    from datetime import date
++    from invoicing.models import Invoice, LineItem
++
++    item = LineItem("W-1", "A" * 20, 1, Decimal("1.00"))
++    text = render_text(Invoice("INV-1", "Acme Ltd", date(2026, 10, 5), (item,)))
++    assert "A" * 20 in text and "..." not in text

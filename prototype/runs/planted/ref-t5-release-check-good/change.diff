@@ -1,0 +1,14 @@
+--- a/invoicing/render.py
++++ b/invoicing/render.py
+@@ -11,7 +11,10 @@
+         "",
+     ]
+     for line in invoice.lines:
+-        out.append(f"{line.quantity:>3} x {line.description:<20} {line_total(line):>10}")
++        description = line.description
++        if len(description) > 20:
++            description = description[:17] + "..."
++        out.append(f"{line.quantity:>3} x {description:<20} {line_total(line):>10}")
+     out.append("")
+     out.append(f"{'Total':<26} {total(invoice):>10}")
+     return "\n".join(out) + "\n"

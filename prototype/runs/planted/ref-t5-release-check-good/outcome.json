@@ -1,0 +1,28 @@
+{
+  "id": "ref-t5-release-check-good",
+  "group": "correct reference change",
+  "wrong": false,
+  "task": "t5-release-check",
+  "what": "The correct reference change for t5-release-check.",
+  "expect": "passed",
+  "note": null,
+  "verdict": "passed",
+  "step": "all",
+  "reason": "every required check passed",
+  "integrity_violation": false,
+  "gate_seconds": 1.429,
+  "groundtruth_qualified": true,
+  "groundtruth": [
+    {
+      "check": "acceptance",
+      "status": "passed",
+      "reason": "6 of 6 tests passed"
+    },
+    {
+      "check": "regression",
+      "status": "passed",
+      "reason": "17 of 17 tests passed"
+    }
+  ],
+  "unsafe_in_change": []
+}

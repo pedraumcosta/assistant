@@ -9,6 +9,7 @@ None has a network, and none is given an API key.
 from __future__ import annotations
 
 import json
+import os
 import subprocess
 import time
 import uuid
@@ -18,8 +19,15 @@ from pathlib import Path
 from prototype.runner.paths import SCAFFOLD
 
 IMAGE = "assist-proto:1"
+# The container runs as the invoking host user, not root. On a native Linux
+# daemon, root with every capability dropped cannot write to a bind mount the
+# host user owns (no CAP_DAC_OVERRIDE), so verdicts ended as `error`: fail
+# closed, but nothing judged (ASSIST-024). Matching the host user makes the
+# mounts writable exactly where the host user could write, and nothing runs
+# as root at all.
 CONFINE = ["--network", "none", "--cap-drop", "ALL", "--security-opt", "no-new-privileges",
-           "--pids-limit", "256", "--memory", "1g"]
+           "--pids-limit", "256", "--memory", "1g",
+           "--user", f"{os.getuid()}:{os.getgid()}"]
 
 
 class SandboxError(RuntimeError):

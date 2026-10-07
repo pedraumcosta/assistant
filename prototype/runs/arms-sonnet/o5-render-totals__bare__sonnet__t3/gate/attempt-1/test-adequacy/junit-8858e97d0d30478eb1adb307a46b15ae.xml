@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="4" skipped="0" tests="21" time="0.040" timestamp="2026-10-07T13:26:03.636683+00:00" hostname="3f20e69d5909"><testcase classname="tests.test_money" name="test_round_cents" time="0.000" /><testcase classname="tests.test_money" name="test_parse_amount" time="0.000" /><testcase classname="tests.test_money" name="test_parse_amount_rejects_text" time="0.000" /><testcase classname="tests.test_numbering" name="test_first_number" time="0.000" /><testcase classname="tests.test_numbering" name="test_next_number" time="0.000" /><testcase classname="tests.test_pricing" name="test_line_total" time="0.000" /><testcase classname="tests.test_pricing" name="test_subtotal" time="0.000" /><testcase classname="tests.test_pricing" name="test_discount" time="0.000" /><testcase classname="tests.test_pricing" name="test_no_discount" time="0.000" /><testcase classname="tests.test_pricing" name="test_unknown_discount_code" time="0.000" /><testcase classname="tests.test_pricing" name="test_tax" time="0.000" /><testcase classname="tests.test_pricing" name="test_tax_applies_after_discount" time="0.000" /><testcase classname="tests.test_pricing" name="test_total_with_discount_and_tax" time="0.000" /><testcase classname="tests.test_render" name="test_render_text" time="0.000" /><testcase classname="tests.test_render" name="test_subtotal_only_for_plain_invoice" time="0.000"><failure message="AssertionError: assert 'Subtotal                        19.98\nTotal' in 'Invoice INV-2026-0001\nCustomer: Acme Ltd\nIssued: 2026-10-05\n\n  2 x Widget                    19.98\n\nTotal                           19.98\n'">def test_subtotal_only_for_plain_invoice():
+        text = render_text(invoice(line(2, "9.99")))
+&gt;       assert "Subtotal                        19.98\n" "Total" in text
+E       AssertionError: assert 'Subtotal                        19.98\nTotal' in 'Invoice INV-2026-0001\nCustomer: Acme Ltd\nIssued: 2026-10-05\n\n  2 x Widget                    19.98\n\nTotal                           19.98\n'
+
+tests/test_render.py:19: AssertionError</failure></testcase><testcase classname="tests.test_render" name="test_discount_and_tax_lines_in_order" time="0.000"><failure message="AssertionError: assert False&#10; +  where False = &lt;built-in method endswith of str object at 0x7c955a8f03f0&gt;('Subtotal                       100.00\nDiscount (WELCOME10)           -10.00\nTax                             18.00\nTotal                          108.00\n')&#10; +    where &lt;built-in method endswith of str object at 0x7c955a8f03f0&gt; = 'Invoice INV-2026-0001\nCustomer: Acme Ltd\nIssued: 2026-10-05\n\n  1 x Widget                   100.00\n\nTotal                          108.00\n'.endswith">def test_discount_and_tax_lines_in_order():
+        text = render_text(invoice(line(1, "100.00"), region="UK", discount_code="WELCOME10"))
+&gt;       assert text.endswith(
+            "Subtotal                       100.00\n"
+            "Discount (WELCOME10)           -10.00\n"
+            "Tax                             18.00\n"
+            "Total                          108.00\n"
+        )
+E       AssertionError: assert False
+E        +  where False = &lt;built-in method endswith of str object at 0x7c955a8f03f0&gt;('Subtotal                       100.00\nDiscount (WELCOME10)           -10.00\nTax                             18.00\nTotal                          108.00\n')
+E        +    where &lt;built-in method endswith of str object at 0x7c955a8f03f0&gt; = 'Invoice INV-2026-0001\nCustomer: Acme Ltd\nIssued: 2026-10-05\n\n  1 x Widget                   100.00\n\nTotal                          108.00\n'.endswith
+
+tests/test_render.py:26: AssertionError</failure></testcase><testcase classname="tests.test_render" name="test_tax_without_discount" time="0.000"><failure message="AssertionError: assert False&#10; +  where False = &lt;built-in method endswith of str object at 0x7c955a8f06f0&gt;('Subtotal                       100.00\nTax                             19.00\nTotal                          119.00\n')&#10; +    where &lt;built-in method endswith of str object at 0x7c955a8f06f0&gt; = 'Invoice INV-2026-0001\nCustomer: Acme Ltd\nIssued: 2026-10-05\n\n  1 x Widget                   100.00\n\nTotal                          119.00\n'.endswith">def test_tax_without_discount():
+        text = render_text(invoice(line(1, "100.00"), region="DE"))
+&gt;       assert text.endswith(
+            "Subtotal                       100.00\n"
+            "Tax                             19.00\n"
+            "Total                          119.00\n"
+        )
+E       AssertionError: assert False
+E        +  where False = &lt;built-in method endswith of str object at 0x7c955a8f06f0&gt;('Subtotal                       100.00\nTax                             19.00\nTotal                          119.00\n')
+E        +    where &lt;built-in method endswith of str object at 0x7c955a8f06f0&gt; = 'Invoice INV-2026-0001\nCustomer: Acme Ltd\nIssued: 2026-10-05\n\n  1 x Widget                   100.00\n\nTotal                          119.00\n'.endswith
+
+tests/test_render.py:36: AssertionError</failure></testcase><testcase classname="tests.test_render" name="test_discount_without_tax" time="0.000"><failure message="AssertionError: assert False&#10; +  where False = &lt;built-in method endswith of str object at 0x7c955a8f0630&gt;('Subtotal                       100.00\nDiscount (PARTNER25)           -25.00\nTotal                           75.00\n')&#10; +    where &lt;built-in method endswith of str object at 0x7c955a8f0630&gt; = 'Invoice INV-2026-0001\nCustomer: Acme Ltd\nIssued: 2026-10-05\n\n  1 x Widget                   100.00\n\nTotal                           75.00\n'.endswith">def test_discount_without_tax():
+        text = render_text(invoice(line(1, "100.00"), discount_code="PARTNER25"))
+&gt;       assert text.endswith(
+            "Subtotal                       100.00\n"
+            "Discount (PARTNER25)           -25.00\n"
+            "Total                           75.00\n"
+        )
+E       AssertionError: assert False
+E        +  where False = &lt;built-in method endswith of str object at 0x7c955a8f0630&gt;('Subtotal                       100.00\nDiscount (PARTNER25)           -25.00\nTotal                           75.00\n')
+E        +    where &lt;built-in method endswith of str object at 0x7c955a8f0630&gt; = 'Invoice INV-2026-0001\nCustomer: Acme Ltd\nIssued: 2026-10-05\n\n  1 x Widget                   100.00\n\nTotal                           75.00\n'.endswith
+
+tests/test_render.py:46: AssertionError</failure></testcase><testcase classname="tests.test_store" name="test_round_trip" time="0.001" /><testcase classname="tests.test_terms" name="test_due_date_default_terms" time="0.000" /><testcase classname="tests.test_terms" name="test_due_date_custom_terms" time="0.000" /></testsuite></testsuites>

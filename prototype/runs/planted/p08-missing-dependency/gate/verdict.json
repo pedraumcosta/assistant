@@ -26,10 +26,10 @@
     {
       "check": "build",
       "exit_code": 1,
-      "duration_s": 1.598,
+      "duration_s": 0.173,
       "status": "failed",
       "reason": "invoicing.money does not import: ModuleNotFoundError: No module named 'decimal_grouping'"
     }
   ],
-  "seconds": 1.615
+  "seconds": 0.178
 }

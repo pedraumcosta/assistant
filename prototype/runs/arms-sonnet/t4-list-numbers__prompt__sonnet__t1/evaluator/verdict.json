@@ -1,0 +1,12 @@
+{
+  "run": "t4-list-numbers__prompt__sonnet__t1",
+  "batch": "arms-sonnet",
+  "task": "t4-list-numbers",
+  "model": "gpt-5.1-2025-11-13",
+  "verdict": "pass",
+  "reason": "The new list_numbers function and its tests correctly implement the specified behavior without altering scope, existing tests, or adding unrelated changes.",
+  "stop_reason": "returned",
+  "turns": 2,
+  "cost_usd": 0.004556,
+  "seconds": 3.545
+}

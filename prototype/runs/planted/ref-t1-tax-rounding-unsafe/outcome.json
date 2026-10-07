@@ -10,7 +10,7 @@
   "step": "scope",
   "reason": "invoicing/money.py must not be changed",
   "integrity_violation": false,
-  "gate_seconds": 9.924,
+  "gate_seconds": 1.105,
   "groundtruth_qualified": false,
   "groundtruth": [
     {

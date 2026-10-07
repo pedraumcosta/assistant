@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="3" skipped="0" tests="10" time="0.026" timestamp="2026-10-07T13:08:24.855589+00:00" hostname="499ef981dd8d"><testcase classname="test_acceptance" name="test_tax_rounds_half_up[1.50-DE-0.29]" time="0.000" /><testcase classname="test_acceptance" name="test_tax_rounds_half_up[2.50-DE-0.48]" time="0.000" /><testcase classname="test_acceptance" name="test_tax_rounds_half_up[0.50-PT-0.12]" time="0.000" /><testcase classname="test_acceptance" name="test_tax_rounds_half_up[100.00-UK-20.00]" time="0.000" /><testcase classname="test_acceptance" name="test_tax_rounds_half_up[1.00-DE-0.19]" time="0.000" /><testcase classname="test_acceptance" name="test_tax_rounds_half_up[10.00-US-0.00]" time="0.000" /><testcase classname="test_acceptance" name="test_line_totals_still_round_half_even" time="0.000"><failure message="AssertionError: assert Decimal('0.13') == Decimal('0.12')&#10; +  where Decimal('0.13') = &lt;function line_total at 0x7139dfa7ed40&gt;(LineItem(sku='W-1', description='Widget', quantity=1, unit_price=Decimal('0.125')))&#10; +    where &lt;function line_total at 0x7139dfa7ed40&gt; = pricing.line_total&#10; +    and   LineItem(sku='W-1', description='Widget', quantity=1, unit_price=Decimal('0.125')) = LineItem('W-1', 'Widget', 1, Decimal('0.125'))&#10; +      where Decimal('0.125') = Decimal('0.125')&#10; +  and   Decimal('0.12') = Decimal('0.12')">def test_line_totals_still_round_half_even():
+&gt;       assert pricing.line_total(LineItem("W-1", "Widget", 1, Decimal("0.125"))) == Decimal("0.12")
+E       AssertionError: assert Decimal('0.13') == Decimal('0.12')
+E        +  where Decimal('0.13') = &lt;function line_total at 0x7139dfa7ed40&gt;(LineItem(sku='W-1', description='Widget', quantity=1, unit_price=Decimal('0.125')))
+E        +    where &lt;function line_total at 0x7139dfa7ed40&gt; = pricing.line_total
+E        +    and   LineItem(sku='W-1', description='Widget', quantity=1, unit_price=Decimal('0.125')) = LineItem('W-1', 'Widget', 1, Decimal('0.125'))
+E        +      where Decimal('0.125') = Decimal('0.125')
+E        +  and   Decimal('0.12') = Decimal('0.12')
+
+test_acceptance.py:29: AssertionError</failure></testcase><testcase classname="test_acceptance" name="test_discount_still_rounds_half_even" time="0.000"><failure message="AssertionError: assert Decimal('0.03') == Decimal('0.02')&#10; +  where Decimal('0.03') = &lt;function discount at 0x7139df8b4900&gt;(Invoice(number='INV-2026-0001', customer='Acme Ltd', issued=datetime.date(2026, 10, 5), lines=(LineItem(sku='W-1', description='Widget', quantity=1, unit_price=Decimal('0.25')),), region='US', discount_code='WELCOME10'))&#10; +    where &lt;function discount at 0x7139df8b4900&gt; = pricing.discount&#10; +    and   Invoice(number='INV-2026-0001', customer='Acme Ltd', issued=datetime.date(2026, 10, 5), lines=(LineItem(sku='W-1', description='Widget', quantity=1, unit_price=Decimal('0.25')),), region='US', discount_code='WELCOME10') = inv('0.25', 'US', 'WELCOME10')&#10; +  and   Decimal('0.02') = Decimal('0.02')">def test_discount_still_rounds_half_even():
+&gt;       assert pricing.discount(inv("0.25", "US", "WELCOME10")) == Decimal("0.02")
+E       AssertionError: assert Decimal('0.03') == Decimal('0.02')
+E        +  where Decimal('0.03') = &lt;function discount at 0x7139df8b4900&gt;(Invoice(number='INV-2026-0001', customer='Acme Ltd', issued=datetime.date(2026, 10, 5), lines=(LineItem(sku='W-1', description='Widget', quantity=1, unit_price=Decimal('0.25')),), region='US', discount_code='WELCOME10'))
+E        +    where &lt;function discount at 0x7139df8b4900&gt; = pricing.discount
+E        +    and   Invoice(number='INV-2026-0001', customer='Acme Ltd', issued=datetime.date(2026, 10, 5), lines=(LineItem(sku='W-1', description='Widget', quantity=1, unit_price=Decimal('0.25')),), region='US', discount_code='WELCOME10') = inv('0.25', 'US', 'WELCOME10')
+E        +  and   Decimal('0.02') = Decimal('0.02')
+
+test_acceptance.py:33: AssertionError</failure></testcase><testcase classname="test_acceptance" name="test_the_shared_helper_still_rounds_half_even" time="0.000"><failure message="AssertionError: assert Decimal('0.29') == Decimal('0.28')&#10; +  where Decimal('0.29') = &lt;function round_cents at 0x7139df8b45e0&gt;(Decimal('0.285'))&#10; +    where &lt;function round_cents at 0x7139df8b45e0&gt; = money.round_cents&#10; +    and   Decimal('0.285') = Decimal('0.285')&#10; +  and   Decimal('0.28') = Decimal('0.28')">def test_the_shared_helper_still_rounds_half_even():
+&gt;       assert money.round_cents(Decimal("0.285")) == Decimal("0.28")
+E       AssertionError: assert Decimal('0.29') == Decimal('0.28')
+E        +  where Decimal('0.29') = &lt;function round_cents at 0x7139df8b45e0&gt;(Decimal('0.285'))
+E        +    where &lt;function round_cents at 0x7139df8b45e0&gt; = money.round_cents
+E        +    and   Decimal('0.285') = Decimal('0.285')
+E        +  and   Decimal('0.28') = Decimal('0.28')
+
+test_acceptance.py:37: AssertionError</failure></testcase><testcase classname="test_acceptance" name="test_total_uses_the_new_tax" time="0.000" /></testsuite></testsuites>

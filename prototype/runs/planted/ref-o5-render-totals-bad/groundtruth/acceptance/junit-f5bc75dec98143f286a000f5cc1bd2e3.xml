@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="3" skipped="0" tests="7" time="0.027" timestamp="2026-10-07T13:08:21.346358+00:00" hostname="d3ac25c734a9"><testcase classname="test_acceptance" name="test_plain_invoice_shows_subtotal_and_total_only" time="0.000"><failure message="AssertionError: assert 'Invoice INV-...     200.00\n' == 'Invoice INV-...     200.00\n'&#10;  &#10;  Skipping 129 identical leading characters in diff, use -v to show&#10;      200.00&#10;  + Tax                              0.00&#10;    Total                          200.00">def test_plain_invoice_shows_subtotal_and_total_only():
+&gt;       assert render.render_text(inv()) == HEAD + (
+            "  2 x Widget                   200.00\n"
+            "\n"
+            "Subtotal                       200.00\n"
+            "Total                          200.00\n"
+        )
+E       AssertionError: assert 'Invoice INV-...     200.00\n' == 'Invoice INV-...     200.00\n'
+E         
+E         Skipping 129 identical leading characters in diff, use -v to show
+E             200.00
+E         + Tax                              0.00
+E           Total                          200.00
+
+test_acceptance.py:16: AssertionError</failure></testcase><testcase classname="test_acceptance" name="test_discount_and_tax" time="0.000" /><testcase classname="test_acceptance" name="test_tax_without_discount" time="0.000" /><testcase classname="test_acceptance" name="test_discount_without_tax" time="0.000"><failure message="AssertionError: assert 'Invoice INV-...     180.00\n' == 'Invoice INV-...     180.00\n'&#10;  &#10;  Skipping 167 identical leading characters in diff, use -v to show&#10;      -20.00&#10;  + Tax                              0.00&#10;    Total                          180.00">def test_discount_without_tax():
+&gt;       assert render.render_text(inv("US", "WELCOME10")) == HEAD + (
+            "  2 x Widget                   200.00\n"
+            "\n"
+            "Subtotal                       200.00\n"
+            "Discount (WELCOME10)           -20.00\n"
+            "Total                          180.00\n"
+        )
+E       AssertionError: assert 'Invoice INV-...     180.00\n' == 'Invoice INV-...     180.00\n'
+E         
+E         Skipping 167 identical leading characters in diff, use -v to show
+E             -20.00
+E         + Tax                              0.00
+E           Total                          180.00
+
+test_acceptance.py:46: AssertionError</failure></testcase><testcase classname="test_acceptance" name="test_no_tax_line_when_a_taxed_region_yields_zero_tax" time="0.000"><failure message="AssertionError: assert 'Tax' not in 'Invoice INV...      0.02\n'&#10;  &#10;  'Tax' is contained here:&#10;         0.02&#10;    Tax                              0.00&#10;  ? +++&#10;    Total                            0.02">def test_no_tax_line_when_a_taxed_region_yields_zero_tax():
+        text = render.render_text(inv("UK", price="0.01"))   # 0.02 at 20% rounds to 0.00
+&gt;       assert "Tax" not in text
+E       AssertionError: assert 'Tax' not in 'Invoice INV...      0.02\n'
+E         
+E         'Tax' is contained here:
+E                0.02
+E           Tax                              0.00
+E         ? +++
+E           Total                            0.02
+
+test_acceptance.py:57: AssertionError</failure></testcase><testcase classname="test_acceptance" name="test_tax_is_charged_on_the_subtotal_after_the_discount" time="0.000" /><testcase classname="test_acceptance" name="test_total_is_subtotal_minus_discount_plus_tax" time="0.000" /></testsuite></testsuites>
