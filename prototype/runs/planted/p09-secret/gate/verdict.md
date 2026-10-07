@@ -19,7 +19,7 @@
 | integrity | passed | nothing found | 0.0 |
 | budget | passed | nothing found | 0.0 |
 | build | passed | parses and imports | 0.2 |
-| repo-tests:tests | passed | 17 of 17 tests passed | 0.4 |
+| repo-tests:tests | passed | 17 of 17 tests passed | 0.3 |
 | author-tests | passed | 20 of 20 tests passed | 0.3 |
 | hidden-tests | passed | 4 of 4 tests passed | 0.3 |
 | scope | passed | nothing found | 0.0 |

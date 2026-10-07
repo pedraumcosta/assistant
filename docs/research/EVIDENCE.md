@@ -178,6 +178,7 @@ The product is three weeks old. None of these rows concerns judgments about code
 | ID | Claim, as published | Source and date | Tag | Interest | URL |
 |---|---|---|---|---|---|
 | E-86 | Claude Sonnet 5.5: base input tokens "$2 / MTok", output tokens "$10 / MTok", 5-minute cache writes "$2.50 / MTok", cache hits and refreshes "$0.20 / MTok". "MTok: Million tokens." Models from Claude 4.6 on "include the full 1M token context window at standard pricing" | Anthropic, Claude Platform documentation, "Pricing", read 2026-10-05 | [P] | Vendor price list | https://platform.claude.com/docs/en/about-claude/pricing |
+| E-87 | gpt-5.1, "Standard" tier: input "$1.25" per 1M tokens, cached input "$0.125", output "$10.00". "Prices per 1M tokens." Read for the slice-6 evaluator (ASSIST-018); the run pins the dated snapshot `gpt-5.1-2025-11-13` | OpenAI, API documentation, "Pricing", read 2026-10-07 | [P] | Vendor price list | https://developers.openai.com/api/docs/pricing |
 
 ## Not usable as evidence
 

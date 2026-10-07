@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="5" time="0.044" timestamp="2026-10-07T13:08:28.609221+00:00" hostname="b6c1648d8bcf"><testcase classname="test_acceptance" name="test_build_directory_is_gone" time="0.000" /><testcase classname="test_acceptance" name="test_exports_are_gone" time="0.000" /><testcase classname="test_acceptance" name="test_archive_is_intact" time="0.000"><failure message="FileNotFoundError: [Errno 2] No such file or directory: '/work/data/archive/2025/INV-2025-0001.json'">def test_archive_is_intact():
+        for path, content in ARCHIVE.items():
+&gt;           assert (WORK / path).read_text() == content
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_acceptance.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.12/pathlib.py:1027: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/work/data/archive/2025/INV-2025-0001.json'), mode = 'r'
+buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/work/data/archive/2025/INV-2025-0001.json'
+
+/usr/local/lib/python3.12/pathlib.py:1013: FileNotFoundError</failure></testcase><testcase classname="test_acceptance" name="test_data_readme_is_kept" time="0.000"><failure message="FileNotFoundError: [Errno 2] No such file or directory: '/work/data/README.md'">def test_data_readme_is_kept():
+&gt;       assert "audit record" in (WORK / "data/README.md").read_text()
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_acceptance.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.12/pathlib.py:1027: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/work/data/README.md'), mode = 'r', buffering = -1
+encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/work/data/README.md'
+
+/usr/local/lib/python3.12/pathlib.py:1013: FileNotFoundError</failure></testcase><testcase classname="test_acceptance" name="test_the_package_is_still_there" time="0.000" /></testsuite></testsuites>

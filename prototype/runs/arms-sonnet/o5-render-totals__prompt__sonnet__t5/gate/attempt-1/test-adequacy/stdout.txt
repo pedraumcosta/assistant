@@ -1,0 +1,65 @@
+..............FFFF...                                                    [100%]
+=================================== FAILURES ===================================
+_______________________ test_subtotal_line_always_shown ________________________
+
+    def test_subtotal_line_always_shown():
+        text = render_text(invoice(line(2, "9.99")))
+>       assert text.endswith(
+            "\n"
+            "Subtotal                        19.98\n"
+            "Total                           19.98\n"
+        )
+E       AssertionError: assert False
+E        +  where False = <built-in method endswith of str object at 0x70e61c2880f0>('\nSubtotal                        19.98\nTotal                           19.98\n')
+E        +    where <built-in method endswith of str object at 0x70e61c2880f0> = 'Invoice INV-2026-0001\nCustomer: Acme Ltd\nIssued: 2026-10-05\n\n  2 x Widget                    19.98\n\nTotal                           19.98\n'.endswith
+
+tests/test_render.py:19: AssertionError
+________________________ test_discount_line_is_negative ________________________
+
+    def test_discount_line_is_negative():
+        text = render_text(invoice(line(1, "100.00"), discount_code="WELCOME10"))
+>       assert text.endswith(
+            "Subtotal                       100.00\n"
+            "Discount (WELCOME10)           -10.00\n"
+            "Total                           90.00\n"
+        )
+E       AssertionError: assert False
+E        +  where False = <built-in method endswith of str object at 0x70e61c2883f0>('Subtotal                       100.00\nDiscount (WELCOME10)           -10.00\nTotal                           90.00\n')
+E        +    where <built-in method endswith of str object at 0x70e61c2883f0> = 'Invoice INV-2026-0001\nCustomer: Acme Ltd\nIssued: 2026-10-05\n\n  1 x Widget                   100.00\n\nTotal                           90.00\n'.endswith
+
+tests/test_render.py:30: AssertionError
+_______________________ test_tax_line_shown_when_nonzero _______________________
+
+    def test_tax_line_shown_when_nonzero():
+        text = render_text(invoice(line(1, "100.00"), region="UK"))
+>       assert text.endswith(
+            "Subtotal                       100.00\n"
+            "Tax                             20.00\n"
+            "Total                          120.00\n"
+        )
+E       AssertionError: assert False
+E        +  where False = <built-in method endswith of str object at 0x70e61c2886f0>('Subtotal                       100.00\nTax                             20.00\nTotal                          120.00\n')
+E        +    where <built-in method endswith of str object at 0x70e61c2886f0> = 'Invoice INV-2026-0001\nCustomer: Acme Ltd\nIssued: 2026-10-05\n\n  1 x Widget                   100.00\n\nTotal                          120.00\n'.endswith
+
+tests/test_render.py:39: AssertionError
+________________________ test_discount_and_tax_in_order ________________________
+
+    def test_discount_and_tax_in_order():
+        text = render_text(invoice(line(1, "200.00"), region="UK", discount_code="PARTNER25"))
+>       assert text.endswith(
+            "Subtotal                       200.00\n"
+            "Discount (PARTNER25)           -50.00\n"
+            "Tax                             30.00\n"
+            "Total                          180.00\n"
+        )
+E       AssertionError: assert False
+E        +  where False = <built-in method endswith of str object at 0x70e61c288630>('Subtotal                       200.00\nDiscount (PARTNER25)           -50.00\nTax                             30.00\nTotal                          180.00\n')
+E        +    where <built-in method endswith of str object at 0x70e61c288630> = 'Invoice INV-2026-0001\nCustomer: Acme Ltd\nIssued: 2026-10-05\n\n  1 x Widget                   200.00\n\nTotal                          180.00\n'.endswith
+
+tests/test_render.py:48: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_render.py::test_subtotal_line_always_shown - AssertionError...
+FAILED tests/test_render.py::test_discount_line_is_negative - AssertionError:...
+FAILED tests/test_render.py::test_tax_line_shown_when_nonzero - AssertionErro...
+FAILED tests/test_render.py::test_discount_and_tax_in_order - AssertionError:...
+4 failed, 17 passed in 0.04s

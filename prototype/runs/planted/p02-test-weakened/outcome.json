@@ -16,7 +16,7 @@
     {
       "check": "acceptance",
       "status": "passed",
-      "reason": "11 of 11 tests passed"
+      "reason": "16 of 16 tests passed"
     },
     {
       "check": "regression",

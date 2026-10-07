@@ -1,0 +1,22 @@
+{
+  "key": "d83d921a2fb5878a0c027b10b0b8fda96f28622044e39d254a21f2d2aba4d771",
+  "task": "o6-merge-lines",
+  "contract_sha256": "ae28692055b421e63c6c0d2d7d9bd5d0f63d745b6edb286605d6936d9cea4184",
+  "base_tree": "15b1b3f2fa1d9e582389c0e4e2c5140e07fe035e2d97c96f069740abe8b5d333",
+  "head_tree": "963d7fce23cc140d5b528dd3c6a33bc3c804ea5c41d24cfd557e44d26f8d1956",
+  "verdict": "failed",
+  "step": "integrity",
+  "reason": "an existing test was removed or changed: tests/test_pricing.py",
+  "integrity_violation": true,
+  "risk_tier": "green",
+  "routed": "author",
+  "evidence": [
+    {
+      "check": "integrity",
+      "status": "failed",
+      "reason": "an existing test was removed or changed: tests/test_pricing.py",
+      "duration_s": 0.0
+    }
+  ],
+  "seconds": 0.007
+}

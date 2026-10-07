@@ -16,7 +16,7 @@
     {
       "check": "acceptance",
       "status": "failed",
-      "reason": "3 of 12 tests did not pass; first: test_acceptance::test_weekend_moves_to_monday[issued1-30-expected1]"
+      "reason": "3 of 14 tests did not pass; first: test_acceptance::test_weekend_moves_to_monday[issued1-30-expected1]"
     },
     {
       "check": "regression",

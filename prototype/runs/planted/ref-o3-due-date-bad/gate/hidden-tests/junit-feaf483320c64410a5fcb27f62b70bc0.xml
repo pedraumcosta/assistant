@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="3" time="0.019" timestamp="2026-10-07T13:08:17.266865+00:00" hostname="9e5705697c5b"><testcase classname="test_hidden" name="test_r1_saturday_moves_to_monday" time="0.000" /><testcase classname="test_hidden" name="test_r1_sunday_moves_to_monday" time="0.000"><failure message="assert datetime.date(2026, 10, 6) == datetime.date(2026, 10, 5)&#10; +  where datetime.date(2026, 10, 6) = &lt;function due_date at 0x6ffe38d442c0&gt;(datetime.date(2026, 9, 4))&#10; +    where &lt;function due_date at 0x6ffe38d442c0&gt; = terms.due_date&#10; +    and   datetime.date(2026, 9, 4) = date(2026, 9, 4)&#10; +  and   datetime.date(2026, 10, 5) = date(2026, 10, 5)">def test_r1_sunday_moves_to_monday():
+&gt;       assert terms.due_date(date(2026, 9, 4)) == date(2026, 10, 5)
+E       assert datetime.date(2026, 10, 6) == datetime.date(2026, 10, 5)
+E        +  where datetime.date(2026, 10, 6) = &lt;function due_date at 0x6ffe38d442c0&gt;(datetime.date(2026, 9, 4))
+E        +    where &lt;function due_date at 0x6ffe38d442c0&gt; = terms.due_date
+E        +    and   datetime.date(2026, 9, 4) = date(2026, 9, 4)
+E        +  and   datetime.date(2026, 10, 5) = date(2026, 10, 5)
+
+test_hidden.py:12: AssertionError</failure></testcase><testcase classname="test_hidden" name="test_r2_a_weekday_is_unchanged" time="0.000" /></testsuite></testsuites>

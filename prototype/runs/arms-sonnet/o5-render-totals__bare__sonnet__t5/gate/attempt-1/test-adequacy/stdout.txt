@@ -1,0 +1,68 @@
+..............FFFF...                                                    [100%]
+=================================== FAILURES ===================================
+________________ test_subtotal_only_when_no_discount_and_no_tax ________________
+
+    def test_subtotal_only_when_no_discount_and_no_tax():
+        text = render_text(invoice(line(2, "9.99")))
+>       assert _tail(text, 2) == [
+            "Subtotal                        19.98",
+            "Total                           19.98",
+        ]
+E       AssertionError: assert ['', 'Total  ...       19.98'] == ['Subtotal   ...       19.98']
+E         
+E         At index 0 diff: '' != 'Subtotal                        19.98'
+E         Use -v to get more diff
+
+tests/test_render.py:23: AssertionError
+________________________ test_discount_line_is_negative ________________________
+
+    def test_discount_line_is_negative():
+        text = render_text(invoice(line(1, "100.00"), discount_code="WELCOME10"))
+>       assert _tail(text, 3) == [
+            "Subtotal                       100.00",
+            "Discount (WELCOME10)           -10.00",
+            "Total                           90.00",
+        ]
+E       AssertionError: assert ['  1 x Widge...       90.00'] == ['Subtotal   ...       90.00']
+E         
+E         At index 0 diff: '  1 x Widget                   100.00' != 'Subtotal                       100.00'
+E         Use -v to get more diff
+
+tests/test_render.py:33: AssertionError
+________________________ test_tax_line_when_tax_nonzero ________________________
+
+    def test_tax_line_when_tax_nonzero():
+        text = render_text(invoice(line(1, "100.00"), region="UK"))
+>       assert _tail(text, 3) == [
+            "Subtotal                       100.00",
+            "Tax                             20.00",
+            "Total                          120.00",
+        ]
+E       AssertionError: assert ['  1 x Widge...      120.00'] == ['Subtotal   ...      120.00']
+E         
+E         At index 0 diff: '  1 x Widget                   100.00' != 'Subtotal                       100.00'
+E         Use -v to get more diff
+
+tests/test_render.py:42: AssertionError
+________________________ test_discount_and_tax_in_order ________________________
+
+    def test_discount_and_tax_in_order():
+        text = render_text(invoice(line(1, "100.00"), region="UK", discount_code="PARTNER25"))
+>       assert _tail(text, 4) == [
+            "Subtotal                       100.00",
+            "Discount (PARTNER25)           -25.00",
+            "Tax                             15.00",
+            "Total                           90.00",
+        ]
+E       AssertionError: assert ['', '  1 x W...       90.00'] == ['Subtotal   ...       90.00']
+E         
+E         At index 0 diff: '' != 'Subtotal                       100.00'
+E         Use -v to get more diff
+
+tests/test_render.py:51: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_render.py::test_subtotal_only_when_no_discount_and_no_tax
+FAILED tests/test_render.py::test_discount_line_is_negative - AssertionError:...
+FAILED tests/test_render.py::test_tax_line_when_tax_nonzero - AssertionError:...
+FAILED tests/test_render.py::test_discount_and_tax_in_order - AssertionError:...
+4 failed, 17 passed in 0.04s

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="3" skipped="0" tests="4" time="0.022" timestamp="2026-10-07T13:08:13.732132+00:00" hostname="ba409f174861"><testcase classname="test_hidden" name="test_r1_ten_or_more_units_get_five_percent" time="0.000"><failure message="AssertionError: assert Decimal('100.00') == Decimal('95.00')&#10; +  where Decimal('100.00') = lt(10)&#10; +  and   Decimal('95.00') = Decimal('95.00')">def test_r1_ten_or_more_units_get_five_percent():
+&gt;       assert lt(10) == Decimal("95.00")
+E       AssertionError: assert Decimal('100.00') == Decimal('95.00')
+E        +  where Decimal('100.00') = lt(10)
+E        +  and   Decimal('95.00') = Decimal('95.00')
+
+test_hidden.py:13: AssertionError</failure></testcase><testcase classname="test_hidden" name="test_r2_fifty_or_more_units_get_ten_percent" time="0.000"><failure message="AssertionError: assert Decimal('475.00') == Decimal('450.00')&#10; +  where Decimal('475.00') = lt(50)&#10; +  and   Decimal('450.00') = Decimal('450.00')">def test_r2_fifty_or_more_units_get_ten_percent():
+&gt;       assert lt(50) == Decimal("450.00")
+E       AssertionError: assert Decimal('475.00') == Decimal('450.00')
+E        +  where Decimal('475.00') = lt(50)
+E        +  and   Decimal('450.00') = Decimal('450.00')
+
+test_hidden.py:18: AssertionError</failure></testcase><testcase classname="test_hidden" name="test_r3_fewer_than_ten_units_get_nothing" time="0.000" /><testcase classname="test_hidden" name="test_r4_result_is_rounded_to_cents" time="0.000"><failure message="AssertionError: assert Decimal('3.30') == Decimal('3.14')&#10; +  where Decimal('3.30') = lt(10, '0.33')&#10; +  and   Decimal('3.14') = Decimal('3.14')">def test_r4_result_is_rounded_to_cents():
+&gt;       assert lt(10, "0.33") == Decimal("3.14")    # 3.30 less 5% = 3.135
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert Decimal('3.30') == Decimal('3.14')
+E        +  where Decimal('3.30') = lt(10, '0.33')
+E        +  and   Decimal('3.14') = Decimal('3.14')
+
+test_hidden.py:27: AssertionError</failure></testcase></testsuite></testsuites>

@@ -1,0 +1,9 @@
+{
+  "added": [
+    "tests/test_merge_lines.py"
+  ],
+  "modified": [
+    "invoicing/pricing.py"
+  ],
+  "deleted": []
+}

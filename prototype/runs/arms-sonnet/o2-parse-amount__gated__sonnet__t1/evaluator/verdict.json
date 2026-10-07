@@ -1,0 +1,12 @@
+{
+  "run": "o2-parse-amount__gated__sonnet__t1",
+  "batch": "arms-sonnet",
+  "task": "o2-parse-amount",
+  "model": "gpt-5.1-2025-11-13",
+  "verdict": "pass",
+  "reason": "The implementation and tests correctly add strict thousands-separator handling to parse_amount within the allowed scope, without altering unrelated behavior.",
+  "stop_reason": "returned",
+  "turns": 2,
+  "cost_usd": 0.004576,
+  "seconds": 4.649
+}

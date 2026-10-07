@@ -1,0 +1,12 @@
+{
+  "run": "o1-bulk-discount__bare__sonnet__t1",
+  "batch": "arms-sonnet",
+  "task": "o1-bulk-discount",
+  "model": "gpt-5.1-2025-11-13",
+  "verdict": "fail",
+  "reason": "Existing line_total behavior (e.g., test_line_total expecting no discount) was changed without adjusting the original test, so requirements about only adding behavior and tests are violated.",
+  "stop_reason": "returned",
+  "turns": 3,
+  "cost_usd": 0.005626,
+  "seconds": 6.271
+}

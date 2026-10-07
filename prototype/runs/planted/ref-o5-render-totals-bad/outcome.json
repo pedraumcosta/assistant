@@ -10,13 +10,13 @@
   "step": "hidden-tests",
   "reason": "1 of 4 tests did not pass; first: test_hidden::test_r3_tax_only_when_not_zero",
   "integrity_violation": false,
-  "gate_seconds": 1.089,
+  "gate_seconds": 1.093,
   "groundtruth_qualified": false,
   "groundtruth": [
     {
       "check": "acceptance",
       "status": "failed",
-      "reason": "3 of 5 tests did not pass; first: test_acceptance::test_plain_invoice_shows_subtotal_and_total_only"
+      "reason": "3 of 7 tests did not pass; first: test_acceptance::test_plain_invoice_shows_subtotal_and_total_only"
     },
     {
       "check": "regression",

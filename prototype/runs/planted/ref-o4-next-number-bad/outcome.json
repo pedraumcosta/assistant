@@ -10,13 +10,13 @@
   "step": "all",
   "reason": "every required check passed",
   "integrity_violation": false,
-  "gate_seconds": 1.413,
+  "gate_seconds": 1.394,
   "groundtruth_qualified": false,
   "groundtruth": [
     {
       "check": "acceptance",
       "status": "failed",
-      "reason": "2 of 11 tests did not pass; first: test_acceptance::test_invalid_entries_are_ignored"
+      "reason": "2 of 13 tests did not pass; first: test_acceptance::test_invalid_entries_are_ignored"
     },
     {
       "check": "regression",

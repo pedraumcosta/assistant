@@ -6,7 +6,7 @@ ________________________ test_the_release_check_itself _________________________
         out = rows("Extended warranty, three years, on-site")
 >       assert all(len(row) <= 37 for row in out)
 E       assert False
-E        +  where False = all(<generator object test_the_release_check_itself.<locals>.<genexpr> at 0x7798aa6ec790>)
+E        +  where False = all(<generator object test_the_release_check_itself.<locals>.<genexpr> at 0x7c6e178f8790>)
 
 test_acceptance.py:18: AssertionError
 ________ test_descriptions[AAAAAAAAAAAAAAAAAAAAA-AAAAAAAAAAAAAAAAA...] _________

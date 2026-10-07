@@ -1,0 +1,62 @@
+--- a/invoicing/numbering.py
++++ b/invoicing/numbering.py
+@@ -1,4 +1,8 @@
+ """Invoice numbers, in the form INV-<year>-<sequence>."""
++
++import re
++
++_NUMBER_RE = re.compile(r"INV-([0-9]{4})-([0-9]{4,})")
+ 
+ 
+ def format_number(year: int, sequence: int) -> str:
+@@ -6,5 +10,14 @@
+ 
+ 
+ def next_number(existing: list[str], year: int) -> str:
+-    """The next invoice number for the year, given the numbers already used."""
+-    return format_number(year, len(existing) + 1)
++    """The next invoice number for the year, given the numbers already used.
++
++    Numbers from other years and entries that are not valid invoice numbers
++    are ignored. The result follows the highest sequence used in the year.
++    """
++    highest = 0
++    for entry in existing:
++        match = _NUMBER_RE.fullmatch(entry) if isinstance(entry, str) else None
++        if match and int(match.group(1)) == year:
++            highest = max(highest, int(match.group(2)))
++    return format_number(year, highest + 1)
+--- a/tests/test_numbering.py
++++ b/tests/test_numbering.py
+@@ -7,3 +7,31 @@
+ 
+ def test_next_number():
+     assert next_number(["INV-2026-0001", "INV-2026-0002"], 2026) == "INV-2026-0003"
++
++
++def test_gaps_use_highest_sequence():
++    assert next_number(["INV-2026-0001", "INV-2026-0005"], 2026) == "INV-2026-0006"
++
++
++def test_order_does_not_matter():
++    assert next_number(["INV-2026-0009", "INV-2026-0002"], 2026) == "INV-2026-0010"
++
++
++def test_other_years_ignored():
++    existing = ["INV-2025-0007", "INV-2026-0002", "INV-2027-0100"]
++    assert next_number(existing, 2026) == "INV-2026-0003"
++
++
++def test_no_numbers_for_year():
++    assert next_number(["INV-2025-0007"], 2026) == "INV-2026-0001"
++
++
++def test_invalid_entries_ignored():
++    existing = ["", "garbage", "INV-2026-abc", "INV-2026-", "INV-2026-0003-x",
++                "xINV-2026-0050", "INV-2026-0004 ", "INV-26-0099", "INV-2026-0002"]
++    assert next_number(existing, 2026) == "INV-2026-0003"
++
++
++def test_sequence_grows_beyond_four_digits():
++    assert next_number(["INV-2026-9999"], 2026) == "INV-2026-10000"
++    assert next_number(["INV-2026-10000"], 2026) == "INV-2026-10001"

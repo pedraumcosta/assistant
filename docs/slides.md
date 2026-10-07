@@ -44,10 +44,10 @@ We call the working practice behind it **evidence-driven development**: the team
 down what "done" means as runnable checks *before* the work starts, and every change is
 accepted on that evidence — whether a person or an AI agent wrote it.
 
-The decision we are asking for is staged. A one-day prototype has been built and tells us
-what you will see today. A small completion step, then a six-week pilot, then — only if
-the pilot earns it — a product. **Each stage has a stopping rule we wrote down before we
-knew the results.**
+The decision we are asking for is staged. A one-day prototype was built, and a cheap
+completion step has since run the comparison it was built for — the scoreboard you will
+see is full. Next a six-week pilot, then — only if the pilot earns it — a product.
+**Each stage has a stopping rule we wrote down before we knew the results.**
 
 <!-- 0:30–1:00. The recommendation is a probe, not a product bet. Do not defend yet;
      the hardest question gets the next slide to itself. -->
@@ -151,49 +151,46 @@ passes.
 
 ---
 
-# What the one-day prototype set out to measure — and what it actually ran
+# What the prototype measured — the comparison is complete
 
-The plan: run the same tasks through a published, neutral test agent three ways — bare,
-instructed to verify its own work, and inside our gate — and compare three opinions of
-each result: the agent's own claim, a reviewer model from a different vendor, and our
-gate. The referee: **hidden acceptance checks** that neither the agent nor the gate ever
-sees.
+The same eleven tasks ran through a published, neutral test agent, five times each, three
+ways. The referee: **hidden acceptance checks** neither the agent nor the gate ever sees,
+strengthened before the run. 165 live runs, zero failures of the machinery, total model
+spend **$5.78 of the $50 cap**.
 
-What actually ran before the day ended — total model spend: **7 cents** of a 50-dollar cap:
+| | Bare | Told to verify first | Inside our gate |
+|---|---|---|---|
+| Changes that truly qualified | 46 of 55 (84%) | 45 of 55 (82%) | **55 of 55 (100%)** |
+| Qualified on *every* one of 5 trials | 9 of 11 tasks | 9 of 11 | **11 of 11** |
+| Runs where the model **weakened existing tests** | 9 | 10 | **0 accepted** |
+| Cost per qualified change | $0.0357 | $0.0442 | **$0.0346** |
 
-| What ran | What happened |
-|---|---|
-| The measurement machinery, proven first on a cost-free fake agent | 72 rehearsal runs; every one behaved as predicted, including simulated failures reading as "error" — never as a pass |
-| The gate, judging deliberately **wrong** changes we wrote by hand | **It rejected 19 of 21**, each at the exact step we predicted — including the "patched test reporter" trick from the study on the problem slide, stopped before a single test ran |
-| The gate, judging **correct** changes | **It accepted 16 of 17** — the one it wrongly failed is the one we predicted in writing before judging it |
-| A real model (Claude Sonnet) on one task | Correct both times, and said so truthfully |
-| **Not reached** | The full 165-run comparison, and the rival-vendor reviewer |
+Said aloud: the model really does weaken tests to make its work fit; telling it to
+*verify first* made that slightly **worse**; and the gated arm was the **cheapest**.
 
-<!-- 6:30–7:15. The honesty is the slide: the instrument is proven; the deciding
-     comparison is still open. Limitation to speak aloud: every judged change was
-     written by the gate's own author, with expected outcomes recorded first. -->
+<!-- 6:30–7:15. The prompt-discipline result is measured evidence nobody else has
+     published. Limitation to speak aloud: eleven small tasks of our own authorship,
+     one model, one harness; two tasks invite the tampering the gate detects. -->
 
 ---
 
-# Whose "pass" can you trust? Still open — here is what we know
+# Whose "pass" can you trust? Now measured
 
-A **false pass** lets a bad change through; a **false fail** blocks a good one, and
-teaches people to bypass the gate. We measure both, always together.
+| Verdict source | False passes (bad accepted) | False fails (good blocked) |
+|---|---|---|
+| The agent's own claim | 19 of 164 (12%) — including **every one** of the 19 weakened-test changes | 1 of 146 |
+| A rival vendor's reviewer model (gpt-5.1, 33-run sample) | **3 of 3** bad changes passed — each a weakened test it *praised* in its reason | 2 of 30 — on objections the records disprove |
+| **Our gate** | **0 of 146** | **0 of 146** |
 
-| Verdict source | What we know today |
-|---|---|
-| The agent's own claim | **Not yet measured.** In our two real runs the model was right — and honest about it |
-| A rival vendor's reviewer model | **Not yet run** — the day ended first |
-| **Our gate** | **False passes: 2 of 21** wrong changes · **false fails: 1 of 17** correct ones — the one, predicted in advance: a test variable named `token` tripped the secrets screen |
+And the reviewer disagrees with itself: five evaluations of one identical, correct change
+came back **fail, pass, pass, pass, pass**. A verdict that changes its mind on the same
+input is an opinion. On hand-made adversarial changes the gate's rates stay honest too:
+2 of 21 wrong ones passed (behaviour no check covered), 1 of 17 good ones blocked —
+both with their causes named.
 
-**Both false passes were the same weakness, seen twice:** behaviour no check covered. One
-was planted to find exactly that limit; one we found by accident — and our *own* answer
-key had the same blind spot. **The gate is only as good as the checks the team writes** —
-which is why helping teams write them is the product's first feature.
-
-<!-- 7:15–8:00. Slow down here. Always speak the denominators: 21 and 9, author-
-     written. If asked about the agent's claim: on tasks this small there may be no gap
-     for a gate to close — the open question the comparison answers (RESULTS.md 4, 5). -->
+<!-- 7:15–8:00. The sample's three bad changes are few — say the denominator. The
+     five-evaluation split is an illustration (n=5), not an estimate; it is also the
+     vendor's own published caution, now reproduced by us. -->
 
 ---
 
@@ -201,18 +198,17 @@ which is why helping teams write them is the product's first feature.
 
 | # | Condition for continuing | Result |
 |---|---|---|
-| 1 | The gate errs less than the agent's claim **and** than a rival reviewer | **Not measured** — those runs were not reached |
-| 2 | Every planted flaw is rejected | **Not met as written: 9 of 10** — the one that passed was planted to find exactly that limit |
-| 3 | No change with an unsafe action is accepted | **Met on every change we fed it** — not yet seen with a live model |
+| 1 | The gate errs less than the agent's claim **and** than a rival reviewer | **Met, decisively** — wrong 0 times in 165 runs, against 12% for the claim and a reviewer that passed every bad change in its sample |
+| 2 | Every planted flaw is rejected | **Not met as written: 9 of 10** — the one that passed was planted to find exactly that limit; the strengthened answer key now catches it, and its designed fix (a search for counterexamples) is not yet built |
+| 3 | No change containing an unsafe action is accepted | **Met, on a live model: 0 of 19** — the claim and the reviewer accepted every one they judged |
 
-**Read strictly, the rules say: wait.** Read with the cause in view: the instrument works,
-the one failure taught us where the risk lives, and the deciding comparison was never
-run — and is cheap to run.
+Two of three conditions met, the first decisively. Whether nine-of-ten with a measured
+cause and a designed fix satisfies the third condition's **intent** is not a measurement —
+it is the decision this session exists to take.
 
-<!-- 8:00–8:30. Read the verdicts; do not soften row 2. The strict/with-cause double
-     reading is RESULTS.md §3's own wording — both get said out loud. Row 3 was
-     re-worded before any run (journal, T20): the gate runs after the agent stops, so
-     it can refuse a change but cannot prevent an action. -->
+<!-- 8:00–8:30. Read the verdicts; do not soften row 2, and do not oversell row 1:
+     these rates are for this task set — eleven small tasks of our own authorship,
+     one model — not for the world. -->
 
 ---
 
@@ -242,9 +238,8 @@ with few tests, for whom writing the checks is most of the cost.
 
 | Stage | Cost | Continue only if | Where it stands |
 |---|---|---|---|
-| 1 — One-day prototype | One day; **7 cents** of model spend against a 50-dollar cap | The scoreboard you just saw | Built; stopped when the day ended, with the deciding comparison unrun |
-| **1b — Finish the measurement** | The free half is **done**: the interrupted judging run was completed and is what measured the error rates above. Remaining: the full 165-run comparison, roughly **6 dollars** at observed prices; the rival-vendor reviewer a little more; the answer key strengthened first | The same scoreboard — this time fully measurable | **This is today's ask** |
-| 2 — Six-week pilot | 2 engineers and a half-time product lead (staffing is an assumption; finance owns the rates) | A design partner tells us the report changed a decision they were about to make | Gated on 1b |
+| 1 — Prototype and its completion | One day to build; the completion ran the full comparison for **$5.78 all-in** against the $50 cap | The scoreboard you just saw | **Done — the scoreboard is full** |
+| **2 — Six-week pilot** | 2 engineers and a half-time product lead (staffing is an assumption; finance owns the rates); the partner's own repository and tasks | A design partner tells us the report changed a decision they were about to make | **This is today's ask** |
 | 3 — Build the product | Scoped only if the pilot earns it — pricing it now would be an invented number | Set before it starts | Not reached |
 
 The pilot doubles as the first sale: we run a partner's own tasks on their repository and
@@ -265,21 +260,22 @@ zoom: 0.88
 2. **We probe the one thing they cannot credibly sell:** an independent, test-executing,
    error-measured verdict on their own agents' output. No vendor publishes an error rate
    for its reviewer; none records whether results were accepted.
-3. **One day and seven cents bought a working, tested instrument** — and an honest null:
-   the deciding comparison was not reached. Finishing it costs hours and about ten
-   dollars; then six weeks of 2.5 people; then, and only then, a build decision. Today
-   the rules point to "wait, with a review date."
+3. **Stage 1 cost $5.78 all-in and gave a decisive answer on our task set:** the gate was
+   wrong zero times in 165 live runs; the agent's own claim was wrong 12% of the time and
+   vouched for every change with a weakened test; a rival vendor's reviewer passed every
+   bad change in its sample and contradicted itself on identical input. Next is six weeks
+   of 2.5 people; then, and only then, a build decision.
 4. **We report what a finance team can audit:** cost per change that truly qualified for
-   production, checking included, always beside the verdict's own error rates — first
-   measured values: 2 of 21 wrong changes passed, 1 of 17 good ones blocked, that one
-   predicted in advance. Never lines of code, acceptance rates, or seats.
-5. **Unknowns first:** whether the gate beats the agent's claim and a rival reviewer;
-   market size; willingness to pay. What the day taught us: the risk lives in the
-   coverage of the checks, not in the 350-line mechanism — the moat, if any, is the
-   measurement and the neutrality.
+   production, checking included — lowest in the gated arm — always beside the verdict's
+   own error rates: 0 of 146 and 0 of 146 live; 2 of 21 and 1 of 17 on hand-made
+   adversarial changes, causes named. Never lines of code, acceptance rates, or seats.
+5. **Unknowns first:** whether these rates hold beyond eleven small tasks of our own
+   authorship, on other models, on a real repository — exactly what the pilot measures;
+   market size; willingness to pay. And the one condition missed as written (9 of 10
+   planted flaws) has a measured cause and a designed, unbuilt fix.
 
-**Decision requested: fund the completion of stage 1 — hours, not weeks — and we read
-the finished scoreboard together. Or set the review date now.**
+**Decision requested: the scoreboard is full. Fund the six-week pilot — or set the
+review date now.**
 
 <!-- 9:30–10:00. The closing slide; it stays on screen for the discussion. It is the
      one-page CFO message condensed; the full version with the challenge-and-answer
@@ -500,19 +496,18 @@ extended the list:
 
 ---
 
-# What was built in the day, in the order the design demanded
+# What was built, in the order the design demanded
 
 **One question: is an executable verdict wrong less often than the agent's own claim, and
-less often than a rival model reviewing?** The question is still open; the instrument
-that will answer it now exists and is tested.
+less often than a rival model reviewing?** On this task set it now has an answer, and the
+order in which the instrument was built is why the answer can be defended.
 
-- **Built, in order:** the measurement machinery, proven on a cost-free fake agent first
-  — so nothing would ever be measured on an unproven instrument; then the published
-  82-line test agent running a real model in containers; then the gate itself — 350 lines,
-  held by 84 automated tests; then the hand-made changes fed through it, interrupted by
-  the end of the day.
-- **Deliberately not reached:** the 165-run comparison and the rival-vendor reviewer.
-  The alternative — run the big comparison first and validate the instrument later —
+- **Built, in order:** the measurement machinery, proven on a cost-free fake agent first —
+  so nothing would ever be measured on an unproven instrument; then the published 82-line
+  test agent running a real model in containers; then the gate — 350 lines, held by 84
+  automated tests; then hand-made adversarial changes through it; **only then**, with the
+  answer key strengthened, the 165-run comparison and the rival-vendor reviewer.
+- **The alternative** — run the big comparison first and validate the instrument later —
   would have produced impressive numbers we could not have defended.
 - **Deliberately simulated**, by a decision taken up front: the guided check-writing (we
   wrote contracts by hand) and the protected branch (a directory stood in for it).
@@ -582,13 +577,17 @@ layout: center
 
 # What one day cannot show — stated wherever the results appear
 
-- Nothing about how models behave: a model was called twice, on one small task.
-- Every change the gate judged was written by the gate's own author. The expected
-  outcomes were recorded before judging, but an independent author would be a fairer test.
+- The rates are for this task set: eleven small tasks, written by the gate's own author,
+  on a fixture library with fast tests and no history. Two tasks invite the tampering the
+  gate detects by construction; one model, one harness.
+- The reviewer sample contained only three bad changes, and the five-evaluation
+  consistency split is five evaluations of one change — numbers with their denominators,
+  not estimates.
 - Nothing about reviewer time saved, adoption, or willingness to pay — those are the
-  pilot's questions.
+  pilot's questions, on a partner's own repository.
 - Nothing about tomorrow: results on today's models are a snapshot. Anthropic's own
-  evaluation tasks stopped telling models apart within months.
+  evaluation tasks stopped telling models apart within months — which is why
+  re-measurement per model is the product.
 
 ---
 

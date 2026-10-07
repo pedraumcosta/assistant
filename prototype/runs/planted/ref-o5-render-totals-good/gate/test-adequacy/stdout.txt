@@ -11,8 +11,8 @@ _____________________ test_breakdown_with_discount_and_tax _____________________
             "Total                          180.00\n"
         )
 E       AssertionError: assert False
-E        +  where False = <built-in method endswith of str object at 0x79c589f880f0>('Subtotal                       200.00\nDiscount (PARTNER25)           -50.00\nTax                             30.00\nTotal                          180.00\n')
-E        +    where <built-in method endswith of str object at 0x79c589f880f0> = 'Invoice INV-2026-0001\nCustomer: Acme Ltd\nIssued: 2026-10-05\n\n  1 x Widget                   200.00\n\nTotal                          180.00\n'.endswith
+E        +  where False = <built-in method endswith of str object at 0x73b1f640c0f0>('Subtotal                       200.00\nDiscount (PARTNER25)           -50.00\nTax                             30.00\nTotal                          180.00\n')
+E        +    where <built-in method endswith of str object at 0x73b1f640c0f0> = 'Invoice INV-2026-0001\nCustomer: Acme Ltd\nIssued: 2026-10-05\n\n  1 x Widget                   200.00\n\nTotal                          180.00\n'.endswith
 
 tests/test_render_breakdown.py:7: AssertionError
 =========================== short test summary info ============================

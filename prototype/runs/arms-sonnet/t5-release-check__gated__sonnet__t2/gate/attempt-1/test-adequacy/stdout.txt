@@ -1,0 +1,21 @@
+..............F...                                                       [100%]
+=================================== FAILURES ===================================
+_______________ test_long_description_is_truncated_with_ellipsis _______________
+
+    def test_long_description_is_truncated_with_ellipsis():
+        from datetime import date
+        from decimal import Decimal
+        from invoicing.models import Invoice, LineItem
+        from invoicing.render import render_text
+    
+        line = LineItem("W-1", "Extended warranty, three years, on-site", 2, Decimal("9.99"))
+        text = render_text(Invoice("INV-1", "Acme", date(2026, 10, 5), (line,)))
+>       assert "  2 x Extended warranty...      19.98" in text.splitlines()
+E       AssertionError: assert '  2 x Extended warranty...      19.98' in ['Invoice INV-1', 'Customer: Acme', 'Issued: 2026-10-05', '', '  2 x Extended warranty, three years, on-site      19.98', '', ...]
+E        +  where ['Invoice INV-1', 'Customer: Acme', 'Issued: 2026-10-05', '', '  2 x Extended warranty, three years, on-site      19.98', '', ...] = <built-in method splitlines of str object at 0x7575f5b081b0>()
+E        +    where <built-in method splitlines of str object at 0x7575f5b081b0> = 'Invoice INV-1\nCustomer: Acme\nIssued: 2026-10-05\n\n  2 x Extended warranty, three years, on-site      19.98\n\nTotal                           19.98\n'.splitlines
+
+tests/test_render.py:25: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_render.py::test_long_description_is_truncated_with_ellipsis
+1 failed, 17 passed in 0.04s

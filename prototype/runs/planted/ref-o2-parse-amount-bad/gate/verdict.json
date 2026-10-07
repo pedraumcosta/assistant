@@ -26,14 +26,14 @@
     {
       "check": "build",
       "exit_code": 0,
-      "duration_s": 0.165,
+      "duration_s": 0.177,
       "status": "passed",
       "reason": "parses and imports"
     },
     {
       "check": "repo-tests:tests",
       "exit_code": 0,
-      "duration_s": 0.304,
+      "duration_s": 0.329,
       "expected_tests": 17,
       "tests": {
         "total": 17,
@@ -49,7 +49,7 @@
     {
       "check": "author-tests",
       "exit_code": 0,
-      "duration_s": 0.315,
+      "duration_s": 0.324,
       "expected_tests": null,
       "tests": {
         "total": 18,
@@ -65,7 +65,7 @@
     {
       "check": "hidden-tests",
       "exit_code": 1,
-      "duration_s": 0.31,
+      "duration_s": 0.302,
       "expected_tests": 5,
       "tests": {
         "total": 5,
@@ -79,5 +79,5 @@
       "reason": "3 of 5 tests did not pass; first: test_hidden::test_r2_malformed_grouping_is_rejected[12,34]"
     }
   ],
-  "seconds": 1.1
+  "seconds": 1.139
 }

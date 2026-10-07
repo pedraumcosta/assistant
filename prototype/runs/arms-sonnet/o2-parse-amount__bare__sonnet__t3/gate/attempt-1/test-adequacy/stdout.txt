@@ -1,0 +1,46 @@
+...FF................................                                    [100%]
+=================================== FAILURES ===================================
+____________________ test_parse_amount_thousands_separators ____________________
+
+    def test_parse_amount_thousands_separators():
+>       assert parse_amount("1,234.50") == Decimal("1234.50")
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_money.py:24: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+text = '1,234.50'
+
+    def parse_amount(text: str) -> Decimal:
+        """Parse an amount written as text. Raises ValueError if it is not one."""
+        try:
+            return Decimal(text.strip())
+        except InvalidOperation:
+>           raise ValueError(f"not an amount: {text!r}") from None
+E           ValueError: not an amount: '1,234.50'
+
+/work/invoicing/money.py:22: ValueError
+________________ test_parse_amount_keeps_scale_with_separators _________________
+
+    def test_parse_amount_keeps_scale_with_separators():
+>       assert str(parse_amount("1,000.00")) == "1000.00"
+                   ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_money.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+text = '1,000.00'
+
+    def parse_amount(text: str) -> Decimal:
+        """Parse an amount written as text. Raises ValueError if it is not one."""
+        try:
+            return Decimal(text.strip())
+        except InvalidOperation:
+>           raise ValueError(f"not an amount: {text!r}") from None
+E           ValueError: not an amount: '1,000.00'
+
+/work/invoicing/money.py:22: ValueError
+=========================== short test summary info ============================
+FAILED tests/test_money.py::test_parse_amount_thousands_separators - ValueErr...
+FAILED tests/test_money.py::test_parse_amount_keeps_scale_with_separators - V...
+2 failed, 35 passed in 0.05s

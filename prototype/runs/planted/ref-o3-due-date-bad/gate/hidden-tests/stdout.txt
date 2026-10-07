@@ -5,8 +5,8 @@ ________________________ test_r1_sunday_moves_to_monday ________________________
     def test_r1_sunday_moves_to_monday():
 >       assert terms.due_date(date(2026, 9, 4)) == date(2026, 10, 5)
 E       assert datetime.date(2026, 10, 6) == datetime.date(2026, 10, 5)
-E        +  where datetime.date(2026, 10, 6) = <function due_date at 0x74de284e42c0>(datetime.date(2026, 9, 4))
-E        +    where <function due_date at 0x74de284e42c0> = terms.due_date
+E        +  where datetime.date(2026, 10, 6) = <function due_date at 0x6ffe38d442c0>(datetime.date(2026, 9, 4))
+E        +    where <function due_date at 0x6ffe38d442c0> = terms.due_date
 E        +    and   datetime.date(2026, 9, 4) = date(2026, 9, 4)
 E        +  and   datetime.date(2026, 10, 5) = date(2026, 10, 5)
 

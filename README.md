@@ -113,15 +113,17 @@ reviewer's?**
 The link to the proposal is mechanical. The prototype's results fill `docs/RESULTS.md`,
 whose kill-criteria scoreboard (false-pass rate below both comparators; every planted flaw
 rejected; the gate accepts no change containing an unsafe action) selects the
-recommendation in the proposal and both presentation forms. **What the day produced:** a
-tested instrument that rejected 19 of 21 wrong hand-made changes (each at the expected
-step, the E-75 reporter patch among them) and blocked none of the 9 correct ones judged,
-for 0.07 USD of the 50 USD cap — and the honest finding that both false passes were
-behaviour no check covered, a blind spot the ground truth shared. **What it could not
-produce** is the comparison it was built to make: the run was stopped on the time budget
-(ADR-022) before the 165-run arm comparison and the cross-vendor evaluator. Read
-strictly, the stage-1 answer is Wait; `RESULTS.md` §8 prices the completion (the first
-step is free). What one day cannot show is stated wherever results appear: reviewer time
+recommendation in the proposal and both presentation forms. **What stage 1 produced** (built 2026-10-05,
+completed 2026-10-07 for 5.78 USD of the 50 USD cap): on 165 live runs the gate's verdict
+was wrong zero times, against 12% for the agent's own claim — which vouched for every one
+of the 19 changes in which the model weakened existing tests — and a rival vendor's
+evaluator that passed every bad change in its sample and split fail/pass on five
+evaluations of one identical change. Every gated run qualified, at the lowest cost per
+qualified change of the three arms. On hand-made adversarial changes the gate's rates are
+2 of 21 wrongly passed (behaviour no check covered — since caught by the widened answer
+key) and 1 of 17 wrongly blocked, predicted in advance. Two of the three stage-1 stopping
+conditions are met, the first decisively; the third (every planted flaw rejected) stands
+at 9 of 10 with its cause measured and its fix designed. What one day cannot show is stated wherever results appear: reviewer time
 saved, willingness to pay, the cost of writing checks for ordinary work, and whether
 results on today's models hold on the next.
 
@@ -133,8 +135,9 @@ For the conclusion: `docs/PROPOSAL.md`, then `docs/presentation.html`. For the r
 
 ## Status
 
-As of 2026-10-05: research complete and verified; thesis decided; proposal sections 1–2,
-design, design review, templates and both presentation forms written; the prototype built
-measurement-first and stopped on the time budget with `docs/RESULTS.md` reporting what was
-and was not measured (ADR-022). Pending: the stage-1 completion priced in `RESULTS.md`
-§8, proposal sections 3–4, and `BUILD_LOG.md`.
+As of 2026-10-07: research complete and verified; thesis decided; design, self-review,
+presentation forms written; the prototype built measurement-first, stopped on the
+one-day budget (ADR-022), then completed on the work branch: ground truth widened, the
+165-run arm comparison and the second-vendor evaluator run, `docs/RESULTS.md` updated in
+place with every rate and its limits. Pending: proposal sections 3–4, the evaluation path
+for an LLM application (the bonus), and `BUILD_LOG.md`.

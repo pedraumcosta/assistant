@@ -1,0 +1,12 @@
+{
+  "run": "o4-next-number__prompt__sonnet__t1",
+  "batch": "arms-sonnet",
+  "task": "o4-next-number",
+  "model": "gpt-5.1-2025-11-13",
+  "verdict": "pass",
+  "reason": "The implementation and added tests correctly handle year-specific, gap-tolerant invoice numbering while respecting scope and leaving unrelated code unchanged.",
+  "stop_reason": "returned",
+  "turns": 3,
+  "cost_usd": 0.004827,
+  "seconds": 4.355
+}

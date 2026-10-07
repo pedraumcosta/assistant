@@ -26,14 +26,14 @@
     {
       "check": "build",
       "exit_code": 0,
-      "duration_s": 0.188,
+      "duration_s": 0.17,
       "status": "passed",
       "reason": "parses and imports"
     },
     {
       "check": "repo-tests:tests",
       "exit_code": 0,
-      "duration_s": 0.336,
+      "duration_s": 0.31,
       "expected_tests": 17,
       "tests": {
         "total": 17,
@@ -49,7 +49,7 @@
     {
       "check": "author-tests",
       "exit_code": 0,
-      "duration_s": 0.321,
+      "duration_s": 0.312,
       "expected_tests": null,
       "tests": {
         "total": 19,
@@ -65,7 +65,7 @@
     {
       "check": "hidden-tests",
       "exit_code": 1,
-      "duration_s": 0.319,
+      "duration_s": 0.304,
       "expected_tests": 4,
       "tests": {
         "total": 4,
@@ -79,5 +79,5 @@
       "reason": "3 of 4 tests did not pass; first: test_hidden::test_r1_ten_or_more_units_get_five_percent"
     }
   ],
-  "seconds": 1.175
+  "seconds": 1.102
 }

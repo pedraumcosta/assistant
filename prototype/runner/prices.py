@@ -5,6 +5,10 @@ from __future__ import annotations
 PRICES = {
     # E-86, read on the publisher's page on 2026-10-05
     "claude-sonnet-5-5": {"input": 2.00, "output": 10.00, "cache_write_5m": 2.50, "cache_read": 0.20, "evidence": "E-86"},
+    # E-87, read on the publisher's page on 2026-10-07. OpenAI bills cached
+    # input at a discount and has no cache-write charge; the adapter maps its
+    # usage fields onto the same keys cost_usd reads.
+    "gpt-5.1-2025-11-13": {"input": 1.25, "output": 10.00, "cache_write_5m": 0.00, "cache_read": 0.125, "evidence": "E-87"},
 }
 
 

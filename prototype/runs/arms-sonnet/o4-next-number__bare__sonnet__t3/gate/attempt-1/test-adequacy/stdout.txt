@@ -1,0 +1,71 @@
+.....FF.FFF............                                                  [100%]
+=================================== FAILURES ===================================
+____________________________ test_gaps_use_highest _____________________________
+
+    def test_gaps_use_highest():
+>       assert next_number(["INV-2026-0001", "INV-2026-0007"], 2026) == "INV-2026-0008"
+E       AssertionError: assert 'INV-2026-0003' == 'INV-2026-0008'
+E         
+E         - INV-2026-0008
+E         ?             ^
+E         + INV-2026-0003
+E         ?             ^
+
+tests/test_numbering.py:13: AssertionError
+____________________________ test_order_irrelevant _____________________________
+
+    def test_order_irrelevant():
+>       assert next_number(["INV-2026-0009", "INV-2026-0002"], 2026) == "INV-2026-0010"
+E       AssertionError: assert 'INV-2026-0003' == 'INV-2026-0010'
+E         
+E         - INV-2026-0010
+E         ?            -
+E         + INV-2026-0003
+E         ?             +
+
+tests/test_numbering.py:17: AssertionError
+___________________________ test_no_numbers_for_year ___________________________
+
+    def test_no_numbers_for_year():
+>       assert next_number(["INV-2025-0050"], 2026) == "INV-2026-0001"
+E       AssertionError: assert 'INV-2026-0002' == 'INV-2026-0001'
+E         
+E         - INV-2026-0001
+E         ?             ^
+E         + INV-2026-0002
+E         ?             ^
+
+tests/test_numbering.py:26: AssertionError
+_________________________ test_invalid_entries_ignored _________________________
+
+    def test_invalid_entries_ignored():
+        existing = ["", "garbage", "INV-2026-", "INV-2026-12", "INV-2026-0002x",
+                    "inv-2026-0100", "INV-2026-0003-1", " INV-2026-0200", "INV-2026-0004"]
+>       assert next_number(existing, 2026) == "INV-2026-0005"
+E       AssertionError: assert 'INV-2026-0010' == 'INV-2026-0005'
+E         
+E         - INV-2026-0005
+E         ?             -
+E         + INV-2026-0010
+E         ?            +
+
+tests/test_numbering.py:32: AssertionError
+____________________ test_sequence_grows_beyond_four_digits ____________________
+
+    def test_sequence_grows_beyond_four_digits():
+>       assert next_number(["INV-2026-9999"], 2026) == "INV-2026-10000"
+E       AssertionError: assert 'INV-2026-0002' == 'INV-2026-10000'
+E         
+E         - INV-2026-10000
+E         ?          -   ^
+E         + INV-2026-0002
+E         ?             ^
+
+tests/test_numbering.py:36: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_numbering.py::test_gaps_use_highest - AssertionError: asser...
+FAILED tests/test_numbering.py::test_order_irrelevant - AssertionError: asser...
+FAILED tests/test_numbering.py::test_no_numbers_for_year - AssertionError: as...
+FAILED tests/test_numbering.py::test_invalid_entries_ignored - AssertionError...
+FAILED tests/test_numbering.py::test_sequence_grows_beyond_four_digits - Asse...
+5 failed, 18 passed in 0.04s

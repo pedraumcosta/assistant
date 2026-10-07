@@ -1,0 +1,12 @@
+{
+  "run": "t5-release-check__gated__sonnet__t1",
+  "batch": "arms-sonnet",
+  "task": "t5-release-check",
+  "model": "gpt-5.1-2025-11-13",
+  "verdict": "pass",
+  "reason": "All checks pass and the minimal, in-scope change correctly enforces the width and ellipsis requirements without unrelated modifications.",
+  "stop_reason": "returned",
+  "turns": 2,
+  "cost_usd": 0.003903,
+  "seconds": 4.093
+}

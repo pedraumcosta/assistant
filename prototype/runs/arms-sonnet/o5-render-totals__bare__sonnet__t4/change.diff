@@ -1,0 +1,70 @@
+--- a/invoicing/render.py
++++ b/invoicing/render.py
+@@ -1,6 +1,6 @@
+ """Plain-text rendering of an invoice."""
+ from invoicing.models import Invoice
+-from invoicing.pricing import line_total, total
++from invoicing.pricing import discount, line_total, subtotal, tax, total
+ 
+ 
+ def render_text(invoice: Invoice) -> str:
+@@ -13,5 +13,11 @@
+     for line in invoice.lines:
+         out.append(f"{line.quantity:>3} x {line.description:<20} {line_total(line):>10}")
+     out.append("")
++    out.append(f"{'Subtotal':<26} {subtotal(invoice):>10}")
++    if invoice.discount_code is not None:
++        label = f"Discount ({invoice.discount_code})"
++        out.append(f"{label:<26} {-discount(invoice):>10}")
++    if tax(invoice) != 0:
++        out.append(f"{'Tax':<26} {tax(invoice):>10}")
+     out.append(f"{'Total':<26} {total(invoice):>10}")
+     return "\n".join(out) + "\n"
+--- a/tests/test_render.py
++++ b/tests/test_render.py
+@@ -12,3 +12,45 @@
+         "  2 x Widget                    19.98\n"
+     )
+     assert text.endswith("Total                           19.98\n")
++
++
++def _tail(text, n):
++    return text.splitlines()[-n:]
++
++
++def test_subtotal_only_when_no_discount_and_no_tax():
++    text = render_text(invoice(line(2, "9.99")))
++    assert _tail(text, 2) == [
++        "Subtotal                        19.98",
++        "Total                           19.98",
++    ]
++    assert "Discount" not in text
++    assert "Tax" not in text
++
++
++def test_discount_line_is_negative():
++    text = render_text(invoice(line(1, "100.00"), discount_code="WELCOME10"))
++    assert _tail(text, 3) == [
++        "Subtotal                       100.00",
++        "Discount (WELCOME10)           -10.00",
++        "Total                           90.00",
++    ]
++
++
++def test_tax_line_without_discount():
++    text = render_text(invoice(line(1, "100.00"), region="UK"))
++    assert _tail(text, 3) == [
++        "Subtotal                       100.00",
++        "Tax                             20.00",
++        "Total                          120.00",
++    ]
++
++
++def test_discount_and_tax_in_order():
++    text = render_text(invoice(line(1, "100.00"), region="UK", discount_code="PARTNER25"))
++    assert _tail(text, 4) == [
++        "Subtotal                       100.00",
++        "Discount (PARTNER25)           -25.00",
++        "Tax                             15.00",
++        "Total                           90.00",
++    ]

@@ -10,13 +10,13 @@
   "step": "secrets",
   "reason": "the change adds what looks like a password or token in code",
   "integrity_violation": false,
-  "gate_seconds": 1.416,
+  "gate_seconds": 1.434,
   "groundtruth_qualified": true,
   "groundtruth": [
     {
       "check": "acceptance",
       "status": "passed",
-      "reason": "26 of 26 tests passed"
+      "reason": "28 of 28 tests passed"
     },
     {
       "check": "regression",

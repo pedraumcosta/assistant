@@ -10,13 +10,13 @@
   "step": "author-tests",
   "reason": "1 of 18 tests were skipped",
   "integrity_violation": false,
-  "gate_seconds": 0.8,
+  "gate_seconds": 0.804,
   "groundtruth_qualified": false,
   "groundtruth": [
     {
       "check": "acceptance",
       "status": "failed",
-      "reason": "3 of 12 tests did not pass; first: test_acceptance::test_weekend_moves_to_monday[issued1-30-expected1]"
+      "reason": "3 of 14 tests did not pass; first: test_acceptance::test_weekend_moves_to_monday[issued1-30-expected1]"
     },
     {
       "check": "regression",

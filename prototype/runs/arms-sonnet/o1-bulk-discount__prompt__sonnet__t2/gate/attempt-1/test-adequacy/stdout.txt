@@ -1,0 +1,73 @@
+.......FFFFFF...........                                                 [100%]
+=================================== FAILURES ===================================
+_______________________ test_line_total_5_percent_at_10 ________________________
+
+    def test_line_total_5_percent_at_10():
+>       assert line_total(line(10, "10.00")) == Decimal("95.00")
+E       AssertionError: assert Decimal('100.00') == Decimal('95.00')
+E        +  where Decimal('100.00') = line_total(LineItem(sku='W-1', description='Widget', quantity=10, unit_price=Decimal('10.00')))
+E        +    where LineItem(sku='W-1', description='Widget', quantity=10, unit_price=Decimal('10.00')) = line(10, '10.00')
+E        +  and   Decimal('95.00') = Decimal('95.00')
+
+tests/test_pricing.py:18: AssertionError
+_______________________ test_line_total_5_percent_at_49 ________________________
+
+    def test_line_total_5_percent_at_49():
+>       assert line_total(line(49, "10.00")) == Decimal("465.50")
+E       AssertionError: assert Decimal('490.00') == Decimal('465.50')
+E        +  where Decimal('490.00') = line_total(LineItem(sku='W-1', description='Widget', quantity=49, unit_price=Decimal('10.00')))
+E        +    where LineItem(sku='W-1', description='Widget', quantity=49, unit_price=Decimal('10.00')) = line(49, '10.00')
+E        +  and   Decimal('465.50') = Decimal('465.50')
+
+tests/test_pricing.py:22: AssertionError
+_______________________ test_line_total_10_percent_at_50 _______________________
+
+    def test_line_total_10_percent_at_50():
+>       assert line_total(line(50, "10.00")) == Decimal("450.00")
+E       AssertionError: assert Decimal('500.00') == Decimal('450.00')
+E        +  where Decimal('500.00') = line_total(LineItem(sku='W-1', description='Widget', quantity=50, unit_price=Decimal('10.00')))
+E        +    where LineItem(sku='W-1', description='Widget', quantity=50, unit_price=Decimal('10.00')) = line(50, '10.00')
+E        +  and   Decimal('450.00') = Decimal('450.00')
+
+tests/test_pricing.py:26: AssertionError
+_____________________ test_line_total_10_percent_above_50 ______________________
+
+    def test_line_total_10_percent_above_50():
+>       assert line_total(line(100, "10.00")) == Decimal("900.00")
+E       AssertionError: assert Decimal('1000.00') == Decimal('900.00')
+E        +  where Decimal('1000.00') = line_total(LineItem(sku='W-1', description='Widget', quantity=100, unit_price=Decimal('10.00')))
+E        +    where LineItem(sku='W-1', description='Widget', quantity=100, unit_price=Decimal('10.00')) = line(100, '10.00')
+E        +  and   Decimal('900.00') = Decimal('900.00')
+
+tests/test_pricing.py:30: AssertionError
+___________ test_line_total_discount_rounds_half_even_on_line_total ____________
+
+    def test_line_total_discount_rounds_half_even_on_line_total():
+        # 10 * 0.25 = 2.50; 5% off = 2.375 -> 2.38 (half-even; 7 is odd -> up)
+>       assert line_total(line(10, "0.25")) == Decimal("2.38")
+E       AssertionError: assert Decimal('2.50') == Decimal('2.38')
+E        +  where Decimal('2.50') = line_total(LineItem(sku='W-1', description='Widget', quantity=10, unit_price=Decimal('0.25')))
+E        +    where LineItem(sku='W-1', description='Widget', quantity=10, unit_price=Decimal('0.25')) = line(10, '0.25')
+E        +  and   Decimal('2.38') = Decimal('2.38')
+
+tests/test_pricing.py:35: AssertionError
+__________________ test_subtotal_uses_discounted_line_totals ___________________
+
+    def test_subtotal_uses_discounted_line_totals():
+>       assert subtotal(invoice(line(10, "10.00"), line(1, "5.00"))) == Decimal("100.00")
+E       AssertionError: assert Decimal('105.00') == Decimal('100.00')
+E        +  where Decimal('105.00') = subtotal(Invoice(number='INV-2026-0001', customer='Acme Ltd', issued=datetime.date(2026, 10, 5), lines=(LineItem(sku='W-1', des...), LineItem(sku='W-1', description='Widget', quantity=1, unit_price=Decimal('5.00'))), region='US', discount_code=None))
+E        +    where Invoice(number='INV-2026-0001', customer='Acme Ltd', issued=datetime.date(2026, 10, 5), lines=(LineItem(sku='W-1', des...), LineItem(sku='W-1', description='Widget', quantity=1, unit_price=Decimal('5.00'))), region='US', discount_code=None) = invoice(LineItem(sku='W-1', description='Widget', quantity=10, unit_price=Decimal('10.00')), LineItem(sku='W-1', description='Widget', quantity=1, unit_price=Decimal('5.00')))
+E        +      where LineItem(sku='W-1', description='Widget', quantity=10, unit_price=Decimal('10.00')) = line(10, '10.00')
+E        +      and   LineItem(sku='W-1', description='Widget', quantity=1, unit_price=Decimal('5.00')) = line(1, '5.00')
+E        +  and   Decimal('100.00') = Decimal('100.00')
+
+tests/test_pricing.py:41: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_pricing.py::test_line_total_5_percent_at_10 - AssertionErro...
+FAILED tests/test_pricing.py::test_line_total_5_percent_at_49 - AssertionErro...
+FAILED tests/test_pricing.py::test_line_total_10_percent_at_50 - AssertionErr...
+FAILED tests/test_pricing.py::test_line_total_10_percent_above_50 - Assertion...
+FAILED tests/test_pricing.py::test_line_total_discount_rounds_half_even_on_line_total
+FAILED tests/test_pricing.py::test_subtotal_uses_discounted_line_totals - Ass...
+6 failed, 18 passed in 0.05s

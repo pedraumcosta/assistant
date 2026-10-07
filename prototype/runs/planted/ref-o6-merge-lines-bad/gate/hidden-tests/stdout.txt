@@ -6,8 +6,8 @@ ____________________ test_r4_different_price_stays_separate ____________________
 >       assert len(pricing.merge_lines((li("A", 1, "10.00"), li("A", 1, "9.00")))) == 2
 E       AssertionError: assert 1 == 2
 E        +  where 1 = len((LineItem(sku='A', description='Widget', quantity=2, unit_price=Decimal('10.00')),))
-E        +    where (LineItem(sku='A', description='Widget', quantity=2, unit_price=Decimal('10.00')),) = <function merge_lines at 0x7d1ecacb11c0>((LineItem(sku='A', description='Widget', quantity=1, unit_price=Decimal('10.00')), LineItem(sku='A', description='Widget', quantity=1, unit_price=Decimal('9.00'))))
-E        +      where <function merge_lines at 0x7d1ecacb11c0> = pricing.merge_lines
+E        +    where (LineItem(sku='A', description='Widget', quantity=2, unit_price=Decimal('10.00')),) = <function merge_lines at 0x7b8e617211c0>((LineItem(sku='A', description='Widget', quantity=1, unit_price=Decimal('10.00')), LineItem(sku='A', description='Widget', quantity=1, unit_price=Decimal('9.00'))))
+E        +      where <function merge_lines at 0x7b8e617211c0> = pricing.merge_lines
 
 test_hidden.py:27: AssertionError
 =========================== short test summary info ============================

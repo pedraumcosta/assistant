@@ -1,0 +1,40 @@
+.................FF..F                                                   [100%]
+=================================== FAILURES ===================================
+____________________ test_due_date_saturday_moves_to_monday ____________________
+
+    def test_due_date_saturday_moves_to_monday():
+        # 2026-01-05 is a Monday; +5 days is Saturday 2026-01-10
+>       assert due_date(date(2026, 1, 5), terms_days=5) == date(2026, 1, 12)
+E       assert datetime.date(2026, 1, 10) == datetime.date(2026, 1, 12)
+E        +  where datetime.date(2026, 1, 10) = due_date(datetime.date(2026, 1, 5), terms_days=5)
+E        +    where datetime.date(2026, 1, 5) = date(2026, 1, 5)
+E        +  and   datetime.date(2026, 1, 12) = date(2026, 1, 12)
+
+tests/test_terms.py:16: AssertionError
+_____________________ test_due_date_sunday_moves_to_monday _____________________
+
+    def test_due_date_sunday_moves_to_monday():
+>       assert due_date(date(2026, 1, 5), terms_days=6) == date(2026, 1, 12)
+E       assert datetime.date(2026, 1, 11) == datetime.date(2026, 1, 12)
+E        +  where datetime.date(2026, 1, 11) = due_date(datetime.date(2026, 1, 5), terms_days=6)
+E        +    where datetime.date(2026, 1, 5) = date(2026, 1, 5)
+E        +  and   datetime.date(2026, 1, 12) = date(2026, 1, 12)
+
+tests/test_terms.py:20: AssertionError
+________________________ test_due_date_never_on_weekend ________________________
+
+    def test_due_date_never_on_weekend():
+        start = date(2026, 1, 1)
+        for n in range(0, 100):
+>           assert due_date(start, terms_days=n).weekday() < 5
+E           assert 5 < 5
+E            +  where 5 = <built-in method weekday of datetime.date object at 0x7db2e154b8f0>()
+E            +    where <built-in method weekday of datetime.date object at 0x7db2e154b8f0> = datetime.date(2026, 1, 3).weekday
+E            +      where datetime.date(2026, 1, 3) = due_date(datetime.date(2026, 1, 1), terms_days=2)
+
+tests/test_terms.py:34: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_terms.py::test_due_date_saturday_moves_to_monday - assert d...
+FAILED tests/test_terms.py::test_due_date_sunday_moves_to_monday - assert dat...
+FAILED tests/test_terms.py::test_due_date_never_on_weekend - assert 5 < 5
+3 failed, 19 passed in 0.04s

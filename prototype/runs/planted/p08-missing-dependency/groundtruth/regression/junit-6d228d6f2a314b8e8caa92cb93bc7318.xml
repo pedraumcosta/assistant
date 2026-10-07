@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="3" failures="0" skipped="0" tests="3" time="0.079" timestamp="2026-10-07T13:08:11.118583+00:00" hostname="fd18db5fed44"><testcase classname="" name="tests.test_money" time="0.000"><error message="collection failure">ImportError while importing test module '/checks/tests/test_money.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_money.py:5: in &lt;module&gt;
+    from invoicing.money import parse_amount, round_cents
+/work/invoicing/money.py:9: in &lt;module&gt;
+    import decimal_grouping  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^
+E   ModuleNotFoundError: No module named 'decimal_grouping'</error></testcase><testcase classname="" name="tests.test_pricing" time="0.000"><error message="collection failure">ImportError while importing test module '/checks/tests/test_pricing.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_pricing.py:5: in &lt;module&gt;
+    from invoicing.pricing import discount, line_total, subtotal, tax, total
+/work/invoicing/pricing.py:5: in &lt;module&gt;
+    from invoicing.money import round_cents
+/work/invoicing/money.py:9: in &lt;module&gt;
+    import decimal_grouping  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^
+E   ModuleNotFoundError: No module named 'decimal_grouping'</error></testcase><testcase classname="" name="tests.test_render" time="0.000"><error message="collection failure">ImportError while importing test module '/checks/tests/test_render.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_render.py:1: in &lt;module&gt;
+    from invoicing.render import render_text
+/work/invoicing/render.py:3: in &lt;module&gt;
+    from invoicing.pricing import line_total, total
+/work/invoicing/pricing.py:5: in &lt;module&gt;
+    from invoicing.money import round_cents
+/work/invoicing/money.py:9: in &lt;module&gt;
+    import decimal_grouping  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^
+E   ModuleNotFoundError: No module named 'decimal_grouping'</error></testcase></testsuite></testsuites>

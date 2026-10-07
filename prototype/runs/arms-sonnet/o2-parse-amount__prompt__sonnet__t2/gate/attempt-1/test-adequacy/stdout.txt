@@ -1,0 +1,249 @@
+...FFFFFFF...............................                                [100%]
+=================================== FAILURES ===================================
+___________ test_parse_amount_thousands_separators[1,234.50-1234.50] ___________
+
+text = '1,234.50', expected = '1234.50'
+
+    @pytest.mark.parametrize(
+        "text, expected",
+        [
+            ("1,234.50", "1234.50"),
+            ("1,234", "1234"),
+            ("12,345.678", "12345.678"),
+            ("123,456,789.01", "123456789.01"),
+            (" 1,000 ", "1000"),
+            ("-1,234.50", "-1234.50"),
+            ("0,123", "123"),
+        ],
+    )
+    def test_parse_amount_thousands_separators(text, expected):
+>       result = parse_amount(text)
+                 ^^^^^^^^^^^^^^^^^^
+
+tests/test_money.py:36: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+text = '1,234.50'
+
+    def parse_amount(text: str) -> Decimal:
+        """Parse an amount written as text. Raises ValueError if it is not one."""
+        try:
+            return Decimal(text.strip())
+        except InvalidOperation:
+>           raise ValueError(f"not an amount: {text!r}") from None
+E           ValueError: not an amount: '1,234.50'
+
+/work/invoicing/money.py:22: ValueError
+______________ test_parse_amount_thousands_separators[1,234-1234] ______________
+
+text = '1,234', expected = '1234'
+
+    @pytest.mark.parametrize(
+        "text, expected",
+        [
+            ("1,234.50", "1234.50"),
+            ("1,234", "1234"),
+            ("12,345.678", "12345.678"),
+            ("123,456,789.01", "123456789.01"),
+            (" 1,000 ", "1000"),
+            ("-1,234.50", "-1234.50"),
+            ("0,123", "123"),
+        ],
+    )
+    def test_parse_amount_thousands_separators(text, expected):
+>       result = parse_amount(text)
+                 ^^^^^^^^^^^^^^^^^^
+
+tests/test_money.py:36: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+text = '1,234'
+
+    def parse_amount(text: str) -> Decimal:
+        """Parse an amount written as text. Raises ValueError if it is not one."""
+        try:
+            return Decimal(text.strip())
+        except InvalidOperation:
+>           raise ValueError(f"not an amount: {text!r}") from None
+E           ValueError: not an amount: '1,234'
+
+/work/invoicing/money.py:22: ValueError
+_________ test_parse_amount_thousands_separators[12,345.678-12345.678] _________
+
+text = '12,345.678', expected = '12345.678'
+
+    @pytest.mark.parametrize(
+        "text, expected",
+        [
+            ("1,234.50", "1234.50"),
+            ("1,234", "1234"),
+            ("12,345.678", "12345.678"),
+            ("123,456,789.01", "123456789.01"),
+            (" 1,000 ", "1000"),
+            ("-1,234.50", "-1234.50"),
+            ("0,123", "123"),
+        ],
+    )
+    def test_parse_amount_thousands_separators(text, expected):
+>       result = parse_amount(text)
+                 ^^^^^^^^^^^^^^^^^^
+
+tests/test_money.py:36: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+text = '12,345.678'
+
+    def parse_amount(text: str) -> Decimal:
+        """Parse an amount written as text. Raises ValueError if it is not one."""
+        try:
+            return Decimal(text.strip())
+        except InvalidOperation:
+>           raise ValueError(f"not an amount: {text!r}") from None
+E           ValueError: not an amount: '12,345.678'
+
+/work/invoicing/money.py:22: ValueError
+_____ test_parse_amount_thousands_separators[123,456,789.01-123456789.01] ______
+
+text = '123,456,789.01', expected = '123456789.01'
+
+    @pytest.mark.parametrize(
+        "text, expected",
+        [
+            ("1,234.50", "1234.50"),
+            ("1,234", "1234"),
+            ("12,345.678", "12345.678"),
+            ("123,456,789.01", "123456789.01"),
+            (" 1,000 ", "1000"),
+            ("-1,234.50", "-1234.50"),
+            ("0,123", "123"),
+        ],
+    )
+    def test_parse_amount_thousands_separators(text, expected):
+>       result = parse_amount(text)
+                 ^^^^^^^^^^^^^^^^^^
+
+tests/test_money.py:36: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+text = '123,456,789.01'
+
+    def parse_amount(text: str) -> Decimal:
+        """Parse an amount written as text. Raises ValueError if it is not one."""
+        try:
+            return Decimal(text.strip())
+        except InvalidOperation:
+>           raise ValueError(f"not an amount: {text!r}") from None
+E           ValueError: not an amount: '123,456,789.01'
+
+/work/invoicing/money.py:22: ValueError
+_____________ test_parse_amount_thousands_separators[ 1,000 -1000] _____________
+
+text = ' 1,000 ', expected = '1000'
+
+    @pytest.mark.parametrize(
+        "text, expected",
+        [
+            ("1,234.50", "1234.50"),
+            ("1,234", "1234"),
+            ("12,345.678", "12345.678"),
+            ("123,456,789.01", "123456789.01"),
+            (" 1,000 ", "1000"),
+            ("-1,234.50", "-1234.50"),
+            ("0,123", "123"),
+        ],
+    )
+    def test_parse_amount_thousands_separators(text, expected):
+>       result = parse_amount(text)
+                 ^^^^^^^^^^^^^^^^^^
+
+tests/test_money.py:36: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+text = ' 1,000 '
+
+    def parse_amount(text: str) -> Decimal:
+        """Parse an amount written as text. Raises ValueError if it is not one."""
+        try:
+            return Decimal(text.strip())
+        except InvalidOperation:
+>           raise ValueError(f"not an amount: {text!r}") from None
+E           ValueError: not an amount: ' 1,000 '
+
+/work/invoicing/money.py:22: ValueError
+__________ test_parse_amount_thousands_separators[-1,234.50--1234.50] __________
+
+text = '-1,234.50', expected = '-1234.50'
+
+    @pytest.mark.parametrize(
+        "text, expected",
+        [
+            ("1,234.50", "1234.50"),
+            ("1,234", "1234"),
+            ("12,345.678", "12345.678"),
+            ("123,456,789.01", "123456789.01"),
+            (" 1,000 ", "1000"),
+            ("-1,234.50", "-1234.50"),
+            ("0,123", "123"),
+        ],
+    )
+    def test_parse_amount_thousands_separators(text, expected):
+>       result = parse_amount(text)
+                 ^^^^^^^^^^^^^^^^^^
+
+tests/test_money.py:36: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+text = '-1,234.50'
+
+    def parse_amount(text: str) -> Decimal:
+        """Parse an amount written as text. Raises ValueError if it is not one."""
+        try:
+            return Decimal(text.strip())
+        except InvalidOperation:
+>           raise ValueError(f"not an amount: {text!r}") from None
+E           ValueError: not an amount: '-1,234.50'
+
+/work/invoicing/money.py:22: ValueError
+______________ test_parse_amount_thousands_separators[0,123-123] _______________
+
+text = '0,123', expected = '123'
+
+    @pytest.mark.parametrize(
+        "text, expected",
+        [
+            ("1,234.50", "1234.50"),
+            ("1,234", "1234"),
+            ("12,345.678", "12345.678"),
+            ("123,456,789.01", "123456789.01"),
+            (" 1,000 ", "1000"),
+            ("-1,234.50", "-1234.50"),
+            ("0,123", "123"),
+        ],
+    )
+    def test_parse_amount_thousands_separators(text, expected):
+>       result = parse_amount(text)
+                 ^^^^^^^^^^^^^^^^^^
+
+tests/test_money.py:36: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+text = '0,123'
+
+    def parse_amount(text: str) -> Decimal:
+        """Parse an amount written as text. Raises ValueError if it is not one."""
+        try:
+            return Decimal(text.strip())
+        except InvalidOperation:
+>           raise ValueError(f"not an amount: {text!r}") from None
+E           ValueError: not an amount: '0,123'
+
+/work/invoicing/money.py:22: ValueError
+=========================== short test summary info ============================
+FAILED tests/test_money.py::test_parse_amount_thousands_separators[1,234.50-1234.50]
+FAILED tests/test_money.py::test_parse_amount_thousands_separators[1,234-1234]
+FAILED tests/test_money.py::test_parse_amount_thousands_separators[12,345.678-12345.678]
+FAILED tests/test_money.py::test_parse_amount_thousands_separators[123,456,789.01-123456789.01]
+FAILED tests/test_money.py::test_parse_amount_thousands_separators[ 1,000 -1000]
+FAILED tests/test_money.py::test_parse_amount_thousands_separators[-1,234.50--1234.50]
+FAILED tests/test_money.py::test_parse_amount_thousands_separators[0,123-123]
+7 failed, 34 passed in 0.05s

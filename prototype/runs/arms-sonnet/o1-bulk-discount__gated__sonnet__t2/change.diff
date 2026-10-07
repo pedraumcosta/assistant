@@ -1,0 +1,42 @@
+--- a/invoicing/pricing.py
++++ b/invoicing/pricing.py
+@@ -7,7 +7,12 @@
+ 
+ 
+ def line_total(line: LineItem) -> Decimal:
+-    return round_cents(line.unit_price * line.quantity)
++    gross = line.unit_price * line.quantity
++    if line.quantity >= 50:
++        gross *= Decimal("0.90")
++    elif line.quantity >= 10:
++        gross *= Decimal("0.95")
++    return round_cents(gross)
+ 
+ 
+ def subtotal(invoice: Invoice) -> Decimal:
+--- a/tests/test_pricing.py
++++ b/tests/test_pricing.py
+@@ -39,3 +39,23 @@
+ def test_total_with_discount_and_tax():
+     inv = invoice(line(1, "200.00"), region="UK", discount_code="PARTNER25")
+     assert total(inv) == Decimal("180.00")
++
++
++@pytest.mark.parametrize(
++    "qty, expected",
++    [
++        (9, "90.00"),
++        (10, "95.00"),
++        (49, "465.50"),
++        (50, "450.00"),
++        (100, "900.00"),
++    ],
++)
++def test_line_total_quantity_discount(qty, expected):
++    assert line_total(line(qty, "10.00")) == Decimal(expected)
++
++
++def test_line_total_quantity_discount_rounds_once_half_even():
++    # 10 * 0.25 * 0.95 = 2.375 -> half-even 2.38; 10 * 0.15 * 0.95 = 1.425 -> 1.42
++    assert line_total(line(10, "0.25")) == Decimal("2.38")
++    assert line_total(line(10, "0.15")) == Decimal("1.42")

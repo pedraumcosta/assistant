@@ -1,0 +1,24 @@
+...............FF..                                                      [100%]
+=================================== FAILURES ===================================
+________________ test_list_numbers_sorted_and_ignores_non_json _________________
+
+tmp_path = PosixPath('/tmp/pytest-of-unknown/pytest-0/test_list_numbers_sorted_and_i0')
+
+    def test_list_numbers_sorted_and_ignores_non_json(tmp_path):
+>       from invoicing.store import list_numbers
+E       ImportError: cannot import name 'list_numbers' from 'invoicing.store' (/work/invoicing/store.py)
+
+tests/test_store.py:12: ImportError
+______________________ test_list_numbers_empty_or_missing ______________________
+
+tmp_path = PosixPath('/tmp/pytest-of-unknown/pytest-0/test_list_numbers_empty_or_mis0')
+
+    def test_list_numbers_empty_or_missing(tmp_path):
+>       from invoicing.store import list_numbers
+E       ImportError: cannot import name 'list_numbers' from 'invoicing.store' (/work/invoicing/store.py)
+
+tests/test_store.py:22: ImportError
+=========================== short test summary info ============================
+FAILED tests/test_store.py::test_list_numbers_sorted_and_ignores_non_json - I...
+FAILED tests/test_store.py::test_list_numbers_empty_or_missing - ImportError:...
+2 failed, 17 passed in 0.04s

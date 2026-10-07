@@ -10,13 +10,13 @@
   "step": "hidden-tests",
   "reason": "3 of 4 tests did not pass; first: test_hidden::test_r1_ten_or_more_units_get_five_percent",
   "integrity_violation": false,
-  "gate_seconds": 1.175,
+  "gate_seconds": 1.102,
   "groundtruth_qualified": false,
   "groundtruth": [
     {
       "check": "acceptance",
       "status": "failed",
-      "reason": "5 of 11 tests did not pass; first: test_acceptance::test_tiers_and_their_boundaries[10-95.00]"
+      "reason": "10 of 16 tests did not pass; first: test_acceptance::test_tiers_and_their_boundaries[10-95.00]"
     },
     {
       "check": "regression",

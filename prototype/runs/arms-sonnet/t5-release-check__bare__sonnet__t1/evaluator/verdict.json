@@ -1,0 +1,12 @@
+{
+  "run": "t5-release-check__bare__sonnet__t1",
+  "batch": "arms-sonnet",
+  "task": "t5-release-check",
+  "model": "gpt-5.1-2025-11-13",
+  "verdict": "pass",
+  "reason": "All tests including the release gate now pass, changes are scoped to allowed files, and the modifications are minimal and directly related to enforcing the line width and ellipsis requirements.",
+  "stop_reason": "returned",
+  "turns": 2,
+  "cost_usd": 0.004083,
+  "seconds": 3.379
+}
