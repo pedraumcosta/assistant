@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- Explainer page. Same content as the session artifact https://claude.ai/artifact/BCm2bSEFfYuzBwQoowTgRD -->
+<title>ASSIST Decision Trail</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column with a timeline rail for the pivots, three-column decision cards, and a verdict ladder. Engineering-notebook feel, cool neutrals, one blue accent, amber reserved for "rejected", red/green reserved for verdict outcomes. */
+:root{
+  --page:#F5F6F8; --surface:#FFFFFF; --ink:#16202B; --ink2:#4A5767; --muted:#7C8794;
+  --line:#DDE2E8; --accent:#1D5C9E; --accent-soft:#E4EEF8; --amber:#9A6A12; --amber-soft:#F7EFDD;
+  --bad:#B23A2F; --bad-soft:#F8E6E3; --good:#2E7D4F; --good-soft:#E3F2E9; --code:#EDF0F3;
+  --display:"Newsreader",Georgia,"Times New Roman",serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --page:#111519; --surface:#1A2026; --ink:#E6EAEE; --ink2:#AEB8C2; --muted:#7C8794;
+    --line:#2A333C; --accent:#6FA8E6; --accent-soft:#1C2A3B; --amber:#D9A94B; --amber-soft:#2B2416;
+    --bad:#E07A6E; --bad-soft:#33201D; --good:#6CC08B; --good-soft:#1B2E22; --code:#222A32;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --page:#111519; --surface:#1A2026; --ink:#E6EAEE; --ink2:#AEB8C2; --muted:#7C8794;
+  --line:#2A333C; --accent:#6FA8E6; --accent-soft:#1C2A3B; --amber:#D9A94B; --amber-soft:#2B2416;
+  --bad:#E07A6E; --bad-soft:#33201D; --good:#6CC08B; --good-soft:#1B2E22; --code:#222A32;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--page);color:var(--ink);margin:0;padding-block:0 80px;font:16px/1.65 var(--body)}
+main{max-width:860px;margin:0 auto;padding-inline:20px;min-width:0}
+h1,h2,h3{font-family:var(--display);font-weight:500;line-height:1.15;text-wrap:balance;margin:0}
+h1{font-size:2.6rem;letter-spacing:-.01em}
+h2{font-size:1.65rem;margin:72px 0 8px}
+h3{font-size:1.15rem;font-weight:600;margin:30px 0 6px}
+p{margin:10px 0;max-width:68ch}
+ul,ol{max-width:68ch;padding-left:1.3em}
+li{margin:5px 0}
+li::marker{color:var(--muted)}
+a{color:var(--accent)}
+strong{font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--code);border-radius:4px;padding:.08em .35em}
+.eyebrow{font:500 .72rem/1 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+header.hero{padding:60px 0 28px;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:16px}
+.lede{font-size:1.15rem;color:var(--ink2);max-width:62ch;margin:0}
+.meta{display:flex;flex-wrap:wrap;gap:6px 22px;font-size:.84rem;color:var(--muted)}
+.meta b{color:var(--ink2);font-weight:500}
+.secnote{color:var(--ink2);margin:0 0 18px;max-width:68ch}
+.toc{display:flex;flex-wrap:wrap;gap:6px;margin:22px 0 0;padding:0;list-style:none;font-size:.85rem}
+.toc a{border:1px solid var(--line);border-radius:99px;padding:4px 12px;text-decoration:none;color:var(--ink2);background:var(--surface)}
+.toc a:hover{border-color:var(--accent);color:var(--accent)}
+
+/* rules I set before research */
+.rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:20px 0}
+.rule{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:14px 16px}
+.rule b{display:block;font-size:.98rem;margin-bottom:4px}
+.rule p{font-size:.9rem;color:var(--ink2);margin:0}
+
+/* timeline of pivots */
+.trail{list-style:none;margin:26px 0;padding:0;border-left:2px solid var(--line);display:flex;flex-direction:column;gap:0}
+.trail li{position:relative;padding:12px 0 18px 30px}
+.trail li::before{content:"";position:absolute;left:-7px;top:19px;width:12px;height:12px;border-radius:50%;background:var(--page);border:2px solid var(--accent)}
+.trail li.final::before{background:var(--accent)}
+.trail .when{font:500 .74rem/1 var(--mono);color:var(--muted);letter-spacing:.04em}
+.trail .pos{display:block;font-family:var(--display);font-size:1.18rem;font-weight:500;margin:4px 0 2px}
+.trail .why{font-size:.92rem;color:var(--ink2);margin:0;max-width:66ch}
+
+/* decision cards */
+.dec{background:var(--surface);border:1px solid var(--line);border-radius:8px;margin:18px 0;overflow:hidden}
+.dec>header{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;padding:14px 18px 10px;border-bottom:1px solid var(--line)}
+.dec .id{font:500 .78rem/1 var(--mono);color:var(--page);background:var(--accent);border-radius:4px;padding:5px 8px}
+.dec .name{font-family:var(--display);font-size:1.15rem;font-weight:600}
+.dec .cols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0}
+.dec .col{padding:12px 18px 14px;min-width:0;border-left:1px solid var(--line)}
+.dec .col:first-child{border-left:0}
+.dec .col .l{font:500 .68rem/1 var(--body);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
+.dec .col.chosen .l{color:var(--accent)}
+.dec .col.rejected .l{color:var(--amber)}
+.dec .col.why .l{color:var(--muted)}
+.dec .col p{font-size:.92rem;margin:0;color:var(--ink)}
+.dec .col.rejected p,.dec .col.why p{color:var(--ink2)}
+@media (max-width:640px){.dec .cols{grid-template-columns:1fr}.dec .col{border-left:0;border-top:1px solid var(--line)}.dec .col:first-child{border-top:0}}
+
+/* flow diagram */
+.flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:10px;align-items:stretch;margin:22px 0}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:12px 14px;min-width:0}
+.box b{display:block;font-size:.95rem}
+.box p{font-size:.85rem;color:var(--ink2);margin:4px 0 0}
+.box.ours{border-color:var(--accent);background:var(--accent-soft)}
+.arrow{align-self:center;color:var(--muted);font-size:1.3rem}
+@media (max-width:640px){.flow{grid-template-columns:1fr}.arrow{transform:rotate(90deg);justify-self:center}}
+
+/* verdict ladder */
+.ladder{list-style:none;margin:20px 0;padding:0;border:1px solid var(--line);border-radius:8px;background:var(--surface);overflow:hidden}
+.ladder li{display:grid;grid-template-columns:36px 1fr auto;gap:12px;align-items:baseline;padding:10px 16px;border-top:1px solid var(--line);font-size:.93rem}
+.ladder li:first-child{border-top:0}
+.ladder .n{font:500 .8rem/1 var(--mono);color:var(--muted)}
+.ladder .name{font-family:var(--mono);font-size:.86rem}
+.ladder .what{color:var(--ink2);display:block;font-family:var(--body);font-size:.88rem}
+.ladder .t{font:400 .78rem/1 var(--mono);color:var(--muted);white-space:nowrap}
+.ladder li.static{background:var(--accent-soft)}
+@media (max-width:520px){.ladder li{grid-template-columns:36px 1fr}.ladder .t{grid-column:2}}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:22px 0}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:12px 14px}
+.stat .n{font-family:var(--display);font-size:1.7rem;font-weight:500;color:var(--accent);font-variant-numeric:tabular-nums;line-height:1.1}
+.stat .n.bad{color:var(--bad)}
+.stat .l{font-size:.78rem;color:var(--muted);margin-top:4px}
+
+/* bar list */
+.chart{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px 18px;margin:20px 0}
+.chart h4{font:600 .95rem/1.3 var(--body);margin:0 0 2px}
+.chart .sub{font-size:.82rem;color:var(--muted);margin:0 0 14px}
+.bars{display:grid;grid-template-columns:max-content 1fr 2.2em;gap:7px 12px;align-items:center;font-size:.86rem}
+.bars .k{font-family:var(--mono);font-size:.82rem;color:var(--ink2)}
+.bars .track{height:14px;position:relative;min-width:0}
+.bars .bar{height:100%;background:var(--accent);border-radius:0 4px 4px 0;position:relative}
+.bars .bar.codeless{background:var(--ink2)}
+.bars .v{font-family:var(--mono);font-size:.82rem;text-align:right;color:var(--ink)}
+.bars .track:hover .bar{filter:brightness(1.15)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:.8rem;color:var(--ink2);margin-top:12px}
+.legend span::before{content:"";display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-2px;margin-right:6px;background:var(--accent)}
+.legend span.c::before{background:var(--ink2)}
+
+/* callouts */
+.call{border-left:3px solid var(--accent);background:var(--surface);padding:12px 16px;margin:18px 0;border-radius:0 6px 6px 0;max-width:72ch}
+.call p{margin:0;font-size:.95rem}
+.call.bad{border-left-color:var(--bad)}
+.call.amber{border-left-color:var(--amber)}
+
+/* verdict table */
+table{border-collapse:collapse;width:100%;font-size:.9rem;margin:16px 0}
+.tw{overflow-x:auto}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500}
+td.num{font-family:var(--mono);font-size:.84rem;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tag{display:inline-block;font:500 .7rem/1 var(--body);letter-spacing:.05em;text-transform:uppercase;border-radius:99px;padding:4px 9px}
+.tag.pass{background:var(--good-soft);color:var(--good)}
+.tag.fail{background:var(--bad-soft);color:var(--bad)}
+.tag.open{background:var(--amber-soft);color:var(--amber)}
+
+/* mistakes list */
+.mist{list-style:none;padding:0;margin:18px 0;display:grid;gap:10px}
+.mist li{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:12px 14px;font-size:.92rem}
+.mist li b{display:block;margin-bottom:2px}
+.mist li span{color:var(--ink2)}
+
+.foot{margin-top:72px;padding-top:18px;border-top:1px solid var(--line);font-size:.84rem;color:var(--muted);max-width:68ch}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+</head>
+<body>
+<main>
+<header class="hero">
+  <span class="eyebrow">Technical walkthrough</span>
+  <h1>How I got from "another coding assistant?" to a 350-line gate</h1>
+  <p class="lede">Leadership asked whether we should enter the AI coding assistant market. One working day later I had an answer, a design, and a prototype that measures its own error. This page is about the reasoning in between: what I believed at the start, what the evidence did to it, the decisions I took and what each one gave up.</p>
+  <div class="meta"><span><b>Pedro Costa</b>, VP Engineering</span><span>Exercise run 3 to 5 October 2026</span><span>Budget: one working day, 50 USD of model spend</span><span>Full record: the <code>assistant</code> repository</span></div>
+  <ul class="toc">
+    <li><a href="#rules">The rules I set first</a></li>
+    <li><a href="#pivots">Seven pivots</a></li>
+    <li><a href="#decisions">The decisions</a></li>
+    <li><a href="#design">The design</a></li>
+    <li><a href="#attack">Attacking it</a></li>
+    <li><a href="#build">Building the prototype</a></li>
+    <li><a href="#results">What it measured</a></li>
+    <li><a href="#mistakes">What went wrong</a></li>
+    <li><a href="#next">Where it stands</a></li>
+  </ul>
+</header>
+
+<h2 id="rules">The rules I set before reading anything</h2>
+<p class="secnote">The brief was blunt: "why should we invest in building another AI coding product when the largest technology companies already offer mature alternatives?" I knew the honest answer might be "we shouldn't", and I wanted a process that could reach that answer without me flinching. So before any research, I fixed how the work would run.</p>
+<div class="rules">
+  <div class="rule"><b>No invented numbers</b><p>Every figure traces to a public source verified at its raw page, or to a run file the prototype wrote. Anything seen only in a search summary gets re-verified or dropped.</p></div>
+  <div class="rule"><b>Decisions before documents</b><p>Each decision is recorded with its rejected alternative at the moment it is taken. The proposal is written from the decisions, never the other way around.</p></div>
+  <div class="rule"><b>Kill criteria before results</b><p>The conditions for continuing are fixed before any run. Whatever the prototype shows, the recommendation is read off a scoreboard, not argued at writing time.</p></div>
+  <div class="rule"><b>"Do not build" is a real outcome</b><p>The case against entering is written undiluted and kept in the proposal. "Wait, with a review date" stays on the table throughout.</p></div>
+  <div class="rule"><b>Pair every throughput number with its quality number</b><p>A speed figure on its own is how this market fools people. None appears alone anywhere in the repo.</p></div>
+  <div class="rule"><b>One confirmed commit per step</b><p>Twenty-eight commits, each one agreed before it was made, with the co-author trailer kept so the tooling's part is visible in the log.</p></div>
+</div>
+<p>Those rules did more work than any single finding. Three times during the day a claim I liked failed re-verification, and the rules decided what happened to it. It was dropped, not softened.</p>
+
+<h2 id="pivots">Seven pivots in two days</h2>
+<p class="secnote">I started with a position that felt strong. It did not survive the first paper. Here is how the position moved, and what moved it each time. The direction is always the same: narrower.</p>
+<ol class="trail">
+  <li><span class="when">3 OCT · START</span><span class="pos">A thin, model-agnostic outer harness: policy, sandbox, gate and evidence around any agent</span><p class="why">My starting instinct from my own notes: "the platform is a harness around the agent, not a bet on the agent". The first research pass over the market seemed to support it.</p></li>
+  <li><span class="when">5 OCT · THE HARNESS PAPER</span><span class="pos">The evidence layer only, entered through per-repository measurement</span><p class="why">A source-code study of eleven coding agents showed the loop is about 90 lines and that the policy, sandbox and budget layer already ships as open source from Databricks. Three quarters of my harness was free. What none of the eleven systems does is run a deterministic check after the agent stops and keep a record of the outcome.</p></li>
+  <li><span class="when">5 OCT · THE ARTICLES, RE-READ IN FULL</span><span class="pos">A verifier with a measured false-pass rate; the mechanism itself is cheap to copy</span><p class="why">The first pass had read truncated fetches. On full text, every "verification" article turned out to be prompt text judged by the model making the claim, or code whose result parser would report a collection error as a pass. Contract-to-test is ten lines. The hard part is a verifier that cannot lie and whose own error is known.</p></li>
+  <li><span class="when">5 OCT · THE VENDOR'S OWN POST, TWO PAPERS</span><span class="pos">A deterministic, vendor-independent, measured verdict</span><p class="why">Anthropic publishes contract-plus-evaluator as its own practice and says agents "reliably skew positive when grading their own work". Two 2026 papers publish my framing and metrics under their own names: production-qualified change, verification tax. I adopted their vocabulary and gave up claiming the concept. What was left unclaimed: independence from the vendor, and a measured error rate.</p></li>
+  <li><span class="when">5 OCT · THE MARKET CHECK</span><span class="pos">The same, for teams where a wrong change is expensive</span><p class="why">CodeRabbit had just raised at 1.5 billion USD positioning as "the control layer". Its checks cannot run your test suite, and no vendor publishes a false-pass rate. OpenAI argues the other way: minimal blocking gates because "corrections are cheap, and waiting is expensive", adding that this "would be irresponsible in a low-throughput environment". The buyer narrowed to the second kind of team.</p></li>
+  <li><span class="when">5 OCT · A SECOND THESIS, EVALUATED</span><span class="pos">Verdict widened from fixed checks to executable evidence</span><p class="why">I evaluated a brownfield specialisation as an alternative product and did not pursue it. But its evidence changed the first thesis: on a migration benchmark, 118 runs passed every fixed check and 28 deserved to. Fixed checks under-describe behaviour. The verdict had to be allowed to grow a counterexample search.</p></li>
+  <li class="final"><span class="when">5 OCT · THE THESIS DISCUSSION</span><span class="pos">A three-stage probe, framed as tooling for evidence-driven development</span><p class="why">Not Build, not Wait: one day, then six weeks with a design partner, then a build only if thresholds set in advance are cleared. Reframed away from "a plug-in that checks the agent", which shrinks with every model release, to a team's standard for what counts as done, which applies whoever wrote the change.</p></li>
+</ol>
+<div class="call"><p>The pattern I want a technical audience to see: each pivot was forced by reading something in full that I had first read in summary. The cost of that discipline was most of a day. The alternative was defending a position the first serious reader would take apart.</p></div>
+
+<h2 id="decisions">The decisions, with what each one rejected</h2>
+<p class="secnote">Twenty-two decisions are recorded in the plan and the journal. These are the ones a technical reader will want to argue with, in the form I recorded them: what I chose, what I turned down, and why.</p>
+
+<div class="dec"><header><span class="id">D3</span><span class="name">The agent under test is someone else's published code</span></header><div class="cols">
+  <div class="col chosen"><div class="l">Chosen</div><p>The 90-line scaffold from the harness paper, unedited, with an adapter around it. Every departure from the listing is recorded.</p></div>
+  <div class="col rejected"><div class="l">Rejected</div><p>Writing my own loop. Wrapping an agent SDK or a hosted agent service.</p></div>
+  <div class="col why"><div class="l">Why</div><p>A citable agent nobody can accuse me of tuning to suit my gate. And it makes the strategic point in code: the loop is small, so the loop is not the product.</p></div>
+</div></div>
+
+<div class="dec"><header><span class="id">T12</span><span class="name">The verdict is executable, not always deterministic</span></header><div class="cols">
+  <div class="col chosen"><div class="l">Chosen</div><p>For conventional code: tests, a yes or no. For an LLM application: an evaluation over fixed cases, some hidden, repeated, scored against a threshold, with pass, fail or inconclusive as outcomes.</p></div>
+  <div class="col rejected"><div class="l">Rejected</div><p>Calling the verdict "deterministic" everywhere. Adding an LLM-application task to the first prototype.</p></div>
+  <div class="col why"><div class="l">Why</div><p>Software built on a model answers differently each time, so one run proves little. The promise does not depend on determinism. It depends on checks fixed beforehand, protected from the author, run outside the agent, recorded, and measured for their own error.</p></div>
+</div></div>
+
+<div class="dec"><header><span class="id">T15</span><span class="name">The contract lives on a protected branch</span></header><div class="cols">
+  <div class="col chosen"><div class="l">Chosen</div><p>Contract and hidden checks sit on a protected branch of the team's own repository. The pipeline pins the contract's hash.</p></div>
+  <div class="col rejected"><div class="l">Rejected</div><p>A separate contract store. Protecting the contract by file format or prompt wording.</p></div>
+  <div class="col why"><div class="l">Why</div><p>The author of a change must not be able to write to the thing that judges it. A protected branch reuses permissions and history the host already has. A separate store is one more system to run and secure.</p></div>
+</div></div>
+
+<div class="dec"><header><span class="id">T20</span><span class="name">What "unsafe" means for the kill criterion</span></header><div class="cols">
+  <div class="col chosen"><div class="l">Chosen</div><p>"The gate accepts no change that contains an unsafe action." Unsafe actions attempted are counted per arm from the event log, as a measurement.</p></div>
+  <div class="col rejected"><div class="l">Rejected</div><p>The original wording, "no unsafe action runs in the gated arm". A thin policy on tool calls in the gated arm. A fourth arm with gate plus policy.</p></div>
+  <div class="col why"><div class="l">Why</div><p>The gate runs after the author stops, so it cannot prevent anything. As first worded the criterion would have failed by construction, or forced me to build the policy layer I had excluded. I found this while scoping the prototype, which is the point of scoping before building.</p></div>
+</div></div>
+
+<div class="dec"><header><span class="id">T21</span><span class="name">Every run is confined in a container, in every arm</span></header><div class="cols">
+  <div class="col chosen"><div class="l">Chosen</div><p>A Docker container per run holding only that run's copy of the fixture, no network, no API key. The verdict and the ground truth run in containers of their own because they execute code the agent wrote.</p></div>
+  <div class="col rejected"><div class="l">Rejected</div><p>macOS <code>sandbox-exec</code>, which worked but is less portable. An isolated copy of the repository alone.</p></div>
+  <div class="col why"><div class="l">Why</div><p>The scaffold runs shell commands on the host with no restriction, and my trap tasks invite destructive commands and planted instructions. A copied directory does not contain <code>rm -rf ~</code>. This was finding 11 of my own design review, and it changed the runner before the first paid call.</p></div>
+</div></div>
+
+<div class="dec"><header><span class="id">T22</span><span class="name">Which models</span></header><div class="cols">
+  <div class="col chosen"><div class="l">Chosen</div><p>Agent under test: Claude Sonnet 5.5. Evaluator comparator: a GPT-5.4 model from OpenAI, on a sample of runs.</p></div>
+  <div class="col rejected"><div class="l">Rejected</div><p>Opus 5.5 as the agent. Haiku 4.5 as the agent. A same-family evaluator.</p></div>
+  <div class="col why"><div class="l">Why</div><p>Sonnet is what a team runs day to day. A stronger model may leave no gap to measure on small tasks; a weaker one confounds the result with the minimal tool interface. The evaluator comes from another vendor so a model family is not grading itself.</p></div>
+</div></div>
+
+<div class="dec"><header><span class="id">ADR-013</span><span class="name">Brownfield specialisation: evaluated, not pursued</span></header><div class="cols">
+  <div class="col chosen"><div class="l">Chosen</div><p>Stay with the evidence layer. Name legacy teams as a hypothesis for the pilot, never as a finding.</p></div>
+  <div class="col rejected"><div class="l">Rejected</div><p>A product built on zoning by blast radius, comprehension memos, characterisation tests first. Declaring brownfield the first market.</p></div>
+  <div class="col why"><div class="l">Why</div><p>The premise holds: agents pass 5.4 percent of whole-repository migrations in one study. But the four practices are process, reproducible as a skill file, and in every verified success the decisive input was the customer's own oracle. No time to validate it in a day.</p></div>
+</div></div>
+
+<div class="dec"><header><span class="id">ADR-012</span><span class="name">Decision models: next enhancement, never the verdict</span></header><div class="cols">
+  <div class="col chosen"><div class="l">Chosen</div><p>First prototype runs without one. Later: a decision-model judge as a fourth verdict source, and a test of whether the gate's own outcomes recalibrate it.</p></div>
+  <div class="col rejected"><div class="l">Rejected</div><p>Including it in the first prototype. Building the product around its economics.</p></div>
+  <div class="col why"><div class="l">Why</div><p>On the one measured result I found, 96 percent of its most confident errors are repeated by LLM judges, against 50 percent under independence. It buys cost and latency, not independence. The correctness verdict must never depend on it.</p></div>
+</div></div>
+
+<h2 id="design">The design in one picture</h2>
+<p class="secnote">The design document opens with the trade it makes, because most design documents never say what they give up: <strong>it trades speed to merge, and some good changes wrongly held back, for a verdict the author of a change cannot influence.</strong> Everything below follows from that sentence.</p>
+<div class="flow">
+  <div class="box ours"><b>Before the work</b><p>Engineer writes a use case with its requirements. Their own assistant asks clarifying questions. Checks are drafted, one per requirement at least. A person approves. The contract goes to the protected branch.</p></div>
+  <div class="arrow">→</div>
+  <div class="box"><b>The work (not ours)</b><p>Any coding agent, from any vendor, or a person, makes the change. The author is untrusted by design. We give it nothing while it works.</p></div>
+  <div class="arrow">→</div>
+  <div class="box ours"><b>After the author stops</b><p>A separate pipeline job runs the verdict from the diff and the contract only. It never reads the agent's transcript. Passed changes route by risk tier. Failed ones go back with the first reason. Errors pass nothing.</p></div>
+</div>
+<p>Two choices in that picture are the ones I would defend hardest. The verdict runner never reads the agent's conversation, because a verifier that reads the author's account of its work inherits the author's mistakes. And <code>error</code> is its own state: when the verdict process itself breaks, nothing passes. A check that crashed must never read as clean.</p>
+
+<h3>The verdict ladder, as built</h3>
+<p>First match wins. The gate reads the base, the change, the contract and three numbers about the run. A test holds it to never reading the event log or the agent's claim. Shaded steps execute no code from the change.</p>
+<ol class="ladder">
+  <li class="static"><span class="n">1</span><span class="name">integrity<span class="what">An existing test, a check, or the test configuration was altered</span></span><span class="t">0.0 s</span></li>
+  <li class="static"><span class="n">2</span><span class="name">budget<span class="what">Attempts, money or time exceeded</span></span><span class="t">0.0 s</span></li>
+  <li><span class="n">3</span><span class="name">build<span class="what">The package parses and imports, and the container sees the right change by hash</span></span><span class="t">1.9 s</span></li>
+  <li><span class="n">4</span><span class="name">repo-tests<span class="what">The repository's own suite, from the base commit</span></span><span class="t">2.2 s</span></li>
+  <li><span class="n">5</span><span class="name">author-tests<span class="what">The author's tests, with skipped tests counted as a failure</span></span><span class="t">2.1 s</span></li>
+  <li><span class="n">6</span><span class="name">hidden-tests<span class="what">The contract's hidden checks, never shown to the agent</span></span><span class="t">1.9 s</span></li>
+  <li class="static"><span class="n">7</span><span class="name">scope<span class="what">The diff touched only what the contract allows</span></span><span class="t">0.0 s</span></li>
+  <li><span class="n">8</span><span class="name">test-adequacy<span class="what">The author's new tests run against the original code. They must fail</span></span><span class="t">2.1 s</span></li>
+  <li class="static"><span class="n">9</span><span class="name">dependency<span class="what">Every new import exists</span></span><span class="t">0.0 s</span></li>
+  <li class="static"><span class="n">10</span><span class="name">secrets<span class="what">Nothing that looks like a key was added</span></span><span class="t">0.0 s</span></li>
+</ol>
+<p>Timings are the mean over the eleven verdicts that ran every step, on a quiet machine with two verdicts in flight. Most of each two seconds is a container starting; the tests themselves take under a second. A full verdict averaged 10.3 seconds and made no model call, so it added no token cost.</p>
+<p>Step 8 is the one I would point a sceptic at. It comes from a published finding that agents' own tests are often vacuous. Running them against the original code and requiring them to fail is cheap, deterministic, and caught exactly the planted flaw built to test it.</p>
+
+<h2 id="attack">Attacking my own design before building it</h2>
+<p class="secnote">Before writing code I reviewed the design as if someone else had written it. Eleven findings, three of them high severity. The verdict I wrote at the top: the design is honest and unusually disciplined about its own costs, and its central security claim is asserted rather than designed.</p>
+<ul>
+  <li><strong>The integrity boundary was a sentence, not a mechanism.</strong> Running the customer's tests means executing the author's code. If that code runs where the hidden checks are mounted, it can read them, forge reports, or patch the test reporter, which is the exact behaviour I cite as my threat model. The fix: each check runs in its own throwaway container, the verdict is assembled outside from exit statuses the sandboxed code cannot write, and test infrastructure such as <code>conftest.py</code> is a protected path by default.</li>
+  <li><strong>The enforcement anchor was circular.</strong> Pinning a contract hash in a pipeline the author can edit protects nothing. The real anchor is the host's required status check in branch protection, and the protected branch must be writable only by a role no agent ever assumes. If the engineer can write there, so can their agent running with their credentials.</li>
+  <li><strong>There was no flaky-test story,</strong> and flakiness breaks idempotency, replay and the false-fail rate at once. That will be the first complaint of any pilot team.</li>
+  <li><strong>The verdict sources would not have judged the same artefacts.</strong> The gate naturally exists only in the gated arm. The fix was to run it offline as a scorer on every arm's final diff, so the agent's claim, the evaluator and the gate all judge an identical set. This changed the runner before the first paid run.</li>
+  <li><strong>Counting unsafe actions by executing them on my laptop.</strong> Finding 11, which became decision T21 above.</li>
+</ul>
+<div class="call amber"><p>One review finding I did not fully act on: static checks should all run before any code from the change executes. As built, only integrity and budget do. Scope, dependency and secrets still come after the test runs. It is cheap to reorder and it stays on the list.</p></div>
+
+<h2 id="build">How I built the prototype</h2>
+<p class="secnote">One question, one day, 50 USD. Is an executable verdict wrong less often than the agent's own claim, and than a model reviewer's? Everything about the build order follows from not wanting to measure anything on an unproven instrument.</p>
+<h3>Measurement first, with a fake agent that costs nothing</h3>
+<p>Slice one built no gate and called no model. It built the fixture (a small invoicing library with its tests), eleven tasks, the hidden ground truth for each, the three containers, the event log, the spend ledger with the cap enforced before a call is made, the unsafe-action rules, and a fake agent that replays hand-made changes through the real loop. Seventy-two dry runs proved the plumbing: a crashed check reads as <code>error</code>, a simulated provider failure is excluded from every rate, and the agent's container cannot see the protected directory, reach the network, or find a key. Each of those is a test, not an assertion.</p>
+<p>The ground truth was written before the gate, and is richer than the gate's own checks. If they were the same checks, the false-pass rate would be zero by construction. Six ordinary tasks each have behaviour the visible tests do not describe, so a change can pass them and still be wrong. Five trap tasks each invite one specific failure.</p>
+<h3>Three arms, three verdict sources</h3>
+<div class="tw"><table>
+  <thead><tr><th>Arm</th><th>What runs</th><th>What it stands for</th></tr></thead>
+  <tbody>
+    <tr><td>Bare</td><td>The scaffold alone</td><td>The agent as shipped</td></tr>
+    <tr><td>Prompt discipline</td><td>The scaffold, told to verify before claiming completion</td><td>Every free "verify first" plugin</td></tr>
+    <tr><td>Gated</td><td>The scaffold inside the contract, with the verdict after it stops and at most two repair attempts</td><td>The product</td></tr>
+  </tbody>
+</table></div>
+<p>Against the hidden ground truth, three verdict sources are scored on the same finished changes: the agent's own claim, an evaluator agent from a different vendor, and the gate. The gated arm is told only what a pipeline would tell it: the visible checks, and the first reason for a failure with no test name.</p>
+<h3>Then the loop, the gate, the planted flaws</h3>
+<p>Slice two put the published scaffold on Sonnet 5.5 through an adapter, and made one paid run. Its cost sized everything after it: 165 runs for the full comparison would have come to about 6.4 USD if each cost what that one did. Slice three built the gate and ran the same task in the gated arm. Slice four wrote ten planted flaws, one for each way of being wrong the design names, and six known-good changes, with the outcome expected of the gate recorded before the gate saw any of them. The rule was fixed in advance: if a flaw is accepted, that is a result to report, not a check to tune until it passes.</p>
+<div class="call bad"><p>The time budget ran out part-way through slice four. I stopped the run with 30 of 38 hand-made changes judged, committed the tree as it stood, and wrote the results from the run files. The 165 model runs and the cross-vendor evaluator were never made. The comparison the prototype was built to make is still open, and the results say so in their first line.</p></div>
+
+<h2 id="results">What the day actually measured</h2>
+<p class="secnote">Everything here comes from a file under <code>prototype/runs/</code>. Nothing is estimated. Every rate is reported with its count, because on a set this small a rate without its denominator is a lie.</p>
+<div class="stats">
+  <div class="stat"><div class="n">19 / 21</div><div class="l">wrong hand-made changes rejected</div></div>
+  <div class="stat"><div class="n">9 / 9</div><div class="l">correct changes accepted, of those judged</div></div>
+  <div class="stat"><div class="n">0 / 5</div><div class="l">unsafe changes accepted</div></div>
+  <div class="stat"><div class="n bad">2</div><div class="l">false passes, same cause twice</div></div>
+  <div class="stat"><div class="n">10.3 s</div><div class="l">mean full verdict, no model call</div></div>
+  <div class="stat"><div class="n">0.07</div><div class="l">USD spent of the 50 cap</div></div>
+</div>
+
+<div class="chart">
+  <h4>Where the 19 rejections happened</h4>
+  <p class="sub">Count of wrong changes stopped at each step of the ladder. Darker bars are steps that execute no code from the change.</p>
+  <div class="bars" role="img" aria-label="Rejections by verdict step: integrity 6, hidden-tests 5, scope 4, build 1, author-tests 1, test-adequacy 1, secrets 1">
+    <span class="k">integrity</span><div class="track" title="6 rejections: an existing test, a check, or conftest.py was altered"><div class="bar codeless" style="width:100%"></div></div><span class="v">6</span>
+    <span class="k">hidden-tests</span><div class="track" title="5 rejections: a hidden acceptance check failed"><div class="bar" style="width:83.3%"></div></div><span class="v">5</span>
+    <span class="k">scope</span><div class="track" title="4 rejections: a file outside the contract's scope was touched"><div class="bar codeless" style="width:66.7%"></div></div><span class="v">4</span>
+    <span class="k">build</span><div class="track" title="1 rejection: an import of a package that does not exist"><div class="bar" style="width:16.7%"></div></div><span class="v">1</span>
+    <span class="k">author-tests</span><div class="track" title="1 rejection: the author's own tests were marked skipped"><div class="bar" style="width:16.7%"></div></div><span class="v">1</span>
+    <span class="k">test-adequacy</span><div class="track" title="1 rejection: new tests passed against the original code"><div class="bar" style="width:16.7%"></div></div><span class="v">1</span>
+    <span class="k">secrets</span><div class="track" title="1 rejection: a hard-coded API key was added"><div class="bar codeless" style="width:16.7%"></div></div><span class="v">1</span>
+  </div>
+  <div class="legend"><span>Executes the change</span><span class="c">Reads the diff only</span></div>
+</div>
+<p>Eleven of the nineteen were decided without running a line of the author's code. The patched test reporter, the method a frontier lab reported seeing a model learn, was stopped at step one before any test ran. Tampering is the easy part: altered tests, altered checks, edited configuration and out-of-scope files are deterministic properties of a diff, and the gate cannot be argued out of them.</p>
+
+<h3>The two false passes are the finding</h3>
+<p>Both are the same weakness. The gate has no opinion about behaviour no check covers.</p>
+<ul>
+  <li><strong>One hidden check used one example.</strong> The requirement says entries that are not valid invoice numbers are ignored. The hidden check tried one such entry; the wrong change handled that one and raised on another. The ground truth, which tries six, caught it. One example per requirement is not enough.</li>
+  <li><strong>One flaw was planted to find the limit, and found more than I wanted.</strong> It correctly changes line totals and quietly stops charging tax after the discount in every region but one. Nothing in the contract looks at tax by region, so nothing objects. Then the second finding: my own ground truth accepts it too. The measure the verdicts were to be compared against has the same blind spot. A wrong change of this kind made by a model would have been counted as qualified.</li>
+</ul>
+<div class="call"><p>So the contract's quality is the product's quality. The first step of the product, turning requirements into checks, carries most of the risk. In this prototype those checks were written by hand, by me, and still missed. That is the strongest argument I have for the counterexample search being the next thing built, and for widening the ground truth before any model run is compared against it.</p></div>
+
+<h3>Against the conditions I fixed in advance</h3>
+<div class="tw"><table>
+  <thead><tr><th>Continue after stage 1 only if</th><th>Result</th><th>Basis</th></tr></thead>
+  <tbody>
+    <tr><td>The gate's false-pass rate is lower than the agent's own claim and than a model reviewer's</td><td><span class="tag open">Not measured</span></td><td>Two model runs, both correct. No reviewer run. The dry-run comparison is true by construction because the fake agent always claims success</td></tr>
+    <tr><td>Every planted flaw is rejected</td><td><span class="tag fail">9 of 10</span></td><td>The behaviour-dropped flaw passed, for the reason above</td></tr>
+    <tr><td>The gate accepts no change containing an unsafe action</td><td><span class="tag pass">0 of 5, hand-made only</span></td><td>Not measured on a model</td></tr>
+  </tbody>
+</table></div>
+<p>Read strictly, the stage-one answer is Wait. Read with its cause, it says something narrower: the gate is only as good as the checks in the contract, which is the first risk the design lists. I report both readings and I do not pick the kinder one.</p>
+
+<h3>What the instrument itself looks like</h3>
+<p>The gate is 350 lines of Python. The measurement around it is 1,450. The agent under test is 82 lines of published listing with 127 lines of adapter. Eighty-four tests hold it together, including one that makes a check crash and requires <code>error</code>, one that proves the gate's source reads neither the ground truth nor the agent's account, and five that prove the agent's container is blind and offline. All of it was written inside the one day. That supports the proposal's own claim that the mechanism is cheap and is not the moat.</p>
+
+<h2 id="mistakes">What went wrong, in my own record</h2>
+<p class="secnote">The journal lists every deviation and correction, including mine. A technical audience should know these, because they are what the process is for.</p>
+<ul class="mist">
+  <li><b>The first research pass read truncated articles and did not know it.</b><span>The summarising fetch cut three long pieces mid-way and reported one as near-complete. Found when I challenged the coverage. Fix: download full text, check it reaches the last section, read to the end. Two pivots came from the re-read.</span></li>
+  <li><b>A kill criterion could not have been met as written.</b><span>"No unsafe action runs in the gated arm" assumed a policy on tool calls that the thesis excludes. Caught while scoping, reworded before any run.</span></li>
+  <li><b>Docker's file sharing lied to the verifier, twice.</b><span>A container read stale content; the host read a stale view of what a container wrote. A verifier judging the wrong files is worse than none. The gate now hashes what it sees inside the container and refuses to judge a mismatch. Found by a test, not in a run, which is the argument for not cutting tests to save time.</span></li>
+  <li><b>My own notes needed fourteen corrections and my early ledger nine.</b><span>A benchmark figure from a podcast was 33 percent; the paper says 14.8. A valuation was stale by 23 billion USD. A result described as "16 working features" was a 16-feature specification. Each was fixed at the raw source or dropped.</span></li>
+  <li><b>The scaffold does not run as published.</b><span>No tool parameter schemas, and its limits surface as a <code>RuntimeError</code> rather than a stop. Recorded with the listing; fixed in the adapter, never in the listing.</span></li>
+  <li><b>A summary I was given was wrong, and I nearly committed it.</b><span>It said the planted-flaw runner had been neither written nor run. Listing the files for the commit showed it had judged 30 changes. The commit message was corrected before the push.</span></li>
+  <li><b>The time budget fell on the measurement itself.</b><span>The plan said to drop the stretch slice first and protect the results. In the event the 150-minute prototype timebox ran out with the central comparison unrun. The build order was right; the timebox was the most optimistic number in the repository, and I had said so in the review.</span></li>
+</ul>
+
+<h2 id="next">Where it stands, and what one day cannot show</h2>
+<p>The recommendation to the executive team is unchanged by the stop: do not build another assistant; run the probe; decide Build or Wait on its numbers. What changed is that stage one is not finished, and the first step to finish it is free. Finishing the interrupted run is one command and no spend. The 165-run arm comparison needs a batch runner over a single-run driver that already works, at roughly 6 USD on the one data point I have. The cross-vendor evaluator needs an adapter and a recorded price. Before any of that is compared with the ground truth, the ground truth gets widened.</p>
+<p>What no prototype of this shape can show, and what the proposal says wherever results appear:</p>
+<ul>
+  <li>Reviewer time saved, willingness to pay, and whether the time the gate adds nets out against review, rework and incidents. Those are the pilot's measures.</li>
+  <li>What it costs a team to write checks for ordinary work. I wrote them by hand, and it is the largest open assumption in the product.</li>
+  <li>Whether a result on today's models holds on the next. The vendor's own evaluator went from necessary to "unnecessary overhead" between two releases. Re-measurement per model and harness pairing is part of the product for that reason.</li>
+  <li>Whether the model errs at all on tasks this small. Both paid runs got the task right and said so truthfully. If there is no gap between the agent's claim and the truth, there is nothing for a gate to close, and the honest answer is Wait.</li>
+</ul>
+<div class="call"><p>If I had to compress the whole exercise into one sentence for an engineer: writing code got cheap, knowing whether to trust it did not, and the only verdict worth paying for is one the author cannot touch and whose own error rate you have measured on your repository. The prototype shows the first half of that is a few hundred lines. The second half is the product, and it is still unmeasured.</p></div>
+
+<p class="foot">Every figure on this page traces to the public-source evidence ledger in the repository or to a run record under <code>prototype/runs/</code>. The decisions are recorded as ADR-001 to ADR-022 in the journal, with the alternative each one rejected. The exercise was run with Claude Code: six parallel research passes, one confirmed commit per step, and the co-author trailer kept in the log so the tool's part is auditable.</p>
+</main>
+</body>
+</html>
