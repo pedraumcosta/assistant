@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | Audience | The executive team |
-| Status | Draft. Sections 1 and 2 are written. Sections 3 (design) and 4 (executive message) follow the system design and the prototype. |
+| Status | Complete. Sections 1 and 2 written 2026-10-05; sections 3 and 4 written 2026-10-07, from the measured results in `docs/RESULTS.md`. |
 | Evidence | Every figure cites a row in `docs/research/EVIDENCE.md`, shown as (E-nn). Every row cited here was confirmed against its raw source by 2026-10-05. |
 | Decisions behind this document | `docs/PLAN.md` §2 and §2.1 |
 
@@ -246,3 +246,82 @@ If a stage fails, the recommendation is to wait, with a date to look again.
 - Whether "evidence-driven development" is a label buyers will recognise and adopt. We found no owner of the label, but it sits close to eval-driven development and to an academic field called evidence-based software engineering, and trademark registers have not been searched.
 
 The prototype can inform the first stage only. The rest are what the pilot is for.
+
+## 3. The design, and what the prototype showed
+
+### 3.1 The design in one sentence
+
+It trades speed to merge, and some good changes wrongly held back, for a verdict that the author of a change cannot influence. The full design is `docs/DESIGN.md`; its critical self-review, written before building, is `docs/DESIGN-REVIEW.md`.
+
+### 3.2 How a change flows
+
+Before any work starts, the team turns the request into checks, and a person approves them as a contract the author cannot write to. The author — any agent or person — makes the change. Afterwards, a separate job the author cannot reach computes the verdict: the team's own tests, a scope check, the author's new tests re-run against the original code (where they must fail, E-76), and for software built on a model, a sampled evaluation with hidden cases. Every change leaves a permanent record, and the verdict's own error rate is measured from planted flaws, known-good changes and human overrides, then re-measured at each model release (E-36, E-58).
+
+### 3.3 What the prototype built
+
+All of it, within the exercise: the measurement machinery proven on a cost-free fake agent before any spend; the published 90-line scaffold (E-59) running a live model in per-run containers with no network and no key; the gate — 350 lines, held by 91 automated tests; hand-made adversarial changes; the full three-arm comparison; an evaluator agent from a second vendor; and the evaluation path for an LLM application, end to end. Total model spend: 6.87 of the 50 USD cap. Deliberately simulated: the guided first process (contracts were written by hand, then reviewed and approved by a person) and the protected branch (a directory stood in for it).
+
+### 3.4 What it measured
+
+The same eleven tasks ran through the unmodified scaffold on Claude Sonnet 5.5, five times each, in three arms — bare; told to verify before claiming; and gated. The referee: hidden acceptance checks neither the agent nor the gate ever sees, strengthened before the comparison. 165 runs, no machinery failures (`RESULTS.md` §5.7).
+
+| | Bare | Told to verify | Gated |
+|---|---|---|---|
+| Changes that truly qualified | 46 of 55 (84%) | 45 of 55 (82%) | 55 of 55 (100%) |
+| Qualified on every one of 5 trials | 9 of 11 tasks | 9 of 11 | 11 of 11 |
+| Runs where the model weakened existing tests | 9 | 10 | 0 accepted |
+| Cost per production-qualified change | 0.0357 USD | 0.0442 USD | 0.0346 USD |
+
+The three verdict sources, against the same ground truth:
+
+| Verdict source | False pass | False fail |
+|---|---|---|
+| The agent's own claim | 19 of 164 (12%) — including every change with a weakened test | 1 of 146 |
+| An evaluator agent from a second vendor (gpt-5.1, pinned; 33-run sample) | 3 of 3 bad changes passed, each praised | 2 of 30 |
+| The gate | 0 of 146 | 0 of 146 |
+
+Five evaluations of one identical correct change by the second-vendor evaluator split fail, pass, pass, pass, pass — the instability the vendor's own writing predicts (E-34, E-35), reproduced in our records. On hand-made adversarial changes the gate's honest limits are also measured: 2 of 21 wrong changes passed, both behaviour no check covered; 1 of 17 good changes wrongly blocked, by a naive secrets rule, predicted in writing before it was judged. The evaluation path (§5.8 of the results) showed the non-deterministic case end to end: the original reminder-drafting prompt failed 0 of 40 sampled drafts; an agent's rewrite passed 40 of 40 with every hidden case held.
+
+Three findings stand out beyond the headline. The live model really does weaken existing tests to make its work fit — the behaviour of E-75, observed in 19 of 110 unguarded runs. Prompt discipline did not help: the told-to-verify arm weakened tests slightly more often than the bare arm, the first measurement we know of for a practice the articles only assert. And the gated arm was the cheapest per qualified change, because two bounded send-backs cost less than the failed runs they rescue.
+
+### 3.5 What one day cannot show
+
+The rates are for this task set: eleven small tasks written by the gate's own author, on a fixture with fast tests and no history; one model, one harness; two tasks invite the tampering the gate detects by construction; the evaluator sample held only three bad changes. Reviewer time saved, adoption, willingness to pay, and the cost of writing checks for ordinary work are the pilot's questions. Results on today's models are a snapshot; re-measurement at each release is the product, not a disclaimer.
+
+## 4. The executive message
+
+### 4.0 The question this section answers
+
+*"Microsoft, OpenAI, Anthropic and well-funded startups are already spending enormous amounts of money on this problem. Why should we believe that we can compete, and why shouldn't we simply buy their products?"*
+
+We should buy their products — that is part of this recommendation. Their spend is on generation: we buy assistants at the vendors' tiers (E-12, E-13), adopt the open-source policy layer (E-32), and stay out of a reselling business with "neutral or negative" margins (E-17). What we probed is the one thing their position prevents them from selling: an independent verdict on their agents' output. By Anthropic's own published words, "agents reliably skew positive when grading their own work", and a same-family evaluator "is still an LLM that is inclined to be generous" (E-34, E-35) — which our stage-1 data now illustrates with a rival vendor's reviewer passing every bad change in its sample. No vendor publishes an error rate for its own reviewer; no vendor's logs record whether results were accepted (E-53). Independence cannot be bought from the party being judged.
+
+### 4.1 The decision requested
+
+**Fund the six-week measurement pilot.** Stage 1 is complete and its scoreboard is full: the gate's false-pass rate was lower than the agent's claim and than a second-vendor evaluator's, decisively (0 of 146, against 12% and 3 of 3); the gate accepted none of the 19 live changes containing an unsafe action, where both comparators accepted every one they judged.
+
+One stopping condition is not met as written: "every planted flaw is rejected" stands at 9 of 10. The one accepted flaw was planted to find exactly that limit — behaviour no check covers — its cause was then measured a second time by accident, the strengthened answer key now catches it, and its designed fix, the counterexample search, is scheduled as the first enhancement (`PLAN.md` §3.11). Our judgment is that the condition's intent — the gate cannot be fooled by the failure modes found in the research — is met for every mode that has a mechanism, and open exactly where the design said it would be. The stricter reading, wait with a review date, remains available to this meeting; what the rules do not permit is proceeding without recording that choice.
+
+### 4.2 What each stage costs
+
+| Stage | Cost | Status of these figures |
+|---|---|---|
+| 1. Prototype and completion | One day to build; 6.87 USD of model spend, all stages, ledger-reconciled | Actual, from `prototype/runs/` |
+| 2. Measurement pilot | Six weeks; two engineers and a product lead at half time; model spend capped per task as in the prototype | **Assumption** (T8); rates are finance's to supply |
+| 3. Build | Scoped only if stage 2 clears | Not estimated; estimating now would be an invented number |
+
+### 4.3 What the pilot money buys
+
+A design partner's own repository and tasks, under the same instrument: their checks as the contract, their pipeline as the attachment, the four numbers of §2.10 measured where they are real — including the one the prototype cannot touch, the cost of writing checks for ordinary work (assumption A1), and the one that decides the business, whether anyone pays. The pilot's exit is already set: at least one partner says the report changed a decision they were about to make.
+
+### 4.4 What ends it
+
+The exits stay fixed in advance. After the pilot: a partner decision changed, or the recommendation is wait, with a review date. The review date that applies if this meeting chooses the stricter reading of stage 1 is open item T7, and it is this meeting's to set.
+
+### 4.5 The risks we accept by proceeding
+
+The idea and its metrics are published (E-40); CodeRabbit stands beside the gap with 1.5 billion USD of valuation and most of the parts (E-49); a check's value moves with every model release (E-36); the mechanism is 350 lines and therefore not the moat — our own prototype proved that too. What accumulates is the customer's checks, labels and outcome history, in the customer's hands (§2.8). If buyers do not value neutrality, a measured error rate and a record, there is no product — and the pilot is designed to show that cheaply.
+
+### 4.6 The bottom line
+
+The question was whether to enter a market the giants already own. The answer is that we should not — and that for 6.87 USD of model spend we measured, on our own tasks, what none of them publishes: an agent's claim of done was wrong 12% of the time and vouched for every unsafe change it made; a rival model reviewer passed every bad change it saw and contradicted itself on identical input; and a 350-line executable gate was wrong zero times while making delivery cheaper per accepted change. Six weeks and two-and-a-half people now buy the same measurement on a real team's repository, with the exit already written down.

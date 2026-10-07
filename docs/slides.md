@@ -419,16 +419,16 @@ nothing. For these, the check is an **evaluation**:
   clears the bar; "failed" only when all of it misses; otherwise **"inconclusive"** —
   more samples while budget remains, then a person decides.
 
-**Built and shown end to end** on a reminder-drafting feature: the original prompt failed
-0 of 40 samples; an agent's rewrite passed 40 of 40, with every hidden case held —
-including a customer literally named "Approved Partners Ltd", which must be named without
-claiming approval. Getting there also met both of the evaluation's own error sources: a
-scorer that wrongly failed valid phrasings, and a pipeline call that silently truncated
-drafts — each caught by reading the records, fixed, and kept.
+**Built and shown end to end:** the original reminder prompt failed 0 of 40 samples; an
+agent's rewrite passed 40 of 40, every hidden case held — and both of the evaluation's
+own error sources appeared on the way, were caught from the records, and were fixed.
 
-<!-- 1:30. This answers "an AI feature can't be verified deterministically" — the
-     promise never depended on determinism. RESULTS.md §5.8; the superseded rounds are
-     kept beside the final pair, which is the discipline on display. -->
+<!-- 1:30. The promise never depended on determinism. Details for questions
+     (RESULTS.md §5.8): hidden case h1 is a customer literally named "Approved
+     Partners Ltd" — nameable, not claimable; the two error sources were a scorer that
+     wrongly failed valid phrasings (fixed as check v2) and an app call that silently
+     truncated drafts (pipeline fix); the superseded rounds are kept beside the final
+     pair, which is the discipline on display. -->
 
 ---
 
